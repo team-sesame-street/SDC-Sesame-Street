@@ -1,5 +1,7 @@
+/* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import QaBox from './questionsAnswers/QaBox.jsx';
 
 function App() {
   const [productId, setProductId] = useState('');
@@ -17,6 +19,7 @@ function App() {
   return (
     <div>
       {productId}
+      <QaBox />
     </div>
   );
 }
