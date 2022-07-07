@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createGlobalStyle } from 'styled-components';
 // eslint-disable-next-line import/extensions
 import App from './components/App.jsx';
-import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
 /*
@@ -63,5 +63,6 @@ ReactDOM.render(
   <>
     <GlobalStyle />
     <App />
-  </>
-  , document.getElementById('app'));
+  </>,
+  document.getElementById('app'),
+);
