@@ -4,7 +4,6 @@ import axios from 'axios';
 import QaListItem from './QaListItem.jsx';
 
 function QaBox({ id }) {
-  console.log(id);
   const [currProduct, setCurrProduct] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {

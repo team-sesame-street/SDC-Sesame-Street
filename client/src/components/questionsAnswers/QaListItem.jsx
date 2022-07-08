@@ -77,14 +77,12 @@ function QaListItem({ result }) {
             )}
         </AnswerWrapper>
       </details>
-      {/* TODO : ADD ANSWERS MODAL **** START */}
       <dialog className="add-answer">
         <form method="dialog">
           <h2>🚧🚧🚧 add answer implementation coming soon 🚧🚧🚧</h2>
           <input placeholder="press enter to exit the modal for now" />
         </form>
       </dialog>
-      {/* ADD ANSWERS MODAL **** END */}
     </Wrapper>
   );
 }
