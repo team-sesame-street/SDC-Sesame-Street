@@ -1,9 +1,12 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-use-before-define */
 import React, { useState, useEffect } from 'react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
-function RelatedItems({ slides }) {
+// import axios from 'axios';
+
+function Outfit({ slides, slidesInfo }) {
   const slideLeft = () => {
     const slider = document.getElementById('slider');
     slider.scrollLeft -= 300;
@@ -18,11 +21,19 @@ function RelatedItems({ slides }) {
     <div style={sliderContainer}>
       <MdChevronLeft size={40} style={left} onClick={slideLeft} />
       <div id="slider" style={slider}>
-        {slides.map((slide, index) => (
+        {slidesInfo.map((slide, index) => (
           <div style={card} key={index}>
-            <div style={{ ...imageStyle, backgroundImage: `url(${slide.url})` }}> </div>
-            <p style={titleStyle}>{slide.title}</p>
-            <p style={descStyle}>{slide.description}</p>
+            <div style={{ ...imageStyle, backgroundImage: `url(${slides[index].url})` }}> </div>
+            <p style={categoryStyle}>{slide.data.category}</p>
+            <p style={titleStyle}>{slide.data.name}</p>
+            <p style={priceStyle}>{slide.data.default_price}</p>
+            <div style={{ marginLeft: '8px' }}>
+              <div style={star} />
+              <div style={star} />
+              <div style={star} />
+              <div style={star} />
+              <div style={star} />
+            </div>
           </div>
         ))}
       </div>
@@ -32,8 +43,8 @@ function RelatedItems({ slides }) {
 }
 
 const sliderContainer = {
-  width: '90%',
-  height: '300px',
+  width: '50%',
+  height: '380px',
   display: 'flex',
   position: 'relative',
   alignItems: 'center',
@@ -68,7 +79,7 @@ const slider = {
 
 const card = {
   width: '300px',
-  height: '300px',
+  height: '365px',
   background: 'white',
   borderRadius: '10px',
   display: 'inline-block',
@@ -79,7 +90,7 @@ const card = {
 
 const imageStyle = {
   width: '100%',
-  height: '220px',
+  height: '75%',
   backgroundColor: 'rgb(240 240 240 / 80%)',
   borderTopLeftRadius: '10px',
   borderTopRightRadius: '10px',
@@ -87,14 +98,25 @@ const imageStyle = {
 };
 
 const titleStyle = {
-  margin: '5px 0px 5px 10px',
-  fontWeight: '500',
-  marginTop: '10px',
+  margin: '0px 0px 3px 10px',
+  fontWeight: '900',
+};
+const priceStyle = {
+  margin: '1px 0px 0px 10px',
+  fontSize: '12px',
 };
 
-const descStyle = {
-  margin: '10px 0px 5px 10px',
+const categoryStyle = {
+  marginLeft: '10px',
   fontSize: '13px',
 };
 
-export default RelatedItems;
+const star = {
+  background: 'gold',
+  clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
+  display: 'inline-block',
+  height: '15px',
+  width: '15px',
+};
+
+export default Outfit;
