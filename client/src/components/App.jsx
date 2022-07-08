@@ -13,7 +13,7 @@ function App() {
         Authorization: process.env.GITKEY,
       },
     })
-      .then((res) => setProductId(res.data[2].id))
+      .then((res) => setProductId(res.data[4].id))
       .catch((err) => alert(err));
   }, []);
 
@@ -21,7 +21,7 @@ function App() {
     <div>
       {productId}
       <Main id={productId} />
-      <QaBox />
+      <QaBox id={productId} />
     </div>
   );
 }
