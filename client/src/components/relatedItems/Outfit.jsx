@@ -2,23 +2,22 @@
 /* eslint-disable no-use-before-define */
 import React, { useState, useEffect } from 'react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
-// import axios from 'axios';
 
-function Outfit({ slides }) {
+function RelatedItems({ slides }) {
   const slideLeft = () => {
-    const slider = document.getElementById('slider');
+    const slider = document.getElementById('slider2');
     slider.scrollLeft -= 300;
   };
 
   const slideRight = () => {
-    const slider = document.getElementById('slider');
+    const slider = document.getElementById('slider2');
     slider.scrollLeft += 300;
   };
 
   return (
     <div style={sliderContainer}>
       <MdChevronLeft size={40} style={left} onClick={slideLeft} />
-      <div id="slider" style={slider}>
+      <div id="slider2" style={slider}>
         {slides.map((slide, index) => (
           <div style={card} key={index}>
             <div style={{ ...imageStyle, backgroundImage: `url(${slide.url})` }}> </div>
@@ -98,4 +97,4 @@ const descStyle = {
   fontSize: '13px',
 };
 
-export default Outfit;
+export default RelatedItems;
