@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import QaBox from './questionsAnswers/QaBox.jsx';
+import Main from './relatedItems/Main.jsx';
 
 function App() {
   const [productId, setProductId] = useState('');
@@ -19,6 +20,7 @@ function App() {
   return (
     <div>
       {productId}
+      <Main id={productId} />
       <QaBox />
     </div>
   );
