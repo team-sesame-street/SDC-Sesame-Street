@@ -6,7 +6,7 @@ import Main from './relatedItems/Main.jsx';
 import MainOverview from './overview/MainOverview.jsx';
 
 function App() {
-  const [productId, setProductId] = useState('');
+  const [productId, setProductId] = useState(40346);
 
   useEffect(() => {
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
@@ -14,7 +14,7 @@ function App() {
         Authorization: process.env.GITKEY,
       },
     })
-      .then((res) => setProductId(res.data[0].id))
+      .then((res) => setProductId(res.data[4].id))
       .catch((err) => alert(err));
   }, []);
 
@@ -23,7 +23,7 @@ function App() {
       {productId}
       <MainOverview id={productId} />
       <Main id={productId} />
-      <QaBox />
+      <QaBox id={productId} />
     </div>
   );
 }
