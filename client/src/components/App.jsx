@@ -5,7 +5,7 @@ import QaBox from './questionsAnswers/QaBox.jsx';
 import Main from './relatedItems/Main.jsx';
 
 function App() {
-  const [productId, setProductId] = useState('');
+  const [productId, setProductId] = useState(40346);
 
   useEffect(() => {
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
@@ -13,7 +13,7 @@ function App() {
         Authorization: process.env.GITKEY,
       },
     })
-      .then((res) => setProductId(res.data[0].id))
+      .then((res) => setProductId(res.data[2].id))
       .catch((err) => alert(err));
   }, []);
 
