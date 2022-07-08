@@ -5,7 +5,6 @@ import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 
 function MainOverview({id}) {
   const [styles, setStyles] = useState([]);
-  const [selectedStyleId, setSelectedStyleId] = useState(null);
   const [selectedStyle, setSelectedStyle] = useState({});
 
   useEffect(() => {
@@ -23,7 +22,7 @@ function MainOverview({id}) {
           setStyles(stylesData);
           stylesData.forEach((style) => {
             if (style['default?']) {
-              setSelectedStyleId(style.style_id);
+              setSelectedStyle(style);
             }
           });
         })
@@ -34,21 +33,13 @@ function MainOverview({id}) {
     }
   }, [id]);
 
-  useEffect(() => {
-    styles.forEach((style) => {
-      if (style.style_id === selectedStyleId) {
-        setSelectedStyle(style);
-      }
-    });
-  }, [selectedStyleId]);
-
   return (
     <div>
       <h1>Overview</h1>
       <StyleSelector
         styles={styles}
-        selectedStyleId={selectedStyleId}
-        setSelectedStyleId={setSelectedStyleId}
+        selectedStyleId={selectedStyle.style_id}
+        setSelectedStyle={setSelectedStyle}
       />
       <ImageDefaultThumbnail selectedStyle={selectedStyle} />
     </div>
