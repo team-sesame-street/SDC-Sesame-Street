@@ -21,6 +21,7 @@ function Main({ id }) {
     }
   }, [id]);
 
+
   const slides = [
     { url: 'https://picsum.photos/600/300', title: 'test test test', description: 'more testing' },
     { url: 'https://picsum.photos/400/300', title: 'test test test', description: 'more testing' },
