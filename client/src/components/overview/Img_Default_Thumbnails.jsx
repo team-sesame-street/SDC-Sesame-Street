@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ImageDefaultThumbnail({selectedStyle}) {
+function ImageDefaultThumbnail({ selectedStyle }) {
   if (Object.keys(selectedStyle).length > 0) {
     return (
       <div>

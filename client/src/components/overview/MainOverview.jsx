@@ -3,7 +3,7 @@ import axios from 'axios';
 import StyleSelector from './StyleSelector.jsx';
 import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 
-function MainOverview({id}) {
+function MainOverview({ id }) {
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
 
