@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import StyleSelector from './StyleSelector.jsx';
 import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
+import MainImage from './Img_Default_Main_Carousel.jsx';
 
 function MainOverview({id}) {
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
+  const [images, setImages] = useState([]);
+  const [selectedImg, setSelectedImg] = useState({});
 
   useEffect(() => {
     if (id) {
@@ -23,6 +26,8 @@ function MainOverview({id}) {
           stylesData.forEach((style) => {
             if (style['default?']) {
               setSelectedStyle(style);
+              setImages(style.photos);
+              setSelectedImg(style.photos[0]);
             }
           });
         })
@@ -33,6 +38,28 @@ function MainOverview({id}) {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (styles.length > 0) {
+      styles.forEach((style) => {
+        if (style['default?']) {
+          setSelectedStyle(style);
+        }
+      });
+    }
+  }, [styles]);
+
+  useEffect(() => {
+    if (Object.keys(selectedStyle).length > 0) {
+      setImages(selectedStyle.photos);
+    }
+  }, [selectedStyle]);
+
+  useEffect(() => {
+    if (images.length > 0) {
+      setSelectedImg(images[0]);
+    }
+  }, [images]);
+
   return (
     <div>
       <h1>Overview</h1>
@@ -41,7 +68,13 @@ function MainOverview({id}) {
         selectedStyleId={selectedStyle.style_id}
         setSelectedStyle={setSelectedStyle}
       />
-      <ImageDefaultThumbnail selectedStyle={selectedStyle} />
+      <ImageDefaultThumbnail
+        images={images}
+        setSelectedImg={setSelectedImg}
+      />
+      <MainImage
+        selectedImg={selectedImg}
+      />
     </div>
   );
 }
