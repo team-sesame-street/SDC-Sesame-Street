@@ -4,12 +4,12 @@ import axios from 'axios';
 import AnswerSubItem from './AnswerSubItem.jsx';
 import byHelpfulness from './utils/byHelpfulness.js';
 
-function QaListItem({ result }) {
+function QaListItem({ result, setPage }) {
   const [answers, setAnswers] = useState(
     Object.entries(result.answers).sort(byHelpfulness),
   );
   const [answerLimit, setAnswerLimit] = useState(2);
-  const [areAllAnswersShown, setAreAllAnswersShown] = useState(false);
+  // const [questions, setQuestions] = useState('');
 
   function handleLoadMoreBtn(e) {
     if (answerLimit <= 2) {
@@ -17,7 +17,6 @@ function QaListItem({ result }) {
     } else {
       setAnswerLimit(2);
     }
-    setAreAllAnswersShown(true);
   }
 
   const [qVote, setQVote] = useState(result.question_helpfulness);
@@ -93,7 +92,7 @@ const Wrapper = styled.article`
 `;
 
 const QuestionWrapper = styled.summary`
-  font-weight: 900;
+  font-weight: 600;
   border: 1px solid whitesmoke;
   display: flex;
   justify-content: space-between;
@@ -121,6 +120,7 @@ const SubActionBtn = styled.button`
   border: none;
   background: none;
   text-decoration: underline;
+  cursor: pointer;
   &:hover {
     text-decoration: none;
   }
