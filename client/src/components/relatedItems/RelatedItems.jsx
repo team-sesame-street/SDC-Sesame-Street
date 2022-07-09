@@ -1,46 +1,11 @@
+/* eslint-disable import/extensions */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
-/* eslint-disable no-use-before-define */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
-
-// import axios from 'axios';
-
-function Outfit({ slides, slidesInfo }) {
-  const slideLeft = () => {
-    const slider = document.getElementById('slider');
-    slider.scrollLeft -= 300;
-  };
-
-  const slideRight = () => {
-    const slider = document.getElementById('slider');
-    slider.scrollLeft += 300;
-  };
-
-  return (
-    <div style={sliderContainer}>
-      <MdChevronLeft size={40} style={left} onClick={slideLeft} />
-      <div id="slider" style={slider}>
-        {slidesInfo.map((slide, index) => (
-          <div style={card} key={index}>
-            <div style={{ ...imageStyle, backgroundImage: `url(${slides[index].url})` }}> </div>
-            <p style={categoryStyle}>{slide.data.category}</p>
-            <p style={titleStyle}>{slide.data.name}</p>
-            <p style={priceStyle}>{slide.data.default_price}</p>
-            <div style={{ marginLeft: '8px' }}>
-              <div style={star} />
-              <div style={star} />
-              <div style={star} />
-              <div style={star} />
-              <div style={star} />
-            </div>
-          </div>
-        ))}
-      </div>
-      <MdChevronRight size={40} style={right} onClick={slideRight} />
-    </div>
-  );
-}
+import Modal from './Modal.jsx';
 
 const sliderContainer = {
   width: '50%',
@@ -101,6 +66,7 @@ const titleStyle = {
   margin: '0px 0px 3px 10px',
   fontWeight: '900',
 };
+
 const priceStyle = {
   margin: '1px 0px 0px 10px',
   fontSize: '12px',
@@ -118,5 +84,55 @@ const star = {
   height: '15px',
   width: '15px',
 };
+
+function Outfit({ slides, slidesInfo, id }) {
+  const [modal, setModal] = useState(false);
+  const [currOutfit, setCurrOutfit] = useState({});
+
+  const slideLeft = () => {
+    const imageSlider = document.getElementById('slider');
+    imageSlider.scrollLeft -= 300;
+  };
+
+  const slideRight = () => {
+    const imageSlider = document.getElementById('slider');
+    imageSlider.scrollLeft += 300;
+  };
+
+  return (
+    <div style={sliderContainer}>
+      <MdChevronLeft size={40} style={left} onClick={slideLeft} />
+      <div id="slider" style={slider}>
+        {slidesInfo.map((slide, index) => (
+          <div
+            style={card}
+            key={index}
+            onClick={() => {
+              setCurrOutfit(slide);
+              setModal(true);
+            }}
+          >
+            <div style={{ ...imageStyle, backgroundImage: `url(${slides[index].url})` }}> </div>
+            <p style={categoryStyle}>{slide.data.category}</p>
+            <p style={titleStyle}>{slide.data.name}</p>
+            <p style={priceStyle}>
+              $
+              {slide.data.default_price}
+            </p>
+            <div style={{ marginLeft: '8px' }}>
+              <div style={star} />
+              <div style={star} />
+              <div style={star} />
+              <div style={star} />
+              <div style={star} />
+            </div>
+          </div>
+        ))}
+        <Modal open={modal} closeModal={() => setModal(false)} currOutfit={currOutfit} id={id} />
+      </div>
+      <MdChevronRight size={40} style={right} onClick={slideRight} />
+    </div>
+  );
+}
 
 export default Outfit;
