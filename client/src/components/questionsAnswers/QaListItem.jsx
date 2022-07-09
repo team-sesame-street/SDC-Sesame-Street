@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import axios from 'axios';
 import AnswerSubItem from './AnswerSubItem.jsx';
 import byHelpfulness from './utils/byHelpfulness.js';
+import Spacer from './utils/smallSpacer.jsx'
 
-function QaListItem({ result, setPage }) {
+
+function QaListItem({ result }) {
   const [answers, setAnswers] = useState(
     Object.entries(result.answers).sort(byHelpfulness),
   );
   const [answerLimit, setAnswerLimit] = useState(2);
-  // const [questions, setQuestions] = useState('');
 
   function handleLoadMoreBtn(e) {
     if (answerLimit <= 2) {
@@ -55,10 +56,13 @@ function QaListItem({ result, setPage }) {
           </span>
           <small>
             Helpful?
-            {hasVoted ? 'Yes' : <SubActionBtn type="button" onClick={handleVoteQ}>Yes</SubActionBtn>}
+            {hasVoted ? <SubActionBtn disabled>
+              Yes
+            </SubActionBtn> : <SubActionBtn type="button" onClick={handleVoteQ}>Yes</SubActionBtn>}
             (
             {qVote}
             )
+            <Spacer/>
             <SubActionBtn type="button" onClick={handleAnswerModal}>Add Answer</SubActionBtn>
           </small>
         </QuestionWrapper>
@@ -68,11 +72,11 @@ function QaListItem({ result, setPage }) {
           ))}
           {answers.length > 2
             && (
-              <button type="button" onClick={handleLoadMoreBtn}>
+              <PrimaryBtn type="button" onClick={handleLoadMoreBtn}>
                 {answerLimit === 2
                   ? 'Load More Answers'
                   : 'Collapse Answers'}
-              </button>
+              </PrimaryBtn>
             )}
         </AnswerWrapper>
       </details>
@@ -124,4 +128,24 @@ const SubActionBtn = styled.button`
   &:hover {
     text-decoration: none;
   }
+  &[disabled] {
+    color: #666;
+    text-decoration: none;
+    cursor: revert;
+  }
 `;
+
+const PrimaryBtn = styled.button`
+  text-transform: uppercase;
+  font-weight: 700;
+  border: none;
+  color: #222;
+  font-size: 0.85rem;
+  padding: 5px 10px;
+  margin: 10px;
+
+  &&:hover {
+    background: #ddd;
+  }
+`;
+
