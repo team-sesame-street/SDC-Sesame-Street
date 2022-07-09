@@ -21,7 +21,6 @@ function Main({ id }) {
     }
   }, [id]);
 
-
   const slides = [
     { url: 'https://picsum.photos/600/300', title: 'test test test', description: 'more testing' },
     { url: 'https://picsum.photos/400/300', title: 'test test test', description: 'more testing' },
@@ -73,11 +72,11 @@ function Main({ id }) {
       .then((data) => setItems(data))
       .catch((err) => console.log(err));
   }, [relatedItems]);
-
+  console.log(itemsInfo);
   return (
     <div>
       <div style={style}>
-        <RelatedItems slides={itemsInfo} slidesInfo={items} />
+        <RelatedItems slides={itemsInfo} slidesInfo={items} id={id} />
       </div>
       <br />
       <br />
@@ -96,7 +95,7 @@ const style = {
   justifyContent: 'center',
   alignItems: 'center',
   position: 'relative',
-  backgroundColor: '#e4e4e4',
+  // backgroundColor: '#e4e4e4',
 };
 
 export default Main;
