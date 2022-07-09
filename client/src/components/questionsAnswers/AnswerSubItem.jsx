@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import formatDate from './utils/formatDate.js';
 import styled from 'styled-components';
+import Spacer from './utils/smallSpacer.jsx'
 
 function AnswerSubItem({ answer }) {
   const [hasVoted, setHasVoted] = useState(
@@ -55,8 +56,9 @@ function AnswerSubItem({ answer }) {
       </div>
       <small>
         <span>
-          {answerer_name === 'Seller' || answerer_name === 'seller' ? <b>{answerer_name}</b> : answerer_name }
+          by {answerer_name === 'Seller' || answerer_name === 'seller' ? <b>{answerer_name}</b> : answerer_name}
         </span>
+        <Spacer />
         <span>
           {formatDate(date)}
         </span>
@@ -64,15 +66,21 @@ function AnswerSubItem({ answer }) {
           <span>Helpful? </span>
           <span>
             {hasVoted
-              ? 'Yes'
+              ?
+              <SubActionBtn disabled>
+                Yes
+              </SubActionBtn>
               : <SubActionBtn onClick={handleVote}>Yes</SubActionBtn>}
             (
             {voteCount}
             )
           </span>
+          <Spacer/>
           <span>
             {hasReported
-              ? 'Reported'
+              ? <SubActionBtn disabled>
+                Reported
+              </SubActionBtn>
               : <SubActionBtn onClick={handleReport}>Report</SubActionBtn>}
           </span>
         </div>
@@ -91,5 +99,10 @@ const SubActionBtn = styled.button`
   cursor: pointer;
   &:hover {
     text-decoration: none;
+  }
+  &[disabled] {
+    color: #666;
+    text-decoration: none;
+    cursor: revert;
   }
 `;
