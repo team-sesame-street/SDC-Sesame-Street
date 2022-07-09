@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import formatDate from './utils/formatDate.js';
+import styled from 'styled-components';
 
 function AnswerSubItem({ answer }) {
   const [hasVoted, setHasVoted] = useState(
@@ -54,7 +55,7 @@ function AnswerSubItem({ answer }) {
       </div>
       <small>
         <span>
-          {answerer_name === 'Seller' ? <b>{answerer_name}</b> : answerer_name }
+          {answerer_name === 'Seller' || answerer_name === 'seller' ? <b>{answerer_name}</b> : answerer_name }
         </span>
         <span>
           {formatDate(date)}
@@ -64,7 +65,7 @@ function AnswerSubItem({ answer }) {
           <span>
             {hasVoted
               ? 'Yes'
-              : <a onClick={handleVote} href="#">Yes</a>}
+              : <SubActionBtn onClick={handleVote}>Yes</SubActionBtn>}
             (
             {voteCount}
             )
@@ -72,7 +73,7 @@ function AnswerSubItem({ answer }) {
           <span>
             {hasReported
               ? 'Reported'
-              : <a onClick={handleReport} href="#">Report</a>}
+              : <SubActionBtn onClick={handleReport}>Report</SubActionBtn>}
           </span>
         </div>
         <div />
@@ -82,3 +83,13 @@ function AnswerSubItem({ answer }) {
 }
 
 export default AnswerSubItem;
+
+const SubActionBtn = styled.button`
+  border: none;
+  background: none;
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover {
+    text-decoration: none;
+  }
+`;
