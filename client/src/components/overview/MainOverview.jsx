@@ -17,8 +17,8 @@ function MainOverview({id}) {
         method: 'get',
         headers: {
           Authorization: process.env.GITKEY,
-          responseType: 'json',
         },
+        responseType: 'json',
       })
         .then((response) => {
           const stylesData = response.data.results;
