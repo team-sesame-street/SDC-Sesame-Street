@@ -14,7 +14,7 @@ function App() {
         Authorization: process.env.GITKEY,
       },
     })
-      .then((res) => setProductId(res.data[4].id))
+      .then((res) => setProductId(res.data[2].id))
       .catch((err) => alert(err));
   }, []);
 

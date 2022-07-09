@@ -1,12 +1,17 @@
 import React from 'react';
 
-function ImageDefaultThumbnail({selectedStyle}) {
-  if (Object.keys(selectedStyle).length > 0) {
+function ImageDefaultThumbnail({images, setSelectedImg}) {
+  if (images.length > 0) {
     return (
       <div>
         <h2>Image Default Thumbnail</h2>
-        {selectedStyle.photos.map((photo, index) => (
-          <img key={index} src={photo.thumbnail_url} alt={`product image #${index}`} />
+        {images.map((image, index) => (
+          <img
+            key={index}
+            src={image.thumbnail_url}
+            alt={`product representation #${index}`}
+            onClick={() => {setSelectedImg(image)}}
+          />
         ))}
       </div>
     );
