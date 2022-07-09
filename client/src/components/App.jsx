@@ -2,11 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import QaBox from './questionsAnswers/QaBox.jsx';
-<<<<<<< HEAD
 import Main from './relatedItems/Main.jsx';
-=======
 import RrBox from './ratings-reviews/RrBox.jsx';
->>>>>>> de62a08 (Added RrBox component to App)
 
 function App() {
   const [productId, setProductId] = useState('');
@@ -26,7 +23,7 @@ function App() {
       {productId}
       <Main id={productId} />
       <QaBox />
-      <RrBox />
+      <RrBox id={productId} />
     </div>
   );
 }
