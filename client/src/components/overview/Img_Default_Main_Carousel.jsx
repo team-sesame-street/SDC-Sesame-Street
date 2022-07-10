@@ -11,7 +11,7 @@ function MainImage({images, currImgIndex, setCurrImgIndex}) {
             {index === currImgIndex && index > 0
             && (<FaArrowCircleLeft onClick={() => { setCurrImgIndex(currImgIndex - 1); }} />)}
             {index === currImgIndex && (
-              <img src={images[currImgIndex].url} alt="A representation of this product" />
+              <img src={images[currImgIndex].url} alt="A representation of this product" style={{ cursor: 'zoom-in' }} />
             )}
             {index === currImgIndex && index < images.length - 1
             && (<FaArrowCircleRight onClick={() => { setCurrImgIndex(currImgIndex + 1); }} />)}
