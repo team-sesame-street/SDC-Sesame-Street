@@ -51,7 +51,12 @@ function Main({ id }) {
         const results = [];
         for (let x = 0; x < data.length; x++) {
           const obj = {};
-          const url = data[x].data.results[0].photos[0].thumbnail_url;
+          let url
+          if (data[x].data.results[0].photos[0].thumbnail_url) {
+            url = data[x].data.results[0].photos[0].thumbnail_url;
+          } else {
+            url = 'https://picsum.photos/600/300';
+          }
           let salePrice;
           !data[x].data.results[0].sale_price
             ? salePrice = false
