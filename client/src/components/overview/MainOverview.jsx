@@ -84,6 +84,10 @@ function MainOverview({id}) {
         images={images}
         currImgIndex={currImgIndex}
         setCurrImgIndex={setCurrImgIndex}
+        thumbnailIndexMin={thumbnailIndexMin}
+        thumbnailIndexMax={thumbnailIndexMax}
+        setThumbnailIndexMin={setThumbnailIndexMin}
+        setThumbnailIndexMax={setThumbnailIndexMax}
       />
     </div>
   );
