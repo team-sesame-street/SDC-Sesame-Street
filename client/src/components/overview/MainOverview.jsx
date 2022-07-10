@@ -8,6 +8,8 @@ function MainOverview({id}) {
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
   const [images, setImages] = useState([]);
+  const [thumbnailIndexMin, setThumbnailIndexMin] = useState(null);
+  const [thumbnailIndexMax, setThumbnailIndexMax] = useState(null);
   const [currImgIndex, setCurrImgIndex] = useState(null);
 
   useEffect(() => {
@@ -26,8 +28,6 @@ function MainOverview({id}) {
           stylesData.forEach((style) => {
             if (style['default?']) {
               setSelectedStyle(style);
-              setImages(style.photos);
-              setCurrImgIndex(0);
             }
           });
         })
@@ -40,7 +40,8 @@ function MainOverview({id}) {
 
   useEffect(() => {
     if (Object.keys(selectedStyle).length > 0) {
-      setImages(selectedStyle.photos);
+      // dummy images data is duplicate of the same photos set
+      setImages(selectedStyle.photos.concat(selectedStyle.photos));
     }
   }, [selectedStyle]);
 
@@ -48,6 +49,16 @@ function MainOverview({id}) {
     if (images.length > 0) {
       if (currImgIndex === null) {
         setCurrImgIndex(0);
+      }
+      if (thumbnailIndexMin === null) {
+        setThumbnailIndexMin(0);
+      }
+      if (thumbnailIndexMax === null) {
+        if (images.length >= 7) {
+          setThumbnailIndexMax(6);
+        } else {
+          setThumbnailIndexMax(images.length - 1);
+        }
       }
     }
   }, [images]);
@@ -64,11 +75,19 @@ function MainOverview({id}) {
         images={images}
         currImgIndex={currImgIndex}
         setCurrImgIndex={setCurrImgIndex}
+        thumbnailIndexMin={thumbnailIndexMin}
+        thumbnailIndexMax={thumbnailIndexMax}
+        setThumbnailIndexMin={setThumbnailIndexMin}
+        setThumbnailIndexMax={setThumbnailIndexMax}
       />
       <MainImage
         images={images}
         currImgIndex={currImgIndex}
         setCurrImgIndex={setCurrImgIndex}
+        thumbnailIndexMin={thumbnailIndexMin}
+        thumbnailIndexMax={thumbnailIndexMax}
+        setThumbnailIndexMin={setThumbnailIndexMin}
+        setThumbnailIndexMax={setThumbnailIndexMax}
       />
     </div>
   );
