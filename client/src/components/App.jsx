@@ -22,7 +22,7 @@ function App() {
     <div>
       {productId}
       <MainOverview id={productId} />
-      <Main id={productId} />
+      {/* <Main id={productId} /> */}
       <QaBox id={productId} />
     </div>
   );

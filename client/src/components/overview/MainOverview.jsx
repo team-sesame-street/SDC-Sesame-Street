@@ -8,7 +8,7 @@ function MainOverview({id}) {
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
   const [images, setImages] = useState([]);
-  const [selectedImg, setSelectedImg] = useState({});
+  const [currImgIndex, setCurrImgIndex] = useState(null);
 
   useEffect(() => {
     if (id) {
@@ -27,7 +27,7 @@ function MainOverview({id}) {
             if (style['default?']) {
               setSelectedStyle(style);
               setImages(style.photos);
-              setSelectedImg(style.photos[0]);
+              setCurrImgIndex(0);
             }
           });
         })
@@ -39,16 +39,6 @@ function MainOverview({id}) {
   }, [id]);
 
   useEffect(() => {
-    if (styles.length > 0) {
-      styles.forEach((style) => {
-        if (style['default?']) {
-          setSelectedStyle(style);
-        }
-      });
-    }
-  }, [styles]);
-
-  useEffect(() => {
     if (Object.keys(selectedStyle).length > 0) {
       setImages(selectedStyle.photos);
     }
@@ -56,7 +46,9 @@ function MainOverview({id}) {
 
   useEffect(() => {
     if (images.length > 0) {
-      setSelectedImg(images[0]);
+      if (currImgIndex === null) {
+        setCurrImgIndex(0);
+      }
     }
   }, [images]);
 
@@ -70,10 +62,13 @@ function MainOverview({id}) {
       />
       <ImageDefaultThumbnail
         images={images}
-        setSelectedImg={setSelectedImg}
+        currImgIndex={currImgIndex}
+        setCurrImgIndex={setCurrImgIndex}
       />
       <MainImage
-        selectedImg={selectedImg}
+        images={images}
+        currImgIndex={currImgIndex}
+        setCurrImgIndex={setCurrImgIndex}
       />
     </div>
   );
