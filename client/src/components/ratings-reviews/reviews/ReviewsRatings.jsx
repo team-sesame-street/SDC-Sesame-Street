@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-use-before-define */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import StarRatings from 'react-star-ratings';
 
