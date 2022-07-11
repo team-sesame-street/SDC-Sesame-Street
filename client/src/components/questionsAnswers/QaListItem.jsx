@@ -4,13 +4,16 @@ import axios from 'axios';
 import AnswerSubItem from './AnswerSubItem.jsx';
 import byHelpfulness from './utils/byHelpfulness.js';
 import Spacer from './utils/smallSpacer.jsx'
+import randomId from './utils/randomId.js'
+import AnswerModal from './AnswerModal.jsx';
 
 
-function QaListItem({ result }) {
+function QaListItem({ result, currProductName }) {
   const [answers, setAnswers] = useState(
     Object.entries(result.answers).sort(byHelpfulness),
   );
   const [answerLimit, setAnswerLimit] = useState(2);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function handleLoadMoreBtn(e) {
     if (answerLimit <= 2) {
@@ -43,8 +46,7 @@ function QaListItem({ result }) {
   }
 
   function handleAnswerModal() {
-    const dialog = document.querySelector('.add-answer');
-    dialog.showModal();
+    setIsModalOpen(!isModalOpen);
   }
 
   return (
@@ -62,7 +64,7 @@ function QaListItem({ result }) {
             (
             {qVote}
             )
-            <Spacer/>
+            <Spacer />
             <SubActionBtn type="button" onClick={handleAnswerModal}>Add Answer</SubActionBtn>
           </small>
         </QuestionWrapper>
@@ -80,12 +82,9 @@ function QaListItem({ result }) {
             )}
         </AnswerWrapper>
       </details>
-      <dialog className="add-answer">
-        <form method="dialog">
-          <h2>🚧🚧🚧 add answer implementation coming soon 🚧🚧🚧</h2>
-          <input placeholder="press enter to exit the modal for now" />
-        </form>
-      </dialog>
+      {isModalOpen
+        ? <AnswerModal key={randomId()} className="answermodal" productName={currProductName} question={result} setIsModalOpen={setIsModalOpen} answers={answers} setAnswers = {setAnswers}/>
+        : ''}
     </Wrapper>
   );
 }
@@ -148,4 +147,3 @@ const PrimaryBtn = styled.button`
     background: #ddd;
   }
 `;
-
