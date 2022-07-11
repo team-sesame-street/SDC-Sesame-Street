@@ -7,6 +7,7 @@ import ReviewsRatings from './ReviewsRatings.jsx';
 import ReviewsDate from './ReviewsDate.jsx';
 import ReviewsUser from './ReviewsUser.jsx';
 import ReviewsRecommend from './ReviewsRecommend.jsx';
+import ReviewsResponse from './ReviewsResponse.jsx'
 
 function Reviews({ reviews }) {
   console.log('class: ', reviews);
@@ -41,6 +42,7 @@ function Reviews({ reviews }) {
               {review.body}
             </p>
             <ReviewsRecommend recommend={review.recommend} />
+            <ReviewsResponse responseBody={review.response} />
           </div>
         );
       })}
