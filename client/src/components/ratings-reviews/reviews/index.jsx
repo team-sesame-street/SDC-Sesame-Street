@@ -6,6 +6,7 @@ import React from 'react';
 import ReviewsRatings from './ReviewsRatings.jsx';
 import ReviewsDate from './ReviewsDate.jsx';
 import ReviewsUser from './ReviewsUser.jsx';
+import ReviewsRecommend from './ReviewsRecommend.jsx';
 
 function Reviews({ reviews }) {
   console.log('class: ', reviews);
@@ -16,10 +17,12 @@ function Reviews({ reviews }) {
         const revSumm = review.summary;
         return (
           <div key={review.review_id}>
-            <ReviewsRatings rating={review.rating} />
-            <ReviewsUser user={review.reviewer_name} />
-            <ReviewsDate date={review.date} />
-            <br />
+            <span style={flexSpan}>
+              <ReviewsRatings rating={review.rating} />
+              <ReviewsUser user={review.reviewer_name} />
+              <ReviewsDate date={review.date} />
+              <br />
+            </span>
             {revSumm.length > 60 ? (
               <span style={summaryContainer}>
                 {`${revSumm.slice(0, 61)}...`}
@@ -37,12 +40,17 @@ function Reviews({ reviews }) {
               <br />
               {review.body}
             </p>
+            <ReviewsRecommend recommend={review.recommend} />
           </div>
         );
       })}
     </div>
   );
 }
+
+const flexSpan = {
+  display: 'flex',
+};
 
 const reviewsContainer = {
 
