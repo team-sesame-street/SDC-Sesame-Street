@@ -13,24 +13,24 @@ function Reviews({ reviews }) {
   return (
     <div style={reviewsContainer}>
       {reviews.map((review) => {
-        const summ = review.summary;
+        const revSumm = review.summary;
         return (
           <div key={review.review_id}>
             <ReviewsRatings rating={review.rating} />
             <ReviewsUser user={review.reviewer_name} />
             <ReviewsDate date={review.date} />
             <br />
-            {summ.length > 60 ? (
+            {revSumm.length > 60 ? (
               <span style={summaryContainer}>
-                {`${summ.slice(0, 61)}...`}
+                {`${revSumm.slice(0, 61)}...`}
                 <p style={bodyContainer}>
-                  {`...${summ.slice(61)}`}
+                  {`...${revSumm.slice(61)}`}
                   <br />
                 </p>
               </span>
             ) : (
               <span style={summaryContainer}>
-                {summ}
+                {revSumm}
               </span>
             )}
             <p>
