@@ -4,6 +4,7 @@
 /* eslint-disable no-use-before-define */
 import React from 'react';
 import ReviewsRatings from './ReviewsRatings.jsx';
+import ReviewsDate from './ReviewsDate.jsx';
 
 function Reviews({ reviews }) {
   console.log('class: ', reviews);
@@ -16,6 +17,7 @@ function Reviews({ reviews }) {
         return (
           <div key={review.review_id}>
             <ReviewsRatings rating={review.rating} />
+            <ReviewsDate date={review.date} />
             <br />
             {summ.length > 10 ? (
               <span style={summaryContainer}>
