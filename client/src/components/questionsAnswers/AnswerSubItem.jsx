@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import formatDate from './utils/formatDate.js';
 import styled from 'styled-components';
-import Spacer from './utils/smallSpacer.jsx'
+import Spacer from './utils/smallSpacer.jsx';
 
 function AnswerSubItem({ answer }) {
   const [hasVoted, setHasVoted] = useState(
@@ -53,6 +53,9 @@ function AnswerSubItem({ answer }) {
       <div>
         A:
         {body}
+      </div>
+      <div>
+        {photos.map((photo) => <Thumbnail src={photo}/>)}
       </div>
       <small>
         <span>
@@ -105,4 +108,11 @@ const SubActionBtn = styled.button`
     text-decoration: none;
     cursor: revert;
   }
+`;
+
+const Thumbnail = styled.img`
+  display: inline-block;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  width: 150px;
 `;
