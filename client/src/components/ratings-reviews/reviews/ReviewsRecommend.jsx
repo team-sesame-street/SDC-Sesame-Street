@@ -6,13 +6,11 @@ import { GrCheckmark } from 'react-icons/gr';
 function ReviewsRecommend({ recommend }) {
   return (
     <div>
-      {recommend ? (
+      {recommend && (
         <span style={recommendContainer}>
           <GrCheckmark />
           I recommend this product
         </span>
-      ) : (
-        <span />
       )}
     </div>
   );
