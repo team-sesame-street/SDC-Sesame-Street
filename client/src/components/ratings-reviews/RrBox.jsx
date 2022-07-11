@@ -1,12 +1,14 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Reviews from './Reviews.jsx';
-import Ratings from './Ratings.jsx';
+import Reviews from './reviews/index.jsx';
+import Ratings from './ratings/Ratings.jsx';
 
 function RrBox({ id }) {
   const [reviews, setReviews] = useState([]);
   const [ratings, setRatings] = useState('');
-  const [count, setCount] = useState(4);
+  const [count, setCount] = useState(10);
 
   useEffect(() => {
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
