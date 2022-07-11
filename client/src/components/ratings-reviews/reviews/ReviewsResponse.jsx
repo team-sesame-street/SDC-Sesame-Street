@@ -4,14 +4,12 @@ import React from 'react';
 function ReviewsResponse({ responseBody }) {
   return (
     <div>
-      {responseBody ? (
+      {responseBody && (
         <span>
           Response:
           <br />
           {responseBody}
         </span>
-      ) : (
-        <span />
       )}
     </div>
   );
