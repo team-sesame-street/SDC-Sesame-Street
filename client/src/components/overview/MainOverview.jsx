@@ -5,12 +5,8 @@ import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 import MainImage from './Img_Default_Main_Carousel.jsx';
 import ProductInfo from './ProductInfo.jsx';
 
-<<<<<<< HEAD
-function MainOverview({ id }) {
-=======
 function MainOverview({id}) {
   const [product, setProduct] = useState({});
->>>>>>> 41b8033af7cc8005e0210d8df523f16e693ecc72
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
   const [images, setImages] = useState([]);

@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-<<<<<<< HEAD
-import formatDate from './utils/formatDate.js';
-=======
->>>>>>> 41b8033af7cc8005e0210d8df523f16e693ecc72
 import Spacer from './utils/smallSpacer.jsx';
+import formatDate from './utils/formatDate.js'
 
 function AnswerSubItem({ answer }) {
   const [hasVoted, setHasVoted] = useState(
@@ -117,8 +114,6 @@ const SubActionBtn = styled.button`
     cursor: revert;
   }
 `;
-<<<<<<< HEAD
-=======
 
 const Thumbnail = styled.img`
   display: inline-block;
@@ -126,4 +121,3 @@ const Thumbnail = styled.img`
   object-fit: cover;
   width: 150px;
 `;
->>>>>>> 41b8033af7cc8005e0210d8df523f16e693ecc72

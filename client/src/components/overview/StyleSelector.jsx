@@ -4,25 +4,6 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
   return (
     <div>
       <h2>Style Selector</h2>
-<<<<<<< HEAD
-      <ul>
-        {styles.map((style) => (
-          style.style_id === selectedStyleId
-            ? (
-              <li key={style.style_id} onClick={() => { setSelectedStyle(style); }}>
-                {style.name}
-                &nbsp;
-                --- Im selected!
-              </li>
-            )
-            : (
-              <li key={style.style_id} onClick={() => { setSelectedStyle(style); }}>
-                {style.name}
-              </li>
-            )
-        ))}
-      </ul>
-=======
       <p>
         <strong>STYLE &gt; </strong>
         {selectedStyle.name ? selectedStyle.name.toUpperCase() : null}
@@ -49,7 +30,6 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
           );
         })}
       </div>
->>>>>>> 41b8033af7cc8005e0210d8df523f16e693ecc72
     </div>
   );
 }

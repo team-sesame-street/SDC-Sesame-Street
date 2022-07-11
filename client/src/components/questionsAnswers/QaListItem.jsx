@@ -3,14 +3,10 @@ import styled from 'styled-components';
 import axios from 'axios';
 import AnswerSubItem from './AnswerSubItem.jsx';
 import byHelpfulness from './utils/byHelpfulness.js';
-<<<<<<< HEAD
-import Spacer from './utils/smallSpacer.jsx';
-=======
 import Spacer from './utils/smallSpacer.jsx'
 import randomId from './utils/randomId.js'
 import AnswerModal from './AnswerModal.jsx';
 
->>>>>>> 41b8033af7cc8005e0210d8df523f16e693ecc72
 
 function QaListItem({ result, currProductName }) {
   const [answers, setAnswers] = useState(
