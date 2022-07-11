@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -6,25 +7,26 @@ import Main from './relatedItems/Main.jsx';
 import RrBox from './ratings-reviews/RrBox.jsx';
 
 function App() {
-  const [productId, setProductId] = useState('');
+  const [productId, setProductId] = useState(40346);
 
-  useEffect(() => {
-    axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
-      headers: {
-        Authorization: process.env.GITKEY,
-      },
-    })
-      .then((res) => setProductId(res.data[0].id))
-      .catch((err) => alert(err));
-  }, []);
+  // useEffect(() => {
+  //   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
+  //     headers: {
+  //       Authorization: process.env.GITKEY,
+  //     },
+  //   })
+  //     .then((res) => setProductId(res.data[2].id))
+  //     .catch((err) => alert(err));
+  // }, []);
 
   return (
-    <div>
+    <>
       {productId}
       <Main id={productId} />
-      <QaBox />
+      <Main id={productId} />
+      <QaBox id={productId} />
       <RrBox id={productId} />
-    </div>
+    </>
   );
 }
 
