@@ -11,7 +11,6 @@ function Reviews({ reviews }) {
 
   return (
     <div style={reviewsContainer}>
-
       {reviews.map((review) => {
         const summ = review.summary;
         return (
