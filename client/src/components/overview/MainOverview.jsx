@@ -3,14 +3,40 @@ import axios from 'axios';
 import StyleSelector from './StyleSelector.jsx';
 import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 import MainImage from './Img_Default_Main_Carousel.jsx';
+import ProductInfo from './ProductInfo.jsx';
 
+<<<<<<< HEAD
 function MainOverview({ id }) {
+=======
+function MainOverview({id}) {
+  const [product, setProduct] = useState({});
+>>>>>>> 41b8033af7cc8005e0210d8df523f16e693ecc72
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
   const [images, setImages] = useState([]);
   const [thumbnailIndexMin, setThumbnailIndexMin] = useState(null);
   const [thumbnailIndexMax, setThumbnailIndexMax] = useState(null);
   const [currImgIndex, setCurrImgIndex] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      axios({
+        url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`,
+        method: 'get',
+        headers: {
+          Authorization: process.env.GITKEY,
+        },
+        responseType: 'json',
+      })
+        .then((response) => {
+          setProduct(response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Unable to retrieve information regarding this product');
+        });
+    }
+  }, [id]);
 
   useEffect(() => {
     if (id) {
@@ -32,8 +58,8 @@ function MainOverview({ id }) {
           });
         })
         .catch((err) => {
-          console.log('Client: Unable to retrieve styles for this product');
           console.log(err);
+          alert('Unable to retrieve styles for this product');
         });
     }
   }, [id]);
@@ -66,9 +92,10 @@ function MainOverview({ id }) {
   return (
     <div>
       <h1>Overview</h1>
+      <ProductInfo product={product} selectedStyle={selectedStyle} />
       <StyleSelector
         styles={styles}
-        selectedStyleId={selectedStyle.style_id}
+        selectedStyle={selectedStyle}
         setSelectedStyle={setSelectedStyle}
       />
       <ImageDefaultThumbnail

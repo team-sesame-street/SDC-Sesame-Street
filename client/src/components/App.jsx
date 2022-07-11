@@ -19,12 +19,12 @@ function App() {
   // }, []);
 
   return (
-    <div>
+    <>
       {productId}
       <MainOverview id={productId} />
       <Main id={productId} />
       <QaBox id={productId} />
-    </div>
+    </>
   );
 }
 
