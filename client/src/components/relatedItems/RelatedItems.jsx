@@ -80,12 +80,14 @@ const categoryStyle = {
 const star = {
   background: 'gold',
   clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
-  display: 'inline-block',
-  height: '15px',
-  width: '15px',
+  height: '22px',
+  width: '22px',
+  float: 'right',
+  marginRight: '10px',
+  marginTop: '10px',
 };
 
-function Outfit({ slides, slidesInfo, id }) {
+function RelatedItems({ slides, slidesInfo, id }) {
   const [modal, setModal] = useState(false);
   const [currOutfit, setCurrOutfit] = useState({});
 
@@ -107,11 +109,14 @@ function Outfit({ slides, slidesInfo, id }) {
           <div
             style={card}
             key={index}
-            onClick={() => {
-              setCurrOutfit(slide);
-              setModal(true);
-            }}
           >
+            <div
+              style={star}
+              onClick={() => {
+                setCurrOutfit(slide);
+                setModal(true);
+              }}
+            />
             <div style={{ ...imageStyle, backgroundImage: `url(${slides[index].url})` }}> </div>
             <p style={categoryStyle}>{slide.data.category}</p>
             <p style={titleStyle}>{slide.data.name}</p>
@@ -119,13 +124,6 @@ function Outfit({ slides, slidesInfo, id }) {
               $
               {slide.data.default_price}
             </p>
-            <div style={{ marginLeft: '8px' }}>
-              <div style={star} />
-              <div style={star} />
-              <div style={star} />
-              <div style={star} />
-              <div style={star} />
-            </div>
           </div>
         ))}
         <Modal open={modal} closeModal={() => setModal(false)} currOutfit={currOutfit} id={id} />
@@ -135,4 +133,4 @@ function Outfit({ slides, slidesInfo, id }) {
   );
 }
 
-export default Outfit;
+export default RelatedItems;

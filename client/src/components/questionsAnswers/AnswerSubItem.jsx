@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import formatDate from './utils/formatDate.js';
 import styled from 'styled-components';
-import Spacer from './utils/smallSpacer.jsx'
+import formatDate from './utils/formatDate.js';
+import Spacer from './utils/smallSpacer.jsx';
 
 function AnswerSubItem({ answer }) {
   const [hasVoted, setHasVoted] = useState(
@@ -56,7 +56,9 @@ function AnswerSubItem({ answer }) {
       </div>
       <small>
         <span>
-          by {answerer_name === 'Seller' || answerer_name === 'seller' ? <b>{answerer_name}</b> : answerer_name}
+          by
+          {' '}
+          {answerer_name === 'Seller' || answerer_name === 'seller' ? <b>{answerer_name}</b> : answerer_name}
         </span>
         <Spacer />
         <span>
@@ -66,21 +68,24 @@ function AnswerSubItem({ answer }) {
           <span>Helpful? </span>
           <span>
             {hasVoted
-              ?
-              <SubActionBtn disabled>
-                Yes
-              </SubActionBtn>
+              ? (
+                <SubActionBtn disabled>
+                  Yes
+                </SubActionBtn>
+              )
               : <SubActionBtn onClick={handleVote}>Yes</SubActionBtn>}
             (
             {voteCount}
             )
           </span>
-          <Spacer/>
+          <Spacer />
           <span>
             {hasReported
-              ? <SubActionBtn disabled>
-                Reported
-              </SubActionBtn>
+              ? (
+                <SubActionBtn disabled>
+                  Reported
+                </SubActionBtn>
+              )
               : <SubActionBtn onClick={handleReport}>Report</SubActionBtn>}
           </span>
         </div>

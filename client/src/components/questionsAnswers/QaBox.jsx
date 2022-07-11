@@ -81,9 +81,9 @@ function QaBox({ id }) {
       setFilteredArr(
         questions
           .filter((question) => question.question_body.toLowerCase()
-            .includes(e.target.value.toLowerCase())));
+            .includes(e.target.value.toLowerCase())),
+      );
     } else if (e.target.value.length < 3) {
-
       setFilteredArr(questions);
     }
   }
@@ -98,9 +98,9 @@ function QaBox({ id }) {
         <QAWrapper id="qwrap">
           {!isLoading && filteredArr.slice(0, questionIndex + 2)
             .map((result) => (
-              <QaListItem key={randomId()} result={result} id="curr"/>
+              <QaListItem key={randomId()} result={result} id="curr" />
             ))}
-            <div id="bottom">---</div>
+          <div id="bottom">---</div>
         </QAWrapper>
       )
         : (

@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import AnswerSubItem from './AnswerSubItem.jsx';
 import byHelpfulness from './utils/byHelpfulness.js';
-import Spacer from './utils/smallSpacer.jsx'
-
+import Spacer from './utils/smallSpacer.jsx';
 
 function QaListItem({ result }) {
   const [answers, setAnswers] = useState(
@@ -56,13 +55,15 @@ function QaListItem({ result }) {
           </span>
           <small>
             Helpful?
-            {hasVoted ? <SubActionBtn disabled>
-              Yes
-            </SubActionBtn> : <SubActionBtn type="button" onClick={handleVoteQ}>Yes</SubActionBtn>}
+            {hasVoted ? (
+              <SubActionBtn disabled>
+                Yes
+              </SubActionBtn>
+            ) : <SubActionBtn type="button" onClick={handleVoteQ}>Yes</SubActionBtn>}
             (
             {qVote}
             )
-            <Spacer/>
+            <Spacer />
             <SubActionBtn type="button" onClick={handleAnswerModal}>Add Answer</SubActionBtn>
           </small>
         </QuestionWrapper>
@@ -148,4 +149,3 @@ const PrimaryBtn = styled.button`
     background: #ddd;
   }
 `;
-

@@ -6,7 +6,7 @@ function Spacer() {
     <Wrapper>
       •
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
