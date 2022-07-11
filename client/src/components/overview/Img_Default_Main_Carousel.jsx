@@ -1,7 +1,9 @@
 import React from 'react';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 
-function MainImage({images, currImgIndex, setCurrImgIndex, thumbnailIndexMin, thumbnailIndexMax, setThumbnailIndexMin, setThumbnailIndexMax}) {
+function MainImage({
+  images, currImgIndex, setCurrImgIndex, thumbnailIndexMin, thumbnailIndexMax, setThumbnailIndexMin, setThumbnailIndexMax,
+}) {
   if (images.length > 0) {
     const navigateLeft = () => {
       if (currImgIndex - 1 < thumbnailIndexMin) {

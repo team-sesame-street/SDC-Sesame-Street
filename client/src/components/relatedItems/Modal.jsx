@@ -55,11 +55,13 @@ function Modal({ open, closeModal, currOutfit, id }) {
       <div onClick={closeModal} style={modalStyle}>
         <section>
           <table style={{ width: '100%' }}>
-            <tr>
-              <th>{siteIdInfo.name}</th>
-              <th />
-              <th>{currOutfit.data.name}</th>
-            </tr>
+            <thead>
+              <tr>
+                <th>{siteIdInfo.name}</th>
+                <th />
+                <th>{currOutfit.data.name}</th>
+              </tr>
+            </thead>
             {currOutfit.data.features.map((feature) => (
               <tbody>
                 <tr>

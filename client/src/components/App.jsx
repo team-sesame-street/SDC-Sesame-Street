@@ -8,15 +8,15 @@ import MainOverview from './overview/MainOverview.jsx';
 function App() {
   const [productId, setProductId] = useState(40346);
 
-  useEffect(() => {
-    axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
-      headers: {
-        Authorization: process.env.GITKEY,
-      },
-    })
-      .then((res) => setProductId(res.data[2].id))
-      .catch((err) => alert(err));
-  }, []);
+  // useEffect(() => {
+  //   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
+  //     headers: {
+  //       Authorization: process.env.GITKEY,
+  //     },
+  //   })
+  //     .then((res) => setProductId(res.data[2].id))
+  //     .catch((err) => alert(err));
+  // }, []);
 
   return (
     <>

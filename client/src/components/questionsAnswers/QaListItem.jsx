@@ -58,9 +58,11 @@ function QaListItem({ result, currProductName }) {
           </span>
           <small>
             Helpful?
-            {hasVoted ? <SubActionBtn disabled>
-              Yes
-            </SubActionBtn> : <SubActionBtn type="button" onClick={handleVoteQ}>Yes</SubActionBtn>}
+            {hasVoted ? (
+              <SubActionBtn disabled>
+                Yes
+              </SubActionBtn>
+            ) : <SubActionBtn type="button" onClick={handleVoteQ}>Yes</SubActionBtn>}
             (
             {qVote}
             )
