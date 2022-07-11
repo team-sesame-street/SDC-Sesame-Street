@@ -5,6 +5,7 @@
 import React from 'react';
 import ReviewsRatings from './ReviewsRatings.jsx';
 import ReviewsDate from './ReviewsDate.jsx';
+import ReviewsUser from './ReviewsUser.jsx';
 
 function Reviews({ reviews }) {
   console.log('class: ', reviews);
@@ -16,6 +17,7 @@ function Reviews({ reviews }) {
         return (
           <div key={review.review_id}>
             <ReviewsRatings rating={review.rating} />
+            <ReviewsUser user={review.reviewer_name} />
             <ReviewsDate date={review.date} />
             <br />
             {summ.length > 60 ? (
