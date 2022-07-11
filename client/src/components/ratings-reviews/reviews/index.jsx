@@ -19,11 +19,11 @@ function Reviews({ reviews }) {
             <ReviewsRatings rating={review.rating} />
             <ReviewsDate date={review.date} />
             <br />
-            {summ.length > 10 ? (
+            {summ.length > 60 ? (
               <span style={summaryContainer}>
-                {`${summ.slice(0, 11)}...`}
+                {`${summ.slice(0, 61)}...`}
                 <p style={bodyContainer}>
-                  {`...${summ.slice(11)}`}
+                  {`...${summ.slice(61)}`}
                   <br />
                 </p>
               </span>
