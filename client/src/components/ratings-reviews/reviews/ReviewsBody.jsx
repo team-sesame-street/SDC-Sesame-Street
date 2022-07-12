@@ -20,6 +20,7 @@ function ReviewsBody({ reviewBody, reviewImages }) {
       setImgUrl(e.target.src);
     }
     if (targetId === 'more') {
+      e.preventDefault();
       setShowMore(true);
     }
   }
@@ -36,7 +37,7 @@ function ReviewsBody({ reviewBody, reviewImages }) {
       {reviewBody.length > 250 && !showMore ? (
         <span>
           {reviewBody.slice(0, 249)}
-          <a href="javascript:void(0);" id="more" onClick={handleClick}>Show more</a>
+          <a href="#" id="more" onClick={handleClick}>Show more</a>
         </span>
       ) : (
         <span>
