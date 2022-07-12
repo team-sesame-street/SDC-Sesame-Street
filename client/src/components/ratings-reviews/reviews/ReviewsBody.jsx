@@ -54,10 +54,10 @@ function ReviewsBody({ reviewBody, reviewImages }) {
 
 const imageContainer = {
   display: 'flex',
-  cursor: 'pointer',
 };
 
 const Thumbnail = styled.img`
+  cursor: pointer;
   aspect-ratio: 1/1;
   object-fit: cover;
   width: 150px;
