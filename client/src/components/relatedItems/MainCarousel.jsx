@@ -15,7 +15,6 @@ const style = {
   justifyContent: 'center',
   alignItems: 'center',
   position: 'relative',
-  // backgroundColor: '#e4e4e4',
 };
 
 function MainCarousel({ id, pageChange }) {
@@ -81,28 +80,6 @@ function MainCarousel({ id, pageChange }) {
     }
   }, [id]);
 
-  // useEffect(() => {
-  //   if (id) {
-  //     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
-  //       headers: {
-  //         Authorization: process.env.GITKEY,
-  //       },
-  //     }).then((res) => {
-  //       setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, info: res.data }));
-  //     })
-  //       .catch((err) => console.log(err));
-
-  //     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`, {
-  //       headers: {
-  //         Authorization: process.env.GITKEY,
-  //       },
-  //     }).then((res) => {
-  //       setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, styles: res.data.results[0] }));
-  //     })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [id]);
-
   useEffect(() => {
     axios.all(styleEndpoints.map((endpoint) => axios.get(endpoint, {
       headers: { Authorization: process.env.GITKEY },
@@ -134,14 +111,6 @@ function MainCarousel({ id, pageChange }) {
       .then((data) => setItemUrls(data))
       .catch((err) => console.log(err));
   }, [relatedItems]);
-
-  // useEffect(() => {
-  //   axios.all(prodEndpoints.map((endpoint) => axios.get(endpoint, {
-  //     headers: { Authorization: process.env.GITKEY },
-  //   })))
-  //     .then((data) => setItemUrls(data))
-  //     .catch((err) => console.log(err));
-  // }, [relatedItems]);
 
   return (
     <div>
