@@ -6,14 +6,15 @@ import byHelpfulness from './utils/byHelpfulness.js';
 import Spacer from './utils/smallSpacer.jsx'
 import randomId from './utils/randomId.js'
 import AnswerModal from './AnswerModal.jsx';
+import QuestionModal from './QuestionModal.jsx';
 
 
-function QaListItem({ result, currProductName }) {
+function QaListItem({ result, currProductName, product_id, isQuestionModalOpen, setIsQuestionModalOpen, questions, setQuestions, setNum }) {
   const [answers, setAnswers] = useState(
     Object.entries(result.answers).sort(byHelpfulness),
   );
   const [answerLimit, setAnswerLimit] = useState(2);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAnswerModalOpen, setIsAnswerModalOpen] = useState(false);
 
   function handleLoadMoreBtn(e) {
     if (answerLimit <= 2) {
@@ -46,7 +47,7 @@ function QaListItem({ result, currProductName }) {
   }
 
   function handleAnswerModal() {
-    setIsModalOpen(!isModalOpen);
+    setIsAnswerModalOpen(!isAnswerModalOpen);
   }
 
   return (
@@ -84,9 +85,12 @@ function QaListItem({ result, currProductName }) {
             )}
         </AnswerWrapper>
       </details>
-      {isModalOpen
-        ? <AnswerModal key={randomId()} className="answermodal" productName={currProductName} question={result} setIsModalOpen={setIsModalOpen} answers={answers} setAnswers = {setAnswers}/>
-        : ''}
+      {isAnswerModalOpen
+        && <AnswerModal key={randomId()} className="answermodal" productName={currProductName} question={result} setIsAnswerModalOpen={setIsAnswerModalOpen} answers={answers} setAnswers={setAnswers} setNum={setNum}/>
+        }
+        {isQuestionModalOpen
+        && <QuestionModal productName={currProductName} product_id={product_id} setIsQuestionModalOpen={setIsQuestionModalOpen} setQuestions = {setQuestions} questions = {questions} setNum={setNum}/>}
+
     </Wrapper>
   );
 }
