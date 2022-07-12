@@ -91,7 +91,7 @@ function RelatedItems({ slides, slidesInfo, id, pageChange }) {
   const [modal, setModal] = useState(false);
   const [currOutfit, setCurrOutfit] = useState({});
   const [carouselPos, setCarouselPos] = useState(false);
-  const [leftSide, setLeftSide] = useState(930)
+  const [leftSide, setLeftSide] = useState(930);
   const imageSlider = document.querySelector('#slider');
   const rightArrow = document.querySelector('#rightArrow');
   const leftArrow = document.querySelector('#leftArrow');
