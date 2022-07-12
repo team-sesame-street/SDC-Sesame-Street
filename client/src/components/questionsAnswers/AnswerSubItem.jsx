@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import Spacer from './utils/smallSpacer.jsx';
-import formatDate from './utils/formatDate.js'
+import formatDate from './utils/formatDate.js';
+import randomId from './utils/randomId.js';
 
 function AnswerSubItem({ answer }) {
   const [hasVoted, setHasVoted] = useState(
@@ -55,12 +56,11 @@ function AnswerSubItem({ answer }) {
         {body}
       </div>
       <div>
-        {photos.map((photo) => <Thumbnail src={photo}/>)}
+        {photos.map((photo) => <Thumbnail key={randomId()} src={photo}/>)}
       </div>
       <small>
         <span>
           by
-          {' '}
           {answerer_name === 'Seller' || answerer_name === 'seller' ? <b>{answerer_name}</b> : answerer_name}
         </span>
         <Spacer />
