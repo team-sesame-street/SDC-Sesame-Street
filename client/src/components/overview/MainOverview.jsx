@@ -4,8 +4,9 @@ import StyleSelector from './StyleSelector.jsx';
 import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 import MainImage from './Img_Default_Main_Carousel.jsx';
 import ProductInfo from './ProductInfo.jsx';
+import Checkout from './Checkout.jsx';
 
-function MainOverview({id}) {
+function MainOverview({ id }) {
   const [product, setProduct] = useState({});
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
@@ -111,6 +112,9 @@ function MainOverview({id}) {
         thumbnailIndexMax={thumbnailIndexMax}
         setThumbnailIndexMin={setThumbnailIndexMin}
         setThumbnailIndexMax={setThumbnailIndexMax}
+      />
+      <Checkout
+        selectedStyle={selectedStyle}
       />
     </div>
   );
