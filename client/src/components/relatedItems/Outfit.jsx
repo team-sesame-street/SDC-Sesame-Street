@@ -48,7 +48,13 @@ function Outfit({
       <MdChevronLeft size={40} style={left} onClick={slideLeft} />
       <div id="slider2" style={slider}>
         {imageRender()}
-        {outfitSlides.length !== 0 ? <button style={{ transform: 'translate(125px, -145px)' }} onClick={clickHandler}> Add an Outfit</button> : <button style={{ transform: 'translate(125px, 175px)' }} onClick={clickHandler}> Add an Outfit</button>}
+        {outfitSlides.length !== 0 ? (<>
+        <button style={{...plusSignStyle, transform: 'translate(150px, -175px)' }} onClick={clickHandler}>+</button>
+        <button style={{...addOutfitStyle, transform: 'translate(85px, -145px)' }} onClick={clickHandler}>Add an Outfit</button></>)
+        : (<>
+        <button style={{...plusSignStyle, transform: 'translate(150px, 145px)' }} onClick={clickHandler}>+</button>
+        <button style={{...addOutfitStyle, transform: 'translate(85px, 175px)' }} onClick={clickHandler}>Add an Outfit</button>
+        </>)}
       </div>
       <MdChevronRight size={40} style={right} onClick={slideRight} />
     </div>
@@ -130,11 +136,22 @@ const categoryStyle = {
   fontSize: '13px',
 };
 
-const addSignStyle = {
+const addOutfitStyle = {
   color: 'gray',
-  // display: 'flex',
-  // justifyContent: 'center',
-  // transform: 'translateY(100px)'
+  background: 'white',
+  fontWeight: '700',
+  fontSize: '15px',
+  borderStyle: 'none',
+  cursor: 'pointer  '
 };
+
+const plusSignStyle = {
+  color: 'gray',
+  background: 'white',
+  fontWeight: '700',
+  fontSize: '35px',
+  borderStyle: 'none',
+  cursor: 'pointer  '
+}
 
 export default Outfit;
