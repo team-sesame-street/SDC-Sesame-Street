@@ -16,6 +16,37 @@ function QaBox({ id }) {
   const [isPageDone, setIsPageDone] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredArr, setFilteredArr] = useState(questions);
+  const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
+
+  const [num, setNum] = useState(0);
+  const [allQs, setAllQs] = useState([]);
+  const [numPage, setNumPage] = useState(1);
+
+  useEffect(() => {
+    if (num !== 0) {
+      setIsLoading(true);
+      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${id}`, {
+        headers: {
+          Authorization: process.env.GITKEY,
+        },
+        params: {
+          page: numPage,
+        },
+      }).then(({ data }) => {
+
+        if (data.results.length > 0) {
+          setAllQs([...allQs, ...data.results]);
+          setNumPage(numPage + 1);
+        } else {
+          setQuestions(allQs);
+          setFilteredArr(allQs);
+          setIsLoading(false);
+          setIsPageDone(true);
+        }
+      });
+    }
+  }, [num, numPage]);
+
 
   useEffect(() => {
     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${id}`, {
@@ -27,19 +58,13 @@ function QaBox({ id }) {
       },
     })
       .then(({ data }) => {
-        // any new data from a page will be placed at the
-        // end of the previous questions collected
         setQuestions([...questions, ...data.results]);
         setFilteredArr(questions);
 
-        // if a page does not contain any items,
-        // stop calling for more pages!
         if (data.results.length === 0) {
           setIsPageDone(true);
         }
 
-        // if after the first pass (first ajax call), question
-        // contains less than two items, this will run again.
         if (questions.length < 2 && !secondPass) {
           setPage(page + 1);
           setSecondPass(true);
@@ -63,15 +88,13 @@ function QaBox({ id }) {
       });
   }, [id]);
 
-  async function handleMoreQuestions() {
+  function handleMoreQuestions() {
     setIsLoading(true);
     if (!isPageDone) {
       setPage(page + 1);
     }
 
     document.querySelector('#bottom').scrollIntoView();
-    // This snippet will continue going through the questions array
-    // until it is at end AND then remove the 'More Questions' button
     if (questions.length - 3 > questionIndex + 1) {
       setQuestionIndex(questionIndex + 2);
     } else {
@@ -96,6 +119,10 @@ function QaBox({ id }) {
     }
   }
 
+  function handleAddQuestion(e) {
+    setIsQuestionModalOpen(!isQuestionModalOpen);
+  }
+
   return (
     <Wrapper>
 
@@ -107,7 +134,7 @@ function QaBox({ id }) {
         <QAWrapper id="qwrap">
           {!isLoading && filteredArr.slice(0, questionIndex + 2)
             .map((result) => (
-              <QaListItem key={randomId()} result={result} id="curr" currProductName={currProductName} />
+              <QaListItem key={randomId()} result={result} id="curr" currProductName={currProductName} product_id={id} setIsQuestionModalOpen={setIsQuestionModalOpen} isQuestionModalOpen={isQuestionModalOpen} setQuestions={setQuestions} questions={questions} setNum={setNum} />
             ))}
           <div id="bottom">.</div>
         </QAWrapper>
@@ -118,7 +145,8 @@ function QaBox({ id }) {
             Loading...
           </>
         )}
-      {!isDone && <button type="button" onClick={handleMoreQuestions} disabled={isLoading} id="moreQbtn">More Questions</button>}
+      {!isDone && <button type="button" onClick={handleMoreQuestions} disabled={isLoading} className="QAButton" disabled={isLoading}>More Questions</button>}
+      <button type="button" disabled={isLoading} onClick={handleAddQuestion} className="QAButton" disabled={isLoading}>Add a Question</button>
     </Wrapper>
   );
 }
@@ -126,6 +154,7 @@ function QaBox({ id }) {
 export default QaBox;
 
 const Wrapper = styled.div`
+  position: relative;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   margin: 100px auto 0 auto;
   padding-bottom: 4rem;
@@ -136,15 +165,21 @@ const Wrapper = styled.div`
     margin: 1.25rem 0;
   }
 
-  & #moreQbtn {
+  & .QAButton {
     text-transform: uppercase;
     font-weight: 700;
     padding: 1rem 5rem;
     background: none;
     border: 1px solid #222;
+    margin-right: 10px;
     &:hover {
       color: #eee;
       background: #222;
+    }
+    &:disabled {
+      background: grey;
+      color: white;
+      opacity: 0.25;
     }
   }
 

@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import convertImageToBase64 from './utils/convertImageToBase64.js';
 import axios from 'axios';
 import { IoClose } from 'react-icons/io5';
+import randomId from './utils/randomId'
 
-function AnswerModal({ productName, question, setIsModalOpen, answers, setAnswers }) {
+function AnswerModal({ productName, question, setIsAnswerModalOpen, answers, setAnswers, setNum }) {
   const [selectedImages, setSelectedImages] = useState(null);
   const [urls, setUrls] = useState([]);
-  const [uploadedImages, setUploadedImages] = useState([]);
 
   function handleImages(e) {
     if (e.target.files.length <= 5) {
@@ -54,10 +54,7 @@ function AnswerModal({ productName, question, setIsModalOpen, answers, setAnswer
         };
 
         Promise.all(cloudPromises)
-          .then((image_urls) => {
-            setUploadedImages(image_urls);
-            return image_urls;
-          }).then((photos) => {
+          .then((photos) => {
             axios
               .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
                 body,
@@ -66,19 +63,13 @@ function AnswerModal({ productName, question, setIsModalOpen, answers, setAnswer
                 photos,
               }, {
                 headers: {
-                  Authorization: process.env.GITKEY
+                  Authorization: process.env.GITKEY,
                 },
               })
               .then(() => {
-                setIsModalOpen(false);
-                setAnswers([...answers, [null, {
-                  body,
-                  date: new Date(),
-                  answerer_name: name,
-                  helpfulness: 0,
-                  photos,
-                }]]);
-              });
+                setNum(randomId());
+                setIsAnswerModalOpen(false);
+              })
           })
           .catch((err) => console.error(err));
       });
@@ -95,15 +86,9 @@ function AnswerModal({ productName, question, setIsModalOpen, answers, setAnswer
           },
         })
         .then(() => {
-          setIsModalOpen(false);
-          setAnswers([...answers, [null, {
-            body,
-            date: new Date(),
-            answerer_name: name,
-            helpfulness: 0,
-            photos: [],
-          }]]);
-        });
+          setNum(randomId());
+          setIsAnswerModalOpen(false);
+        })
   }
 }
 
@@ -132,12 +117,12 @@ return (
       {selectedImages && (
         <div>
           {
-            urls.map((url) => <Thumbnail src={url} />)
+            urls.map((url) => <Thumbnail key={randomId()} src={url} />)
           }
         </div>
       )}
       <button type="submit">submit</button>
-    <IoClose onClick={()=>setIsModalOpen(false)} className="close-button" />
+    <IoClose onClick={()=>setIsAnswerModalOpen(false)} className="close-button" />
     </form>
   </Wrapper>
 );
@@ -148,8 +133,8 @@ export default AnswerModal;
 const Wrapper = styled.div`
 isolation: isolate;
   & .modal-backdrop {
-    z-index: -1;
     position: fixed;
+    z-index: -1;
     top: 0;
     right: 0;
     text-align: center;
@@ -164,12 +149,14 @@ isolation: isolate;
   & form {
     position: absolute;
     top: 0;
-    left: auto;
-    right: auto;
+    left: 0;
     background: whitesmoke;
-    width: 60%;
+    width: 100%;
     height: min-content;
     padding: 2rem;
+    margin: 100px 0;
+    box-shadow: 2px 2px 10px #bbb;
+    border-radius: 4px;
   }
   & #file-input {
     position: absolute !important;

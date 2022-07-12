@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import QaBox from './questionsAnswers/QaBox.jsx';
-import Main from './relatedItems/Main.jsx';
 import RrBox from './ratings-reviews/RrBox.jsx';
+import MainCarousel from './relatedItems/MainCarousel.jsx';
+import MainOverview from './overview/MainOverview.jsx';
 
 function App() {
   const [productId, setProductId] = useState(40346);
@@ -19,11 +20,16 @@ function App() {
   //     .catch((err) => alert(err));
   // }, []);
 
+  const pageChange = (id) => {
+    setProductId(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <>
       {productId}
-      <Main id={productId} />
-      <Main id={productId} />
+      <MainOverview id={productId} />
+      <MainCarousel id={productId} pageChange={pageChange} />
       <QaBox id={productId} />
       <RrBox id={productId} />
     </>

@@ -87,9 +87,16 @@ const star = {
   marginTop: '10px',
 };
 
-function RelatedItems({ slides, slidesInfo, id }) {
+function RelatedItems({ slides, slidesInfo, id, pageChange }) {
   const [modal, setModal] = useState(false);
   const [currOutfit, setCurrOutfit] = useState({});
+  const [carouselPos, setCarouselPos] = useState(false);
+
+  if(carouselPos) {
+    const imageSlider = document.getElementById('slider');
+    imageSlider.scrollLeft = 0;
+    setCarouselPos(false);
+  }
 
   const slideLeft = () => {
     const imageSlider = document.getElementById('slider');
@@ -117,7 +124,12 @@ function RelatedItems({ slides, slidesInfo, id }) {
                 setModal(true);
               }}
             />
-            <div style={{ ...imageStyle, backgroundImage: `url(${slides[index].url})` }}> </div>
+            <div style={{ ...imageStyle, backgroundImage: `url(${slides[index].url})` }} onClick={() => {
+                setCarouselPos(true)
+                pageChange(slide.data.id)
+              }}
+            >
+            </div>
             <p style={categoryStyle}>{slide.data.category}</p>
             <p style={titleStyle}>{slide.data.name}</p>
             <p style={priceStyle}>

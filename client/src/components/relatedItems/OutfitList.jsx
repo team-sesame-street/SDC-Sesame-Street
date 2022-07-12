@@ -1,4 +1,5 @@
 import React from 'react';
+import { TiDeleteOutline } from "react-icons/ti";
 
 const card = {
   width: '300px',
@@ -40,15 +41,12 @@ const categoryStyle = {
 };
 
 const btnStyle = {
-  height: '25px',
-  width: '285px',
+  transform: 'translateX(265px)',
   position: 'absolute',
   cursor: 'pointer',
   display: 'flex',
   justifyContent: 'end',
-  color: 'red',
-  fontWeight: '800',
-  fontSize: '30px',
+  color: 'white',
   marginTop: '6px',
 };
 
@@ -59,7 +57,8 @@ function OutfitList({ slide, deleteOutfit }) {
 
   return (
     <div style={card}>
-      <div onClick={deleteHandler} style={btnStyle}> x </div>
+      <TiDeleteOutline size={25} onClick={deleteHandler} style={btnStyle}/>
+      {/* <div onClick={deleteHandler} style={btnStyle}> x </div> */}
       <div style={{ ...imageStyle, backgroundImage: `url(${slide.url})` }} />
       <p style={categoryStyle}>{slide.category}</p>
       <p style={titleStyle}>{slide.name}</p>
