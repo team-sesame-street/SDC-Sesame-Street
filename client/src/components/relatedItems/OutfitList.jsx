@@ -41,15 +41,12 @@ const categoryStyle = {
 };
 
 const btnStyle = {
-  // height: '25px',
   transform: 'translateX(265px)',
   position: 'absolute',
   cursor: 'pointer',
   display: 'flex',
   justifyContent: 'end',
   color: 'white',
-  // fontWeight: '800',
-  // fontSize: '30px',
   marginTop: '6px',
 };
 

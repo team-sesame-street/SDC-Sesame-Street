@@ -20,6 +20,7 @@ function App() {
 
   const pageChange = (id) => {
     setProductId(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
