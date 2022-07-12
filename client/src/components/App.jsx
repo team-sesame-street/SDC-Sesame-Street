@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import QaBox from './questionsAnswers/QaBox.jsx';
-import Main from './relatedItems/Main.jsx';
+import MainCarousel from './relatedItems/MainCarousel.jsx';
 import MainOverview from './overview/MainOverview.jsx';
 
 function App() {
@@ -18,11 +18,15 @@ function App() {
   //     .catch((err) => alert(err));
   // }, []);
 
+  const pageChange = (id) => {
+    setProductId(id);
+  };
+
   return (
     <>
       {productId}
       <MainOverview id={productId} />
-      <Main id={productId} />
+      <MainCarousel id={productId} pageChange={pageChange} />
       <QaBox id={productId} />
     </>
   );

@@ -8,7 +8,7 @@ import axios from 'axios';
 import Outfit from './Outfit.jsx';
 import RelatedItems from './RelatedItems.jsx';
 
-function Main({ id }) {
+function MainCarousel({ id, pageChange }) {
   const [relatedItems, setRelatedItems] = useState([]);
   const [relatedItemsInfo, setRelatedItemInfo] = useState([]);
   const [itemsUrls, setItemUrls] = useState([]);
@@ -111,22 +111,10 @@ function Main({ id }) {
       .catch((err) => console.log(err));
   }, [relatedItems]);
 
-  const slides = [
-    { url: 'https://picsum.photos/600/300', title: 'test test test', description: 'more testing' },
-    { url: 'https://picsum.photos/400/300', title: 'test test test', description: 'more testing' },
-    { url: 'https://picsum.photos/300/300', title: 'test test test', description: 'more testing' },
-    { url: 'https://picsum.photos/100/300', title: 'test test test', description: 'more testing' },
-    { url: 'https://picsum.photos/500/300', title: 'test test test', description: 'more testing' },
-    { url: 'https://picsum.photos/700/300', title: 'test test test', description: 'more testing' },
-    { url: 'https://picsum.photos/800/300', title: 'test test test', description: 'more testing' },
-    { url: 'https://picsum.photos/900/300', title: 'test test test', description: 'more testing' },
-    { url: 'https://picsum.photos/200/300', title: 'test test test', description: 'more testing' },
-  ];
-
   return (
     <div>
       <div style={style}>
-        <RelatedItems slides={relatedItemsInfo} slidesInfo={itemsUrls} id={id} />
+        <RelatedItems slides={relatedItemsInfo} slidesInfo={itemsUrls} id={id} pageChange={pageChange} />
       </div>
       <br />
       <br />
@@ -148,4 +136,4 @@ const style = {
   // backgroundColor: '#e4e4e4',
 };
 
-export default Main;
+export default MainCarousel;
