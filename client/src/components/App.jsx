@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import QaBox from './questionsAnswers/QaBox.jsx';
+import RrBox from './ratings-reviews/RrBox.jsx';
 import MainCarousel from './relatedItems/MainCarousel.jsx';
 import MainOverview from './overview/MainOverview.jsx';
 
@@ -29,6 +31,7 @@ function App() {
       <MainOverview id={productId} />
       <MainCarousel id={productId} pageChange={pageChange} />
       <QaBox id={productId} />
+      <RrBox id={productId} />
     </div>
   );
 }
