@@ -26,13 +26,13 @@ function App() {
   };
 
   return (
-    <>
+    <div>
       {productId}
       <MainOverview id={productId} />
       <MainCarousel id={productId} pageChange={pageChange} />
       <QaBox id={productId} />
       <RrBox id={productId} />
-    </>
+    </div>
   );
 }
 
