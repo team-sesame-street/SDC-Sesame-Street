@@ -8,6 +8,16 @@ import axios from 'axios';
 import Outfit from './Outfit.jsx';
 import RelatedItems from './RelatedItems.jsx';
 
+const style = {
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  position: 'relative',
+  // backgroundColor: '#e4e4e4',
+};
+
 function MainCarousel({ id, pageChange }) {
   const [relatedItems, setRelatedItems] = useState([]);
   const [relatedItemsInfo, setRelatedItemInfo] = useState([]);
@@ -51,11 +61,6 @@ function MainCarousel({ id, pageChange }) {
         },
       }).then((res) => setRelatedItems(res.data))
         .catch((err) => console.log(err));
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (id) {
       axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
         headers: {
           Authorization: process.env.GITKEY,
@@ -76,6 +81,28 @@ function MainCarousel({ id, pageChange }) {
     }
   }, [id]);
 
+  // useEffect(() => {
+  //   if (id) {
+  //     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
+  //       headers: {
+  //         Authorization: process.env.GITKEY,
+  //       },
+  //     }).then((res) => {
+  //       setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, info: res.data }));
+  //     })
+  //       .catch((err) => console.log(err));
+
+  //     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`, {
+  //       headers: {
+  //         Authorization: process.env.GITKEY,
+  //       },
+  //     }).then((res) => {
+  //       setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, styles: res.data.results[0] }));
+  //     })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [id]);
+
   useEffect(() => {
     axios.all(styleEndpoints.map((endpoint) => axios.get(endpoint, {
       headers: { Authorization: process.env.GITKEY },
@@ -85,10 +112,10 @@ function MainCarousel({ id, pageChange }) {
         for (let x = 0; x < data.length; x++) {
           const obj = {};
           let url;
-          if (data[x].data.results[0].photos[0].thumbnail_url) {
-            url = data[x].data.results[0].photos[0].thumbnail_url;
+          if (data[x].data.results[0].photos[0].url) {
+            url = data[x].data.results[0].photos[0].url;
           } else {
-            url = 'https://picsum.photos/600/300';
+            url = 'https://images.unsplash.com/photo-1515243061678-14fc18b93935?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=800';
           }
           let salePrice;
           !data[x].data.results[0].sale_price
@@ -101,15 +128,20 @@ function MainCarousel({ id, pageChange }) {
         setRelatedItemInfo(results);
       })
       .catch((err) => console.log(err));
-  }, [relatedItems]);
-
-  useEffect(() => {
     axios.all(prodEndpoints.map((endpoint) => axios.get(endpoint, {
       headers: { Authorization: process.env.GITKEY },
     })))
       .then((data) => setItemUrls(data))
       .catch((err) => console.log(err));
   }, [relatedItems]);
+
+  // useEffect(() => {
+  //   axios.all(prodEndpoints.map((endpoint) => axios.get(endpoint, {
+  //     headers: { Authorization: process.env.GITKEY },
+  //   })))
+  //     .then((data) => setItemUrls(data))
+  //     .catch((err) => console.log(err));
+  // }, [relatedItems]);
 
   return (
     <div>
@@ -125,15 +157,5 @@ function MainCarousel({ id, pageChange }) {
     </div>
   );
 }
-
-const style = {
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  position: 'relative',
-  // backgroundColor: '#e4e4e4',
-};
 
 export default MainCarousel;
