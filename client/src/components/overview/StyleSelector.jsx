@@ -23,7 +23,9 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
             <img
               key={style.style_id}
               src={style.photos[0].thumbnail_url}
-              onClick={() => {setSelectedStyle(style)}}
+              onClick={() => {
+                setSelectedStyle(style);
+              }}
               alt={style.name}
               style={styling}
             />
