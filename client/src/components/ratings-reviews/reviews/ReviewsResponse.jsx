@@ -5,11 +5,11 @@ function ReviewsResponse({ responseBody }) {
   return (
     <div>
       {responseBody && (
-        <span>
+        <div>
           Response:
           <br />
           {responseBody}
-        </span>
+        </div>
       )}
     </div>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/extensions */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/prop-types */
@@ -9,41 +10,45 @@ import ReviewsUser from './ReviewsUser.jsx';
 import ReviewsRecommend from './ReviewsRecommend.jsx';
 import ReviewsResponse from './ReviewsResponse.jsx';
 import ReviewsBody from './ReviewsBody.jsx';
+import ReviewsHelpful from './ReviewsHelpful.jsx';
 
 function Reviews({ reviews }) {
   console.log('class: ', reviews);
 
   return (
-    <div style={reviewsContainer}>
+    <div style={flexContainer}>
       {reviews.map((review) => {
         const revSumm = review.summary;
         return (
-          <div key={review.review_id}>
-            <span style={flexSpan}>
+          <div key={review.review_id} style={flexItems}>
+            <div style={{ display: 'flex' }}>
               <ReviewsRatings rating={review.rating} />
               <ReviewsUser user={review.reviewer_name} />
               <ReviewsDate date={review.date} />
-              <br />
-            </span>
+            </div>
+            <br />
             {revSumm.length > 60 ? (
-              <span style={summaryContainer}>
+              <div style={summaryContainer}>
                 {`${revSumm.slice(0, 61)}...`}
-                <span style={bodyContainer}>
+                <div style={bodyContainer}>
                   {`...${revSumm.slice(61)}`}
                   <br />
-                </span>
-              </span>
+                </div>
+              </div>
             ) : (
-              <span style={summaryContainer}>
+              <div style={summaryContainer}>
                 {revSumm}
-              </span>
+              </div>
             )}
-            <span>
+            <div>
               <br />
               <ReviewsBody reviewBody={review.body} reviewImages={review.photos} />
-            </span>
+              <br />
+            </div>
             <ReviewsRecommend recommend={review.recommend} />
             <ReviewsResponse responseBody={review.response} />
+            <br />
+            <ReviewsHelpful helpfulness={review.helpfulness} reviewId={review.review_id} />
           </div>
         );
       })}
@@ -51,16 +56,20 @@ function Reviews({ reviews }) {
   );
 }
 
-const flexSpan = {
+const flexContainer = {
   display: 'flex',
+  flexDirection: 'column',
+  gap: '100px',
+  alignItems: 'center',
 };
 
-const reviewsContainer = {
-
+const flexItems = {
+  width: '600px',
 };
 
 const summaryContainer = {
   fontWeight: 'bold',
+  fontSize: 20,
 };
 
 const bodyContainer = {

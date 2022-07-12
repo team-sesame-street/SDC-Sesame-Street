@@ -7,10 +7,10 @@ function ReviewsRecommend({ recommend }) {
   return (
     <div>
       {recommend && (
-        <span style={recommendContainer}>
+        <div style={recommendContainer}>
           <GrCheckmark />
           I recommend this product
-        </span>
+        </div>
       )}
     </div>
   );

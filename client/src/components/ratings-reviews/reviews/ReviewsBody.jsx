@@ -35,33 +35,34 @@ function ReviewsBody({ reviewBody, reviewImages }) {
         />
       )}
       {reviewBody.length > 250 && !showMore ? (
-        <span>
+        <div>
           {reviewBody.slice(0, 249)}
           <a href="#" id="more" onClick={handleClick}>Show more</a>
-        </span>
+        </div>
       ) : (
-        <span>
+        <div>
           {reviewBody}
-        </span>
+        </div>
       )}
-      <span style={imageContainer}>
+      <div style={imageContainer}>
         {reviewImages.map((image) => (
           <Thumbnail key={image.id} src={image.url} onClick={handleClick} id="thumbnail" />
         ))}
-      </span>
+      </div>
     </div>
   );
 }
 
 const imageContainer = {
   display: 'flex',
+  gap: '20px',
 };
 
 const Thumbnail = styled.img`
   cursor: pointer;
   aspect-ratio: 1/1;
   object-fit: cover;
-  width: 150px;
+  width: 100px;
 `;
 
 export default ReviewsBody;
