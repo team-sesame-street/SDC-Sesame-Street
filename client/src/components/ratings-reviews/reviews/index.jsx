@@ -7,7 +7,8 @@ import ReviewsRatings from './ReviewsRatings.jsx';
 import ReviewsDate from './ReviewsDate.jsx';
 import ReviewsUser from './ReviewsUser.jsx';
 import ReviewsRecommend from './ReviewsRecommend.jsx';
-import ReviewsResponse from './ReviewsResponse.jsx'
+import ReviewsResponse from './ReviewsResponse.jsx';
+import ReviewsBody from './ReviewsBody.jsx';
 
 function Reviews({ reviews }) {
   console.log('class: ', reviews);
@@ -27,20 +28,20 @@ function Reviews({ reviews }) {
             {revSumm.length > 60 ? (
               <span style={summaryContainer}>
                 {`${revSumm.slice(0, 61)}...`}
-                <p style={bodyContainer}>
+                <span style={bodyContainer}>
                   {`...${revSumm.slice(61)}`}
                   <br />
-                </p>
+                </span>
               </span>
             ) : (
               <span style={summaryContainer}>
                 {revSumm}
               </span>
             )}
-            <p>
+            <span>
               <br />
-              {review.body}
-            </p>
+              <ReviewsBody reviewBody={review.body} reviewImages={review.photos} />
+            </span>
             <ReviewsRecommend recommend={review.recommend} />
             <ReviewsResponse responseBody={review.response} />
           </div>

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-script-url */
 /* eslint-disable react/jsx-no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -5,7 +6,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Lightbox from "react-image-lightbox";
+import Lightbox from 'react-image-lightbox';
 
 function ReviewsBody({ reviewBody, reviewImages }) {
   const [focused, setFocus] = useState(false);
@@ -13,12 +14,12 @@ function ReviewsBody({ reviewBody, reviewImages }) {
   const [showMore, setShowMore] = useState(false);
 
   function handleClick(e) {
-    const id = e.target.id;
-    if (id === 'thumbnail') {
+    const targetId = e.target.id;
+    if (targetId === 'thumbnail') {
       setFocus(true);
       setImgUrl(e.target.src);
     }
-    if (id === 'more') {
+    if (targetId === 'more') {
       setShowMore(true);
     }
   }
