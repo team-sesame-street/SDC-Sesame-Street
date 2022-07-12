@@ -91,26 +91,41 @@ function RelatedItems({ slides, slidesInfo, id, pageChange }) {
   const [modal, setModal] = useState(false);
   const [currOutfit, setCurrOutfit] = useState({});
   const [carouselPos, setCarouselPos] = useState(false);
+  const [leftSide, setLeftSide] = useState(930)
+  const imageSlider = document.querySelector('#slider');
+  const rightArrow = document.querySelector('#rightArrow');
+  const leftArrow = document.querySelector('#leftArrow');
 
-  if(carouselPos) {
-    const imageSlider = document.getElementById('slider');
+  if (carouselPos) {
     imageSlider.scrollLeft = 0;
     setCarouselPos(false);
   }
 
   const slideLeft = () => {
-    const imageSlider = document.getElementById('slider');
-    imageSlider.scrollLeft -= 300;
+    imageSlider.scrollLeft -= 310;
+    setLeftSide(leftSide - 310);
   };
 
   const slideRight = () => {
-    const imageSlider = document.getElementById('slider');
-    imageSlider.scrollLeft += 300;
+    imageSlider.scrollLeft += 310;
+    setLeftSide(leftSide + 310);
   };
+
+  if (imageSlider && leftSide >= imageSlider.scrollWidth && rightArrow) {
+    rightArrow.style.visibility = 'hidden';
+  } else if (imageSlider && leftSide < imageSlider.scrollWidth && rightArrow) {
+    rightArrow.style.visibility = 'visible';
+  }
+
+  if (leftSide <= 930 && leftArrow) {
+    leftArrow.style.visibility = 'hidden';
+  } else if (leftSide > 930 && leftArrow) {
+    leftArrow.style.visibility = 'visible';
+  }
 
   return (
     <div style={sliderContainer}>
-      <MdChevronLeft size={40} style={left} onClick={slideLeft} />
+      <MdChevronLeft size={40} style={left} onClick={slideLeft} id="leftArrow" />
       <div id="slider" style={slider}>
         {slidesInfo.map((slide, index) => (
           <div
@@ -124,7 +139,7 @@ function RelatedItems({ slides, slidesInfo, id, pageChange }) {
                 setModal(true);
               }}
             />
-            <div style={{ ...imageStyle, backgroundImage: `url(${slides[index].url})` }} onClick={() => {
+            <div style={{ ...imageStyle, backgroundImage: `URL(${slides[index].url})`, }} onClick={() => {
                 setCarouselPos(true)
                 pageChange(slide.data.id)
               }}
@@ -140,7 +155,7 @@ function RelatedItems({ slides, slidesInfo, id, pageChange }) {
         ))}
         <Modal open={modal} closeModal={() => setModal(false)} currOutfit={currOutfit} id={id} />
       </div>
-      <MdChevronRight size={40} style={right} onClick={slideRight} />
+      <MdChevronRight id="rightArrow" size={40} style={right} onClick={slideRight} />
     </div>
   );
 }

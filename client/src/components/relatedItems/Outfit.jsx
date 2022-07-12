@@ -12,12 +12,12 @@ function Outfit({
 }) {
   const slideLeft = () => {
     const slider = document.getElementById('slider2');
-    slider.scrollLeft -= 300;
+    slider.scrollLeft -= 310;
   };
 
   const slideRight = () => {
     const slider = document.getElementById('slider2');
-    slider.scrollLeft += 300;
+    slider.scrollLeft += 310;
   };
 
   const clickHandler = () => {
@@ -49,11 +49,11 @@ function Outfit({
       <div id="slider2" style={slider}>
         {imageRender()}
         {outfitSlides.length !== 0 ? (<>
-        <button style={{...plusSignStyle, transform: 'translate(150px, -175px)' }} onClick={clickHandler}>+</button>
-        <button style={{...addOutfitStyle, transform: 'translate(85px, -145px)' }} onClick={clickHandler}>Add an Outfit</button></>)
+        <button style={{...plusSignStyle, transform: 'translateY(-175px)' }} onClick={clickHandler}>+</button>
+        <button style={{...addOutfitStyle, transform: 'translate(-200px, -145px)' }} onClick={clickHandler}>Add an Outfit</button></>)
         : (<>
-        <button style={{...plusSignStyle, transform: 'translate(150px, 145px)' }} onClick={clickHandler}>+</button>
-        <button style={{...addOutfitStyle, transform: 'translate(85px, 175px)' }} onClick={clickHandler}>Add an Outfit</button>
+        <button style={{...plusSignStyle, transform: 'translateY(145px)' }} onClick={clickHandler}>+</button>
+        <button style={{...addOutfitStyle, transform: 'translate(-200px, 175px)' }} onClick={clickHandler}>Add an Outfit</button>
         </>)}
       </div>
       <MdChevronRight size={40} style={right} onClick={slideRight} />
@@ -96,53 +96,13 @@ const slider = {
   scrollBehavior: 'smooth',
 };
 
-const card = {
-  width: '300px',
-  height: '365px',
-  background: 'white',
-  borderRadius: '10px',
-  display: 'inline-block',
-  marginLeft: '5px',
-  marginRight: '5px',
-  cursor: 'pointer',
-};
-
-const imageStyle = {
-  width: '100%',
-  height: '75%',
-  backgroundColor: 'rgb(240 240 240 / 80%)',
-  borderTopLeftRadius: '10px',
-  borderTopRightRadius: '10px',
-  backgroundSize: 'cover',
-  fontSize: '30px',
-  color: 'gray',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
-
-const titleStyle = {
-  margin: '0px 0px 3px 10px',
-  fontWeight: '900',
-};
-
-const priceStyle = {
-  margin: '1px 0px 0px 10px',
-  fontSize: '12px',
-};
-
-const categoryStyle = {
-  marginLeft: '10px',
-  fontSize: '13px',
-};
-
 const addOutfitStyle = {
   color: 'gray',
   background: 'white',
   fontWeight: '700',
   fontSize: '15px',
   borderStyle: 'none',
-  cursor: 'pointer  '
+  cursor: 'pointer  ',
 };
 
 const plusSignStyle = {
@@ -151,7 +111,8 @@ const plusSignStyle = {
   fontWeight: '700',
   fontSize: '35px',
   borderStyle: 'none',
-  cursor: 'pointer  '
+  cursor: 'pointer  ',
+  width: '290px',
 }
 
 export default Outfit;
