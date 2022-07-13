@@ -1,152 +1,141 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { VscLoading } from 'react-icons/vsc';
-import QaListItem from './QaListItem.jsx';
-import randomId from './utils/randomId.js';
+import SearchBar from './SearchBar.jsx';
+import QAWrapper from './QAWrapper.jsx';
 
 function QaBox({ id }) {
-  const [currProductName, setCurrProductName] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [isDone, setIsDone] = useState(false);
   const [questions, setQuestions] = useState([]);
-  const [page, setPage] = useState(1);
-  const [questionIndex, setQuestionIndex] = useState(0);
   const [secondPass, setSecondPass] = useState(false);
-  const [isPageDone, setIsPageDone] = useState(false);
+  const [doubleCheckNextPage, setDoubleCheckNextPage] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredArr, setFilteredArr] = useState(questions);
-  const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
-
-  const [num, setNum] = useState(0);
-  const [allQs, setAllQs] = useState([]);
-  const [numPage, setNumPage] = useState(1);
+  const [indexes, setIndexes] = useState({
+    page: 1,
+    questionIndex: 0,
+  });
+  const [productMetadata, setProductMetadata] = useState({
+    product_id: id,
+    productName: '',
+  });
+  const [checks, setChecks] = useState({
+    isLoading: true,
+    isDone: false,
+    isPageDone: false,
+    isQuestionModalOpen: false,
+  });
 
   useEffect(() => {
-    if (num !== 0) {
-      setIsLoading(true);
-      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${id}`, {
-        headers: {
-          Authorization: process.env.GITKEY,
-        },
-        params: {
-          page: numPage,
-        },
-      }).then(({ data }) => {
+    setProductMetadata({
+      product_id: id,
+      productName: '',
+    });
+    setDoubleCheckNextPage(false);
+    setQuestions([]);
+    setSecondPass(false);
+    setSearchTerm('');
+    setIndexes({
+      page: 1,
+      questionIndex: 0,
+    });
+    setChecks({
+      isLoading: true,
+      isDone: false,
+      isPageDone: false,
+      isQuestionModalOpen: false,
+    });
 
-        if (data.results.length > 0) {
-          setAllQs([...allQs, ...data.results]);
-          setNumPage(numPage + 1);
-        } else {
-          setQuestions(allQs);
-          setFilteredArr(allQs);
-          setIsLoading(false);
-          setIsPageDone(true);
-        }
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
+      headers: {
+        Authorization: process.env.GITKEY,
+      },
+    })
+      .then(({ data }) => {
+        setProductMetadata({ productName: data.name, product_id: data.id });
       });
-    }
-  }, [num, numPage]);
-
+  }, [id]);
 
   useEffect(() => {
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${id}`, {
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${productMetadata.product_id}`, {
       headers: {
         Authorization: process.env.GITKEY,
       },
       params: {
-        page,
+        page: indexes.page,
       },
     })
       .then(({ data }) => {
         setQuestions([...questions, ...data.results]);
-        setFilteredArr(questions);
 
         if (data.results.length === 0) {
-          setIsPageDone(true);
+          if (!doubleCheckNextPage) {
+            setDoubleCheckNextPage(true);
+            setIndexes({ ...indexes, page: indexes.page + 1 });
+          } else {
+            setDoubleCheckNextPage(false);
+            setChecks({ ...checks, isPageDone: true });
+          }
         }
 
         if (questions.length < 2 && !secondPass) {
-          setPage(page + 1);
           setSecondPass(true);
+          setIndexes({ ...indexes, page: indexes.page + 1 });
+        } else if (secondPass && questions.length <= 2) {
+          setSecondPass(false);
+          setChecks({ ...checks, isPageDone: true });
         }
-        if (secondPass && questions.length <= 2) {
-          setIsDone(true);
-        }
-
-        setIsLoading(false);
+        setChecks({ ...checks, isLoading: false });
       });
-  }, [id, page]);
+  }, [indexes.page]);
 
-  useEffect(() => {
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
-      headers: {
-        Authorization: process.env.GITKEY,
-      }
-    })
-      .then(({ data }) => {
-        setCurrProductName(data.name);
-      });
-  }, [id]);
+  // useEffect(() => {
+  //   axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${productMetadata.product_id}`, {
+  //     headers: {
+  //       Authorization: process.env.GITKEY,
+  //     }
+  //   })
+  //     .then(({ data }) => {
+  //       console.log(data.name);
+  //       setProductMetadata({ ...productMetadata, productName: data.name });
+  //     });
+  // }, [id]);
 
   function handleMoreQuestions() {
-    setIsLoading(true);
-    if (!isPageDone) {
-      setPage(page + 1);
+    document.querySelector('#bottom').scrollIntoView(false);
+
+    if (!checks.isPageDone) {
+      setIndexes({ ...indexes, page: indexes.page++ });
     }
 
-    document.querySelector('#bottom').scrollIntoView();
-    if (questions.length - 3 > questionIndex + 1) {
-      setQuestionIndex(questionIndex + 2);
+    if (questions.length - 3 > indexes.questionIndex) {
+      setIndexes({ ...indexes, questionIndex: indexes.questionIndex + 2 });
     } else {
-      setQuestionIndex(questionIndex + 1);
-      setIsDone(true);
-    }
-
-    setIsLoading(false);
-  }
-
-  function handleChange(e) {
-    setSearchTerm(e.target.value);
-    if (e.target.value.length >= 3) {
-      setFilteredArr(
-        questions
-          .filter((question) => question.question_body.toLowerCase()
-            .includes(e.target.value.toLowerCase())
-          )
-      );
-    } else if (e.target.value.length < 3) {
-      setFilteredArr(questions);
+      setIndexes({ ...indexes, questionIndex: indexes.questionIndex + 1 });
+      setChecks({ ...checks, isDone: true });
     }
   }
 
-  function handleAddQuestion(e) {
-    setIsQuestionModalOpen(!isQuestionModalOpen);
+  function handleAddQuestion() {
+    setChecks({ ...checks, isQuestionModalOpen: !checks.isQuestionModalOpen });
   }
 
   return (
     <Wrapper>
-
       <h2>Questions And Answers</h2>
-      <SearchBarWrapper>
-        <input type="textbox" placeholder="Have a question? Search for answers…" value={searchTerm} onChange={handleChange} />
-      </SearchBarWrapper>
-      {!isLoading ? (
-        <QAWrapper id="qwrap">
-          {!isLoading && filteredArr.slice(0, questionIndex + 2)
-            .map((result) => (
-              <QaListItem key={randomId()} result={result} id="curr" currProductName={currProductName} product_id={id} setIsQuestionModalOpen={setIsQuestionModalOpen} isQuestionModalOpen={isQuestionModalOpen} setQuestions={setQuestions} questions={questions} setNum={setNum} />
-            ))}
-          <div id="bottom">.</div>
-        </QAWrapper>
-      )
-        : (
-          <>
-            <VscLoading style={{ display: 'inline-block' }} />
-            Loading...
-          </>
-        )}
-      {!isDone && <button type="button" onClick={handleMoreQuestions} disabled={isLoading} className="QAButton" disabled={isLoading}>More Questions</button>}
-      <button type="button" disabled={isLoading} onClick={handleAddQuestion} className="QAButton" disabled={isLoading}>Add a Question</button>
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+      <QAWrapper
+        questions={questions}
+        setQuestions={setQuestions}
+        productMetadata={productMetadata}
+        questionIndex={indexes.questionIndex}
+        searchTerm={searchTerm}
+        checks={checks}
+        setChecks={setChecks}
+      />
+
+      {!checks.isDone
+        && (<button type="button" onClick={() => handleMoreQuestions()} disabled={checks.isLoading} className="QAButton">More Questions</button>)}
+      <button type="button" disabled={checks.isLoading} onClick={() => handleAddQuestion()} className="QAButton">Add a Question</button>
     </Wrapper>
   );
 }
@@ -156,10 +145,15 @@ export default QaBox;
 const Wrapper = styled.div`
   position: relative;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  margin: 100px auto 0 auto;
+  margin: 50px auto 0 auto;
   padding-bottom: 4rem;
   width: 70%;
 
+  @media (max-width: 500px) {
+    margin: 25px 0 0 0;
+    width: 100%;
+    padding: 5px;
+  }
 
   & h2 {
     margin: 1.25rem 0;
@@ -183,26 +177,4 @@ const Wrapper = styled.div`
     }
   }
 
-`;
-
-const QAWrapper = styled.div`
-  max-height: 75vh;
-  overflow: auto;
-`;
-
-const SearchBarWrapper = styled.div`
-  width: 100%;
-  height: 2.5rem;
-  margin-bottom: 1rem;
-  & input {
-    border: 1px solid #333;
-    width: 100%;
-    height: 100%;
-    background: url('https://i.ibb.co/bJTc5MD/noun-search-4968922.webp') no-repeat right 10px center;
-    background-size: 25px 25px;
-    padding: 0.5rem 0.6rem;
-  }
-  & input:hover, input:focus {
-    background-color: #f1f1f1;
-  }
 `;

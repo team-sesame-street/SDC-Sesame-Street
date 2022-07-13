@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import Modal from './Modal.jsx';
+import Ratings from './Ratings.jsx';
 
 const sliderContainer = {
   width: '50%',
@@ -43,7 +44,7 @@ const slider = {
 };
 
 const card = {
-  width: '300px',
+  width: '16vw',
   height: '365px',
   background: 'white',
   borderRadius: '10px',
@@ -87,32 +88,47 @@ const star = {
   marginTop: '10px',
 };
 
-function RelatedItems({ slides, slidesInfo, id, pageChange }) {
+function RelatedItems({slides, id, pageChange, reviews }) {
   const [modal, setModal] = useState(false);
   const [currOutfit, setCurrOutfit] = useState({});
   const [carouselPos, setCarouselPos] = useState(false);
+  const [leftSide, setLeftSide] = useState(700);
+  const imageSlider = document.querySelector('#slider');
+  const rightArrow = document.querySelector('#rightArrow');
+  const leftArrow = document.querySelector('#leftArrow');
 
-  if(carouselPos) {
-    const imageSlider = document.getElementById('slider');
+  if (carouselPos) {
     imageSlider.scrollLeft = 0;
     setCarouselPos(false);
   }
 
   const slideLeft = () => {
-    const imageSlider = document.getElementById('slider');
-    imageSlider.scrollLeft -= 300;
+    imageSlider.scrollLeft -= 315;
+    setLeftSide(leftSide - 315);
   };
 
   const slideRight = () => {
-    const imageSlider = document.getElementById('slider');
-    imageSlider.scrollLeft += 300;
+    imageSlider.scrollLeft += 315;
+    setLeftSide(leftSide + 315);
   };
+
+  if (imageSlider && leftSide > imageSlider.scrollWidth - 15 && rightArrow) {
+    rightArrow.style.visibility = 'hidden';
+  } else if (imageSlider && leftSide < imageSlider.scrollWidth && rightArrow) {
+    rightArrow.style.visibility = 'visible';
+  }
+
+  if (leftSide <= 700 && leftArrow) {
+    leftArrow.style.visibility = 'hidden';
+  } else if (leftSide > 700 && leftArrow) {
+    leftArrow.style.visibility = 'visible';
+  }
 
   return (
     <div style={sliderContainer}>
-      <MdChevronLeft size={40} style={left} onClick={slideLeft} />
+      <MdChevronLeft size={40} style={left} onClick={slideLeft} id="leftArrow" />
       <div id="slider" style={slider}>
-        {slidesInfo.map((slide, index) => (
+        {slides.info.length !== 0 && slides.info.length === slides.urls.length && reviews.length === slides.info.length ? slides.info.map((slide, index) => (
           <div
             style={card}
             key={index}
@@ -124,8 +140,9 @@ function RelatedItems({ slides, slidesInfo, id, pageChange }) {
                 setModal(true);
               }}
             />
-            <div style={{ ...imageStyle, backgroundImage: `url(${slides[index].url})` }} onClick={() => {
+            <div style={{ ...imageStyle, backgroundImage: `URL(${slides.urls[index].url})`, }} onClick={() => {
                 setCarouselPos(true)
+                setLeftSide(0)
                 pageChange(slide.data.id)
               }}
             >
@@ -136,11 +153,12 @@ function RelatedItems({ slides, slidesInfo, id, pageChange }) {
               $
               {slide.data.default_price}
             </p>
+             <Ratings rating={reviews[index].avg} key={index} />
           </div>
-        ))}
+        )) : <></>}
         <Modal open={modal} closeModal={() => setModal(false)} currOutfit={currOutfit} id={id} />
       </div>
-      <MdChevronRight size={40} style={right} onClick={slideRight} />
+      <MdChevronRight id="rightArrow" size={40} style={right} onClick={slideRight} />
     </div>
   );
 }

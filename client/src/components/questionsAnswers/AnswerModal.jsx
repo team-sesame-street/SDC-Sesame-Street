@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import convertImageToBase64 from './utils/convertImageToBase64.js';
 import axios from 'axios';
 import { IoClose } from 'react-icons/io5';
-import randomId from './utils/randomId'
+import convertImageToBase64 from './utils/convertImageToBase64.js';
+import randomId from './utils/randomId';
 
-function AnswerModal({ productName, question, setIsAnswerModalOpen, answers, setAnswers, setNum }) {
+function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigger }) {
   const [selectedImages, setSelectedImages] = useState(null);
   const [urls, setUrls] = useState([]);
 
@@ -67,7 +67,7 @@ function AnswerModal({ productName, question, setIsAnswerModalOpen, answers, set
                 },
               })
               .then(() => {
-                setNum(randomId());
+                setTrigger(randomId());
                 setIsAnswerModalOpen(false);
               })
           })
@@ -82,50 +82,50 @@ function AnswerModal({ productName, question, setIsAnswerModalOpen, answers, set
           photos: [],
         }, {
           headers: {
-            Authorization: process.env.GITKEY
+            Authorization: process.env.GITKEY,
           },
         })
         .then(() => {
-          setNum(randomId());
+          setTrigger(randomId());
           setIsAnswerModalOpen(false);
-        })
+        });
+    }
   }
-}
 
-return (
-  <Wrapper>
-    <div className="modal-backdrop"></div>
-    <form onSubmit={handleSubmit}>
-      <h2>Submit your Answer</h2>
-      <h3>{productName}: {question.question_body}</h3>
-      <label htmlFor="answer">
-        Your Answer:
-        <textarea id="answer" maxLength={1000} name="answer" required />
-      </label>
-      <label htmlFor="username">
-        Your Nickname:
-        <input type="textbox" id="username" maxLength={60} placeholder="Example: jack543!" name="username" required />
-      </label>
-      <small>For privacy reasons, do not use your full name or email address.</small>
-      <label htmlFor="email">
-        Your email:
-        <input type="email" id="email" maxLength={60} placeholder="Example: jack@email.com" name="email" required />
-      </label>
-      <small>For authentication reasons, you will not be emailed.</small>
-      <label htmlFor="file-input" id="file-input-label">Choose up to 5 images to upload (PNG, JPG)</label>
-      <input type="file" accept=".jpg, .jpeg, .png, .webp" multiple onChange={handleImages} id="file-input" />
-      {selectedImages && (
-        <div>
-          {
-            urls.map((url) => <Thumbnail key={randomId()} src={url} />)
-          }
-        </div>
-      )}
-      <button type="submit">submit</button>
-    <IoClose onClick={()=>setIsAnswerModalOpen(false)} className="close-button" />
-    </form>
-  </Wrapper>
-);
+  return (
+    <Wrapper>
+      <div className="modal-backdrop"></div>
+      <form onSubmit={handleSubmit}>
+        <h2>Submit your Answer</h2>
+        <h3>{productMetadata.productName}: {question.question_body}</h3>
+        <label htmlFor="answer">
+          Your Answer:
+          <textarea id="answer" maxLength={1000} name="answer" required />
+        </label>
+        <label htmlFor="username">
+          Your Nickname:
+          <input type="textbox" id="username" maxLength={60} placeholder="Example: jack543!" name="username" required />
+        </label>
+        <small>For privacy reasons, do not use your full name or email address.</small>
+        <label htmlFor="email">
+          Your email:
+          <input type="email" id="email" maxLength={60} placeholder="Example: jack@email.com" name="email" required />
+        </label>
+        <small>For authentication reasons, you will not be emailed.</small>
+        <label htmlFor="file-input" id="file-input-label">Choose up to 5 images to upload (PNG, JPG)</label>
+        <input type="file" accept=".jpg, .jpeg, .png, .webp" multiple onChange={handleImages} id="file-input" />
+        {selectedImages && (
+          <div>
+            {
+              urls.map((url) => <Thumbnail key={randomId()} src={url} />)
+            }
+          </div>
+        )}
+        <button type="submit">submit</button>
+        <IoClose onClick={() => setIsAnswerModalOpen(false)} className="close-button" />
+      </form>
+    </Wrapper>
+  );
 }
 
 export default AnswerModal;

@@ -2,7 +2,7 @@ import React from 'react';
 import { TiDeleteOutline } from "react-icons/ti";
 
 const card = {
-  width: '300px',
+  width: '16vw',
   height: '365px',
   background: 'white',
   borderRadius: '10px',
@@ -41,13 +41,13 @@ const categoryStyle = {
 };
 
 const btnStyle = {
-  transform: 'translateX(265px)',
-  position: 'absolute',
+  width: '97%',
+  transform: 'translateY(32px)',
   cursor: 'pointer',
   display: 'flex',
+  flexDirection: 'row',
   justifyContent: 'end',
   color: 'white',
-  marginTop: '6px',
 };
 
 function OutfitList({ slide, deleteOutfit }) {
@@ -57,8 +57,9 @@ function OutfitList({ slide, deleteOutfit }) {
 
   return (
     <div style={card}>
-      <TiDeleteOutline size={25} onClick={deleteHandler} style={btnStyle}/>
-      {/* <div onClick={deleteHandler} style={btnStyle}> x </div> */}
+      <div style={btnStyle}>
+      <TiDeleteOutline size={25} onClick={deleteHandler} />
+      </div>
       <div style={{ ...imageStyle, backgroundImage: `url(${slide.url})` }} />
       <p style={categoryStyle}>{slide.category}</p>
       <p style={titleStyle}>{slide.name}</p>

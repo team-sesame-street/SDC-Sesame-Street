@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import StyleSelector from './StyleSelector.jsx';
 import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 import MainImage from './Img_Default_Main_Carousel.jsx';
 import ProductInfo from './ProductInfo.jsx';
 import Checkout from './Checkout.jsx';
+import ExpandedImage from './Img_Expanded.jsx';
 
 function MainOverview({ id }) {
   const [product, setProduct] = useState({});
@@ -14,6 +16,7 @@ function MainOverview({ id }) {
   const [thumbnailIndexMin, setThumbnailIndexMin] = useState(null);
   const [thumbnailIndexMax, setThumbnailIndexMax] = useState(null);
   const [currImgIndex, setCurrImgIndex] = useState(null);
+  const [expandedView, setExpandedView] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -65,6 +68,7 @@ function MainOverview({ id }) {
     if (Object.keys(selectedStyle).length > 0) {
       // dummy images data is duplicate of the same photos set
       setImages(selectedStyle.photos.concat(selectedStyle.photos));
+      // setImages(selectedStyle.photos);
     }
   }, [selectedStyle]);
 
@@ -89,6 +93,14 @@ function MainOverview({ id }) {
   return (
     <div>
       <h1>Overview</h1>
+      {expandedView && (
+        <ExpandedImage
+          images={images}
+          currImgIndex={currImgIndex}
+          setCurrImgIndex={setCurrImgIndex}
+          setExpandedView={setExpandedView}
+        />
+      )}
       <ProductInfo product={product} selectedStyle={selectedStyle} />
       <StyleSelector
         styles={styles}
@@ -112,6 +124,7 @@ function MainOverview({ id }) {
         thumbnailIndexMax={thumbnailIndexMax}
         setThumbnailIndexMin={setThumbnailIndexMin}
         setThumbnailIndexMax={setThumbnailIndexMax}
+        setExpandedView={setExpandedView}
       />
       <Checkout
         selectedStyle={selectedStyle}
@@ -119,5 +132,13 @@ function MainOverview({ id }) {
     </div>
   );
 }
+
+MainOverview.propTypes = {
+  id: PropTypes.number,
+};
+
+MainOverview.defaultProps = {
+  id: undefined,
+};
 
 export default MainOverview;

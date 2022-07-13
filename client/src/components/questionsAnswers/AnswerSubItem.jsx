@@ -14,11 +14,11 @@ function AnswerSubItem({ answer }) {
   );
 
   const {
-    id, body, date, answerer_name, helpfulness, photos,
+    body, date, answerer_name, helpfulness, photos,
   } = answer[1];
   const [voteCount, setVoteCount] = useState(helpfulness);
 
-  function handleVote(e) {
+  function handleVote() {
     axios
       .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${answer[0]}/helpful`, {}, {
         headers: {
@@ -36,7 +36,7 @@ function AnswerSubItem({ answer }) {
       });
   }
 
-  function handleReport(e) {
+  function handleReport() {
     axios
       .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${answer[0]}/report`, {}, {
         headers: {
@@ -50,9 +50,8 @@ function AnswerSubItem({ answer }) {
   }
 
   return (
-    <div>
+    <Wrapper>
       <div>
-        A:
         {body}
       </div>
       <div>
@@ -61,6 +60,7 @@ function AnswerSubItem({ answer }) {
       <small>
         <span>
           by
+          {" "}
           {answerer_name === 'Seller' || answerer_name === 'seller' ? <b>{answerer_name}</b> : answerer_name}
         </span>
         <Spacer />
@@ -68,7 +68,7 @@ function AnswerSubItem({ answer }) {
           {formatDate(date)}
         </span>
         <div>
-          <span>Helpful? </span>
+          <span>Helpful?</span>
           <span>
             {hasVoted
               ? (
@@ -76,7 +76,7 @@ function AnswerSubItem({ answer }) {
                   Yes
                 </SubActionBtn>
               )
-              : <SubActionBtn onClick={handleVote}>Yes</SubActionBtn>}
+              : <SubActionBtn onClick={() => handleVote()}>Yes</SubActionBtn>}
             (
             {voteCount}
             )
@@ -89,16 +89,21 @@ function AnswerSubItem({ answer }) {
                   Reported
                 </SubActionBtn>
               )
-              : <SubActionBtn onClick={handleReport}>Report</SubActionBtn>}
+              : <SubActionBtn onClick={() => handleReport()}>Report</SubActionBtn>}
           </span>
         </div>
         <div />
       </small>
-    </div>
+    </Wrapper>
   );
 }
 
 export default AnswerSubItem;
+
+const Wrapper = styled.div`
+  border-bottom: 1px solid whitesmoke;
+  padding-bottom: 10px;
+`;
 
 const SubActionBtn = styled.button`
   border: none;
@@ -116,8 +121,11 @@ const SubActionBtn = styled.button`
 `;
 
 const Thumbnail = styled.img`
+  border: 1px solid #222;
   display: inline-block;
   aspect-ratio: 1/1;
   object-fit: cover;
   width: 150px;
+  height: 75px;
+  margin: 10px 10px 5px 0;
 `;
