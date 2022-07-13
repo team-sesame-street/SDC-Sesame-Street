@@ -65,6 +65,7 @@ function MainOverview({ id }) {
     if (Object.keys(selectedStyle).length > 0) {
       // dummy images data is duplicate of the same photos set
       setImages(selectedStyle.photos.concat(selectedStyle.photos));
+      // setImages(selectedStyle.photos);
     }
   }, [selectedStyle]);
 
