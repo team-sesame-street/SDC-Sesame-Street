@@ -4,7 +4,7 @@ import React from 'react';
 import StarRatings from 'react-star-ratings';
 
 function ReviewsRatings({ rating }) {
-  const starRating = Math.ceil(rating * 4) / 4;
+  const starRating = Math.round(rating * 4) / 4;
 
   return (
     <div>
