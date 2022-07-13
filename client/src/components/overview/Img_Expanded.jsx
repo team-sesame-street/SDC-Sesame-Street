@@ -1,9 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { IoIosArrowDropright, IoIosArrowDropleft } from 'react-icons/io';
 import { IoExitOutline } from 'react-icons/io5';
-import { FiCircle } from "react-icons/fi";
+import { FiCircle } from 'react-icons/fi';
 
-function ExpandedImage({images, currImgIndex, setCurrImgIndex, setExpandedView}) {
+function ExpandedImage({
+  images, currImgIndex, setCurrImgIndex, setExpandedView,
+}) {
   if (images.length > 0) {
     const styleMainCircle = {
       fontSize: '15px',
@@ -15,7 +18,7 @@ function ExpandedImage({images, currImgIndex, setCurrImgIndex, setExpandedView})
 
     const styleExpandedImg = {
       cursor: 'crosshair',
-    }
+    };
 
     return (
       <div>
@@ -44,5 +47,15 @@ function ExpandedImage({images, currImgIndex, setCurrImgIndex, setExpandedView})
     );
   }
 }
+
+ExpandedImage.propTypes = {
+  images: PropTypes.arrayOf(PropTypes.shape({
+    thumbnail_url: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  })).isRequired,
+  currImgIndex: PropTypes.number.isRequired,
+  setCurrImgIndex: PropTypes.func.isRequired,
+  setExpandedView: PropTypes.func.isRequired,
+};
 
 export default ExpandedImage;

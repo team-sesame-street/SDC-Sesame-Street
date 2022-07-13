@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import StyleSelector from './StyleSelector.jsx';
 import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
@@ -131,5 +132,13 @@ function MainOverview({ id }) {
     </div>
   );
 }
+
+MainOverview.propTypes = {
+  id: PropTypes.number,
+};
+
+MainOverview.defaultProps = {
+  id: undefined,
+};
 
 export default MainOverview;

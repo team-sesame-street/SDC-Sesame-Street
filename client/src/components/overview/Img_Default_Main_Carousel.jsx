@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 
 function MainImage({ images, currImgIndex, setCurrImgIndex, thumbnailIndexMin,
@@ -49,5 +50,25 @@ function MainImage({ images, currImgIndex, setCurrImgIndex, thumbnailIndexMin,
     );
   }
 }
+
+MainImage.propTypes = {
+  images: PropTypes.arrayOf(PropTypes.shape({
+    thumbnail_url: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  })).isRequired,
+  currImgIndex: PropTypes.number,
+  setCurrImgIndex: PropTypes.func.isRequired,
+  thumbnailIndexMin: PropTypes.number,
+  thumbnailIndexMax: PropTypes.number,
+  setThumbnailIndexMin: PropTypes.func.isRequired,
+  setThumbnailIndexMax: PropTypes.func.isRequired,
+  setExpandedView: PropTypes.func.isRequired,
+};
+
+MainImage.defaultProps = {
+  currImgIndex: null,
+  thumbnailIndexMax: null,
+  thumbnailIndexMin: null,
+};
 
 export default MainImage;
