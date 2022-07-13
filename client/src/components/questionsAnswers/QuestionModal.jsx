@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { IoClose } from 'react-icons/io5';
 import randomId from './utils/randomId';
-function QuestionModal({ productName, product_id, setIsQuestionModalOpen, filteredArr, setFilteredArr, questions, setQuestions, setNum }) {
+function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
   function handleSubmit(e) {
     e.preventDefault();
     const body = e.target.question.value;
@@ -14,17 +14,16 @@ function QuestionModal({ productName, product_id, setIsQuestionModalOpen, filter
       body,
       name,
       email,
-      product_id
+      product_id: productMetadata.product_id
     }, {
       headers: {
         Authorization: process.env.GITKEY,
-      }
+      },
     })
       .then(() => {
-        // updates the state to the newest data!
-        setNum(randomId());
-        setIsQuestionModalOpen(false);
-      })
+        setTrigger(randomId());
+        setChecks({ ...checks, isQuestionModalOpen: false });
+      });
   }
 
   return (
@@ -32,7 +31,7 @@ function QuestionModal({ productName, product_id, setIsQuestionModalOpen, filter
       <div className="modal-backdrop"></div>
       <form onSubmit={handleSubmit}>
         <h2>Ask Your Question</h2>
-        <h3>About the {productName}</h3>
+        <h3>About the {productMetadata.productName}</h3>
         <label htmlFor="question">
           Your Question*:
           <textarea id="question" maxLength={1000} name="question" required />
@@ -49,7 +48,7 @@ function QuestionModal({ productName, product_id, setIsQuestionModalOpen, filter
         <small>For authentication reasons, you will not be emailed.</small>
 
         <button type="submit">submit</button>
-        <IoClose onClick={() => setIsQuestionModalOpen(false)} className="close-button" />
+        <IoClose onClick={() => setChecks({ ...checks, isQuestionModalOpen: false })} className="close-button" />
       </form>
     </Wrapper>
   );
@@ -58,7 +57,7 @@ function QuestionModal({ productName, product_id, setIsQuestionModalOpen, filter
 export default QuestionModal;
 
 const Wrapper = styled.div`
-isolation: isolate;
+  isolation: isolate;
   & .modal-backdrop {
     position: fixed;
     z-index: -1;
@@ -85,23 +84,6 @@ isolation: isolate;
     box-shadow: 2px 2px 10px #bbb;
     border-radius: 4px;
   }
-  & #file-input {
-    position: absolute !important;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
-  }
-
-  & #file-input-label {
-    display: inline-block;
-    padding: 5px 10px;
-    background: #ddd;
-  }
-  & #file-input-label:hover {
-    background: #ccc;
-  }
-
   .close-button {
     position: absolute;
     top:0;
@@ -112,11 +94,4 @@ isolation: isolate;
   input, textarea {
     display: block;
   }
-`;
-
-const Thumbnail = styled.img`
-  display: inline-block;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  width: 150px;
 `;
