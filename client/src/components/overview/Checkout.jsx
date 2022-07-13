@@ -12,7 +12,8 @@ function Checkout({ selectedStyle }) {
   useEffect(() => {
     if (Object.keys(selectedStyle).length > 0) {
       const inStock = Object.keys(selectedStyle.skus).filter(
-        (sku) => (selectedStyle.skus[sku].quantity > 0));
+        (sku) => (selectedStyle.skus[sku].quantity > 0),
+      );
       setSkusInStock(inStock);
       setSelectedSku('');
       setSelectedQuantity(null);
@@ -75,7 +76,7 @@ function Checkout({ selectedStyle }) {
           Authorization: process.env.GITKEY,
         },
         data: {
-          "sku_id": selectedSku,
+          sku_id: selectedSku,
         },
       });
     }
@@ -85,7 +86,7 @@ function Checkout({ selectedStyle }) {
 
   if (Object.keys(selectedStyle).length > 0
     && skusInStock.every((sku) => (Object.keys(selectedStyle.skus).indexOf(sku) !== -1))) {
-    let range = [];
+    const range = [];
     if (maxQuantity !== null && maxQuantity > 0) {
       for (let i = 1; i <= maxQuantity; i += 1) {
         range.push(i);
