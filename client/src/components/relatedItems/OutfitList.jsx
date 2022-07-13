@@ -60,7 +60,6 @@ function OutfitList({ slide, deleteOutfit }) {
       <div style={btnStyle}>
       <TiDeleteOutline size={25} onClick={deleteHandler} />
       </div>
-      {/* <div onClick={deleteHandler} style={btnStyle}> x </div> */}
       <div style={{ ...imageStyle, backgroundImage: `url(${slide.url})` }} />
       <p style={categoryStyle}>{slide.category}</p>
       <p style={titleStyle}>{slide.name}</p>
