@@ -23,7 +23,7 @@ function Reviews({ reviews, setSort, count, setCount, meta }) {
   }
 
   return (
-    <div style={flexContainer}>
+    <div style={reviewsContainer}>
       <div style={{ display: 'flex', gap: '4px' }}>
         {totalReviews}
         {' '}
@@ -31,53 +31,60 @@ function Reviews({ reviews, setSort, count, setCount, meta }) {
         {' '}
         <ReviewsSort setSort={setSort} />
       </div>
-      {reviews.map((review) => {
-        const revSumm = review.summary;
-        return (
-          <div key={review.review_id} style={flexItems}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <ReviewsRatings rating={review.rating} />
-              <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-                <ReviewsUser user={review.reviewer_name} />
-                <ReviewsDate date={review.date} />
-              </div>
-            </div>
-            <br />
-            {revSumm.length > 60 ? (
-              <div style={summaryContainer}>
-                {`${revSumm.slice(0, 61)}...`}
-                <div style={bodyContainer}>
-                  {`...${revSumm.slice(61)}`}
-                  <br />
+      <div style={reviewsSubContainer}>
+        {reviews.map((review) => {
+          const revSumm = review.summary;
+          return (
+            <div key={review.review_id} style={flexItems}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <ReviewsRatings rating={review.rating} />
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                  <ReviewsUser user={review.reviewer_name} />
+                  <ReviewsDate date={review.date} />
                 </div>
               </div>
-            ) : (
-              <div style={summaryContainer}>
-                {revSumm}
+              <br />
+              {revSumm.length > 60 ? (
+                <div style={summaryContainer}>
+                  {`${revSumm.slice(0, 61)}...`}
+                  <div style={bodyContainer}>
+                    {`...${revSumm.slice(61)}`}
+                    <br />
+                  </div>
+                </div>
+              ) : (
+                <div style={summaryContainer}>
+                  {revSumm}
+                </div>
+              )}
+              <div>
+                <br />
+                <ReviewsBody reviewBody={review.body} reviewImages={review.photos} />
+                <br />
               </div>
-            )}
-            <div>
+              <ReviewsRecommend recommend={review.recommend} />
+              <ReviewsResponse responseBody={review.response} />
               <br />
-              <ReviewsBody reviewBody={review.body} reviewImages={review.photos} />
-              <br />
+              <ReviewsHelpful helpfulness={review.helpfulness} reviewId={review.review_id} />
             </div>
-            <ReviewsRecommend recommend={review.recommend} />
-            <ReviewsResponse responseBody={review.response} />
-            <br />
-            <ReviewsHelpful helpfulness={review.helpfulness} reviewId={review.review_id} />
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
       <ReviewsMoreReviews count={count} setCount={setCount} totalReviews={totalReviews} />
     </div>
   );
 }
 
-const flexContainer = {
+const reviewsContainer = {
   display: 'flex',
   flexDirection: 'column',
   gap: '100px',
   alignItems: 'center',
+};
+
+const reviewsSubContainer = {
+  maxHeight: '100vh',
+  overflowY: 'auto',
 };
 
 const flexItems = {
