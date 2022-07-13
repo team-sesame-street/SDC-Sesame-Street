@@ -150,8 +150,7 @@ function RelatedItems({slides, id, pageChange, reviews }) {
             <p style={categoryStyle}>{slide.data.category}</p>
             <p style={titleStyle}>{slide.data.name}</p>
             <p style={priceStyle}>
-              $
-              {slide.data.default_price}
+              {!slides.urls[index].salePrice ? <label>${slides.urls[index].originalPrice}</label> : <label style={{color:'red'}}>${slides.urls[index].salePrice} <strike style={{color:'black'}}>{slides.urls[index].originalPrice}</strike></label>}
             </p>
              <Ratings rating={reviews[index].avg} key={index} />
           </div>

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import AnswerSubItem from './AnswerSubItem.jsx';
-import byHelpfulness from './utils/byHelpfulness.js';
-import Spacer from './utils/smallSpacer.jsx'
-import randomId from './utils/randomId.js'
+import byHelpfulness from '../../../utils/byHelpfulness.js';
+import Spacer from '../../../utils/smallSpacer.jsx'
+import randomId from '../../../utils/randomId.js'
 import AnswerModal from './AnswerModal.jsx';
 import QuestionModal from './QuestionModal.jsx';
 

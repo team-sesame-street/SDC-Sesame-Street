@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import Spacer from './utils/smallSpacer.jsx';
-import formatDate from './utils/formatDate.js';
-import randomId from './utils/randomId.js';
+import Spacer from '../../../utils/smallSpacer.jsx';
+import formatDate from '../../../utils/formatDate.js';
+import randomId from '../../../utils/randomId.js';
 
 function AnswerSubItem({ answer }) {
   const [hasVoted, setHasVoted] = useState(

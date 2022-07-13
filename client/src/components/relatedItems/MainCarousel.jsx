@@ -102,11 +102,13 @@ function MainCarousel({ id, pageChange }) {
               url = 'https://images.unsplash.com/photo-1515243061678-14fc18b93935?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=800';
             }
             let salePrice;
+            let originalPrice = data[x][0].data.results[0].original_price
             !data[x][0].data.results[0].sale_price
               ? salePrice = false
               : salePrice = data[x][0].data.results[0].sale_price;
             obj.salePrice = salePrice;
             obj.url = url;
+            obj.originalPrice = originalPrice
             results.push(obj);
           }
           setRelatedItemInfo((relatedItemsInfo) => ({...relatedItemsInfo, urls: results}));

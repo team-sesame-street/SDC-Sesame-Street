@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import formatDate from '../../questionsAnswers/utils/formatDate';
+import formatDate from '../../../../utils/formatDate';
 
 function ReviewsDate({ date }) {
   return (

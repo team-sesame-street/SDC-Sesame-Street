@@ -6,9 +6,8 @@ import QAWrapper from './QAWrapper.jsx';
 
 function QaBox({ id }) {
   const [questions, setQuestions] = useState([]);
-  const [secondPass, setSecondPass] = useState(false);
-  const [doubleCheckNextPage, setDoubleCheckNextPage] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [count, setCount] = useState(0);
   const [indexes, setIndexes] = useState({
     page: 1,
     questionIndex: 0,
@@ -20,30 +19,11 @@ function QaBox({ id }) {
   const [checks, setChecks] = useState({
     isLoading: true,
     isDone: false,
-    isPageDone: false,
     isQuestionModalOpen: false,
   });
+  const [isPageDone, setIsPageDone] = useState(false);
 
   useEffect(() => {
-    setProductMetadata({
-      product_id: id,
-      productName: '',
-    });
-    setDoubleCheckNextPage(false);
-    setQuestions([]);
-    setSecondPass(false);
-    setSearchTerm('');
-    setIndexes({
-      page: 1,
-      questionIndex: 0,
-    });
-    setChecks({
-      isLoading: true,
-      isDone: false,
-      isPageDone: false,
-      isQuestionModalOpen: false,
-    });
-
     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
       headers: {
         Authorization: process.env.GITKEY,
@@ -51,11 +31,53 @@ function QaBox({ id }) {
     })
       .then(({ data }) => {
         setProductMetadata({ productName: data.name, product_id: data.id });
+      })
+      .then(() => {
+        setIsPageDone(false);
+        setQuestions([]);
+        setSearchTerm('');
+        setIndexes({
+          page: 1,
+          questionIndex: 0,
+        });
+        setChecks({
+          isLoading: true,
+          isDone: false,
+          isQuestionModalOpen: false,
+        });
+        setCount(0);
+      })
+      .then(() => {
+        axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${id}`, {
+          headers: {
+            Authorization: process.env.GITKEY,
+          },
+          params: {
+            page: indexes.page,
+          },
+        })
+          .then(({ data }) => {
+            if (data.results.length === 0 && !isPageDone) {
+              setCount(count + 1);
+              if (count >= 2) {
+                setIsPageDone(true);
+              } else if ((count < 2 && !isPageDone) || data.results.length === 1) {
+                // !REMOVE OR IF BROKEN
+                setIndexes({ ...indexes, page: indexes.page + 1 });
+              }
+            } else {
+              setQuestions([...questions, ...data.results]);
+              if (data.results.length < 2 && !isPageDone) {
+                setIndexes({ ...indexes, page: indexes.page + 1 });
+              }
+            }
+            setChecks({ ...checks, isLoading: false });
+          });
       });
   }, [id]);
 
   useEffect(() => {
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${productMetadata.product_id}`, {
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${id}`, {
       headers: {
         Authorization: process.env.GITKEY,
       },
@@ -64,49 +86,32 @@ function QaBox({ id }) {
       },
     })
       .then(({ data }) => {
-        setQuestions([...questions, ...data.results]);
-
-        if (data.results.length === 0) {
-          if (!doubleCheckNextPage) {
-            setDoubleCheckNextPage(true);
+        if (data.results.length === 0 && !isPageDone) {
+          setCount(count + 1);
+          if (count >= 2) {
+            setIsPageDone(true);
+          } else if ((count < 2 && !isPageDone) || data.results.length === 1) {
+            // !REMOVE OR IF BROKEN
             setIndexes({ ...indexes, page: indexes.page + 1 });
-          } else {
-            setDoubleCheckNextPage(false);
-            setChecks({ ...checks, isPageDone: true });
           }
-        }
-
-        if (questions.length < 2 && !secondPass) {
-          setSecondPass(true);
-          setIndexes({ ...indexes, page: indexes.page + 1 });
-        } else if (secondPass && questions.length <= 2) {
-          setSecondPass(false);
-          setChecks({ ...checks, isPageDone: true });
+        } else {
+          setQuestions([...questions, ...data.results]);
+          if (data.results.length < 2 && !isPageDone) {
+            setIndexes({ ...indexes, page: indexes.page + 1 });
+          }
         }
         setChecks({ ...checks, isLoading: false });
       });
   }, [indexes.page]);
 
-  // useEffect(() => {
-  //   axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${productMetadata.product_id}`, {
-  //     headers: {
-  //       Authorization: process.env.GITKEY,
-  //     }
-  //   })
-  //     .then(({ data }) => {
-  //       console.log(data.name);
-  //       setProductMetadata({ ...productMetadata, productName: data.name });
-  //     });
-  // }, [id]);
-
   function handleMoreQuestions() {
     document.querySelector('#bottom').scrollIntoView(false);
 
-    if (!checks.isPageDone) {
+    if (!isPageDone) {
       setIndexes({ ...indexes, page: indexes.page++ });
     }
 
-    if (questions.length - 3 > indexes.questionIndex) {
+    if (questions.length - 1 > indexes.questionIndex) {
       setIndexes({ ...indexes, questionIndex: indexes.questionIndex + 2 });
     } else {
       setIndexes({ ...indexes, questionIndex: indexes.questionIndex + 1 });
@@ -130,6 +135,7 @@ function QaBox({ id }) {
         questionIndex={indexes.questionIndex}
         searchTerm={searchTerm}
         checks={checks}
+        setIsPageDone={setIsPageDone}
         setChecks={setChecks}
       />
 
