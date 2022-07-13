@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { IoClose } from 'react-icons/io5';
-import convertImageToBase64 from './utils/convertImageToBase64.js';
-import randomId from './utils/randomId';
+import convertImageToBase64 from '../../../utils/convertImageToBase64.js';
+import randomId from '../../../utils/randomId';
 
 function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigger }) {
   const [selectedImages, setSelectedImages] = useState(null);

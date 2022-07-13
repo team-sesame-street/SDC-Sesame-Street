@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { IoClose } from 'react-icons/io5';
-import randomId from './utils/randomId';
+import randomId from '../../../utils/randomId';
 function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
   function handleSubmit(e) {
     e.preventDefault();
