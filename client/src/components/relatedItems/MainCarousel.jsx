@@ -19,8 +19,8 @@ const style = {
 
 function MainCarousel({ id, pageChange }) {
   const [relatedItems, setRelatedItems] = useState([]);
-  const [relatedItemsInfo, setRelatedItemInfo] = useState([]);
-  const [itemsUrls, setItemUrls] = useState([]);
+  const [relatedItemsInfo, setRelatedItemInfo] = useState({info:[], urls:[]});
+  // const [itemsUrls, setItemUrls] = useState([]);
   const [outfitSlides, setCurrOutfitSlides] = useState([]);
   const [currentOutfitInfo, setCurrOutfitInfo] = useState({
     info: {},
@@ -99,23 +99,24 @@ function MainCarousel({ id, pageChange }) {
             ? salePrice = false
             : salePrice = data[x].data.results[0].sale_price;
           obj.salePrice = salePrice;
+          console.log(x, 'inside of urls')
           obj.url = url;
           results.push(obj);
         }
-        setRelatedItemInfo(results);
+        setRelatedItemInfo((relatedItemsInfo) => ({...relatedItemsInfo, urls: results}));
       })
       .catch((err) => console.log(err));
+
     axios.all(prodEndpoints.map((endpoint) => axios.get(endpoint, {
       headers: { Authorization: process.env.GITKEY },
     })))
-      .then((data) => setItemUrls(data))
+      .then((data) => setRelatedItemInfo((relatedItemsInfo) => ({...relatedItemsInfo, info: data})))
       .catch((err) => console.log(err));
   }, [relatedItems]);
-
   return (
     <div>
       <div style={style}>
-        <RelatedItems slides={relatedItemsInfo} slidesInfo={itemsUrls} id={id} pageChange={pageChange} />
+        <RelatedItems slides={relatedItemsInfo} id={id} pageChange={pageChange} />
       </div>
       <br />
       <br />
