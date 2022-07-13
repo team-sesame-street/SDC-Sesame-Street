@@ -11,20 +11,27 @@ import ReviewsRecommend from './ReviewsRecommend.jsx';
 import ReviewsResponse from './ReviewsResponse.jsx';
 import ReviewsBody from './ReviewsBody.jsx';
 import ReviewsHelpful from './ReviewsHelpful.jsx';
+import ReviewsSort from './ReviewsSort.jsx';
 
-function Reviews({ reviews }) {
-  console.log('class: ', reviews);
+function Reviews({ reviews, setSort }) {
+  // console.log('class: ', reviews);
 
   return (
     <div style={flexContainer}>
+      <div style={{ display: 'flex' }}>
+        Reviews sorted by
+        <ReviewsSort setSort={setSort} />
+      </div>
       {reviews.map((review) => {
         const revSumm = review.summary;
         return (
           <div key={review.review_id} style={flexItems}>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <ReviewsRatings rating={review.rating} />
-              <ReviewsUser user={review.reviewer_name} />
-              <ReviewsDate date={review.date} />
+              <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                <ReviewsUser user={review.reviewer_name} />
+                <ReviewsDate date={review.date} />
+              </div>
             </div>
             <br />
             {revSumm.length > 60 ? (
