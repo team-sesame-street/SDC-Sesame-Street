@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 function Checkout({ selectedStyle }) {
@@ -95,7 +96,7 @@ function Checkout({ selectedStyle }) {
       <form onSubmit={handleSubmit}>
         {clickSubmit && (<div>Please select size</div>)}
         <select
-          defaultValue={selectedSku === '' ? 'Select Size' : selectedSku}
+          defaultValue={selectedSku}
           size={clickSubmit && skusInStock.length > 0 ? 3 : 0}
           onChange={(e) => { setSelectedSku(e.target.value); }}
         >
@@ -130,5 +131,27 @@ function Checkout({ selectedStyle }) {
     );
   }
 }
+
+Checkout.propTypes = {
+  selectedStyle: PropTypes.shape({
+    style_id: PropTypes.number,
+    name: PropTypes.string,
+    original_price: PropTypes.string,
+    sale_price: PropTypes.string,
+    'default?': PropTypes.bool,
+    photos: PropTypes.arrayOf(PropTypes.shape({
+      thumbnail_url: PropTypes.string,
+      url: PropTypes.string,
+    })),
+    skus: PropTypes.objectOf(PropTypes.shape({
+      quantity: PropTypes.number,
+      size: PropTypes.oneOf(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+    })),
+  }),
+};
+
+Checkout.defaultProps = {
+  selectedStyle: PropTypes.object,
+};
 
 export default Checkout;
