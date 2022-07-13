@@ -108,17 +108,18 @@ function Checkout({ selectedStyle }) {
               </option>
             )))}
         </select>
-        <select onChange={(e) => { setSelectedQuantity(e.target.value); }}>
-          {(selectedSku.length === 0 || (selectedSku.length > 0 && maxQuantity === null)) && (<option value="">-</option>)}
-          {maxQuantity === 0 && (<option value={0}>Out Of Stock</option>)}
-          {selectedSku.length > 0 && maxQuantity && (range.map((quantity) => (
-            <option value={quantity} key={quantity}>
-              {quantity}
-            </option>
-          )))}
-        </select>
+        {skusInStock.length > 0 && (
+          <select onChange={(e) => { setSelectedQuantity(e.target.value); }}>
+            {(selectedSku.length === 0 || (selectedSku.length > 0 && maxQuantity === null)) && (<option value="">-</option>)}
+            {maxQuantity === 0 && (<option value={0}>Out Of Stock</option>)}
+            {selectedSku.length > 0 && maxQuantity && (range.map((quantity) => (
+              <option value={quantity} key={quantity}>
+                {quantity}
+              </option>
+            )))}
+          </select>
+        )}
         {skusInStock.length > 0 && selectedSku.length === 0
-        && (maxQuantity > 0 || maxQuantity === null)
         && (<button type="button" onClick={clickSubmitWithNoQuantity}>Add to Cart</button>)}
         {skusInStock.length > 0
         && selectedSku.length > 0
