@@ -43,7 +43,7 @@ const slider = {
 };
 
 const card = {
-  width: '300px',
+  width: '16vw',
   height: '365px',
   background: 'white',
   borderRadius: '10px',
@@ -91,7 +91,7 @@ function RelatedItems({slides, id, pageChange }) {
   const [modal, setModal] = useState(false);
   const [currOutfit, setCurrOutfit] = useState({});
   const [carouselPos, setCarouselPos] = useState(false);
-  const [leftSide, setLeftSide] = useState(930);
+  const [leftSide, setLeftSide] = useState(700);
   const imageSlider = document.querySelector('#slider');
   const rightArrow = document.querySelector('#rightArrow');
   const leftArrow = document.querySelector('#leftArrow');
@@ -101,24 +101,24 @@ function RelatedItems({slides, id, pageChange }) {
   }
 
   const slideLeft = () => {
-    imageSlider.scrollLeft -= 310;
-    setLeftSide(leftSide - 310);
+    imageSlider.scrollLeft -= 315;
+    setLeftSide(leftSide - 315);
   };
 
   const slideRight = () => {
-    imageSlider.scrollLeft += 310;
-    setLeftSide(leftSide + 310);
+    imageSlider.scrollLeft += 315;
+    setLeftSide(leftSide + 315);
   };
 
-  if (imageSlider && leftSide >= imageSlider.scrollWidth && rightArrow) {
+  if (imageSlider && leftSide > imageSlider.scrollWidth - 15 && rightArrow) {
     rightArrow.style.visibility = 'hidden';
   } else if (imageSlider && leftSide < imageSlider.scrollWidth && rightArrow) {
     rightArrow.style.visibility = 'visible';
   }
 
-  if (leftSide <= 930 && leftArrow) {
+  if (leftSide <= 700 && leftArrow) {
     leftArrow.style.visibility = 'hidden';
-  } else if (leftSide > 930 && leftArrow) {
+  } else if (leftSide > 700 && leftArrow) {
     leftArrow.style.visibility = 'visible';
   }
 
@@ -140,6 +140,7 @@ function RelatedItems({slides, id, pageChange }) {
             />
             <div style={{ ...imageStyle, backgroundImage: `URL(${slides.urls[index].url})`, }} onClick={() => {
                 setCarouselPos(true)
+                setLeftSide(0)
                 pageChange(slide.data.id)
               }}
             >
