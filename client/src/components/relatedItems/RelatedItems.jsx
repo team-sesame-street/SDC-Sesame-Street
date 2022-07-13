@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import Modal from './Modal.jsx';
+import Ratings from './Ratings.jsx';
 
 const sliderContainer = {
   width: '50%',
@@ -87,7 +88,7 @@ const star = {
   marginTop: '10px',
 };
 
-function RelatedItems({slides, id, pageChange }) {
+function RelatedItems({slides, id, pageChange, reviews }) {
   const [modal, setModal] = useState(false);
   const [currOutfit, setCurrOutfit] = useState({});
   const [carouselPos, setCarouselPos] = useState(false);
@@ -95,6 +96,7 @@ function RelatedItems({slides, id, pageChange }) {
   const imageSlider = document.querySelector('#slider');
   const rightArrow = document.querySelector('#rightArrow');
   const leftArrow = document.querySelector('#leftArrow');
+
   if (carouselPos) {
     imageSlider.scrollLeft = 0;
     setCarouselPos(false);
@@ -126,7 +128,7 @@ function RelatedItems({slides, id, pageChange }) {
     <div style={sliderContainer}>
       <MdChevronLeft size={40} style={left} onClick={slideLeft} id="leftArrow" />
       <div id="slider" style={slider}>
-        {slides.info.length !== 0 && slides.info.length === slides.urls.length ? slides.info.map((slide, index) => (
+        {slides.info.length !== 0 && slides.info.length === slides.urls.length && reviews.length === slides.info.length ? slides.info.map((slide, index) => (
           <div
             style={card}
             key={index}
@@ -148,9 +150,9 @@ function RelatedItems({slides, id, pageChange }) {
             <p style={categoryStyle}>{slide.data.category}</p>
             <p style={titleStyle}>{slide.data.name}</p>
             <p style={priceStyle}>
-              $
-              {slide.data.default_price}
+              {!slides.urls[index].salePrice ? <label>${slides.urls[index].originalPrice}</label> : <label style={{color:'red'}}>${slides.urls[index].salePrice} <strike style={{color:'black'}}>{slides.urls[index].originalPrice}</strike></label>}
             </p>
+             <Ratings rating={reviews[index].avg} key={index} />
           </div>
         )) : <></>}
         <Modal open={modal} closeModal={() => setModal(false)} currOutfit={currOutfit} id={id} />

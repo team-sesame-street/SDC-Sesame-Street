@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 
 function ImageDefaultThumbnail({
-  images, currImgIndex, setCurrImgIndex, thumbnailIndexMin, thumbnailIndexMax, setThumbnailIndexMin, setThumbnailIndexMax,
+  images, currImgIndex, setCurrImgIndex, thumbnailIndexMin, thumbnailIndexMax, setThumbnailIndexMin,
+  setThumbnailIndexMax,
 }) {
   if (images.length > 0) {
     const thumbnailIndexRange = (min, max) => {
@@ -54,5 +56,24 @@ function ImageDefaultThumbnail({
     );
   }
 }
+
+ImageDefaultThumbnail.propTypes = {
+  images: PropTypes.arrayOf(PropTypes.shape({
+    thumbnail_url: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  })).isRequired,
+  currImgIndex: PropTypes.number,
+  setCurrImgIndex: PropTypes.func.isRequired,
+  thumbnailIndexMin: PropTypes.number,
+  thumbnailIndexMax: PropTypes.number,
+  setThumbnailIndexMin: PropTypes.func.isRequired,
+  setThumbnailIndexMax: PropTypes.func.isRequired,
+};
+
+ImageDefaultThumbnail.defaultProps = {
+  currImgIndex: null,
+  thumbnailIndexMax: null,
+  thumbnailIndexMin: null,
+};
 
 export default ImageDefaultThumbnail;

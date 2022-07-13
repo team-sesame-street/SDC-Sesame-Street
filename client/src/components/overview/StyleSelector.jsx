@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
   return (
@@ -35,5 +36,44 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
     </div>
   );
 }
+
+StyleSelector.propTypes = {
+  styles: PropTypes.arrayOf(PropTypes.shape({
+    style_id: PropTypes.number,
+    name: PropTypes.string,
+    original_price: PropTypes.string,
+    sale_price: PropTypes.string,
+    'default?': PropTypes.bool,
+    photos: PropTypes.arrayOf(PropTypes.shape({
+      thumbnail_url: PropTypes.string,
+      url: PropTypes.string,
+    })),
+    skus: PropTypes.objectOf(PropTypes.shape({
+      quantity: PropTypes.number,
+      size: PropTypes.oneOf(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+    })),
+  })),
+  selectedStyle: PropTypes.shape({
+    style_id: PropTypes.number,
+    name: PropTypes.string,
+    original_price: PropTypes.string,
+    sale_price: PropTypes.string,
+    'default?': PropTypes.bool,
+    photos: PropTypes.arrayOf(PropTypes.shape({
+      thumbnail_url: PropTypes.string,
+      url: PropTypes.string,
+    })),
+    skus: PropTypes.objectOf(PropTypes.shape({
+      quantity: PropTypes.number,
+      size: PropTypes.oneOf(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+    })),
+  }),
+  setSelectedStyle: PropTypes.func.isRequired,
+};
+
+StyleSelector.defaultProps = {
+  styles: PropTypes.array.isRequired,
+  selectedStyle: PropTypes.object.isRequired,
+};
 
 export default StyleSelector;

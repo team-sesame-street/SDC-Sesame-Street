@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 function Checkout({ selectedStyle }) {
@@ -11,7 +12,8 @@ function Checkout({ selectedStyle }) {
   useEffect(() => {
     if (Object.keys(selectedStyle).length > 0) {
       const inStock = Object.keys(selectedStyle.skus).filter(
-        (sku) => (selectedStyle.skus[sku].quantity > 0));
+        (sku) => (selectedStyle.skus[sku].quantity > 0),
+      );
       setSkusInStock(inStock);
       setSelectedSku('');
       setSelectedQuantity(null);
@@ -74,7 +76,7 @@ function Checkout({ selectedStyle }) {
           Authorization: process.env.GITKEY,
         },
         data: {
-          "sku_id": selectedSku,
+          sku_id: selectedSku,
         },
       });
     }
@@ -84,7 +86,7 @@ function Checkout({ selectedStyle }) {
 
   if (Object.keys(selectedStyle).length > 0
     && skusInStock.every((sku) => (Object.keys(selectedStyle.skus).indexOf(sku) !== -1))) {
-    let range = [];
+    const range = [];
     if (maxQuantity !== null && maxQuantity > 0) {
       for (let i = 1; i <= maxQuantity; i += 1) {
         range.push(i);
@@ -95,7 +97,7 @@ function Checkout({ selectedStyle }) {
       <form onSubmit={handleSubmit}>
         {clickSubmit && (<div>Please select size</div>)}
         <select
-          defaultValue={selectedSku === '' ? 'Select Size' : selectedSku}
+          defaultValue={selectedSku}
           size={clickSubmit && skusInStock.length > 0 ? 3 : 0}
           onChange={(e) => { setSelectedSku(e.target.value); }}
         >
@@ -130,5 +132,27 @@ function Checkout({ selectedStyle }) {
     );
   }
 }
+
+Checkout.propTypes = {
+  selectedStyle: PropTypes.shape({
+    style_id: PropTypes.number,
+    name: PropTypes.string,
+    original_price: PropTypes.string,
+    sale_price: PropTypes.string,
+    'default?': PropTypes.bool,
+    photos: PropTypes.arrayOf(PropTypes.shape({
+      thumbnail_url: PropTypes.string,
+      url: PropTypes.string,
+    })),
+    skus: PropTypes.objectOf(PropTypes.shape({
+      quantity: PropTypes.number,
+      size: PropTypes.oneOf(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+    })),
+  }),
+};
+
+Checkout.defaultProps = {
+  selectedStyle: PropTypes.object,
+};
 
 export default Checkout;
