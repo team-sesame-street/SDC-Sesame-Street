@@ -87,7 +87,7 @@ const star = {
   marginTop: '10px',
 };
 
-function RelatedItems({ slides, slidesInfo, id, pageChange }) {
+function RelatedItems({slides, id, pageChange }) {
   const [modal, setModal] = useState(false);
   const [currOutfit, setCurrOutfit] = useState({});
   const [carouselPos, setCarouselPos] = useState(false);
@@ -95,7 +95,6 @@ function RelatedItems({ slides, slidesInfo, id, pageChange }) {
   const imageSlider = document.querySelector('#slider');
   const rightArrow = document.querySelector('#rightArrow');
   const leftArrow = document.querySelector('#leftArrow');
-
   if (carouselPos) {
     imageSlider.scrollLeft = 0;
     setCarouselPos(false);
@@ -127,7 +126,7 @@ function RelatedItems({ slides, slidesInfo, id, pageChange }) {
     <div style={sliderContainer}>
       <MdChevronLeft size={40} style={left} onClick={slideLeft} id="leftArrow" />
       <div id="slider" style={slider}>
-        {slidesInfo.map((slide, index) => (
+        {slides.info.length !== 0 && slides.info.length === slides.urls.length ? slides.info.map((slide, index) => (
           <div
             style={card}
             key={index}
@@ -139,7 +138,7 @@ function RelatedItems({ slides, slidesInfo, id, pageChange }) {
                 setModal(true);
               }}
             />
-            <div style={{ ...imageStyle, backgroundImage: `URL(${slides[index].url})`, }} onClick={() => {
+            <div style={{ ...imageStyle, backgroundImage: `URL(${slides.urls[index].url})`, }} onClick={() => {
                 setCarouselPos(true)
                 pageChange(slide.data.id)
               }}
@@ -152,7 +151,7 @@ function RelatedItems({ slides, slidesInfo, id, pageChange }) {
               {slide.data.default_price}
             </p>
           </div>
-        ))}
+        )) : <></>}
         <Modal open={modal} closeModal={() => setModal(false)} currOutfit={currOutfit} id={id} />
       </div>
       <MdChevronRight id="rightArrow" size={40} style={right} onClick={slideRight} />
