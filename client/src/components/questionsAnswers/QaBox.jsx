@@ -4,10 +4,10 @@ import axios from 'axios';
 import SearchBar from './SearchBar.jsx';
 import QAWrapper from './QAWrapper.jsx';
 
-
 function QaBox({ id }) {
   const [questions, setQuestions] = useState([]);
   const [secondPass, setSecondPass] = useState(false);
+  const [doubleCheckNextPage, setDoubleCheckNextPage] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [indexes, setIndexes] = useState({
     page: 1,
@@ -25,7 +25,36 @@ function QaBox({ id }) {
   });
 
   useEffect(() => {
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${id}`, {
+    setProductMetadata({
+      product_id: id,
+      productName: '',
+    })
+    setQuestions([]);
+    setSecondPass(false);
+    setSearchTerm('');
+    setIndexes({
+      page: 1,
+      questionIndex: 0,
+    });
+    setChecks({
+      isLoading: true,
+      isDone: false,
+      isPageDone: false,
+      isQuestionModalOpen: false,
+    });
+
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
+      headers: {
+        Authorization: process.env.GITKEY,
+      },
+    })
+      .then(({ data }) => {
+        setProductMetadata({ productName: data.name, product_id: data.id });
+      });
+  }, [id]);
+
+  useEffect(() => {
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${productMetadata.product_id}`, {
       headers: {
         Authorization: process.env.GITKEY,
       },
@@ -37,7 +66,12 @@ function QaBox({ id }) {
         setQuestions([...questions, ...data.results]);
 
         if (data.results.length === 0) {
-          setChecks({ ...checks, isPageDone: true });
+          if(!doubleCheckNextPage) {
+            setDoubleCheckNextPage(true);
+            setIndexes({ ...indexes, page: indexes.page + 1 });
+          } else {
+            setChecks({ ...checks, isPageDone: true });
+          }
         }
 
         if (questions.length < 2 && !secondPass) {
@@ -48,18 +82,19 @@ function QaBox({ id }) {
         }
         setChecks({ ...checks, isLoading: false });
       });
-  }, [id, indexes.page]);
+  }, [indexes.page]);
 
-  useEffect(() => {
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
-      headers: {
-        Authorization: process.env.GITKEY,
-      }
-    })
-      .then(({ data }) => {
-        setProductMetadata({ ...productMetadata, productName: data.name });
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${productMetadata.product_id}`, {
+  //     headers: {
+  //       Authorization: process.env.GITKEY,
+  //     }
+  //   })
+  //     .then(({ data }) => {
+  //       console.log(data.name);
+  //       setProductMetadata({ ...productMetadata, productName: data.name });
+  //     });
+  // }, [id]);
 
   function handleMoreQuestions() {
     document.querySelector('#bottom').scrollIntoView(false);
