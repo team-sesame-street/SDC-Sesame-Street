@@ -68,7 +68,7 @@ function Reviews({ reviews, setSort, count, setCount, meta }) {
           </div>
         );
       })}
-      <ReviewsMoreReviews count={count} setCount={setCount} />
+      <ReviewsMoreReviews count={count} setCount={setCount} totalReviews={totalReviews} />
     </div>
   );
 }
