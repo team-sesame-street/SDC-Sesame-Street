@@ -48,7 +48,6 @@ function Modal({ open, closeModal, currOutfit, id }) {
     }
   }, [id]);
 
-  console.log(siteIdInfo);
   return (
     <>
       <div style={overlayStyle} />

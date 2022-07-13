@@ -3,63 +3,9 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-use-before-define */
-import React from 'react';
+import React, { useState } from 'react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import OutfitList from './OutfitList.jsx';
-
-function Outfit({
-  currOutfit, addOutfit, outfitSlides, deleteOutfit,
-}) {
-  const slideLeft = () => {
-    const slider = document.getElementById('slider2');
-    slider.scrollLeft -= 300;
-  };
-
-  const slideRight = () => {
-    const slider = document.getElementById('slider2');
-    slider.scrollLeft += 300;
-  };
-
-  const clickHandler = () => {
-    for (const outfit of outfitSlides) {
-      if (outfit.id === currOutfit.info.id) return;
-    }
-    const obj = {};
-    obj.id = currOutfit.info.id;
-    obj.url = currOutfit.styles.photos[0].thumbnail_url;
-    obj.name = currOutfit.info.name;
-    obj.category = currOutfit.info.category;
-    obj.price = currOutfit.info.default_price;
-    addOutfit(obj);
-  };
-
-  const imageRender = () => {
-    if (outfitSlides.length !== 0) {
-      return (
-        outfitSlides.map((slide, index) => (
-          <OutfitList key={index} slide={slide} deleteOutfit={deleteOutfit} />
-        ))
-      );
-    }
-  };
-
-  return (
-    <div style={sliderContainer}>
-      <MdChevronLeft size={40} style={left} onClick={slideLeft} />
-      <div id="slider2" style={slider}>
-        {imageRender()}
-        {outfitSlides.length !== 0 ? (<>
-        <button style={{...plusSignStyle, transform: 'translate(150px, -175px)' }} onClick={clickHandler}>+</button>
-        <button style={{...addOutfitStyle, transform: 'translate(85px, -145px)' }} onClick={clickHandler}>Add an Outfit</button></>)
-        : (<>
-        <button style={{...plusSignStyle, transform: 'translate(150px, 145px)' }} onClick={clickHandler}>+</button>
-        <button style={{...addOutfitStyle, transform: 'translate(85px, 175px)' }} onClick={clickHandler}>Add an Outfit</button>
-        </>)}
-      </div>
-      <MdChevronRight size={40} style={right} onClick={slideRight} />
-    </div>
-  );
-}
 
 const sliderContainer = {
   width: '50%',
@@ -96,53 +42,13 @@ const slider = {
   scrollBehavior: 'smooth',
 };
 
-const card = {
-  width: '300px',
-  height: '365px',
-  background: 'white',
-  borderRadius: '10px',
-  display: 'inline-block',
-  marginLeft: '5px',
-  marginRight: '5px',
-  cursor: 'pointer',
-};
-
-const imageStyle = {
-  width: '100%',
-  height: '75%',
-  backgroundColor: 'rgb(240 240 240 / 80%)',
-  borderTopLeftRadius: '10px',
-  borderTopRightRadius: '10px',
-  backgroundSize: 'cover',
-  fontSize: '30px',
-  color: 'gray',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
-
-const titleStyle = {
-  margin: '0px 0px 3px 10px',
-  fontWeight: '900',
-};
-
-const priceStyle = {
-  margin: '1px 0px 0px 10px',
-  fontSize: '12px',
-};
-
-const categoryStyle = {
-  marginLeft: '10px',
-  fontSize: '13px',
-};
-
 const addOutfitStyle = {
   color: 'gray',
   background: 'white',
   fontWeight: '700',
   fontSize: '15px',
   borderStyle: 'none',
-  cursor: 'pointer  '
+  cursor: 'pointer  ',
 };
 
 const plusSignStyle = {
@@ -151,7 +57,79 @@ const plusSignStyle = {
   fontWeight: '700',
   fontSize: '35px',
   borderStyle: 'none',
-  cursor: 'pointer  '
+  cursor: 'pointer  ',
+  width: '290px',
+}
+
+function Outfit({
+  currOutfit, addOutfit, outfitSlides, deleteOutfit,
+}) {
+  const [leftSide, setLeftSide] = useState(930);
+  const imageContainer = document.querySelector('#slider2');
+  const rightArrow = document.querySelector('#outfitRightArrow');
+  const leftArrow = document.querySelector('#outfitLeftArrow');
+
+  if (imageContainer && leftSide >= imageContainer.scrollWidth && rightArrow) {
+    rightArrow.style.visibility = 'hidden';
+  } else if (imageContainer && leftSide < imageContainer.scrollWidth && rightArrow) {
+    rightArrow.style.visibility = 'visible';
+  }
+
+  if (leftSide <= 930 && leftArrow) {
+    leftArrow.style.visibility = 'hidden';
+  } else if (leftSide > 930 && leftArrow) {
+    leftArrow.style.visibility = 'visible';
+  }
+
+  const slideLeft = () => {
+    imageContainer.scrollLeft -= 310;
+    setLeftSide(leftSide - 310);
+  };
+
+  const slideRight = () => {
+    imageContainer.scrollLeft += 310;
+    setLeftSide(leftSide + 310);
+  };
+
+  const clickHandler = () => {
+    for (const outfit of outfitSlides) {
+      if (outfit.id === currOutfit.info.id) return;
+    }
+    const obj = {};
+    obj.id = currOutfit.info.id;
+    obj.url = currOutfit.styles.photos[0].thumbnail_url;
+    obj.name = currOutfit.info.name;
+    obj.category = currOutfit.info.category;
+    obj.price = currOutfit.info.default_price;
+    addOutfit(obj);
+  };
+
+  const imageRender = () => {
+    if (outfitSlides.length !== 0) {
+      return (
+        outfitSlides.map((slide, index) => (
+          <OutfitList key={index} slide={slide} deleteOutfit={deleteOutfit} />
+        ))
+      );
+    }
+  };
+
+  return (
+    <div style={sliderContainer}>
+      <MdChevronLeft size={40} style={left} onClick={slideLeft} id="outfitLeftArrow" />
+      <div id="slider2" style={slider}>
+        {imageRender()}
+        {outfitSlides.length !== 0 ? (<>
+        <button style={{...plusSignStyle, transform: 'translateY(-175px)' }} onClick={clickHandler}>+</button>
+        <button style={{...addOutfitStyle, transform: 'translate(-200px, -145px)' }} onClick={clickHandler}>Add an Outfit</button></>)
+        : (<>
+        <button style={{...plusSignStyle, transform: 'translateY(145px)' }} onClick={clickHandler}>+</button>
+        <button style={{...addOutfitStyle, transform: 'translate(-200px, 175px)' }} onClick={clickHandler}>Add an Outfit</button>
+        </>)}
+      </div>
+      <MdChevronRight size={40} style={right} onClick={slideRight} id="outfitRightArrow" />
+    </div>
+  );
 }
 
 export default Outfit;
