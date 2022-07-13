@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Reviews from './reviews/index.jsx';
-import Ratings from './ratings/Ratings.jsx';
+import Ratings from './ratings/index.jsx';
 
 function RrBox({ id }) {
   const [reviews, setReviews] = useState([]);
@@ -46,7 +46,7 @@ function RrBox({ id }) {
   return (
     <div>
       <h1>Ratings & Reviews</h1>
-      <Ratings id={id} />
+      <Ratings meta={meta} />
       <Reviews reviews={reviews} setSort={setSort} count={count} setCount={setCount} meta={meta} />
     </div>
   );
