@@ -49,7 +49,7 @@ function Checkout({ selectedStyle }) {
             setMaxQuantity(0);
           }
         });
-    } else if (selectedSku && selectedSku.length === 0) {
+    } else if (selectedSku.length === 0) {
       setSelectedQuantity(null);
       setMaxQuantity(null);
       setClickSubmit(false);
@@ -78,6 +78,7 @@ function Checkout({ selectedStyle }) {
         },
       });
     }
+    e.target.reset();
     setSelectedSku('');
   };
 
@@ -94,7 +95,7 @@ function Checkout({ selectedStyle }) {
       <form onSubmit={handleSubmit}>
         {clickSubmit && (<div>Please select size</div>)}
         <select
-          defaultValue={selectedSku}
+          defaultValue={selectedSku === '' ? 'Select Size' : selectedSku}
           size={clickSubmit && skusInStock.length > 0 ? 3 : 0}
           onChange={(e) => { setSelectedSku(e.target.value); }}
         >
@@ -116,14 +117,14 @@ function Checkout({ selectedStyle }) {
             </option>
           )))}
         </select>
-        {skusInStock.length > 0 && selectedSku.length === 0 && maxQuantity > 0
+        {skusInStock.length > 0 && selectedSku.length === 0
+        && (maxQuantity > 0 || maxQuantity === null)
         && (<button type="button" onClick={clickSubmitWithNoQuantity}>Add to Cart</button>)}
         {skusInStock.length > 0
         && selectedSku.length > 0
         && selectedQuantity
         && maxQuantity > 0
         && (<button type="submit">Add to Cart</button>)}
-        {/* {console.log(selectedSku, selectedQuantity, clickSubmit)} */}
       </form>
     );
   }
