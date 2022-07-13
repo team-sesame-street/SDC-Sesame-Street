@@ -9,12 +9,14 @@ import AnswerModal from './AnswerModal.jsx';
 import QuestionModal from './QuestionModal.jsx';
 
 
-function QaListItem({ result, currProductName, product_id, isQuestionModalOpen, setIsQuestionModalOpen, questions, setQuestions, setNum }) {
+function QaListItem({ result, productMetadata, setTrigger }) {
   const [answers, setAnswers] = useState(
     Object.entries(result.answers).sort(byHelpfulness),
   );
   const [answerLimit, setAnswerLimit] = useState(2);
   const [isAnswerModalOpen, setIsAnswerModalOpen] = useState(false);
+
+
 
   function handleLoadMoreBtn(e) {
     if (answerLimit <= 2) {
@@ -53,7 +55,7 @@ function QaListItem({ result, currProductName, product_id, isQuestionModalOpen, 
   return (
     <Wrapper>
       <details open>
-        <QuestionWrapper>
+        <QuestionWrap>
           <span>
             {result.question_body}
           </span>
@@ -63,34 +65,40 @@ function QaListItem({ result, currProductName, product_id, isQuestionModalOpen, 
               <SubActionBtn disabled>
                 Yes
               </SubActionBtn>
-            ) : <SubActionBtn type="button" onClick={handleVoteQ}>Yes</SubActionBtn>}
+            ) : <SubActionBtn type="button" onClick={() => handleVoteQ()}>Yes</SubActionBtn>}
             (
             {qVote}
             )
             <Spacer />
             <SubActionBtn type="button" onClick={handleAnswerModal}>Add Answer</SubActionBtn>
           </small>
-        </QuestionWrapper>
-        <AnswerWrapper>
-          {answers.slice(0, answerLimit).map((answer) => (
-            <AnswerSubItem key={answer[0]} answer={answer} />
-          ))}
-          {answers.length > 2
-            && (
-              <PrimaryBtn type="button" onClick={handleLoadMoreBtn}>
-                {answerLimit === 2
-                  ? 'Load More Answers'
-                  : 'Collapse Answers'}
-              </PrimaryBtn>
-            )}
-        </AnswerWrapper>
+        </QuestionWrap>
+        {
+          answers.length > 0
+          && (
+            <AnswerWrapper>
+              <div className="answer_label">A:</div>
+              <div className="answers_list">
+                {answers.slice(0, answerLimit).map((answer) => (
+                  <AnswerSubItem key={answer[0]} answer={answer} />
+                ))}
+                {answers.length > 2
+                  && (
+                    <PrimaryBtn type="button" onClick={() => handleLoadMoreBtn()}>
+                      {answerLimit === 2
+                        ? 'Load More Answers'
+                        : 'Collapse Answers'}
+                    </PrimaryBtn>
+                  )}
+
+              </div>
+            </AnswerWrapper>
+            )
+        }
       </details>
       {isAnswerModalOpen
-        && <AnswerModal key={randomId()} className="answermodal" productName={currProductName} question={result} setIsAnswerModalOpen={setIsAnswerModalOpen} answers={answers} setAnswers={setAnswers} setNum={setNum}/>
-        }
-        {isQuestionModalOpen
-        && <QuestionModal productName={currProductName} product_id={product_id} setIsQuestionModalOpen={setIsQuestionModalOpen} setQuestions = {setQuestions} questions = {questions} setNum={setNum}/>}
-
+        && <AnswerModal key={randomId()} className="answermodal" productMetadata={productMetadata} question={result} setIsAnswerModalOpen={() => setIsAnswerModalOpen()} setTrigger={setTrigger} />
+      }
     </Wrapper>
   );
 }
@@ -100,9 +108,10 @@ export default QaListItem;
 const Wrapper = styled.article`
 `;
 
-const QuestionWrapper = styled.summary`
+const QuestionWrap = styled.summary`
+  font-size: 1.10rem;
   font-weight: 600;
-  border: 1px solid whitesmoke;
+  border-bottom: 1px solid whitesmoke;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -115,14 +124,27 @@ const QuestionWrapper = styled.summary`
 
   & small {
     font-weight: 400;
-  font-size: 0.75rem;
-  min-width: max-content;
+    font-size: 0.75rem;
+    min-width: max-content;
   }
 `;
 
 const AnswerWrapper = styled.div`
   max-height: 50vh;
   overflow: auto;
+  display: flex;
+  padding: 10px;
+  gap: 5px;
+
+  & .answer_label {
+    font-weight: 600;
+    font-size: 1.10rem;
+    flex-basis: min-content;
+  }
+
+  & .answers_list {
+    flex: 1;
+  }
 `;
 
 const SubActionBtn = styled.button`
@@ -147,7 +169,7 @@ const PrimaryBtn = styled.button`
   color: #222;
   font-size: 0.85rem;
   padding: 5px 10px;
-  margin: 10px;
+  margin: 10px 0;
 
   &&:hover {
     background: #ddd;
