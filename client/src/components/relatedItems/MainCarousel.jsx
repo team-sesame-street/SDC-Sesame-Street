@@ -20,7 +20,7 @@ const style = {
 function MainCarousel({ id, pageChange }) {
   const [relatedItems, setRelatedItems] = useState([]);
   const [relatedItemsInfo, setRelatedItemInfo] = useState({info:[], urls:[]});
-  // const [itemsUrls, setItemUrls] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [outfitSlides, setCurrOutfitSlides] = useState([]);
   const [currentOutfitInfo, setCurrOutfitInfo] = useState({
     info: {},
@@ -35,6 +35,11 @@ function MainCarousel({ id, pageChange }) {
   const prodEndpoints = [];
   for (let x = 0; x < relatedItems.length; x++) {
     prodEndpoints.push(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${relatedItems[x]}`);
+  }
+
+  const reviewsEndpoints = [];
+  for (let x = 0; x < relatedItems.length; x++) {
+    reviewsEndpoints.push(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta?product_id=${relatedItems[x]}`);
   }
 
   const addOutfit = (newOutfit) => {
@@ -111,11 +116,34 @@ function MainCarousel({ id, pageChange }) {
     })))
       .then((data) => setRelatedItemInfo((relatedItemsInfo) => ({...relatedItemsInfo, info: data})))
       .catch((err) => console.log(err));
+
+    axios.all(reviewsEndpoints.map((endpoint) => axios.get(endpoint, {
+      headers: { Authorization: process.env.GITKEY },
+    })))
+      .then((data) => {
+        const results = []
+        for (let x = 0; x < data.length; x++) {
+          const obj = {}
+          const id = data[x].data.product_id;
+          let avg = 0
+          let count = 0
+          for (const rating in data[x].data.ratings) {
+           avg += parseInt(rating) * parseInt(data[x].data.ratings[rating])
+           count += parseInt(data[x].data.ratings[rating])
+          }
+          obj.id = id;
+          obj.avg = avg / count;
+          results.push(obj);
+        }
+        setReviews(results);
+      })
+      .catch((err) => console.log(err));
   }, [relatedItems]);
+
   return (
     <div>
       <div style={style}>
-        <RelatedItems slides={relatedItemsInfo} id={id} pageChange={pageChange} />
+        <RelatedItems slides={relatedItemsInfo} id={id} pageChange={pageChange} reviews={reviews} />
       </div>
       <br />
       <br />
