@@ -22,13 +22,33 @@ function Checkout({ selectedStyle }) {
 
   useEffect(() => {
     if (selectedSku && selectedSku.length > 0) {
-      if (selectedStyle.skus[selectedSku].quantity > 15) {
-        setMaxQuantity(15);
-        setSelectedQuantity(1);
-      } else {
-        setMaxQuantity(selectedStyle.skus[selectedSku].quantity);
-        setSelectedQuantity(1);
-      }
+      let alreadyInCart = 0;
+      axios({
+        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart',
+        method: 'get',
+        headers: {
+          Authorization: process.env.GITKEY,
+        },
+        responseType: 'json',
+      })
+        .then((response) => {
+          const cart = response.data;
+          for (let i = 0; i < cart.length; i += 1) {
+            if (cart[i].sku_id === Number(selectedSku)) {
+              alreadyInCart = Number(cart[i].count);
+            }
+          }
+          const availableToOrder = selectedStyle.skus[selectedSku].quantity - alreadyInCart;
+          if (availableToOrder > 15) {
+            setMaxQuantity(15);
+            setSelectedQuantity(1);
+          } else if (availableToOrder > 0) {
+            setMaxQuantity(availableToOrder);
+            setSelectedQuantity(1);
+          } else {
+            setMaxQuantity(0);
+          }
+        });
     } else if (selectedSku && selectedSku.length === 0) {
       setSelectedQuantity(null);
       setMaxQuantity(null);
@@ -41,6 +61,26 @@ function Checkout({ selectedStyle }) {
     setSelectedSku(skusInStock[0]);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setClickSubmit(false);
+    let count = selectedQuantity;
+    while (count > 0) {
+      count -= 1;
+      axios({
+        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart',
+        method: 'post',
+        headers: {
+          Authorization: process.env.GITKEY,
+        },
+        data: {
+          "sku_id": selectedSku,
+        },
+      });
+    }
+    setSelectedSku('');
+  };
+
   if (Object.keys(selectedStyle).length > 0
     && skusInStock.every((sku) => (Object.keys(selectedStyle.skus).indexOf(sku) !== -1))) {
     let range = [];
@@ -51,29 +91,9 @@ function Checkout({ selectedStyle }) {
     }
 
     return (
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        setClickSubmit(false);
-        let count = selectedQuantity;
-        while (count > 0) {
-          count -= 1;
-          axios({
-            url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart',
-            method: 'post',
-            headers: {
-              Authorization: process.env.GITKEY,
-            },
-            data: {
-              "sku_id": selectedSku,
-            },
-          });
-        }
-        setSelectedSku('');
-      }}
-      >
+      <form onSubmit={handleSubmit}>
         {clickSubmit && (<div>Please select size</div>)}
         <select
-          id="size-selector"
           defaultValue={selectedSku}
           size={clickSubmit && skusInStock.length > 0 ? 3 : 0}
           onChange={(e) => { setSelectedSku(e.target.value); }}
@@ -88,21 +108,21 @@ function Checkout({ selectedStyle }) {
             )))}
         </select>
         <select onChange={(e) => { setSelectedQuantity(e.target.value); }}>
-          {(selectedSku.length === 0 || (selectedSku.length > 0 && !maxQuantity)) && (<option value="">-</option>)}
+          {(selectedSku.length === 0 || (selectedSku.length > 0 && maxQuantity === null)) && (<option value="">-</option>)}
+          {maxQuantity === 0 && (<option value={0}>Out Of Stock</option>)}
           {selectedSku.length > 0 && maxQuantity && (range.map((quantity) => (
             <option value={quantity} key={quantity}>
               {quantity}
             </option>
           )))}
         </select>
-        {skusInStock.length > 0 && selectedSku.length === 0
+        {skusInStock.length > 0 && selectedSku.length === 0 && maxQuantity > 0
         && (<button type="button" onClick={clickSubmitWithNoQuantity}>Add to Cart</button>)}
         {skusInStock.length > 0
         && selectedSku.length > 0
         && selectedQuantity
-        && (
-        <button type="submit">Add to Cart</button>
-        )}
+        && maxQuantity > 0
+        && (<button type="submit">Add to Cart</button>)}
         {/* {console.log(selectedSku, selectedQuantity, clickSubmit)} */}
       </form>
     );
