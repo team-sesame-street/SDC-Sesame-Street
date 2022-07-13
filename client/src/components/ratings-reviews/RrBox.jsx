@@ -7,8 +7,9 @@ import Ratings from './ratings/Ratings.jsx';
 
 function RrBox({ id }) {
   const [reviews, setReviews] = useState([]);
-  const [count, setCount] = useState(10);
+  const [count, setCount] = useState(2);
   const [sort, setSort] = useState('relevant');
+  const [meta, setMeta] = useState();
 
   useEffect(() => {
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
@@ -25,13 +26,28 @@ function RrBox({ id }) {
         setReviews(res.data.results);
       })
       .catch((err) => console.log('Error RrBox: ', err));
-  }, [id, sort]);
+  }, [id, sort, count]);
+
+  useEffect(() => {
+    axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
+      headers: {
+        Authorization: process.env.GITKEY,
+      },
+      params: {
+        product_id: id,
+      },
+    })
+      .then((res) => {
+        setMeta(res.data);
+      })
+      .catch((err) => console.log('Error getting meta data (RrBox): ', err));
+  }, [id]);
 
   return (
     <div>
       <h1>Ratings & Reviews</h1>
       <Ratings id={id} />
-      <Reviews reviews={reviews} setSort={setSort} />
+      <Reviews reviews={reviews} setSort={setSort} count={count} setCount={setCount} meta={meta} />
     </div>
   );
 }
