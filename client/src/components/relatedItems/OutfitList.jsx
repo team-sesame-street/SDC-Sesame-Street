@@ -2,7 +2,7 @@ import React from 'react';
 import { TiDeleteOutline } from "react-icons/ti";
 
 const card = {
-  width: '300px',
+  width: '16vw',
   height: '365px',
   background: 'white',
   borderRadius: '10px',

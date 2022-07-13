@@ -99,7 +99,6 @@ function MainCarousel({ id, pageChange }) {
             ? salePrice = false
             : salePrice = data[x].data.results[0].sale_price;
           obj.salePrice = salePrice;
-          console.log(x, 'inside of urls')
           obj.url = url;
           results.push(obj);
         }

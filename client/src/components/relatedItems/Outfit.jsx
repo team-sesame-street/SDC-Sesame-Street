@@ -64,36 +64,36 @@ const plusSignStyle = {
 function Outfit({
   currOutfit, addOutfit, outfitSlides, deleteOutfit,
 }) {
-  const [leftSide, setLeftSide] = useState(930);
+  const [leftSide, setLeftSide] = useState(700);
   const imageContainer = document.querySelector('#slider2');
   const rightArrow = document.querySelector('#outfitRightArrow');
   const leftArrow = document.querySelector('#outfitLeftArrow');
 
-  if (imageContainer && leftSide >= imageContainer.scrollWidth && rightArrow) {
+  if (imageContainer && leftSide >= imageContainer.scrollWidth - 15 && rightArrow) {
     rightArrow.style.visibility = 'hidden';
   } else if (imageContainer && leftSide < imageContainer.scrollWidth && rightArrow) {
     rightArrow.style.visibility = 'visible';
   }
 
-  if (leftSide <= 930 && leftArrow) {
+  if (leftSide <= 700 && leftArrow) {
     leftArrow.style.visibility = 'hidden';
-  } else if (leftSide > 930 && leftArrow) {
+  } else if (leftSide > 700 && leftArrow) {
     leftArrow.style.visibility = 'visible';
   }
 
   const slideLeft = () => {
-    imageContainer.scrollLeft -= 310;
-    setLeftSide(leftSide - 310);
+    imageContainer.scrollLeft -= 315;
+    setLeftSide(leftSide - 315);
   };
 
   const slideRight = () => {
-    imageContainer.scrollLeft += 310;
-    setLeftSide(leftSide + 310);
+    imageContainer.scrollLeft += 315;
+    setLeftSide(leftSide + 315);
   };
 
   const clickHandler = () => {
     for (const outfit of outfitSlides) {
-      if (outfit.id === currOutfit.info.id) return;
+      if (outfit.id === currOutfit.info.id) continue
     }
     const obj = {};
     obj.id = currOutfit.info.id;
