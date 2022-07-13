@@ -28,7 +28,8 @@ function QaBox({ id }) {
     setProductMetadata({
       product_id: id,
       productName: '',
-    })
+    });
+    setDoubleCheckNextPage(false);
     setQuestions([]);
     setSecondPass(false);
     setSearchTerm('');
@@ -66,18 +67,20 @@ function QaBox({ id }) {
         setQuestions([...questions, ...data.results]);
 
         if (data.results.length === 0) {
-          if(!doubleCheckNextPage) {
+          if (!doubleCheckNextPage) {
             setDoubleCheckNextPage(true);
             setIndexes({ ...indexes, page: indexes.page + 1 });
           } else {
+            setDoubleCheckNextPage(false);
             setChecks({ ...checks, isPageDone: true });
           }
         }
 
         if (questions.length < 2 && !secondPass) {
-          setIndexes({ ...indexes, page: indexes.page + 1 });
           setSecondPass(true);
+          setIndexes({ ...indexes, page: indexes.page + 1 });
         } else if (secondPass && questions.length <= 2) {
+          setSecondPass(false);
           setChecks({ ...checks, isPageDone: true });
         }
         setChecks({ ...checks, isLoading: false });
@@ -103,7 +106,7 @@ function QaBox({ id }) {
       setIndexes({ ...indexes, page: indexes.page++ });
     }
 
-    if (questions.length - 3 > indexes.questionIndex + 1) {
+    if (questions.length - 3 > indexes.questionIndex) {
       setIndexes({ ...indexes, questionIndex: indexes.questionIndex + 2 });
     } else {
       setIndexes({ ...indexes, questionIndex: indexes.questionIndex + 1 });
