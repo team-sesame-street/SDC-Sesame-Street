@@ -12,7 +12,7 @@ import ReviewsBody from './ReviewsBody.jsx';
 import ReviewsHelpful from './ReviewsHelpful.jsx';
 import ReviewsSort from './ReviewsSort.jsx';
 import ReviewsMoreReviews from './ReviewsMoreReviews.jsx';
-import getTotalRatings from './getTotalRatings';
+import getTotalRatings from '../../../../utils/getTotalRatings.js';
 
 function Reviews({ reviews, setSort, count, setCount, meta }) {
   console.log('class: ', reviews);
