@@ -96,7 +96,7 @@ function Checkout({ selectedStyle }) {
       <form onSubmit={handleSubmit}>
         {clickSubmit && (<div>Please select size</div>)}
         <select
-          defaultValue={selectedSku === '' ? 'Select Size' : selectedSku}
+          defaultValue={selectedSku}
           size={clickSubmit && skusInStock.length > 0 ? 3 : 0}
           onChange={(e) => { setSelectedSku(e.target.value); }}
         >
