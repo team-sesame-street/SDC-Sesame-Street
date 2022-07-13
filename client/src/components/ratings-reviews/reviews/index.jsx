@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable import/extensions */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-use-before-define */
@@ -12,14 +11,24 @@ import ReviewsResponse from './ReviewsResponse.jsx';
 import ReviewsBody from './ReviewsBody.jsx';
 import ReviewsHelpful from './ReviewsHelpful.jsx';
 import ReviewsSort from './ReviewsSort.jsx';
+import ReviewsMoreReviews from './ReviewsMoreReviews.jsx';
+import getTotalRatings from './getTotalRatings';
 
-function Reviews({ reviews, setSort }) {
-  // console.log('class: ', reviews);
+function Reviews({ reviews, setSort, count, setCount, meta }) {
+  console.log('class: ', reviews);
+  console.log(meta);
+  let totalReviews = null;
+  if (meta) {
+    totalReviews = getTotalRatings(meta.ratings);
+  }
 
   return (
     <div style={flexContainer}>
-      <div style={{ display: 'flex' }}>
-        Reviews sorted by
+      <div style={{ display: 'flex', gap: '4px' }}>
+        {totalReviews}
+        {' '}
+        reviews, sorted by
+        {' '}
         <ReviewsSort setSort={setSort} />
       </div>
       {reviews.map((review) => {
@@ -59,6 +68,7 @@ function Reviews({ reviews, setSort }) {
           </div>
         );
       })}
+      <ReviewsMoreReviews count={count} setCount={setCount} />
     </div>
   );
 }
