@@ -9,6 +9,7 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
   const [trigger, setTrigger] = useState(0);
   const [allQs, setAllQs] = useState([]);
   const [resetPage, setResetPage] = useState(1);
+  const [doubleCheckNextPage, setDoubleCheckNextPage] = useState(false);
 
   useEffect(() => {
     if (trigger !== 0) {
@@ -26,8 +27,14 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
           setAllQs([...allQs, ...data.results]);
           setResetPage(resetPage + 1);
         } else {
-          setQuestions(allQs);
-          setChecks({ ...checks, isLoading: false, isPageDone: true });
+          if (!doubleCheckNextPage) {
+            setDoubleCheckNextPage(true);
+            setResetPage(resetPage + 1);
+          } else {
+            setDoubleCheckNextPage(false);
+            setQuestions(allQs);
+            setChecks({ ...checks, isLoading: false, isPageDone: true });
+          }
         }
       });
     }
