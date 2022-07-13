@@ -104,7 +104,7 @@ function MainCarousel({ id, pageChange }) {
             let salePrice;
             let originalPrice = data[x][0].data.results[0].original_price
             !data[x][0].data.results[0].sale_price
-              ? salePrice = 100
+              ? salePrice = false
               : salePrice = data[x][0].data.results[0].sale_price;
             obj.salePrice = salePrice;
             obj.url = url;
