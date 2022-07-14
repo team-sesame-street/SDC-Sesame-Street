@@ -31,7 +31,7 @@ describe('rendering StyleSelector', () => {
     expect(element).toHaveTextContent('BLACK');
   });
 
-  it('should invoke a function that select a new style', () => {
+  it('should invoke a function that selects a new style', () => {
     fireEvent(
       screen.getByAltText('Goldenrod'),
       new MouseEvent('click', {
