@@ -28,7 +28,7 @@ function ExpandedImage({
             {index === currImgIndex && index > 0
             && (<IoIosArrowDropleft onClick={() => { setCurrImgIndex(currImgIndex - 1);} } />)}
             {index === currImgIndex && (
-              <img src={images[currImgIndex].url} alt="A representation of this product" style={styleExpandedImg} />
+              <img src={images[currImgIndex].url} alt="A representation of this product" style={styleExpandedImg} loading="lazy"/>
             )}
             {index === currImgIndex && index < images.length - 1
             && (<IoIosArrowDropright onClick={() => { setCurrImgIndex(currImgIndex + 1);} } />)}

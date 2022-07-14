@@ -96,7 +96,7 @@ function QaBox({ id, setProductId }) {
 
   return (
     <Wrapper>
-      {/* <PageSwitcher setProductId={setProductId}/> */}
+      <PageSwitcher setProductId={setProductId}/>
       <h2>Questions And Answers</h2>
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <QAWrapper

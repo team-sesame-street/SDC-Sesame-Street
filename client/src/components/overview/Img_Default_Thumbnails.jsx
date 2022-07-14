@@ -37,7 +37,7 @@ function ImageDefaultThumbnail({
           return (
             <div key={index}>
               {index >= thumbnailIndexMin && index <= thumbnailIndexMax
-              && (<img src={image.thumbnail_url} style={style} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} />)}
+              && (<img src={image.thumbnail_url} style={style} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} loading="lazy"/>)}
 
             </div>
           );

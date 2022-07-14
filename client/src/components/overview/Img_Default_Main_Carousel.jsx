@@ -39,7 +39,7 @@ function MainImage({ images, currImgIndex, setCurrImgIndex, thumbnailIndexMin,
             {index === currImgIndex && (
               <img src={images[currImgIndex].url} style={styling}
                 alt="A representation of this product"
-                onClick={() => {setExpandedView(true);}}
+                onClick={() => {setExpandedView(true);}} loading="lazy"
               />
             )}
             {index === currImgIndex && index < images.length - 1

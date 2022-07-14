@@ -55,7 +55,7 @@ function AnswerSubItem({ answer }) {
         {body}
       </div>
       <div>
-        {photos.map((photo) => <Thumbnail key={randomId()} src={photo}/>)}
+        {photos.map((photo) => <Thumbnail key={randomId()} src={photo} loading="lazy"/>)}
       </div>
       <small>
         <span>
