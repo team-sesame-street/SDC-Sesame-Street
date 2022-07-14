@@ -57,7 +57,8 @@ describe('rendering Expanded View', () => {
   });
 
   it('invokes once a fn that will exit the expanded view when the exit btn is clicked', () => {
-    fireEvent(screen.getByTestId('exit-expanded-btn'),
+    fireEvent(
+      screen.getByTestId('exit-expanded-btn'),
       new MouseEvent('click', {
         bubbles: true,
       }),
