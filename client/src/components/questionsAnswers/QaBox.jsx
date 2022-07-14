@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import axios from 'axios';
 import SearchBar from './SearchBar.jsx';
 import QAWrapper from './QAWrapper.jsx';
+import PageSwitcher from '../../../utils/PageSwitcher.jsx';
 
-function QaBox({ id }) {
+function QaBox({ id, setProductId }) {
   const [questions, setQuestions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [count, setCount] = useState(0);
@@ -30,49 +31,20 @@ function QaBox({ id }) {
       },
     })
       .then(({ data }) => {
-        setProductMetadata({ productName: data.name, product_id: data.id });
-      })
-      .then(() => {
-        setIsPageDone(false);
         setQuestions([]);
-        setSearchTerm('');
         setIndexes({
           page: 1,
           questionIndex: 0,
         });
+        setIsPageDone(false);
+        setSearchTerm('');
         setChecks({
           isLoading: true,
           isDone: false,
           isQuestionModalOpen: false,
         });
         setCount(0);
-      })
-      .then(() => {
-        axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${id}`, {
-          headers: {
-            Authorization: process.env.GITKEY,
-          },
-          params: {
-            page: indexes.page,
-          },
-        })
-          .then(({ data }) => {
-            if (data.results.length === 0 && !isPageDone) {
-              setCount(count + 1);
-              if (count >= 2) {
-                setIsPageDone(true);
-              } else if ((count < 2 && !isPageDone) || data.results.length === 1) {
-                // !REMOVE OR IF BROKEN
-                setIndexes({ ...indexes, page: indexes.page + 1 });
-              }
-            } else {
-              setQuestions([...questions, ...data.results]);
-              if (data.results.length < 2 && !isPageDone) {
-                setIndexes({ ...indexes, page: indexes.page + 1 });
-              }
-            }
-            setChecks({ ...checks, isLoading: false });
-          });
+        setProductMetadata({ productName: data.name, product_id: data.id });
       });
   }, [id]);
 
@@ -91,12 +63,11 @@ function QaBox({ id }) {
           if (count >= 2) {
             setIsPageDone(true);
           } else if ((count < 2 && !isPageDone) || data.results.length === 1) {
-            // !REMOVE OR IF BROKEN
             setIndexes({ ...indexes, page: indexes.page + 1 });
           }
         } else {
           setQuestions([...questions, ...data.results]);
-          if (data.results.length < 2 && !isPageDone) {
+          if (questions.length < 2 && !isPageDone) {
             setIndexes({ ...indexes, page: indexes.page + 1 });
           }
         }
@@ -125,9 +96,9 @@ function QaBox({ id }) {
 
   return (
     <Wrapper>
+      <PageSwitcher setProductId={setProductId}/>
       <h2>Questions And Answers</h2>
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-
       <QAWrapper
         questions={questions}
         setQuestions={setQuestions}

@@ -96,8 +96,8 @@ function MainCarousel({ id, pageChange }) {
           for (let x = 0; x < data.length; x++) {
             const obj = {};
             let url;
-            if (data[x][0].data.results[0].photos[0].url) {
-              url = data[x][0].data.results[0].photos[0].url;
+            if (data[x][0].data.results[0].photos[0].thumbnail_url) {
+              url = data[x][0].data.results[0].photos[0].thumbnail_url;
             } else {
               url = 'https://images.unsplash.com/photo-1515243061678-14fc18b93935?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=800';
             }
@@ -153,7 +153,7 @@ function MainCarousel({ id, pageChange }) {
   }, [id]);
 
   return (
-    <div>
+    <div data-testId='main'>
       <div style={style}>
         <RelatedItems slides={relatedItemsInfo} id={id} pageChange={pageChange} reviews={reviews} />
       </div>

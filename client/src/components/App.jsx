@@ -8,7 +8,7 @@ import MainCarousel from './relatedItems/MainCarousel.jsx';
 import MainOverview from './overview/MainOverview.jsx';
 
 function App() {
-  const [productId, setProductId] = useState(40346);
+  const [productId, setProductId] = useState(40344);
 
   // useEffect(() => {
   //   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
@@ -30,7 +30,7 @@ function App() {
       {productId}
       <MainOverview id={productId} />
       <MainCarousel id={productId} pageChange={pageChange} />
-      <QaBox id={productId} />
+      <QaBox id={productId} setProductId={setProductId} />
       <RrBox id={productId} />
     </div>
   );
