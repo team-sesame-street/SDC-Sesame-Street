@@ -8,7 +8,8 @@ import MainCarousel from './relatedItems/MainCarousel.jsx';
 import MainOverview from './overview/MainOverview.jsx';
 
 function App() {
-  const [productId, setProductId] = useState(40344);
+  const [productId, setProductId] = useState(40346);
+  // 40344
 
   // useEffect(() => {
   //   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {

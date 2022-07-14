@@ -17,6 +17,7 @@ function MainOverview({ id }) {
   const [thumbnailIndexMax, setThumbnailIndexMax] = useState(null);
   const [currImgIndex, setCurrImgIndex] = useState(null);
   const [expandedView, setExpandedView] = useState(false);
+  // NOTES: ID 40345 is the a product with no available sizes
 
   useEffect(() => {
     if (id) {

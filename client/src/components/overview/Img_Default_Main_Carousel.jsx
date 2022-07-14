@@ -2,8 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 
-function MainImage({ images, currImgIndex, setCurrImgIndex, thumbnailIndexMin,
-  thumbnailIndexMax, setThumbnailIndexMin, setThumbnailIndexMax, setExpandedView }) {
+function MainImage(
+  {
+    images, currImgIndex, setCurrImgIndex, thumbnailIndexMin,
+    thumbnailIndexMax, setThumbnailIndexMin, setThumbnailIndexMax, setExpandedView,
+  },
+) {
   if (images.length > 0) {
     const navigateLeft = () => {
       if (currImgIndex - 1 < thumbnailIndexMin) {
@@ -35,7 +39,7 @@ function MainImage({ images, currImgIndex, setCurrImgIndex, thumbnailIndexMin,
         {images.map((image, index) => (
           <div key={index}>
             {index === currImgIndex && index > 0
-            && (<FaArrowCircleLeft onClick={navigateLeft} />)}
+            && (<FaArrowCircleLeft data-testid="left-arrow" onClick={navigateLeft} />)}
             {index === currImgIndex && (
               <img src={images[currImgIndex].url} style={styling}
                 alt="A representation of this product"
@@ -43,7 +47,7 @@ function MainImage({ images, currImgIndex, setCurrImgIndex, thumbnailIndexMin,
               />
             )}
             {index === currImgIndex && index < images.length - 1
-            && (<FaArrowCircleRight onClick={navigateRight} />)}
+            && (<FaArrowCircleRight data-testid="right-arrow" onClick={navigateRight} />)}
           </div>
         ))}
       </div>

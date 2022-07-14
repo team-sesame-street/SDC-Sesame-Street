@@ -17,13 +17,14 @@ function ImageDefaultThumbnail({
         <h2>Image Default Thumbnail</h2>
         {images.length > 7 && thumbnailIndexMin > 0 && (
           <RiArrowUpSFill
+            data-testid="up-arrow-active"
             onClick={() => {
               thumbnailIndexRange(thumbnailIndexMin - 1, thumbnailIndexMax - 1);
             }}
           />
         )}
         {images.length > 7 && thumbnailIndexMin === 0 && (
-          <RiArrowUpSFill style={{ fill: '#eeeeee' }} />
+          <RiArrowUpSFill data-testid="up-arrow-inactive" style={{ fill: '#eeeeee' }} />
         )}
         {images.map((image, index) => {
           const style = {
