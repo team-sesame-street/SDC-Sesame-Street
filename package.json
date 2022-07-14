@@ -8,7 +8,8 @@
     "server": "nodemon ./server/index.js",
     "client-dev": "webpack --mode development --watch",
     "build": "webpack --config ./webpack.config.js",
-    "lint": "eslint --fix --ext .js,.jsx ."
+    "lint": "eslint --fix --ext .js,.jsx .",
+    "test": "npx jest"
   },
   "author": "",
   "license": "ISC",
