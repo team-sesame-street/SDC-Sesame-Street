@@ -153,7 +153,7 @@ function MainCarousel({ id, pageChange }) {
   }, [id]);
 
   return (
-    <div>
+    <div data-testId='main'>
       <div style={style}>
         <RelatedItems slides={relatedItemsInfo} id={id} pageChange={pageChange} reviews={reviews} />
       </div>
