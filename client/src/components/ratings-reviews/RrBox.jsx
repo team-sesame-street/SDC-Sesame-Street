@@ -12,6 +12,9 @@ function RrBox({ id }) {
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('relevant');
   const [meta, setMeta] = useState();
+  const [currRating, setRating] = useState({
+    1: false, 2: false, 3: false, 4: false, 5: false,
+  });
 
   useEffect(() => {
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
@@ -26,9 +29,21 @@ function RrBox({ id }) {
     })
       .then((res) => {
         setReviews(res.data.results);
+        // console.log('rating', res.data.results);
+        // console.log('actual', currRating);
+        const ratingArray = Object.values(currRating);
+        const mapped = ratingArray.map((bool, index) => {
+          if (bool) {
+            return index + 1;
+          }
+          return false;
+        });
+
+        // console.log(mapped);
+        // console.log('Rating Array: ', ratingArray);
       })
       .catch((err) => console.log('Error RrBox: ', err));
-  }, [id, sort, count]);
+  }, [id, sort, count, currRating]);
 
   useEffect(() => {
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
@@ -49,7 +64,7 @@ function RrBox({ id }) {
     <div className="RrBox-container" style={flexContainer}>
       <div style={ratingsContainer}>
         Ratings & Reviews
-        <Ratings meta={meta} />
+        <Ratings meta={meta} currRating={currRating} setRating={setRating} />
       </div>
       <div style={reviewsContainer}>
         <Reviews reviews={reviews} setSort={setSort} count={count} meta={meta} setCount={setCount} />

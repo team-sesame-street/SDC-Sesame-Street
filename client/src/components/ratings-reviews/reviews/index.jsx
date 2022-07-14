@@ -15,8 +15,8 @@ import ReviewsMoreReviews from './ReviewsMoreReviews.jsx';
 import getTotalRatings from '../../../../utils/getTotalRatings.js';
 
 function Reviews({ reviews, setSort, count, setCount, meta }) {
-  console.log('class: ', reviews);
-  console.log(meta);
+  // console.log('class: ', reviews);
+  // console.log(meta);
   let totalReviews = null;
   if (meta) {
     totalReviews = getTotalRatings(meta.ratings);
