@@ -1,8 +1,7 @@
 import React from 'react';
 import {
-  render, screen, cleanup, fireEvent, act,
+  render, screen, cleanup, fireEvent,
 } from '@testing-library/react';
-import { toBeVisible, toBeInTheDocument } from '@testing-library/jest-dom';
 import ExpandedImage from '../../../src/components/overview/Img_Expanded.jsx';
 
 const images = require('./ImagesDataTest.js').photos;
