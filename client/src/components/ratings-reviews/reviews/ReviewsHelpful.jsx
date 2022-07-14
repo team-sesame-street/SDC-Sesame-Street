@@ -82,9 +82,11 @@ function ReviewsHelpful({ helpfulness, reviewId }) {
 
 const flexDisplay = {
   display: 'flex',
-  justifyContent: 'space-between',
+  gap: '15px',
   width: '40%',
+  whiteSpace: 'nowrap',
   fontSize: 14,
+  marginBottom: '20px',
 };
 
 const greyedOut = {

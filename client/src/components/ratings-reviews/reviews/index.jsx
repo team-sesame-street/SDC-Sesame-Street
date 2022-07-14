@@ -24,7 +24,7 @@ function Reviews({ reviews, setSort, count, setCount, meta }) {
 
   return (
     <div style={reviewsContainer}>
-      <div style={{ display: 'flex', gap: '4px' }}>
+      <div style={sortedStyle}>
         {totalReviews}
         {' '}
         reviews, sorted by
@@ -35,7 +35,7 @@ function Reviews({ reviews, setSort, count, setCount, meta }) {
         {reviews.map((review) => {
           const revSumm = review.summary;
           return (
-            <div key={review.review_id} style={flexItems}>
+            <div key={review.review_id} style={individualReview}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <ReviewsRatings rating={review.rating} />
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
@@ -70,25 +70,42 @@ function Reviews({ reviews, setSort, count, setCount, meta }) {
           );
         })}
       </div>
-      <ReviewsMoreReviews count={count} setCount={setCount} totalReviews={totalReviews} />
+      <div style={buttonStyle}>
+        <ReviewsMoreReviews count={count} setCount={setCount} totalReviews={totalReviews} />
+      </div>
     </div>
   );
 }
 
 const reviewsContainer = {
+  marginTop: '60px',
   display: 'flex',
   flexDirection: 'column',
-  gap: '100px',
-  alignItems: 'center',
+  width: '100%',
 };
 
 const reviewsSubContainer = {
   maxHeight: '100vh',
   overflowY: 'auto',
+  wordBreak: 'break-all',
+  marginBottom: '20px',
 };
 
-const flexItems = {
-  width: '600px',
+const individualReview = {
+  borderBottomStyle: 'solid',
+  marginTop: '40px',
+};
+
+const buttonStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+};
+
+const sortedStyle = {
+  display: 'flex',
+  marginBottom: '25px',
+  fontSize: 20,
+  fontWeight: 'bold',
 };
 
 const summaryContainer = {

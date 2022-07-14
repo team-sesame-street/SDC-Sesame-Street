@@ -3,7 +3,7 @@ import React from 'react';
 
 function ReviewsSort({ setSort }) {
   return (
-    <div className="sort">
+    <div className="sort" style={sortBtnStyle}>
       <select onChange={() => { setSort(event.target.value); }}>
         <option value="relevant">relevance</option>
         <option value="newest">newest</option>
@@ -12,5 +12,9 @@ function ReviewsSort({ setSort }) {
     </div>
   );
 }
+
+const sortBtnStyle = {
+  marginLeft: '6px',
+};
 
 export default ReviewsSort;
