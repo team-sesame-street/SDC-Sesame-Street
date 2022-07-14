@@ -44,6 +44,6 @@ describe('rendering StyleSelector', () => {
         bubbles: true,
       }),
     );
-    expect(setSelectedStyle).toHaveBeenCalled();
+    expect(setSelectedStyle).toHaveBeenCalledTimes(1);
   });
 });
