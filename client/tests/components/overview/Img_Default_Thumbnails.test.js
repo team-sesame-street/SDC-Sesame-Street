@@ -33,6 +33,11 @@ describe('rendering Thumbnail in Default View', () => {
     expect(screen.queryByAltText('product representation #0')).toBeVisible();
   });
 
+  it('displays images within the range of the thumbnail', () => {
+    const thumbnails = screen.getAllByRole('img');
+    expect(thumbnails).toHaveLength(7);
+  });
+
   it('does not show images beyond the range of the thumbnail', () => {
     expect(screen.queryByAltText('product representation #9')).not.toBeInTheDocument();
   });

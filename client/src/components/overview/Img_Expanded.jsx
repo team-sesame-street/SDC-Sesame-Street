@@ -26,23 +26,23 @@ function ExpandedImage({
         {images.map((image, index) => (
           <div key={index}>
             {index === currImgIndex && index > 0
-            && (<IoIosArrowDropleft onClick={() => { setCurrImgIndex(currImgIndex - 1);} } />)}
+            && (<IoIosArrowDropleft onClick={() => { setCurrImgIndex(currImgIndex - 1); }} />)}
             {index === currImgIndex && (
               <img src={images[currImgIndex].url} alt="A representation of this product" style={styleExpandedImg} loading="lazy"/>
             )}
             {index === currImgIndex && index < images.length - 1
-            && (<IoIosArrowDropright onClick={() => { setCurrImgIndex(currImgIndex + 1);} } />)}
+            && (<IoIosArrowDropright onClick={() => { setCurrImgIndex(currImgIndex + 1); }} />)}
           </div>
         ))}
         {images.map((image, index) => (
           <div key={index}>
-            {index === currImgIndex && (<FiCircle style={styleMainCircle} />)}
+            {index === currImgIndex && (<FiCircle data-testid="inactive-circle" style={styleMainCircle} />)}
             {index !== currImgIndex && (
-              <FiCircle style={styleCircles} onClick={() => { setCurrImgIndex(index); }} />
+              <FiCircle data-testid="active-circle" style={styleCircles} onClick={() => { setCurrImgIndex(index); }} />
             )}
           </div>
         ))}
-        <IoExitOutline onClick={() => { setExpandedView(false); }} />
+        <IoExitOutline data-testid="exit-expanded-btn" onClick={() => { setExpandedView(false); }} />
       </div>
     );
   }
