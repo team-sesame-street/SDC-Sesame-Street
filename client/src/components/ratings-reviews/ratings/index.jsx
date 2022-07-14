@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-use-before-define */
 import React from 'react';
@@ -5,7 +6,7 @@ import StarRatings from 'react-star-ratings';
 import getTotalRatings from '../../../../utils/getTotalRatings.js';
 import RatingsBreakdown from './RatingsBreakdown.jsx';
 
-function Ratings({ meta }) {
+function Ratings({ meta, currRating, setRating }) {
   let rating = 0;
   let totalRatings = 0;
   let ratings = {};
@@ -27,8 +28,13 @@ function Ratings({ meta }) {
         <StarRatings rating={starRating} starDimension="18px" starSpacing="2px" starRatedColor="black" />
       </div>
       <div style={breakdownContainer}>
-        <RatingsBreakdown ratings={ratings} totalRatings={totalRatings}
-        onClick={() => {console.log(event.target)}}/>
+        <RatingsBreakdown
+          ratings={ratings}
+          totalRatings={totalRatings}
+          currRating={currRating}
+          setRating={setRating}
+          onClick={() => { console.log(event.target); }}
+        />
       </div>
     </div>
   );
