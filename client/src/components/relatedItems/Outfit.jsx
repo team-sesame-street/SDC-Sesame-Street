@@ -93,7 +93,7 @@ function Outfit({
 
   const clickHandler = () => {
     for (const outfit of outfitSlides) {
-      if (outfit.id === currOutfit.info.id) continue
+      if (outfit.id === currOutfit.info.id) return;
     }
     const obj = {};
     obj.id = currOutfit.info.id;
@@ -102,6 +102,8 @@ function Outfit({
     obj.category = currOutfit.info.category;
     obj.price = currOutfit.info.default_price;
     addOutfit(obj);
+    const currentList = JSON.parse(localStorage.getItem('list')) || []
+    localStorage.setItem('list', JSON.stringify([...currentList, obj]));
   };
 
   const imageRender = () => {
