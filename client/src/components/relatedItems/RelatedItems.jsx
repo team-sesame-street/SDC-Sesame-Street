@@ -23,6 +23,7 @@ const left = {
   left: '0',
   boxShadow: '2px 2px 2px 2px rgb(0 0 0 / 12%)',
   cursor: 'pointer',
+  visibility: 'hidden',
 };
 
 const right = {
@@ -44,7 +45,7 @@ const slider = {
 };
 
 const card = {
-  width: '16vw',
+  width: '300px',
   height: '365px',
   background: 'white',
   borderRadius: '10px',
@@ -118,16 +119,16 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
     rightArrow.style.visibility = 'visible';
   }
 
-  if (leftSide <= 700 && leftArrow) {
+  if (leftArrow && leftSide <= 700) {
     leftArrow.style.visibility = 'hidden';
   } else if (leftSide > 700 && leftArrow) {
     leftArrow.style.visibility = 'visible';
   }
 
   return (
-    <div style={sliderContainer}>
-      <MdChevronLeft size={40} style={left} onClick={slideLeft} id="leftArrow" />
-      <div data-testId='carousel-1' id="slider" style={slider}>
+    <div data-testid='related' style={sliderContainer}>
+      <MdChevronLeft size={40} style={left} onClick={slideLeft} id="leftArrow" data-testid='left-arrow'/>
+      <div id="slider" style={slider}>
         {slides.info.length !== 0 && slides.info.length === slides.urls.length && reviews.length === slides.info.length ? slides.info.map((slide, index) => (
           <div
             style={card}
@@ -149,7 +150,7 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
             </div>
             <p style={categoryStyle}>{slide.data.category}</p>
             <p style={titleStyle}>{slide.data.name}</p>
-            <p style={priceStyle}>
+            <p style={priceStyle} data-testid='label'>
               {!slides.urls[index].salePrice ? <label>${slides.urls[index].originalPrice}</label> : <label style={{color:'red'}}>${slides.urls[index].salePrice} <strike style={{color:'black'}}>{slides.urls[index].originalPrice}</strike></label>}
             </p>
              <Ratings rating={reviews[index].avg} key={index} />
@@ -157,7 +158,7 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
         )) : <></>}
         <Modal open={modal} closeModal={() => setModal(false)} currOutfit={currOutfit} id={id} />
       </div>
-      <MdChevronRight id="rightArrow" size={40} style={right} onClick={slideRight} />
+      <MdChevronRight id="rightArrow" size={40} style={right} onClick={slideRight} data-testid='right-arrow' />
     </div>
   );
 }

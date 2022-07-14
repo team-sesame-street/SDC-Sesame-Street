@@ -7,7 +7,7 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
       <h2>Style Selector</h2>
       <p>
         <strong>STYLE &gt; </strong>
-        {selectedStyle.name ? selectedStyle.name.toUpperCase() : null}
+        <span data-testid="selected-style-name">{selectedStyle.name ? selectedStyle.name.toUpperCase() : null}</span>
       </p>
       <div>
         {styles.map((style) => {

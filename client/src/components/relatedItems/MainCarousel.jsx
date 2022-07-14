@@ -63,6 +63,7 @@ function MainCarousel({ id, pageChange }) {
       }
     }
     setCurrOutfitSlides(copy);
+    localStorage.setItem('list', JSON.stringify(copy));
   };
 
   let infoPromises = []
@@ -151,6 +152,10 @@ function MainCarousel({ id, pageChange }) {
         .catch((err) => console.log(err));
     }
   }, [id]);
+
+  useEffect(() => {
+    setCurrOutfitSlides(JSON.parse(localStorage.getItem('list')) || [])
+  },[])
 
   return (
     <div data-testId='main'>

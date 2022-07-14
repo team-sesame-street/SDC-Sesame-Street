@@ -17,6 +17,7 @@ function MainOverview({ id }) {
   const [thumbnailIndexMax, setThumbnailIndexMax] = useState(null);
   const [currImgIndex, setCurrImgIndex] = useState(null);
   const [expandedView, setExpandedView] = useState(false);
+  // NOTES: ID 40345 is the a product with no available sizes
 
   useEffect(() => {
     if (id) {
@@ -67,8 +68,8 @@ function MainOverview({ id }) {
   useEffect(() => {
     if (Object.keys(selectedStyle).length > 0) {
       // dummy images data is duplicate of the same photos set
-      // setImages(selectedStyle.photos.concat(selectedStyle.photos));
-      setImages(selectedStyle.photos);
+      setImages(selectedStyle.photos.concat(selectedStyle.photos));
+      // setImages(selectedStyle.photos);
     }
   }, [selectedStyle]);
 
