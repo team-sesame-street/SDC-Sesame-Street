@@ -29,8 +29,8 @@ function RrBox({ id }) {
     })
       .then((res) => {
         setReviews(res.data.results);
-        console.log('rating', res.data.results);
-        console.log('actual', currRating);
+        // console.log('rating', res.data.results);
+        // console.log('actual', currRating);
         const ratingArray = Object.values(currRating);
         const mapped = ratingArray.map((bool, index) => {
           if (bool) {
@@ -39,8 +39,8 @@ function RrBox({ id }) {
           return false;
         });
 
-        console.log(mapped);
-        console.log('Rating Array: ', ratingArray);
+        // console.log(mapped);
+        // console.log('Rating Array: ', ratingArray);
       })
       .catch((err) => console.log('Error RrBox: ', err));
   }, [id, sort, count, currRating]);
