@@ -7,7 +7,7 @@ function Ratings({ rating }) {
   const starRating = Math.ceil(rating * 4) / 4;
 
   return (
-    <div>
+    <div data-testId='ratings'>
       <StarRatings rating={starRating} starDimension="18px" starSpacing="2px" starRatedColor="black" />
     </div>
   );

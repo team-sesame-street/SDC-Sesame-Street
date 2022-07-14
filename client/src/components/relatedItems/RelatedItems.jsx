@@ -88,7 +88,7 @@ const star = {
   marginTop: '10px',
 };
 
-function RelatedItems({slides, id, pageChange, reviews }) {
+function RelatedItems({ slides, id, pageChange, reviews }) {
   const [modal, setModal] = useState(false);
   const [currOutfit, setCurrOutfit] = useState({});
   const [carouselPos, setCarouselPos] = useState(false);
@@ -127,7 +127,7 @@ function RelatedItems({slides, id, pageChange, reviews }) {
   return (
     <div style={sliderContainer}>
       <MdChevronLeft size={40} style={left} onClick={slideLeft} id="leftArrow" />
-      <div id="slider" style={slider}>
+      <div data-testId='carousel-1' id="slider" style={slider}>
         {slides.info.length !== 0 && slides.info.length === slides.urls.length && reviews.length === slides.info.length ? slides.info.map((slide, index) => (
           <div
             style={card}
