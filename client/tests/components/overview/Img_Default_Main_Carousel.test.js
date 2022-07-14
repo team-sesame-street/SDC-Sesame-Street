@@ -2,7 +2,7 @@ import React from 'react';
 import {
   render, screen, cleanup, fireEvent, act,
 } from '@testing-library/react';
-import { toBeVisible } from '@testing-library/jest-dom';
+import { toBeVisible, toBeInTheDocument } from '@testing-library/jest-dom';
 import MainImage from '../../../src/components/overview/Img_Default_Main_Carousel.jsx';
 
 const images = require('./ImagesDataTest.js').photos;
@@ -11,6 +11,7 @@ describe('rendering Main Image in Default View', () => {
   afterEach(() => {
     cleanup();
   });
+
   // dummy functions
   const setCurrImgIndex = jest.fn();
   const setThumbnailIndexMax = jest.fn();
@@ -49,7 +50,7 @@ describe('rendering Main Image in Default View', () => {
       />);
     });
 
-    expect(screen.queryByTestId('left-arrow')).toBeNull();
+    expect(screen.queryByTestId('left-arrow')).not.toBeInTheDocument();
   });
 
   it('does not show a right arrow with the last image in the set', () => {
