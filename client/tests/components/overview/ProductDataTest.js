@@ -1,4 +1,4 @@
-module.exports = {
+const product = {
   product_id: '40346',
   results: [
     {
@@ -357,3 +357,5 @@ module.exports = {
     },
   ],
 };
+
+export default product;

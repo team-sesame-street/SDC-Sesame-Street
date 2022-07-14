@@ -4,8 +4,7 @@ import {
 } from '@testing-library/react';
 import { toHaveTextContent } from '@testing-library/jest-dom';
 import StyleSelector from '../../../src/components/overview/StyleSelector.jsx';
-
-const product = require('./ProductDataTest.js');
+import product from './ProductDataTest.js';
 
 describe('rendering StyleSelector', () => {
   const setSelectedStyle = jest.fn();

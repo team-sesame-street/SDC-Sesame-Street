@@ -4,8 +4,9 @@ import {
 } from '@testing-library/react';
 import { toBeVisible, toBeInTheDocument } from '@testing-library/jest-dom';
 import MainImage from '../../../src/components/overview/Img_Default_Thumbnails.jsx';
+import imagesSet from './ImagesDataTest.js';
 
-const images = require('./ImagesDataTest.js').photos;
+const images = imagesSet.photos;
 
 describe('rendering Thumbnail in Default View', () => {
   // dummy functions

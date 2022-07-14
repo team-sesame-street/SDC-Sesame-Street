@@ -1,4 +1,4 @@
-module.exports = {
+const imagesSet = {
   photos: [
     {
       thumbnail_url: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80',
@@ -26,3 +26,5 @@ module.exports = {
     },
   ],
 };
+
+export default imagesSet;

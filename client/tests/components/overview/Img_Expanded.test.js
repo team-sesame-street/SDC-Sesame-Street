@@ -3,11 +3,10 @@ import {
   render, screen, cleanup, fireEvent,
 } from '@testing-library/react';
 import ExpandedImage from '../../../src/components/overview/Img_Expanded.jsx';
+import imagesSet from './ImagesDataTest.js';
 
-const images = require('./ImagesDataTest.js').photos;
-/*
-images, currImgIndex, setCurrImgIndex, setExpandedView,
-*/
+const images = imagesSet.photos;
+
 describe('rendering Expanded View', () => {
   const setCurrImgIndex = jest.fn();
   const setExpandedView = jest.fn();
