@@ -44,7 +44,7 @@ function RrBox({ id }) {
   }, [id]);
 
   return (
-    <div>
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center'}}>
       <h1>Ratings & Reviews</h1>
       <Ratings id={id} />
       <Reviews reviews={reviews} setSort={setSort} count={count} setCount={setCount} meta={meta} />
