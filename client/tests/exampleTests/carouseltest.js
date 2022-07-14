@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Ratings from '../relatedItems/Ratings.jsx'
 import MainCarousel from '../relatedItems/MainCarousel.jsx'
 import { render, screen, cleanup } from '@testing-library/react'
@@ -14,7 +14,7 @@ test('This should render product carousel component', () => {
 });
 
 test('This should render the main carousel component', () => {
-  render(<MainCarousel id={40346}/>);
+  render(<MainCarousel id={40346} />);
   const element = screen.getByTestId('main');
   expect(element).toBeInTheDocument();
 });
