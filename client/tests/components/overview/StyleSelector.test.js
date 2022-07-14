@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  render, screen, cleanup, fireEvent
+  render, screen, cleanup, fireEvent,
 } from '@testing-library/react';
 import { toHaveTextContent } from '@testing-library/jest-dom';
 import StyleSelector from '../../../src/components/overview/StyleSelector.jsx';
@@ -9,6 +9,7 @@ const product = require('./ProductDataTest.js');
 
 describe('rendering StyleSelector', () => {
   const setSelectedStyle = jest.fn();
+
   beforeEach(() => {
     const styles = product.results;
     let selectedStyle = styles[0];
@@ -18,7 +19,12 @@ describe('rendering StyleSelector', () => {
         styles={styles}
         selectedStyle={selectedStyle}
         setSelectedStyle={setSelectedStyle}
-      />);
+      />,
+    );
+  });
+
+  afterEach(() => {
+    cleanup();
   });
 
   it('should display all styles available for the current product', () => {
@@ -31,7 +37,7 @@ describe('rendering StyleSelector', () => {
     expect(element).toHaveTextContent('BLACK');
   });
 
-  it('should invoke a function that selects a new style', () => {
+  it('should invoke a function that selects a new style when another image is clicked', () => {
     fireEvent(
       screen.getByAltText('Goldenrod'),
       new MouseEvent('click', {
@@ -39,9 +45,5 @@ describe('rendering StyleSelector', () => {
       }),
     );
     expect(setSelectedStyle).toHaveBeenCalled();
-  });
-
-  afterEach(() => {
-    cleanup();
   });
 });
