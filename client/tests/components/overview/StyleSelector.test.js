@@ -37,7 +37,7 @@ describe('rendering StyleSelector', () => {
     expect(element).toHaveTextContent('BLACK');
   });
 
-  it('should invoke a function that selects a new style when another image is clicked', () => {
+  it('should invoke once a function that selects a new style when another image is clicked', () => {
     fireEvent(
       screen.getByAltText('Goldenrod'),
       new MouseEvent('click', {
