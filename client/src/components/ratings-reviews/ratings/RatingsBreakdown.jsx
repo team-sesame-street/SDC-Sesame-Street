@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import RatingsBar from '../../../../utils/RatingsBar.jsx';
 
-function RatingsBreakdown({ ratings, totalRatings }) {
-  const [color, setColor] = useState('')
+function RatingsBreakdown({ ratings, totalRatings, currRating, setRating }) {
+  const [color, setColor] = useState('');
+
   const barArr = [];
   for (let i = 5; i >= 1; i -= 1) {
     barArr.push(
@@ -20,11 +21,19 @@ function RatingsBreakdown({ ratings, totalRatings }) {
     alignItems: 'baseline',
     cursor: 'pointer',
     fontSize: '18px',
-    backgroundColor: color,
   };
 
+  function handleEnter(event) {
+    event.target.style.backgroundColor = "blue";
+  }
+
+  function handleLeave(event) {
+    event.target.style.backgroundColor = "";
+  }
+
   function handleClick(event) {
-    console.log(event.target.className);
+    const key = event.target.className;
+    setRating({ ...currRating, [key]: !currRating[key] });
   }
 
   return (
@@ -32,7 +41,7 @@ function RatingsBreakdown({ ratings, totalRatings }) {
       Rating Breakdown:
       <div style={barStyling}>
         {barArr.map((ratingBar, i) => (
-          <div style={individualBreakdown} key={[i]} className={5 - i} onClick={handleClick} onKeyPress={handleClick} onMouseEnter={() => setColor('pink')} onMouseLeave={() => setColor('')} role="button" tabIndex="0">
+          <div style={individualBreakdown} key={[i]} className={5 - i} onClick={handleClick} onKeyPress={handleClick} role="button" tabIndex="0" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
             {5 - i}
             {' '}
             stars
