@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import QaListItem from './QaListItem.jsx';
 import randomId from '../../../utils/randomId.js';
-import axios from 'axios';
 import QuestionModal from './QuestionModal.jsx';
 
 function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks, searchTerm, questionIndex, setIsPageDone }) {
@@ -44,12 +44,13 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
             setIsPageDone(true);
           }
         }
-      });
+      })
+        .catch((err) => console.error(err));
     }
   }, [trigger, resetPage]);
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="qa-wrapper" className="qa-wrapper">
       {
         questions
           .filter(
@@ -78,13 +79,12 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
       {checks.isQuestionModalOpen
         && (
           <QuestionModal
+            data-test-id="question-modal-wrapper"
             productMetadata={productMetadata}
             checks={checks}
             setChecks={setChecks}
             setTrigger={setTrigger} />
         )}
-
-      <div id="bottom">.</div>
     </Wrapper>
   )
 }

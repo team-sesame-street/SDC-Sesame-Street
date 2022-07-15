@@ -45,7 +45,8 @@ function QaBox({ id, setProductId }) {
         });
         setCount(0);
         setProductMetadata({ productName: data.name, product_id: data.id });
-      });
+      })
+      .catch((err) => console.error(err));
   }, [id]);
 
   useEffect(() => {
@@ -72,12 +73,15 @@ function QaBox({ id, setProductId }) {
           }
         }
         setChecks({ ...checks, isLoading: false });
-      });
+      })
+      .catch((err) => console.error(err));
   }, [indexes.page]);
 
-  function handleMoreQuestions() {
-    document.querySelector('#bottom').scrollIntoView(false);
+  useEffect(()=> {
+      document.querySelector('.qa-wrapper')?.scrollTo({ top: document.querySelector('.qa-wrapper').scrollHeight, behavior: 'smooth' });
+  }, [indexes.questionIndex]);
 
+  function handleMoreQuestions() {
     if (!isPageDone) {
       setIndexes({ ...indexes, page: indexes.page++ });
     }
@@ -88,6 +92,7 @@ function QaBox({ id, setProductId }) {
       setIndexes({ ...indexes, questionIndex: indexes.questionIndex + 1 });
       setChecks({ ...checks, isDone: true });
     }
+
   }
 
   function handleAddQuestion() {
@@ -95,9 +100,9 @@ function QaBox({ id, setProductId }) {
   }
 
   return (
-    <Wrapper>
-      <PageSwitcher setProductId={setProductId}/>
-      <h2>Questions And Answers</h2>
+    <Wrapper data-testid="qa-component">
+      {/* <PageSwitcher setProductId={setProductId} /> */}
+      <h2 className="qa-component-header">Questions And Answers</h2>
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <QAWrapper
         questions={questions}
@@ -109,10 +114,11 @@ function QaBox({ id, setProductId }) {
         setIsPageDone={setIsPageDone}
         setChecks={setChecks}
       />
-
+      <PrimaryBtnGroup>
       {!checks.isDone
         && (<button type="button" onClick={() => handleMoreQuestions()} disabled={checks.isLoading} className="QAButton">More Questions</button>)}
-      <button type="button" disabled={checks.isLoading} onClick={() => handleAddQuestion()} className="QAButton">Add a Question</button>
+      <button type="button" disabled={checks.isLoading} onClick={() => handleAddQuestion()} className="QAButton" data-testid="qa-addqbtn">Add a Question</button>
+      </PrimaryBtnGroup>
     </Wrapper>
   );
 }
@@ -129,20 +135,33 @@ const Wrapper = styled.div`
   @media (max-width: 500px) {
     margin: 25px 0 0 0;
     width: 100%;
-    padding: 5px;
+    padding: 15px;
   }
 
-  & h2 {
+  & .qa-component-header {
     margin: 1.25rem 0;
+
+    @media(max-width:500px) {
+      text-align: center;
+      padding: 0 10px;
+    }
   }
+`;
+
+
+const PrimaryBtnGroup = styled.div`
+  display: flex;
 
   & .QAButton {
+    height: 3rem;
+    padding: 0 1rem;
+    justify-content: flex-start;
     text-transform: uppercase;
     font-weight: 700;
-    padding: 1rem 5rem;
     background: none;
     border: 1px solid #222;
     margin-right: 10px;
+    margin-top: 15px;
     &:hover {
       color: #eee;
       background: #222;
@@ -152,6 +171,14 @@ const Wrapper = styled.div`
       color: white;
       opacity: 0.25;
     }
-  }
 
+    @media(max-width: 500px) {
+      flex: 1;
+      padding: 0;
+      height: 5rem;
+    }
+  }
+  @media(max-width: 500px) {
+    justify-content: space-between;
+  }
 `;

@@ -3,15 +3,15 @@ import styled from 'styled-components';
 
 function SearchBar({ searchTerm, setSearchTerm }) {
   return (
-    <SearchBarWrapper>
-      <input type="textbox" placeholder="Have a question? Search for answers…" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+    <SearchBarWrapper data-testid="qa-searchbarform">
+      <input data-testid="qa-searchbar" type="textbox" placeholder="Have a question? Search for answers…" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} name="searchterm" />
     </SearchBarWrapper>
-  )
+  );
 }
 
 export default SearchBar;
 
-const SearchBarWrapper = styled.div`
+const SearchBarWrapper = styled.form`
   width: 100%;
   height: 2.5rem;
   margin-bottom: 1rem;
@@ -25,5 +25,10 @@ const SearchBarWrapper = styled.div`
   }
   & input:hover, input:focus {
     background-color: #f1f1f1;
+  }
+
+  @media(max-width:500px) {
+    height: 3.5rem;
+    margin-bottom: 1.5rem;
   }
 `;
