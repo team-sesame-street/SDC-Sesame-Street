@@ -46,7 +46,8 @@ function AnswerSubItem({ answer }) {
       .then(() => {
         setHasReported(true);
         localStorage.setItem(`hasReported-answer${answer[0]}`, true);
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   return (
@@ -54,9 +55,9 @@ function AnswerSubItem({ answer }) {
       <div>
         {body}
       </div>
-      <div>
+      <ThumbnailWrapper>
         {photos.map((photo) => <Thumbnail key={randomId()} src={photo} loading="lazy"/>)}
-      </div>
+      </ThumbnailWrapper>
       <small>
         <span>
           by
@@ -102,7 +103,18 @@ export default AnswerSubItem;
 
 const Wrapper = styled.div`
   border-bottom: 1px solid whitesmoke;
-  padding-bottom: 10px;
+  padding-bottom: 1rem;
+
+  & small > div{
+    @media(max-width:500px) {
+        align-self: flex-end;
+        opacity: 0.35;
+      }
+  }
+
+  @media(max-width: 500px) {
+    padding-bottom: 1.5rem;
+  }
 `;
 
 const SubActionBtn = styled.button`
@@ -128,4 +140,13 @@ const Thumbnail = styled.img`
   width: 150px;
   height: 75px;
   margin: 10px 10px 5px 0;
+`;
+
+const ThumbnailWrapper = styled.div`
+  display: flex;
+  @media(max-width:500px) {
+    & img {
+      flex: 1;
+    }
+  }
 `;
