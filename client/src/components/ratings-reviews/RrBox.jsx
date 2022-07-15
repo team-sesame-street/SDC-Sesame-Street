@@ -15,6 +15,7 @@ function RrBox({ id }) {
   const [currRating, setRating] = useState({
     1: false, 2: false, 3: false, 4: false, 5: false,
   });
+  const [filterRatings, setFilterRatings] = useState();
 
   useEffect(() => {
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
@@ -28,19 +29,20 @@ function RrBox({ id }) {
       },
     })
       .then((res) => {
-        setReviews(res.data.results);
-        // console.log('rating', res.data.results);
-        // console.log('actual', currRating);
+        const reviewsData = res.data.results;
         const ratingArray = Object.values(currRating);
-        const mapped = ratingArray.map((bool, index) => {
+        const mapped = ratingArray.flatMap((bool, index) => {
           if (bool) {
             return index + 1;
           }
-          return false;
+          return [];
         });
-
-        // console.log(mapped);
-        // console.log('Rating Array: ', ratingArray);
+        if (mapped.length === 0) {
+          setReviews(reviewsData);
+        } else {
+          const ratingMatch = reviewsData.filter((r) => mapped.indexOf(r.rating) !== -1);
+          setReviews(ratingMatch);
+        }
       })
       .catch((err) => console.log('Error RrBox: ', err));
   }, [id, sort, count, currRating]);
@@ -55,19 +57,39 @@ function RrBox({ id }) {
       },
     })
       .then((res) => {
-        setMeta(res.data);
+        const metaData = res.data;
+        const ratingArray = Object.values(currRating);
+        const mapped = ratingArray.flatMap((bool, index) => {
+          if (bool) {
+            return index + 1;
+          }
+          return [];
+        });
+        if (mapped.length === 0) {
+          setMeta(metaData);
+          setFilterRatings();
+        } else {
+          const ratingsValues = Object.values(metaData.ratings);
+          const newRatingsData = {};
+          for (let i = 0; i < mapped.length; i += 1) {
+            const key = mapped[i];
+            newRatingsData[key] = ratingsValues[key - 1];
+          }
+          setFilterRatings(newRatingsData);
+          setMeta(metaData);
+        }
       })
       .catch((err) => console.log('Error getting meta data (RrBox): ', err));
-  }, [id]);
+  }, [id, currRating]);
 
   return (
     <div className="RrBox-container" style={flexContainer}>
       <div style={ratingsContainer}>
         Ratings & Reviews
-        <Ratings meta={meta} currRating={currRating} setRating={setRating} />
+        <Ratings meta={meta} currRating={currRating} setRating={setRating} filterRatings={filterRatings} />
       </div>
       <div style={reviewsContainer}>
-        <Reviews reviews={reviews} setSort={setSort} count={count} meta={meta} setCount={setCount} />
+        <Reviews reviews={reviews} setSort={setSort} count={count} meta={meta} setCount={setCount} filterRatings={filterRatings} />
       </div>
     </div>
   );
