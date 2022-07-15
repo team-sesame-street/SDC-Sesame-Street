@@ -23,7 +23,8 @@ function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
       .then(() => {
         setTrigger(randomId());
         setChecks({ ...checks, isQuestionModalOpen: false });
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   useEffect(() => {

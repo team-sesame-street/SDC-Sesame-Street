@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import QaListItem from './QaListItem.jsx';
 import randomId from '../../../utils/randomId.js';
-import axios from 'axios';
 import QuestionModal from './QuestionModal.jsx';
 
 function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks, searchTerm, questionIndex, setIsPageDone }) {
@@ -44,7 +44,8 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
             setIsPageDone(true);
           }
         }
-      });
+      })
+        .catch((err) => console.error(err));
     }
   }, [trigger, resetPage]);
 

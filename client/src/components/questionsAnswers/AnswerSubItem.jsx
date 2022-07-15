@@ -46,7 +46,8 @@ function AnswerSubItem({ answer }) {
       .then(() => {
         setHasReported(true);
         localStorage.setItem(`hasReported-answer${answer[0]}`, true);
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   return (

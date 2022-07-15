@@ -41,9 +41,7 @@ function QaListItem({ result, productMetadata, setTrigger }) {
         setHasVoted(true);
         localStorage.setItem(`hasVoted-question${result.question_id}`, true);
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => console.error(err));
   }
 
   function handleAnswerModal() {
