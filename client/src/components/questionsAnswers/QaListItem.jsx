@@ -14,9 +14,7 @@ function QaListItem({ result, productMetadata, setTrigger }) {
   const [answerLimit, setAnswerLimit] = useState(2);
   const [isAnswerModalOpen, setIsAnswerModalOpen] = useState(false);
 
-
-
-  function handleLoadMoreBtn(e) {
+  function handleLoadMoreBtn() {
     if (answerLimit <= 2) {
       setAnswerLimit(answers.length + 1);
     } else {
@@ -78,7 +76,7 @@ function QaListItem({ result, productMetadata, setTrigger }) {
                   && (
                     <PrimaryBtn type="button" onClick={() => handleLoadMoreBtn()} data-testid="load-more-answers-btn">
                       {answerLimit === 2
-                        ? 'Load More Answers'
+                        ? 'See More Answers'
                         : 'Collapse Answers'}
                     </PrimaryBtn>
                   )}
