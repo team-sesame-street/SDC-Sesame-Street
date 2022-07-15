@@ -1,4 +1,3 @@
-
 export const questions = [
   {
     question_id: 573569,

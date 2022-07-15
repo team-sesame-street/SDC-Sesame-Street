@@ -1,32 +1,37 @@
-/**
- * @jest-environment jsdom
- */
- import React from 'react';
+import React from 'react';
 
- import SearchBar from '../../../src/components/questionsAnswers/SearchBar.jsx';
- import { render, screen, cleanup, fireEvent, waitFor } from '@testing-library/react';
- import { toBeInTheDocument, toBeEmptyDOMElement, toBeVisible, toHaveFocus, toHaveAttribute, toHaveValue, toBeRequired } from '@testing-library/jest-dom';
-
- const {questions, productMetadata, checks, setChecks, searchTerm, setSearchTerm} = require('./qadata.js');
+import { render, cleanup } from '@testing-library/react';
+import { toHaveAttribute, toHaveValue } from '@testing-library/jest-dom';
+import SearchBar from '../../../src/components/questionsAnswers/SearchBar.jsx';
+import { searchTerm } from './qadata.js';
 
 afterEach(() => {
   cleanup();
 });
 
-
-// SEARCH BAR
-
 test('This should show a placeholder text in the Searchbar', () => {
-  render(<SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>);
-  let placeholder = "Have a question? Search for answers…";
-  let el = screen.getByTestId('qa-searchbar');
+  const setSearchTerm = jest.fn();
+  const { getByTestId } = render(
+    <SearchBar
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+    />,
+  );
+
+  const placeholder = 'Have a question? Search for answers…';
+  const el = getByTestId('qa-searchbar');
   expect(el).toHaveAttribute('placeholder', placeholder);
 });
 
 test('This should set the controlled value of the Searchbar based on the state', () => {
-  render(<SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>);
-  // const user = userEvent.setup();
-  let el = screen.getByTestId('qa-searchbar');
-  // userEvent.type(el, 'abc123');
+  const setSearchTerm = jest.fn();
+  const { getByTestId } = render(
+    <SearchBar
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+    />,
+  );
+
+  const el = getByTestId('qa-searchbar');
   expect(el).toHaveValue(searchTerm);
 });
