@@ -6,8 +6,6 @@ import byHelpfulness from '../../../utils/byHelpfulness.js';
 import Spacer from '../../../utils/smallSpacer.jsx'
 import randomId from '../../../utils/randomId.js'
 import AnswerModal from './AnswerModal.jsx';
-import QuestionModal from './QuestionModal.jsx';
-
 
 function QaListItem({ result, productMetadata, setTrigger }) {
   const [answers, setAnswers] = useState(
@@ -93,7 +91,7 @@ function QaListItem({ result, productMetadata, setTrigger }) {
         }
       </details>
       {isAnswerModalOpen
-        && <AnswerModal key={randomId()} className="answermodal" productMetadata={productMetadata} question={result} setIsAnswerModalOpen={() => setIsAnswerModalOpen()} setTrigger={setTrigger} />
+        && <AnswerModal key={randomId()} className="answermodal" productMetadata={productMetadata} question={result} isAnswerModalOpen={isAnswerModalOpen} setIsAnswerModalOpen={() => setIsAnswerModalOpen()} setTrigger={setTrigger} />
       }
     </Wrapper>
   );
@@ -122,11 +120,21 @@ const QuestionWrap = styled.summary`
     font-weight: 400;
     font-size: 0.75rem;
     min-width: max-content;
+
+    @media(max-width:500px) {
+      align-self: flex-end;
+      opacity: 0.35;
+    }
+  }
+
+  @media(max-width:500px) {
+    flex-direction: column;
+    align-items: flex-start;
   }
 `;
 
 const AnswerWrapper = styled.div`
-  max-height: 50vh;
+  max-height: max-content;
   overflow: auto;
   display: flex;
   padding: 10px;
