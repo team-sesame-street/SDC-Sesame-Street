@@ -76,8 +76,6 @@ function QaBox({ id, setProductId }) {
   }, [indexes.page]);
 
   function handleMoreQuestions() {
-    document.querySelector('#bottom').scrollIntoView(false);
-
     if (!isPageDone) {
       setIndexes({ ...indexes, page: indexes.page++ });
     }
@@ -95,8 +93,8 @@ function QaBox({ id, setProductId }) {
   }
 
   return (
-    <Wrapper>
-      <PageSwitcher setProductId={setProductId}/>
+    <Wrapper data-testid="qa-component">
+      {/* <PageSwitcher setProductId={setProductId} /> */}
       <h2>Questions And Answers</h2>
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <QAWrapper
@@ -112,7 +110,7 @@ function QaBox({ id, setProductId }) {
 
       {!checks.isDone
         && (<button type="button" onClick={() => handleMoreQuestions()} disabled={checks.isLoading} className="QAButton">More Questions</button>)}
-      <button type="button" disabled={checks.isLoading} onClick={() => handleAddQuestion()} className="QAButton">Add a Question</button>
+      <button type="button" disabled={checks.isLoading} onClick={() => handleAddQuestion()} className="QAButton" data-testid="qa-addqbtn">Add a Question</button>
     </Wrapper>
   );
 }

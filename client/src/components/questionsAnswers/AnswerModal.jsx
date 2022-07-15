@@ -93,8 +93,8 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
   }
 
   return (
-    <Wrapper>
-      <div className="modal-backdrop"></div>
+    <Wrapper data-testid="add-answer-modal">
+      <div className="modal-backdrop" data-testid="ans-modal-backdrop"></div>
       <form onSubmit={handleSubmit}>
         <h2>Submit your Answer</h2>
         <h3>{productMetadata.productName}: {question.question_body}</h3>
@@ -117,7 +117,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
         {selectedImages && (
           <div>
             {
-              urls.map((url) => <Thumbnail key={randomId()} src={url} />)
+              urls.map((url) => <Thumbnail key={randomId()} src={url} loading="lazy" />)
             }
           </div>
         )}

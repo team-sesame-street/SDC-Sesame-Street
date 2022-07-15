@@ -53,7 +53,7 @@ function QaListItem({ result, productMetadata, setTrigger }) {
   }
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="qa-listItem">
       <details open>
         <QuestionWrap>
           <span>
@@ -61,16 +61,12 @@ function QaListItem({ result, productMetadata, setTrigger }) {
           </span>
           <small>
             Helpful?
-            {hasVoted ? (
-              <SubActionBtn disabled>
-                Yes
-              </SubActionBtn>
-            ) : <SubActionBtn type="button" onClick={() => handleVoteQ()}>Yes</SubActionBtn>}
+            <SubActionBtn type="button" onClick={() => handleVoteQ()} value={hasVoted} data-testid="q-helpful-yes-button" disabled={!!(hasVoted)}>Yes</SubActionBtn>
             (
             {qVote}
             )
             <Spacer />
-            <SubActionBtn type="button" onClick={handleAnswerModal}>Add Answer</SubActionBtn>
+            <SubActionBtn data-testid="add-answer-button" type="button" onClick={handleAnswerModal}>Add Answer</SubActionBtn>
           </small>
         </QuestionWrap>
         {
@@ -84,7 +80,7 @@ function QaListItem({ result, productMetadata, setTrigger }) {
                 ))}
                 {answers.length > 2
                   && (
-                    <PrimaryBtn type="button" onClick={() => handleLoadMoreBtn()}>
+                    <PrimaryBtn type="button" onClick={() => handleLoadMoreBtn()} data-testid="load-more-answers-btn">
                       {answerLimit === 2
                         ? 'Load More Answers'
                         : 'Collapse Answers'}
