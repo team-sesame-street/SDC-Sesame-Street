@@ -94,7 +94,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
 
   return (
     <Wrapper data-testid="add-answer-modal">
-      <div data-testid="ans-modal-backdrop"></div>
+      <div className="modal-backdrop" data-testid="ans-modal-backdrop"></div>
       <form onSubmit={handleSubmit}>
         <h2>Submit your Answer</h2>
         <h3>{productMetadata.productName}: {question.question_body}</h3>
