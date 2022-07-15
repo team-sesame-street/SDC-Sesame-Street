@@ -49,7 +49,7 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
   }, [trigger, resetPage]);
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="qa-wrapper">
       {
         questions
           .filter(
@@ -78,13 +78,12 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
       {checks.isQuestionModalOpen
         && (
           <QuestionModal
+            data-test-id="question-modal-wrapper"
             productMetadata={productMetadata}
             checks={checks}
             setChecks={setChecks}
             setTrigger={setTrigger} />
         )}
-
-      <div id="bottom">.</div>
     </Wrapper>
   )
 }

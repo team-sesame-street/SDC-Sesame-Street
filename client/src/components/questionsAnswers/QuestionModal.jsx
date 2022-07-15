@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { IoClose } from 'react-icons/io5';
@@ -27,9 +27,9 @@ function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
   }
 
   return (
-    <Wrapper>
-      <div className="modal-backdrop"></div>
-      <form onSubmit={handleSubmit}>
+    <Wrapper data-testid="question-modal-wrapper">
+      <div className="modal-backdrop" data-testid="qa-modal-backdrop"></div>
+      <form onSubmit={handleSubmit} data-testid="qa-question-modal-form">
         <h2>Ask Your Question</h2>
         <h3>About the {productMetadata.productName}</h3>
         <label htmlFor="question">
@@ -47,8 +47,8 @@ function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
         </label>
         <small>For authentication reasons, you will not be emailed.</small>
 
-        <button type="submit">submit</button>
-        <IoClose onClick={() => setChecks({ ...checks, isQuestionModalOpen: false })} className="close-button" />
+        <button type="submit" data-testid="question-submit-button">submit</button>
+        <IoClose onClick={() => setChecks({ ...checks, isQuestionModalOpen: false })} className="close-button" data-testid="close-button"/>
       </form>
     </Wrapper>
   );
