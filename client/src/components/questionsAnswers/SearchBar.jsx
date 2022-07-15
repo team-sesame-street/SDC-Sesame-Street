@@ -26,4 +26,9 @@ const SearchBarWrapper = styled.form`
   & input:hover, input:focus {
     background-color: #f1f1f1;
   }
+
+  @media(max-width:500px) {
+    height: 3.5rem;
+    margin-bottom: 1.5rem;
+  }
 `;

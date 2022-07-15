@@ -49,7 +49,7 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
   }, [trigger, resetPage]);
 
   return (
-    <Wrapper data-testid="qa-wrapper">
+    <Wrapper data-testid="qa-wrapper" className="qa-wrapper">
       {
         questions
           .filter(
