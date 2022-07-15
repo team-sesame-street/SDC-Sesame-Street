@@ -31,48 +31,48 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
     const email = e.target.email.value;
     const name = e.target.username.value;
 
-    const promises = [];
+    // Convert images to text (base64)
+    const convertedImages = [];
     if (selectedImages) {
       for (let i = 0; i < selectedImages.length; i++) {
-        promises.push(convertImageToBase64(selectedImages[i]));
+        convertedImages.push(convertImageToBase64(selectedImages[i]));
       }
-
-      Promise.all(promises).then((blobs) => {
-        const cloudPromises = [];
-        for (let i = 0; i < blobs.length; i++) {
-          cloudPromises.push(
-            axios
-              .post(`https://api.cloudinary.com/v1_1/drf3dli0i/image/upload`, {
-                file: blobs[i],
-                upload_preset: "wvbnvl8l",
-              })
-              .then(({ data }) => data.secure_url)
-              .catch((err) => {
-                console.error(err);
-              })
-          )
-        };
-
-        Promise.all(cloudPromises)
-          .then((photos) => {
-            axios
-              .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
-                body,
-                name,
-                email,
-                photos,
-              }, {
-                headers: {
-                  Authorization: process.env.GITKEY,
-                },
-              })
-              .then(() => {
-                setTrigger(randomId());
-                setIsAnswerModalOpen(false);
-              })
-          })
-          .catch((err) => console.error(err));
-      });
+      // Send those converted images to Cloudinary
+      // Cloudinary sends back an array of URLs
+      Promise.all(convertedImages)
+        .then((blobs) => {
+          const cloudPromises = [];
+          for (let i = 0; i < blobs.length; i++) {
+            cloudPromises.push(
+              axios
+                .post(`https://api.cloudinary.com/v1_1/drf3dli0i/image/upload`, {
+                  file: blobs[i],
+                  upload_preset: "wvbnvl8l",
+                })
+                .then(({ data }) => data.secure_url),
+            );
+          }
+          // Send the array of urls with the POST request to Hack Reactor
+          Promise.all(cloudPromises)
+            .then((photos) => {
+              axios
+                .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
+                  body,
+                  name,
+                  email,
+                  photos,
+                }, {
+                  headers: {
+                    Authorization: process.env.GITKEY,
+                  },
+                })
+                .then(() => {
+                  setTrigger(randomId());
+                  setIsAnswerModalOpen(false);
+                });
+            });
+        })
+        .catch((err) => console.error(err));
     } else {
       axios
         .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
@@ -88,9 +88,11 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
         .then(() => {
           setTrigger(randomId());
           setIsAnswerModalOpen(false);
+        })
+        .catch((err) => {
+          console.error(err);
         });
     }
-
   }
 
   useEffect(() => {
@@ -103,7 +105,8 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
       <Form onSubmit={handleSubmit}>
         <h2>Submit your Answer</h2>
         <h3>
-          {productMetadata.productName}:
+          {productMetadata.productName}
+          :
           <span className="header-question">{question.question_body}</span>
         </h3>
         <InputWrapper htmlFor="answer">

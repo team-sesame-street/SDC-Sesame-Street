@@ -45,7 +45,8 @@ function QaBox({ id, setProductId }) {
         });
         setCount(0);
         setProductMetadata({ productName: data.name, product_id: data.id });
-      });
+      })
+      .catch((err) => console.error(err));
   }, [id]);
 
   useEffect(() => {
@@ -72,7 +73,8 @@ function QaBox({ id, setProductId }) {
           }
         }
         setChecks({ ...checks, isLoading: false });
-      });
+      })
+      .catch((err) => console.error(err));
   }, [indexes.page]);
 
   useEffect(()=> {
