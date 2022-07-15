@@ -40,12 +40,15 @@ function MainImage(
           <div key={index}>
             {index === currImgIndex && index > 0
             && (<FaArrowCircleLeft data-testid="left-arrow" onClick={navigateLeft} />)}
-            {index === currImgIndex && (
-              <img src={images[currImgIndex].url} style={styling}
+            { index === currImgIndex && (
+              <img
+                src={images[currImgIndex].url}
+                style={styling}
                 alt="A representation of this product"
-                onClick={() => {setExpandedView(true);}} loading="lazy"
+                onClick={() => { setExpandedView(true); }}
+                loading="lazy"
               />
-            )}
+            ) }
             {index === currImgIndex && index < images.length - 1
             && (<FaArrowCircleRight data-testid="right-arrow" onClick={navigateRight} />)}
           </div>
