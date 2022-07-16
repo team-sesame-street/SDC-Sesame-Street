@@ -102,34 +102,38 @@ function MainOverview({ id }) {
           setExpandedView={setExpandedView}
         />
       )}
-      <ProductInfo product={product} selectedStyle={selectedStyle} />
-      <StyleSelector
-        styles={styles}
-        selectedStyle={selectedStyle}
-        setSelectedStyle={setSelectedStyle}
-      />
-      <ImageDefaultThumbnail
-        images={images}
-        currImgIndex={currImgIndex}
-        setCurrImgIndex={setCurrImgIndex}
-        thumbnailIndexMin={thumbnailIndexMin}
-        thumbnailIndexMax={thumbnailIndexMax}
-        setThumbnailIndexMin={setThumbnailIndexMin}
-        setThumbnailIndexMax={setThumbnailIndexMax}
-      />
-      <MainImage
-        images={images}
-        currImgIndex={currImgIndex}
-        setCurrImgIndex={setCurrImgIndex}
-        thumbnailIndexMin={thumbnailIndexMin}
-        thumbnailIndexMax={thumbnailIndexMax}
-        setThumbnailIndexMin={setThumbnailIndexMin}
-        setThumbnailIndexMax={setThumbnailIndexMax}
-        setExpandedView={setExpandedView}
-      />
-      <Checkout
-        selectedStyle={selectedStyle}
-      />
+      {!expandedView && (
+        <div>
+          <ProductInfo product={product} selectedStyle={selectedStyle} />
+          <StyleSelector
+            styles={styles}
+            selectedStyle={selectedStyle}
+            setSelectedStyle={setSelectedStyle}
+          />
+          <ImageDefaultThumbnail
+            images={images}
+            currImgIndex={currImgIndex}
+            setCurrImgIndex={setCurrImgIndex}
+            thumbnailIndexMin={thumbnailIndexMin}
+            thumbnailIndexMax={thumbnailIndexMax}
+            setThumbnailIndexMin={setThumbnailIndexMin}
+            setThumbnailIndexMax={setThumbnailIndexMax}
+          />
+          <MainImage
+            images={images}
+            currImgIndex={currImgIndex}
+            setCurrImgIndex={setCurrImgIndex}
+            thumbnailIndexMin={thumbnailIndexMin}
+            thumbnailIndexMax={thumbnailIndexMax}
+            setThumbnailIndexMin={setThumbnailIndexMin}
+            setThumbnailIndexMax={setThumbnailIndexMax}
+            setExpandedView={setExpandedView}
+          />
+          <Checkout
+            selectedStyle={selectedStyle}
+          />
+        </div>
+      )}
     </div>
   );
 }
