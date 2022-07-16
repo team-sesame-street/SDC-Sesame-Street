@@ -7,14 +7,16 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
     // backgroundColor: 'grey',
     display: 'grid',
     width: '36vh',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    gap: '2vh',
-    gridAutoRows: '8vh',
+    gridTemplateColumns: 'repeat(4, minmax(max-content, 1fr))',
+    gap: '1vh',
+    gridAutoRows: 'minmax(50px, 8vh)',
     // margin: 'auto',
   };
 
   const thumbnailStyling = {
     objectFit: 'cover',
+    minWidth: '50px',
+    minHeight: '50px',
     width: '8vh',
     height: '8vh',
     borderRadius: '50%',
@@ -31,8 +33,9 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
       <div style={styleSelectorGridStyling}>
         {styles.map((style) => {
           const checkmarkStyling = {
+            width: 'minmax(2px, 0.5vh)',
             top: '0.5vh',
-            right: '0.5vw',
+            right: '0.5vh',
             color: 'black',
             border: 'white',
             position: 'absolute',
