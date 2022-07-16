@@ -9,7 +9,8 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
     width: '36vh',
     gridTemplateColumns: 'repeat(4, minmax(max-content, 1fr))',
     gap: '1vh',
-    gridAutoRows: 'minmax(50px, 8vh)',
+    gridAutoRows: 'max-content',
+    // gridAutoRows: 'minmax(50px, 8vh)',
     // margin: 'auto',
   };
 
