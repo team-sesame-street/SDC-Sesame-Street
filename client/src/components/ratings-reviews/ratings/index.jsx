@@ -5,6 +5,7 @@ import React from 'react';
 import StarRatings from 'react-star-ratings';
 import getTotalRatings from '../../../../utils/getTotalRatings.js';
 import RatingsBreakdown from './RatingsBreakdown.jsx';
+import ProductBreakdown from './RatingsProductBreakdown.jsx';
 
 function Ratings({ meta, currRating, setRating, filterRatings }) {
   let rating = 0;
@@ -36,6 +37,9 @@ function Ratings({ meta, currRating, setRating, filterRatings }) {
           filterRatings={filterRatings}
           meta={meta}
         />
+      </div>
+      <div>
+        <ProductBreakdown meta={meta} />
       </div>
     </div>
   );
