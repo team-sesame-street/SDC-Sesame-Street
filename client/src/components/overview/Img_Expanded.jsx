@@ -81,7 +81,7 @@ const styleExit = {
   height: '3vh',
   zIndex: 100,
   cursor: 'pointer',
-  top: '5%', // change this to vh unit if wants to be responsive
+  top: '5%',
   right: '5%',
 };
 
