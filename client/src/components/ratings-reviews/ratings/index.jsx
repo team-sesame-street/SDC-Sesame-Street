@@ -34,6 +34,7 @@ function Ratings({ meta, currRating, setRating, filterRatings }) {
           currRating={currRating}
           setRating={setRating}
           filterRatings={filterRatings}
+          meta={meta}
         />
       </div>
     </div>

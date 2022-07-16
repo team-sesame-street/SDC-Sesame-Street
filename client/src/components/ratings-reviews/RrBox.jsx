@@ -12,10 +12,10 @@ function RrBox({ id }) {
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('relevant');
   const [meta, setMeta] = useState();
+  const [filterRatings, setFilterRatings] = useState();
   const [currRating, setRating] = useState({
     1: false, 2: false, 3: false, 4: false, 5: false,
   });
-  const [filterRatings, setFilterRatings] = useState();
 
   useEffect(() => {
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {

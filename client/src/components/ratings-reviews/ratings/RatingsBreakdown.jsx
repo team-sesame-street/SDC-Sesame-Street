@@ -5,13 +5,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import RatingsBar from '../../../../utils/RatingsBar.jsx';
+import getPercentage from '../../../../utils/getPercentage.js';
 
-function RatingsBreakdown({ ratings, totalRatings, currRating, setRating, filterRatings }) {
+function RatingsBreakdown({ ratings, totalRatings, currRating, setRating, filterRatings, meta }) {
   const barArr = [];
   for (let i = 5; i >= 1; i -= 1) {
     barArr.push(
       <RatingsBar
-        fillWidth={(ratings[i] / totalRatings) * 100}
+        fillWidth={getPercentage(ratings[i], totalRatings)}
         className={i}
       />,
     );
@@ -29,10 +30,18 @@ function RatingsBreakdown({ ratings, totalRatings, currRating, setRating, filter
     }
   }
 
+  function getRecommended() {
+    const rec = meta.recommended;
+    const totalRec = Number(rec.true) + Number(rec.false);
+    return `${getPercentage(rec.true, totalRec)}% `;
+  }
+
   return (
     <div style={stylingContainer}>
-      Rating Breakdown:
-      <br />
+      <div style={recommendStyling}>
+        {meta && getRecommended()}
+        of reviews recommend this product
+      </div>
       {filterRatings && (<a href="#" onClick={handleClick} id="remove-filter" style={removeFilterStyling}>Remove all filters</a>)}
       <div style={barStyling}>
         {barArr.map((ratingBar, i) => (
@@ -41,7 +50,7 @@ function RatingsBreakdown({ ratings, totalRatings, currRating, setRating, filter
             {' '}
             stars
             {ratingBar}
-            {Math.round(((ratings[5 - i] / totalRatings) * 100))}
+            {getPercentage(ratings[5 - i], totalRatings)}
             %
           </IndividualBreakdown>
         ))}
@@ -55,6 +64,11 @@ const barStyling = {
   flexDirection: 'column',
 };
 
+const recommendStyling = {
+  fontFamily: 'arial',
+  fontSize: '16.5px',
+};
+
 const stylingContainer = {
   display: 'flex',
   flexDirection: 'column',
@@ -64,12 +78,12 @@ const stylingContainer = {
 const removeFilterStyling = {
   display: 'flex',
   color: 'crimson',
-  width: '75%',
+  width: '150px',
 };
 
 const individualBreakdown = {
   display: 'flex',
-  alignItems: 'baseline',
+  alignItems: 'center',
   cursor: 'pointer',
   fontSize: '18px',
 };

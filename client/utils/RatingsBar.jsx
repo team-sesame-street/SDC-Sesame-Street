@@ -2,9 +2,10 @@
 import React from 'react';
 
 function RatingsBar({ fillWidth, className }) {
+  const width = 200;
   const containerStyles = {
-    height: 10,
-    width: '100px',
+    height: 12,
+    width: `${width}px`,
     backgroundColor: 'lightGray',
     borderRadius: 50,
     margin: 10,
@@ -12,7 +13,7 @@ function RatingsBar({ fillWidth, className }) {
 
   const fillerStyles = {
     height: '100%',
-    width: fillWidth || 0,
+    width: `${(fillWidth / 100) * width || 0}px`,
     backgroundColor: 'limeGreen',
     borderRadius: 'inherit',
     textAlign: 'right',
