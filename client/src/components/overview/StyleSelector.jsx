@@ -45,10 +45,9 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
           };
 
           return (
-            <div style={{ position: 'relative' }}>
+            <div style={{ position: 'relative' }} key={style.style_id}>
               <BsFillCheckCircleFill style={checkmarkStyling} />
               <img
-                key={style.style_id}
                 src={style.photos[0].thumbnail_url}
                 onClick={() => {
                   setSelectedStyle(style);
