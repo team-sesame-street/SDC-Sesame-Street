@@ -7,25 +7,26 @@ import styled from 'styled-components';
 
 const NavSymbols = styled.div`
   display: grid;
-  width: max-content;
-  height: max-content;
+  gap: 2px;
   grid-auto-flow: column;
   grid-template-rows: max-content;
   grid-auto-columns: max-content;
 `;
 
+const styleMainCircle = {
+  width: '12px',
+  height: '12px',
+};
+
+const styleCircles = {
+  width: '9px',
+  height: '9px',
+};
+
 function ExpandedImage({
   images, currImgIndex, setCurrImgIndex, setExpandedView,
 }) {
   if (images.length > 0) {
-    const styleMainCircle = {
-      fontSize: '15px',
-    };
-
-    const styleCircles = {
-      fontSize: '10px',
-    };
-
     const styleExpandedImg = {
       cursor: 'crosshair',
     };
