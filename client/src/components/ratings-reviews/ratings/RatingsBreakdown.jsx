@@ -14,6 +14,9 @@ function RatingsBreakdown({ ratings, totalRatings, currRating, setRating, filter
       <RatingsBar
         fillWidth={getPercentage(ratings[i], totalRatings)}
         className={i}
+        width={200}
+        borderRadius={50}
+        margin={10}
       />,
     );
   }
