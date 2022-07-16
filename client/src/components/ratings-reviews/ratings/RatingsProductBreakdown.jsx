@@ -13,7 +13,7 @@ function ProductBreakdown({ meta }) {
     Size: 'Too small',
     Comfort: 'Poor',
     Quality: 'Poor',
-  }
+  };
   if (meta) {
     const char = meta.characteristics;
     const keysArr = Object.keys(char);
@@ -33,24 +33,50 @@ function ProductBreakdown({ meta }) {
   return (
     <div>
       {barArr.map((bar, i) => {
-        const percent = (nameVal[i].value / 5) * 910;
+        const name = nameArr[i];
+        const nameValue = nameVal[i].value;
+        const percent = (nameValue / 5) * 910;
         return (
-          <div key={nameArr[i]} style={{ position: 'relative' }}>
-            {nameArr[i]}
-            {nameVal[i].value}
+          <div key={name} style={{ position: 'relative', fontSize: '16px' }}>
+            {name}
             {bar}
-            <GoTriangleDown size={30} style={{position: 'absolute', transform: `translate(${percent}%, -70%)` }}/>
-            {sizeObj[nameArr[i]]}
+            <GoTriangleDown size={30} style={{ position: 'absolute', transform: `translate(${percent}%, -70%)` }} />
+
+            {sizeObj[name] === 'Poor' ? (
+              <div style={poorStyle}>
+                Poor
+                <div>
+                  Great
+                </div>
+              </div>
+            ) : (
+              <div style={poorStyle}>
+                Too small
+                <div style={poorSubStyle}>
+                  Perfect
+                </div>
+                <div style={poorSubStyle}>
+                  Too large
+                </div>
+              </div>
+            )}
+            <br/>
           </div>
-        )})}
+        );
+      })}
     </div>
   );
 }
 
-const triangleStyles = {
-  position: 'absolute',
-  // -10% min and 910% max for first argument in translate
-  transform: 'translate(450%, -70%)',
+const poorStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  fontSize: '14px',
+};
+
+const poorSubStyle = {
+  display: 'flex',
+  flexDirection: 'space-between',
 };
 
 export default ProductBreakdown;
