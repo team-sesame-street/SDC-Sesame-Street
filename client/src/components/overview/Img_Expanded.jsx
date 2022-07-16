@@ -3,6 +3,16 @@ import PropTypes from 'prop-types';
 import { IoIosArrowDropright, IoIosArrowDropleft } from 'react-icons/io';
 import { IoExitOutline } from 'react-icons/io5';
 import { FiCircle } from 'react-icons/fi';
+import styled from 'styled-components';
+
+const NavSymbols = styled.div`
+  display: grid;
+  width: max-content;
+  height: max-content;
+  grid-auto-flow: column;
+  grid-template-rows: max-content;
+  grid-auto-columns: max-content;
+`;
 
 function ExpandedImage({
   images, currImgIndex, setCurrImgIndex, setExpandedView,
@@ -34,14 +44,19 @@ function ExpandedImage({
             && (<IoIosArrowDropright onClick={() => { setCurrImgIndex(currImgIndex + 1); }} />)}
           </div>
         ))}
-        {images.map((image, index) => (
-          <div key={index}>
-            {index === currImgIndex && (<FiCircle data-testid="inactive-circle" style={styleMainCircle} />)}
-            {index !== currImgIndex && (
-              <FiCircle data-testid="active-circle" style={styleCircles} onClick={() => { setCurrImgIndex(index); }} />
-            )}
-          </div>
-        ))}
+        <NavSymbols>
+          {images.map((image, index) => (
+            <FiCircle
+              key={index}
+              style={index === currImgIndex ? styleMainCircle : styleCircles}
+              onClick={() => {
+                if (index !== currImgIndex) {
+                  setCurrImgIndex(index);
+                }
+              }}
+            />
+          ))}
+        </NavSymbols>
         <IoExitOutline data-testid="exit-expanded-btn" onClick={() => { setExpandedView(false); }} />
       </div>
     );
