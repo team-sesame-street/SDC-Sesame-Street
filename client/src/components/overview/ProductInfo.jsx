@@ -10,7 +10,8 @@ function ProductInfo({ product, selectedStyle }) {
       display: 'grid',
       width: '12vh',
       gridTemplateRows: 'max-content',
-      gridTemplateColumns: 'repeat(3, minmax(max-content, 1fr))',
+      // gridTemplateColumns: 'repeat(3, minmax(max-content, 1fr))',
+      gridTemplateColumns: 'repeat(3, max-content)',
       gap: '1vh',
     };
 

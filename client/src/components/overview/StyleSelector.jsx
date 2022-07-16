@@ -7,10 +7,10 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
     // backgroundColor: 'grey',
     display: 'grid',
     width: '36vh',
-    gridTemplateColumns: 'repeat(4, minmax(max-content, 1fr))',
+    // gridTemplateColumns: 'repeat(4, minmax(max-content, 1fr))',
+    gridTemplateColumns: 'repeat(4, max-content)',
     gap: '1vh',
     gridAutoRows: 'max-content',
-    // gridAutoRows: 'minmax(50px, 8vh)',
     // margin: 'auto',
   };
 
