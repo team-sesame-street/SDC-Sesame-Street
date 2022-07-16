@@ -14,12 +14,15 @@ import ReviewsSort from './ReviewsSort.jsx';
 import ReviewsMoreReviews from './ReviewsMoreReviews.jsx';
 import getTotalRatings from '../../../../utils/getTotalRatings.js';
 
-function Reviews({ reviews, setSort, count, setCount, meta }) {
-  // console.log('class: ', reviews);
-  // console.log(meta);
-  let totalReviews = null;
+function Reviews({ reviews, setSort, count, setCount, meta, filterRatings }) {
+  let totalReviews;
   if (meta) {
-    totalReviews = getTotalRatings(meta.ratings);
+    if (filterRatings) {
+      totalReviews = getTotalRatings(filterRatings);
+      setCount(totalReviews);
+    } else {
+      totalReviews = getTotalRatings(meta.ratings);
+    }
   }
 
   return (
