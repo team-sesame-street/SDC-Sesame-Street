@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-function RatingsBar({ fillWidth, className }) {
-  const width = 200;
+function RatingsBar({ fillWidth, className, width, borderRadius, margin }) {
   const containerStyles = {
     height: 12,
     width: `${width}px`,
     backgroundColor: 'lightGray',
-    borderRadius: 50,
-    margin: 10,
+    borderRadius: borderRadius || 0,
+    margin: margin || 0,
   };
 
   const fillerStyles = {
