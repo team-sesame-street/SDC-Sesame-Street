@@ -6,6 +6,21 @@ function ProductInfo({ product, selectedStyle }) {
   if (Object.keys(product).length > 0 && Object.keys(selectedStyle).length > 0) {
     const formatPrice = (price) => ('$'.concat(price.slice(0, -3)));
 
+    const socialSharingGridStyling = {
+      display: 'grid',
+      width: '12vh',
+      gridTemplateRows: 'max-content',
+      gridTemplateColumns: 'repeat(3, minmax(max-content, 1fr))',
+      gap: '1vh',
+    };
+
+    const socialSharingStyling = {
+      minWidth: '25px',
+      minHeight: '25px',
+      width: '3vh',
+      height: '3vh',
+    };
+
     return (
       <div>
         <p>{product.category.toUpperCase()}</p>
@@ -43,11 +58,11 @@ function ProductInfo({ product, selectedStyle }) {
             ))}
           </ul>
         </div>
-        <div>
+        <div style={socialSharingGridStyling}>
           {/* Share on Social Media Section */}
-          <RiFacebookCircleFill />
-          <RiTwitterFill />
-          <RiPinterestFill />
+          <RiFacebookCircleFill style={socialSharingStyling} />
+          <RiTwitterFill style={socialSharingStyling} />
+          <RiPinterestFill style={socialSharingStyling} />
         </div>
       </div>
     );
