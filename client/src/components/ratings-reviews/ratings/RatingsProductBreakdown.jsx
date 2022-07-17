@@ -55,9 +55,9 @@ export default function ProductBreakdown({ meta }) {
             {name}
             {bar}
             <GoTriangleDown size={30} style={{ position: 'absolute', transform: `translate(${percent}%, -70%)` }} />
-            <div style={styles.sizeContainer }>
+            <div style={styles.sizeContainer}>
               {sizeObj[name].map((size) => (
-                <div style={styles.sizeItems}>
+                <div style={styles.sizeItems} key={size[size.length - 2]}>
                   { size }
                 </div>
               ))}
