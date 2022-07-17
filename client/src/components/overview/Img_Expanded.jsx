@@ -5,37 +5,6 @@ import { IoExitOutline } from 'react-icons/io5';
 import { BsCircleFill } from 'react-icons/bs';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
-  position: relative;
-  margin: auto;
-  width: 100vh;
-  height: 75vh;
-`;
-
-const NavSymbols = styled.div`
-  // background-color: red;
-  display: grid;
-  width: 100%;
-  height: 100%;
-  // bottom: 10%;
-  gap: 5px;
-  grid-auto-flow: column;
-  grid-template-rows: max-content;
-  grid-auto-columns: max-content;
-  justify-content: center;
-  align-content: end;
-  justify-items: center;
-  align-items: center;
-`;
-
-const Image = styled.img`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  cursor: crosshair;
-  object-fit: contain;
-`;
-
 const styleMainCircle = {
   width: '11px',
   height: '15px',
@@ -59,7 +28,6 @@ const styleLeftArrow = {
   height: '4vh',
   minWidth: '20px',
   minHeight: '20px',
-  zIndex: 100,
   cursor: 'pointer',
   top: '50%',
   left: '5%',
@@ -73,7 +41,6 @@ const styleRightArrow = {
   height: '4vh',
   minWidth: '20px',
   minHeight: '20px',
-  zIndex: 100,
   cursor: 'pointer',
   top: '50%',
   right: '5%',
@@ -87,7 +54,6 @@ const styleExit = {
   height: '4vh',
   minWidth: '20px',
   minHeight: '20px',
-  zIndex: 100,
   cursor: 'pointer',
   top: '5%',
   right: '5%',
@@ -150,3 +116,33 @@ ExpandedImage.propTypes = {
 };
 
 export default ExpandedImage;
+
+const Wrapper = styled.div`
+  position: relative;
+  isolation: isolate;
+  margin: auto;
+  width: 100vh;
+  height: 75vh;
+`;
+
+const NavSymbols = styled.div`
+  display: grid;
+  width: 100%;
+  height: 100%;
+  gap: 5px;
+  grid-auto-flow: column;
+  grid-template-rows: max-content;
+  grid-auto-columns: max-content;
+  justify-content: center;
+  align-content: end;
+  justify-items: center;
+  align-items: center;
+`;
+
+const Image = styled.img`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  object-fit: contain;
+`;

@@ -3,29 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 
-const Wrapper = styled.div`
-  grid-column: 2 / 4;
-  grid-row: 1 / 9;
-  position: absolute;
-  z-index: 100;
-  display: grid;
-  width: max-content;
-  height: max-content;
-  max-width: 100%;
-  max-height: 100%;
-  grid-template-rows: repeat(3, max-content);
-  grid-template-columns: 1fr;
-  cursor: pointer;
-`;
-
-const ThumbnailsGrid = styled.div`
-  display: grid;
-  width: 100%;
-  height: 100%;
-  grid-template-columns: max-content;
-  grid-auto-rows: max-content;
-`;
-
 function ImageDefaultThumbnail({
   images, currImgIndex, setCurrImgIndex, thumbnailIndexMin, thumbnailIndexMax, setThumbnailIndexMin,
   setThumbnailIndexMax,
@@ -39,13 +16,13 @@ function ImageDefaultThumbnail({
     const upArrowStyle = {
       minWidth: '50px',
       width: '8vh',
-      fill: thumbnailIndexMin === 0 ? '#eeeeee' : '#000000',
+      fill: thumbnailIndexMin === 0 ? '#eeeeee' : 'default',
     };
 
     const downArrowStyle = {
       minWidth: '50px',
       width: '8vh',
-      fill: thumbnailIndexMax === images.length - 1 ? '#eeeeee' : '#000000',
+      fill: thumbnailIndexMax === images.length - 1 ? '#eeeeee' : 'default',
     };
 
     return (
@@ -117,3 +94,26 @@ ImageDefaultThumbnail.defaultProps = {
 };
 
 export default ImageDefaultThumbnail;
+
+const Wrapper = styled.div`
+  grid-column: 2 / 4;
+  grid-row: 1 / 9;
+  position: absolute;
+  z-index: 100;
+  display: grid;
+  width: max-content;
+  height: max-content;
+  max-width: 100%;
+  max-height: 100%;
+  grid-template-rows: repeat(3, max-content);
+  grid-template-columns: 1fr;
+  cursor: pointer;
+`;
+
+const ThumbnailsGrid = styled.div`
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: max-content;
+  grid-auto-rows: max-content;
+`;

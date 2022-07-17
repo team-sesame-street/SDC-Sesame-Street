@@ -4,34 +4,29 @@ import styled from 'styled-components';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 
-const SubWrapper = styled.div`
-  background-color: #F8F7F2;
-  position: relative;
-  display: grid;
-  height: 60vh;
-  width: 90vh;
-  min-height: 390px;
-  min-width: 510px;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(8, 1fr);
-  justify-content: center;
-  align-content: center;
-  justify-items: center;
-  align-items: center;
-`;
+const leftArrowStyle = {
+  position: 'absolute',
+  zIndex: 70,
+  height: '3vh',
+  width: '3vh',
+  minHeight: '20px',
+  minWidth: '20px',
+  gridColumn: '1 / 2',
+  gridRow: '5 / 6',
+  cursor: 'pointer',
+};
 
-const Image = styled.img`
-  position: absolute;
-  z-index: 50;
-  grid-row: 1 / 9;
-  grid-column: 1/ 13;
-  height: 100%;
-  width: 100%;
-  min-width: 510px;
-  min-height: 390px;
-  object-fit: contain;
-  cursor: zoom-in;
-`;
+const rightArrowStyle = {
+  position: 'absolute',
+  zIndex: 70,
+  height: '3vh',
+  width: '3vh',
+  minHeight: '20px',
+  minWidth: '20px',
+  gridColumn: '12 / 13',
+  gridRow: '5 / 6',
+  cursor: 'pointer',
+};
 
 function MainImage(
   {
@@ -75,17 +70,7 @@ function MainImage(
                   <FaArrowCircleLeft
                     data-testid="left-arrow"
                     onClick={navigateLeft}
-                    style={{
-                      position: 'absolute',
-                      zIndex: 70,
-                      height: '3vh',
-                      width: '3vh',
-                      minHeight: '20px',
-                      minWidth: '20px',
-                      gridColumn: '1 / 2',
-                      gridRow: '5 / 6',
-                      cursor: 'pointer',
-                    }}
+                    style={leftArrowStyle}
                   />
                 )}
                 <Image
@@ -96,17 +81,7 @@ function MainImage(
                 />
                 {index < images.length - 1 && (
                   <FaArrowCircleRight
-                    style={{
-                      position: 'absolute',
-                      zIndex: 70,
-                      height: '3vh',
-                      width: '3vh',
-                      minHeight: '20px',
-                      minWidth: '20px',
-                      gridColumn: '12 / 13',
-                      gridRow: '5 / 6',
-                      cursor: 'pointer',
-                    }}
+                    style={rightArrowStyle}
                     data-testid="right-arrow"
                     onClick={navigateRight}
                   />
@@ -141,3 +116,33 @@ MainImage.defaultProps = {
 };
 
 export default MainImage;
+
+const SubWrapper = styled.div`
+  background-color: #F8F7F2;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  height: 60vh;
+  width: 90vh;
+  min-height: 390px;
+  min-width: 510px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+`;
+
+const Image = styled.img`
+  position: absolute;
+  z-index: 50;
+  grid-row: 1 / 9;
+  grid-column: 1/ 13;
+  height: 100%;
+  width: 100%;
+  min-width: 510px;
+  min-height: 390px;
+  object-fit: contain;
+  cursor: zoom-in;
+`;
