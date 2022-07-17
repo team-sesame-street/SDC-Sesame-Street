@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -5,7 +6,7 @@ import { IoClose } from 'react-icons/io5';
 import convertImageToBase64 from '../../../utils/convertImageToBase64.js';
 import randomId from '../../../utils/randomId';
 
-function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigger, isAnswerModalOpen }) {
+function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, questions, setQuestions }) {
   const [selectedImages, setSelectedImages] = useState(null);
   const [urls, setUrls] = useState([]);
 
@@ -34,7 +35,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
     // Convert images to text (base64)
     const convertedImages = [];
     if (selectedImages) {
-      for (let i = 0; i < selectedImages.length; i++) {
+      for (let i = 0; i < selectedImages.length; i += 1) {
         convertedImages.push(convertImageToBase64(selectedImages[i]));
       }
       // Send those converted images to Cloudinary
@@ -42,39 +43,48 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
       Promise.all(convertedImages)
         .then((blobs) => {
           const cloudPromises = [];
-          for (let i = 0; i < blobs.length; i++) {
+          for (let i = 0; i < blobs.length; i += 1) {
             cloudPromises.push(
               axios
                 .post(`https://api.cloudinary.com/v1_1/drf3dli0i/image/upload`, {
                   file: blobs[i],
-                  upload_preset: "wvbnvl8l",
+                  upload_preset: 'wvbnvl8l',
                 })
                 .then(({ data }) => data.secure_url),
             );
           }
           // Send the array of urls with the POST request to Hack Reactor
           Promise.all(cloudPromises)
-            .then((photos) => {
-              axios
-                .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
-                  body,
-                  name,
-                  email,
-                  photos,
-                }, {
+            .then((photos) => axios
+              .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
+                body,
+                name,
+                email,
+                photos,
+              }, {
+                headers: {
+                  Authorization: process.env.GITKEY,
+                },
+              })
+              .then(() => axios
+                .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers?count=15`, {
                   headers: {
                     Authorization: process.env.GITKEY,
-                  },
+                  }
                 })
-                .then(() => {
-                  setTrigger(randomId());
+                .then(({ data }) => {
                   setIsAnswerModalOpen(false);
-                });
-            });
+                  const formattedData = data.results.map((result) => ({ ...result, id: question.question_id, photos: result.photos?.map((photo) => photo.url) }));
+                  const quest = questions.find((q) => q.question_id === question.question_id);
+                  quest.answers = formattedData;
+                  const newQuestionIndex = questions.indexOf(quest);
+                  questions.splice(newQuestionIndex, 1, quest);
+                  setQuestions([...questions]);
+                })));
         })
         .catch((err) => console.error(err));
     } else {
-      axios
+      return axios
         .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
           body,
           name,
@@ -86,18 +96,27 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
           },
         })
         .then(() => {
-          setTrigger(randomId());
           setIsAnswerModalOpen(false);
+          return axios
+            .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers?count=15`, {
+              headers: {
+                Authorization: process.env.GITKEY,
+              }
+            })
+            .then(({ data }) => {
+              const formattedData = data.results.map((result) => ({ ...result, id: question.question_id, photos: result.photos?.map((photo) => photo.url) }));
+              const quest = questions.find((q) => q.question_id === question.question_id);
+              quest.answers = formattedData;
+              const newQuestionIndex = questions.indexOf(quest);
+              questions.splice(newQuestionIndex, 1, quest);
+              setQuestions([...questions]);
+            });
         })
         .catch((err) => {
           console.error(err);
         });
     }
   }
-
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-  }, [isAnswerModalOpen]);
 
   return (
     <Wrapper data-testid="add-answer-modal">
@@ -141,10 +160,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
         <SubmitWrapper>
           <button type="submit">Submit</button>
         </SubmitWrapper>
-        <IoClose onClick={() => {
-          setIsAnswerModalOpen(false);
-          document.body.style.overflow = 'auto';
-        }} className="close-button" />
+        <IoClose onClick={() => setIsAnswerModalOpen(false)} className="close-button" />
       </Form>
     </Wrapper>
   );
@@ -199,7 +215,8 @@ isolation: auto;
 `;
 
 const Form = styled.form`
-overflow: auto;
+  overflow: auto;
+  overscroll-behavior: contain;
   z-index: 1000;
   position: fixed;
   top: 0;
