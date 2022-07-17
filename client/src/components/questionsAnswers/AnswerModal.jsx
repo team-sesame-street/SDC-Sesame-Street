@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+/* eslint-disable max-len */
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { IoClose } from 'react-icons/io5';
 import convertImageToBase64 from '../../../utils/convertImageToBase64.js';
 import randomId from '../../../utils/randomId';
 
-function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigger }) {
+function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, questions, setQuestions }) {
   const [selectedImages, setSelectedImages] = useState(null);
   const [urls, setUrls] = useState([]);
 
@@ -31,31 +32,30 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
     const email = e.target.email.value;
     const name = e.target.username.value;
 
-    const promises = [];
+    // Convert images to text (base64)
+    const convertedImages = [];
     if (selectedImages) {
-      for (let i = 0; i < selectedImages.length; i++) {
-        promises.push(convertImageToBase64(selectedImages[i]));
+      for (let i = 0; i < selectedImages.length; i += 1) {
+        convertedImages.push(convertImageToBase64(selectedImages[i]));
       }
-
-      Promise.all(promises).then((blobs) => {
-        const cloudPromises = [];
-        for (let i = 0; i < blobs.length; i++) {
-          cloudPromises.push(
-            axios
-              .post(`https://api.cloudinary.com/v1_1/drf3dli0i/image/upload`, {
-                file: blobs[i],
-                upload_preset: "wvbnvl8l",
-              })
-              .then(({ data }) => data.secure_url)
-              .catch((err) => {
-                console.error(err);
-              })
-          )
-        };
-
-        Promise.all(cloudPromises)
-          .then((photos) => {
-            axios
+      // Send those converted images to Cloudinary
+      // Cloudinary sends back an array of URLs
+      Promise.all(convertedImages)
+        .then((blobs) => {
+          const cloudPromises = [];
+          for (let i = 0; i < blobs.length; i += 1) {
+            cloudPromises.push(
+              axios
+                .post(`https://api.cloudinary.com/v1_1/drf3dli0i/image/upload`, {
+                  file: blobs[i],
+                  upload_preset: 'wvbnvl8l',
+                })
+                .then(({ data }) => data.secure_url),
+            );
+          }
+          // Send the array of urls with the POST request to Hack Reactor
+          Promise.all(cloudPromises)
+            .then((photos) => axios
               .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
                 body,
                 name,
@@ -66,15 +66,25 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
                   Authorization: process.env.GITKEY,
                 },
               })
-              .then(() => {
-                setTrigger(randomId());
-                setIsAnswerModalOpen(false);
-              })
-          })
-          .catch((err) => console.error(err));
-      });
+              .then(() => axios
+                .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers?count=15`, {
+                  headers: {
+                    Authorization: process.env.GITKEY,
+                  }
+                })
+                .then(({ data }) => {
+                  setIsAnswerModalOpen(false);
+                  const formattedData = data.results.map((result) => ({ ...result, id: question.question_id, photos: result.photos?.map((photo) => photo.url) }));
+                  const quest = questions.find((q) => q.question_id === question.question_id);
+                  quest.answers = formattedData;
+                  const newQuestionIndex = questions.indexOf(quest);
+                  questions.splice(newQuestionIndex, 1, quest);
+                  setQuestions([...questions]);
+                })));
+        })
+        .catch((err) => console.error(err));
     } else {
-      axios
+      return axios
         .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
           body,
           name,
@@ -86,44 +96,72 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
           },
         })
         .then(() => {
-          setTrigger(randomId());
           setIsAnswerModalOpen(false);
+          return axios
+            .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers?count=15`, {
+              headers: {
+                Authorization: process.env.GITKEY,
+              }
+            })
+            .then(({ data }) => {
+              const formattedData = data.results.map((result) => ({ ...result, id: question.question_id, photos: result.photos?.map((photo) => photo.url) }));
+              const quest = questions.find((q) => q.question_id === question.question_id);
+              quest.answers = formattedData;
+              const newQuestionIndex = questions.indexOf(quest);
+              questions.splice(newQuestionIndex, 1, quest);
+              setQuestions([...questions]);
+            });
+        })
+        .catch((err) => {
+          console.error(err);
         });
     }
   }
 
   return (
-    <Wrapper>
-      <div className="modal-backdrop"></div>
-      <form onSubmit={handleSubmit}>
+    <Wrapper data-testid="add-answer-modal">
+      <div className="modal-backdrop" data-testid="ans-modal-backdrop"></div>
+      <Form onSubmit={handleSubmit}>
         <h2>Submit your Answer</h2>
-        <h3>{productMetadata.productName}: {question.question_body}</h3>
-        <label htmlFor="answer">
+        <h3>
+          {productMetadata.productName}
+          :
+          <span className="header-question">{question.question_body}</span>
+        </h3>
+        <InputWrapper htmlFor="answer">
           Your Answer:
           <textarea id="answer" maxLength={1000} name="answer" required />
-        </label>
-        <label htmlFor="username">
-          Your Nickname:
-          <input type="textbox" id="username" maxLength={60} placeholder="Example: jack543!" name="username" required />
-        </label>
-        <small>For privacy reasons, do not use your full name or email address.</small>
-        <label htmlFor="email">
-          Your email:
-          <input type="email" id="email" maxLength={60} placeholder="Example: jack@email.com" name="email" required />
-        </label>
-        <small>For authentication reasons, you will not be emailed.</small>
-        <label htmlFor="file-input" id="file-input-label">Choose up to 5 images to upload (PNG, JPG)</label>
-        <input type="file" accept=".jpg, .jpeg, .png, .webp" multiple onChange={handleImages} id="file-input" />
-        {selectedImages && (
-          <div>
-            {
-              urls.map((url) => <Thumbnail key={randomId()} src={url} />)
-            }
-          </div>
-        )}
-        <button type="submit">submit</button>
+        </InputWrapper>
+        <div className="nicknameAndemail">
+          <InputWrapper htmlFor="username">
+            Your Nickname:
+            <input type="textbox" id="username" maxLength={60} placeholder="Example: jack543!" name="username" required />
+            <small>For privacy reasons, do not use your full name or email address.</small>
+          </InputWrapper>
+          <InputWrapper htmlFor="email">
+            Your email:
+            <input type="email" id="email" maxLength={60} placeholder="Example: jack@email.com" name="email" required />
+            <small>For authentication reasons, you will not be emailed.</small>
+          </InputWrapper>
+        </div>
+        <InputWrapper htmlFor="file-input" id="file-input-label">
+          <input type="file" accept=".jpg, .jpeg, .png, .webp" multiple onChange={handleImages} id="file-input" />
+          <small>Click here to add up to 5 images to upload...</small>
+        </InputWrapper>
+        <ThumbnailWrapper>
+          {selectedImages && (
+            <div>
+              {
+                urls.map((url) => <Thumbnail key={randomId()} src={url} loading="lazy" />)
+              }
+            </div>
+          )}
+        </ThumbnailWrapper>
+        <SubmitWrapper>
+          <button type="submit">Submit</button>
+        </SubmitWrapper>
         <IoClose onClick={() => setIsAnswerModalOpen(false)} className="close-button" />
-      </form>
+      </Form>
     </Wrapper>
   );
 }
@@ -131,7 +169,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, setTrigg
 export default AnswerModal;
 
 const Wrapper = styled.div`
-isolation: isolate;
+isolation: auto;
   & .modal-backdrop {
     position: fixed;
     z-index: -1;
@@ -146,18 +184,7 @@ isolation: isolate;
     margin: 0;
     padding: 0;
   }
-  & form {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: whitesmoke;
-    width: 100%;
-    height: min-content;
-    padding: 2rem;
-    margin: 100px 0;
-    box-shadow: 2px 2px 10px #bbb;
-    border-radius: 4px;
-  }
+
   & #file-input {
     position: absolute !important;
     height: 1px;
@@ -187,9 +214,128 @@ isolation: isolate;
   }
 `;
 
+const Form = styled.form`
+  overflow: auto;
+  overscroll-behavior: contain;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  background: whitesmoke;
+  width: 40%;
+  height: min-content;
+  padding: 2.5rem 3.1rem;
+  margin: 100px auto;
+  box-shadow: 2px 2px 10px #bbb;
+  border-radius: 4px;
+  & h2 {
+    margin: 0.5rem 0 1rem 0;
+  }
+
+  & h3 {
+    & .header-question {
+      margin-left: 5px;
+      font-weight: 400;
+    }
+  }
+
+  & .nicknameAndemail {
+    display: flex;
+    gap: 10px;
+    @media(max-width: 500px) {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+
+  & input[type="textbox"], input[type="email"] {
+    width: 100%;
+    height: 3rem;
+    border: 1px solid #ddd;
+    &:hover {
+      border: 1px solid #bbb;
+    }
+  }
+
+  & textarea {
+    width: 100%;
+    height: 4rem;
+    resize: none;
+    border: 1px solid #ddd;
+    &:hover {
+      border: 1px solid #bbb;
+    }
+
+    @media(max-width: 500px) {
+      height: 8rem;
+    }
+  }
+
+  @media(max-width: 500px) {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const ThumbnailWrapper = styled.div`
+  margin: 1rem 0;
+  width: 100%;
+  padding:  0;
+  height: min-content;
+  min-height: 100px;
+  max-height: 130px;
+outline: 1px solid #ddd;
+`;
+
 const Thumbnail = styled.img`
   display: inline-block;
   aspect-ratio: 1/1;
   object-fit: cover;
-  width: 150px;
+  width: ${100 / 5}%;
+  height: 100px;
+  padding: 5px;
+`;
+
+const InputWrapper = styled.label`
+  margin-top: 0.5rem;
+  & small {
+    font-style: italic;
+  }
+`;
+
+const SubmitWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  & button {
+    height: 3rem;
+    padding: 0 1rem;
+    justify-content: flex-start;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: none;
+    border: 1px solid #222;
+    margin-right: 10px;
+    margin-top: 15px;
+    &:hover {
+      color: #eee;
+      background: #222;
+    }
+    &:disabled {
+      background: grey;
+      color: white;
+      opacity: 0.25;
+    }
+
+    @media(max-width: 500px) {
+      flex: 1;
+      padding: 0;
+      height: 5rem;
+    }
+  }
+
 `;

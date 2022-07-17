@@ -1,24 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import AnswerSubItem from './AnswerSubItem.jsx';
 import byHelpfulness from '../../../utils/byHelpfulness.js';
-import Spacer from '../../../utils/smallSpacer.jsx'
-import randomId from '../../../utils/randomId.js'
+import Spacer from '../../../utils/smallSpacer.jsx';
+import randomId from '../../../utils/randomId.js';
 import AnswerModal from './AnswerModal.jsx';
-import QuestionModal from './QuestionModal.jsx';
 
-
-function QaListItem({ result, productMetadata, setTrigger }) {
+function QaListItem({ result, productMetadata, setTrigger, questions, setQuestions }) {
   const [answers, setAnswers] = useState(
-    Object.entries(result.answers).sort(byHelpfulness),
+    Object.values(result.answers).sort(byHelpfulness),
   );
   const [answerLimit, setAnswerLimit] = useState(2);
   const [isAnswerModalOpen, setIsAnswerModalOpen] = useState(false);
 
-
-
-  function handleLoadMoreBtn(e) {
+  function handleLoadMoreBtn() {
     if (answerLimit <= 2) {
       setAnswerLimit(answers.length + 1);
     } else {
@@ -30,7 +26,6 @@ function QaListItem({ result, productMetadata, setTrigger }) {
   const [hasVoted, setHasVoted] = useState(
     localStorage.getItem(`hasVoted-question${result.question_id}`) || false,
   );
-
   function handleVoteQ() {
     axios
       .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${result.question_id}/helpful`, {}, {
@@ -41,11 +36,9 @@ function QaListItem({ result, productMetadata, setTrigger }) {
       .then(() => {
         setQVote(qVote + 1);
         setHasVoted(true);
-        localStorage.setItem(`hasVoted-question${result.question_id}`, true);
+        localStorage.setItem(`hasVoted-question${result.question_id}`, qVote + 1);
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => console.error(err));
   }
 
   function handleAnswerModal() {
@@ -53,7 +46,7 @@ function QaListItem({ result, productMetadata, setTrigger }) {
   }
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="qa-listItem">
       <details open>
         <QuestionWrap>
           <span>
@@ -61,16 +54,12 @@ function QaListItem({ result, productMetadata, setTrigger }) {
           </span>
           <small>
             Helpful?
-            {hasVoted ? (
-              <SubActionBtn disabled>
-                Yes
-              </SubActionBtn>
-            ) : <SubActionBtn type="button" onClick={() => handleVoteQ()}>Yes</SubActionBtn>}
+            <SubActionBtn type="button" onClick={() => handleVoteQ()} value={hasVoted} data-testid="q-helpful-yes-button" disabled={!!(hasVoted)}>Yes</SubActionBtn>
             (
-            {qVote}
+            {localStorage.getItem(`hasVoted-question${result.question_id}`) || qVote}
             )
             <Spacer />
-            <SubActionBtn type="button" onClick={handleAnswerModal}>Add Answer</SubActionBtn>
+            <SubActionBtn data-testid="add-answer-button" type="button" onClick={() => handleAnswerModal()}>Add Answer</SubActionBtn>
           </small>
         </QuestionWrap>
         {
@@ -80,24 +69,24 @@ function QaListItem({ result, productMetadata, setTrigger }) {
               <div className="answer_label">A:</div>
               <div className="answers_list">
                 {answers.slice(0, answerLimit).map((answer) => (
-                  <AnswerSubItem key={answer[0]} answer={answer} />
+                  <AnswerSubItem key={randomId()} answer={answer} question_id={result.question_id} />
                 ))}
                 {answers.length > 2
                   && (
-                    <PrimaryBtn type="button" onClick={() => handleLoadMoreBtn()}>
+                    <PrimaryBtn type="button" onClick={() => handleLoadMoreBtn()} data-testid="load-more-answers-btn">
                       {answerLimit === 2
-                        ? 'Load More Answers'
+                        ? 'See More Answers'
                         : 'Collapse Answers'}
                     </PrimaryBtn>
                   )}
 
               </div>
             </AnswerWrapper>
-            )
+          )
         }
       </details>
       {isAnswerModalOpen
-        && <AnswerModal key={randomId()} className="answermodal" productMetadata={productMetadata} question={result} setIsAnswerModalOpen={() => setIsAnswerModalOpen()} setTrigger={setTrigger} />
+        && <AnswerModal key={randomId()} className="answermodal" productMetadata={productMetadata} question={result} isAnswerModalOpen={isAnswerModalOpen} setIsAnswerModalOpen={() => setIsAnswerModalOpen()} setTrigger={setTrigger} setAnswers={setAnswers} questions={questions} setQuestions={setQuestions} />
       }
     </Wrapper>
   );
@@ -126,11 +115,21 @@ const QuestionWrap = styled.summary`
     font-weight: 400;
     font-size: 0.75rem;
     min-width: max-content;
+
+    @media(max-width:500px) {
+      align-self: flex-end;
+      opacity: 0.35;
+    }
+  }
+
+  @media(max-width:500px) {
+    flex-direction: column;
+    align-items: flex-start;
   }
 `;
 
 const AnswerWrapper = styled.div`
-  max-height: 50vh;
+  max-height: max-content;
   overflow: auto;
   display: flex;
   padding: 10px;

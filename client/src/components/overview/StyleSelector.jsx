@@ -1,38 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { BsFillCheckCircleFill } from 'react-icons/bs';
 
 function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
   return (
     <div>
-      <h2>Style Selector</h2>
       <p>
         <strong>STYLE &gt; </strong>
         <span data-testid="selected-style-name">{selectedStyle.name ? selectedStyle.name.toUpperCase() : null}</span>
       </p>
-      <div>
+      <StyleSelectorGrid>
         {styles.map((style) => {
-          const styling = {
-            opacity: style.style_id === selectedStyle.style_id ? 1 : 0.4,
-            height: '50px',
-            width: '50px',
-            objectFit: 'cover',
-            borderRadius: '50%',
-            border: '1px solid black',
+          const checkmarkStyling = {
+            width: 'minmax(2px, 0.5vh)',
+            top: '0.5vh',
+            right: '0.5vh',
+            color: 'black',
+            border: 'white',
+            position: 'absolute',
+            zIndex: 10,
+            visibility: style.style_id === selectedStyle.style_id ? 'visible' : 'hidden',
           };
 
           return (
-            <img
-              key={style.style_id}
-              src={style.photos[0].thumbnail_url}
-              onClick={() => {
-                setSelectedStyle(style);
-              }}
-              alt={style.name}
-              style={styling}
-            />
+            <ThumbnailWrapper key={style.style_id}>
+              <BsFillCheckCircleFill style={checkmarkStyling} />
+              <Thumbnail
+                src={style.photos[0].thumbnail_url}
+                onClick={() => {
+                  setSelectedStyle(style);
+                }}
+                alt={style.name}
+              />
+            </ThumbnailWrapper>
           );
         })}
-      </div>
+      </StyleSelectorGrid>
     </div>
   );
 }
@@ -77,3 +81,26 @@ StyleSelector.defaultProps = {
 };
 
 export default StyleSelector;
+
+const StyleSelectorGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, max-content);
+  gap: 15px;
+  grid-auto-rows: max-content;
+`;
+
+const ThumbnailWrapper = styled.div`
+  position: relative;
+  isolation: isolate;
+`;
+
+const Thumbnail = styled.img`
+  object-fit: cover;
+  min-width: 50px;
+  min-height: 50px;
+  width: 8vh;
+  height: 8vh;
+  border-radius: 50%;
+  border: 1px solid black;
+  opacity: 0.6;
+`;

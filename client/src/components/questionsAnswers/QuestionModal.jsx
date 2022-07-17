@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { IoClose } from 'react-icons/io5';
@@ -21,35 +21,41 @@ function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
       },
     })
       .then(() => {
-        setTrigger(randomId());
         setChecks({ ...checks, isQuestionModalOpen: false });
-      });
+        setTrigger(randomId());
+      })
+      .catch((err) => console.error(err));
   }
 
   return (
-    <Wrapper>
-      <div className="modal-backdrop"></div>
-      <form onSubmit={handleSubmit}>
+    <Wrapper data-testid="question-modal-wrapper">
+      <div className="modal-backdrop" data-testid="qa-modal-backdrop"></div>
+      <Form onSubmit={handleSubmit} data-testid="qa-question-modal-form">
         <h2>Ask Your Question</h2>
         <h3>About the {productMetadata.productName}</h3>
-        <label htmlFor="question">
+        <InputWrapper htmlFor="question">
           Your Question*:
           <textarea id="question" maxLength={1000} name="question" required />
-        </label>
-        <label htmlFor="username">
-          Your Nickname*:
-          <input type="textbox" id="username" maxLength={60} placeholder="Example: jackson11!" name="username" required />
-        </label>
-        <small>For privacy reasons, do not use your full name or email address.</small>
-        <label htmlFor="email">
-          Your email*:
-          <input type="email" id="email" maxLength={60} placeholder="Example: jack@email.com" name="email" required />
-        </label>
-        <small>For authentication reasons, you will not be emailed.</small>
-
-        <button type="submit">submit</button>
-        <IoClose onClick={() => setChecks({ ...checks, isQuestionModalOpen: false })} className="close-button" />
-      </form>
+        </InputWrapper>
+        <div className="nicknameAndemail">
+          <InputWrapper htmlFor="username">
+            Your Nickname*:
+            <input type="textbox" id="username" maxLength={60} placeholder="Example: jackson11!" name="username" required />
+            <small>For privacy reasons, do not use your full name or email address.</small>
+          </InputWrapper>
+          <InputWrapper htmlFor="email">
+            Your email*:
+            <input type="email" id="email" maxLength={60} placeholder="Example: jack@email.com" name="email" required />
+            <small>For authentication reasons, you will not be emailed.</small>
+          </InputWrapper>
+        </div>
+        <SubmitWrapper>
+          <button type="submit" data-testid="question-submit-button">submit</button>
+        </SubmitWrapper>
+        <IoClose onClick={() => {
+          setChecks({ ...checks, isQuestionModalOpen: false });
+        }} className="close-button" data-testid="close-button" />
+      </Form>
     </Wrapper>
   );
 }
@@ -57,7 +63,7 @@ function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
 export default QuestionModal;
 
 const Wrapper = styled.div`
-  isolation: isolate;
+  isolation: auto;
   & .modal-backdrop {
     position: fixed;
     z-index: -1;
@@ -72,18 +78,6 @@ const Wrapper = styled.div`
     margin: 0;
     padding: 0;
   }
-  & form {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: whitesmoke;
-    width: 100%;
-    height: min-content;
-    padding: 2rem;
-    margin: 100px 0;
-    box-shadow: 2px 2px 10px #bbb;
-    border-radius: 4px;
-  }
   .close-button {
     position: absolute;
     top:0;
@@ -93,5 +87,105 @@ const Wrapper = styled.div`
   }
   input, textarea {
     display: block;
+  }
+`;
+
+const Form = styled.form`
+  overflow: auto;
+  overscroll-behavior: contain;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  background: whitesmoke;
+  width: 40%;
+  height: min-content;
+  padding: 2.5rem 3.1rem;
+  margin: 100px auto;
+  box-shadow: 2px 2px 10px #bbb;
+  border-radius: 4px;
+  & h2 {
+    margin: 0.5rem 0 1rem 0;
+  }
+
+  @media(max-width: 500px) {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  & .nicknameAndemail {
+    display: flex;
+    gap: 10px;
+    @media(max-width: 500px) {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+
+  & input[type="textbox"], input[type="email"] {
+    width: 100%;
+    height: 3rem;
+    border: 1px solid #ddd;
+    &:hover {
+      border: 1px solid #bbb;
+    }
+  }
+
+  & textarea {
+    width: 100%;
+    height: 4rem;
+    resize: none;
+    border: 1px solid #ddd;
+    &:hover {
+      border: 1px solid #bbb;
+    }
+
+    @media(max-width: 500px) {
+      height: 8rem;
+    }
+  }
+`;
+
+const SubmitWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  & button {
+    height: 3rem;
+    padding: 0 1rem;
+    justify-content: flex-start;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: none;
+    border: 1px solid #222;
+    margin-right: 10px;
+    margin-top: 15px;
+    &:hover {
+      color: #eee;
+      background: #222;
+    }
+    &:disabled {
+      background: grey;
+      color: white;
+      opacity: 0.25;
+    }
+
+    @media(max-width: 500px) {
+      flex: 1;
+      padding: 0;
+      height: 5rem;
+    }
+  }
+
+`;
+
+const InputWrapper = styled.label`
+  margin-top: 0.5rem;
+  & small {
+    font-style: italic;
   }
 `;

@@ -5,8 +5,9 @@ import React from 'react';
 import StarRatings from 'react-star-ratings';
 import getTotalRatings from '../../../../utils/getTotalRatings.js';
 import RatingsBreakdown from './RatingsBreakdown.jsx';
+import ProductBreakdown from './RatingsProductBreakdown.jsx';
 
-function Ratings({ meta, currRating, setRating }) {
+function Ratings({ meta, currRating, setRating, filterRatings }) {
   let rating = 0;
   let totalRatings = 0;
   let ratings = {};
@@ -33,8 +34,12 @@ function Ratings({ meta, currRating, setRating }) {
           totalRatings={totalRatings}
           currRating={currRating}
           setRating={setRating}
-          onClick={() => { console.log(event.target); }}
+          filterRatings={filterRatings}
+          meta={meta}
         />
+      </div>
+      <div>
+        <ProductBreakdown meta={meta} />
       </div>
     </div>
   );

@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 import SearchBar from './SearchBar.jsx';
 import QAWrapper from './QAWrapper.jsx';
-import PageSwitcher from '../../../utils/PageSwitcher.jsx';
 
-function QaBox({ id, setProductId }) {
+function QaBox({ id }) {
   const [questions, setQuestions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [count, setCount] = useState(0);
@@ -45,7 +44,8 @@ function QaBox({ id, setProductId }) {
         });
         setCount(0);
         setProductMetadata({ productName: data.name, product_id: data.id });
-      });
+      })
+      .catch((err) => console.error(err));
   }, [id]);
 
   useEffect(() => {
@@ -60,24 +60,39 @@ function QaBox({ id, setProductId }) {
       .then(({ data }) => {
         if (data.results.length === 0 && !isPageDone) {
           setCount(count + 1);
-          if (count >= 2) {
+          if (count >= 7) {
             setIsPageDone(true);
-          } else if ((count < 2 && !isPageDone) || data.results.length === 1) {
+          } else if ((count < 7 && !isPageDone) || data.results.length === 1) {
             setIndexes({ ...indexes, page: indexes.page + 1 });
           }
         } else {
-          setQuestions([...questions, ...data.results]);
+          const freshData = [...questions, ...data.results];
+
+          const uniq = [];
+          const qsWithoutDups = freshData.filter((el) => {
+            const duplicate = uniq.includes(el.question_id);
+            if (!duplicate) {
+              uniq.push(el.question_id);
+              return true;
+            }
+            return false;
+          });
+          setQuestions(qsWithoutDups);
+
           if (questions.length < 2 && !isPageDone) {
             setIndexes({ ...indexes, page: indexes.page + 1 });
           }
         }
         setChecks({ ...checks, isLoading: false });
-      });
+      })
+      .catch((err) => console.error(err));
   }, [indexes.page]);
 
-  function handleMoreQuestions() {
-    document.querySelector('#bottom').scrollIntoView(false);
+  useEffect(() => {
+      document.querySelector('.qa-wrapper')?.scrollTo({ top: document.querySelector('.qa-wrapper').scrollHeight, behavior: 'smooth' });
+  }, [indexes.questionIndex]);
 
+  function handleMoreQuestions() {
     if (!isPageDone) {
       setIndexes({ ...indexes, page: indexes.page++ });
     }
@@ -95,9 +110,8 @@ function QaBox({ id, setProductId }) {
   }
 
   return (
-    <Wrapper>
-      <PageSwitcher setProductId={setProductId}/>
-      <h2>Questions And Answers</h2>
+    <Wrapper data-testid="qa-component">
+      <h2 className="qa-component-header">Questions And Answers</h2>
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <QAWrapper
         questions={questions}
@@ -106,13 +120,14 @@ function QaBox({ id, setProductId }) {
         questionIndex={indexes.questionIndex}
         searchTerm={searchTerm}
         checks={checks}
-        setIsPageDone={setIsPageDone}
         setChecks={setChecks}
+        page={indexes.page}
       />
-
+      <PrimaryBtnGroup>
       {!checks.isDone
         && (<button type="button" onClick={() => handleMoreQuestions()} disabled={checks.isLoading} className="QAButton">More Questions</button>)}
-      <button type="button" disabled={checks.isLoading} onClick={() => handleAddQuestion()} className="QAButton">Add a Question</button>
+      <button type="button" disabled={checks.isLoading} onClick={() => handleAddQuestion()} className="QAButton" data-testid="qa-addqbtn">Add a Question</button>
+      </PrimaryBtnGroup>
     </Wrapper>
   );
 }
@@ -124,25 +139,38 @@ const Wrapper = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   margin: 50px auto 0 auto;
   padding-bottom: 4rem;
-  width: 70%;
-
+  width: 50%;
   @media (max-width: 500px) {
     margin: 25px 0 0 0;
     width: 100%;
-    padding: 5px;
+    padding: 15px;
   }
 
-  & h2 {
+  & .qa-component-header {
     margin: 1.25rem 0;
+
+    @media(max-width:500px) {
+      width: 100%;
+      text-align: center;
+      padding: 0 10px;
+    }
   }
+`;
+
+
+const PrimaryBtnGroup = styled.div`
+  display: flex;
 
   & .QAButton {
+    height: 3rem;
+    padding: 0 1rem;
+    justify-content: flex-start;
     text-transform: uppercase;
     font-weight: 700;
-    padding: 1rem 5rem;
     background: none;
     border: 1px solid #222;
     margin-right: 10px;
+    margin-top: 15px;
     &:hover {
       color: #eee;
       background: #222;
@@ -152,6 +180,14 @@ const Wrapper = styled.div`
       color: white;
       opacity: 0.25;
     }
-  }
 
+    @media(max-width: 500px) {
+      flex: 1;
+      padding: 0;
+      height: 5rem;
+    }
+  }
+  @media(max-width: 500px) {
+    justify-content: space-between;
+  }
 `;

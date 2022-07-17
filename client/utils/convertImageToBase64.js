@@ -1,5 +1,5 @@
 function convertImageToBase64(file) {
-  return new Promise((res, rej) => {
+  return new Promise((res) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
