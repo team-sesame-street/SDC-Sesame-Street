@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import AnswerSubItem from './AnswerSubItem.jsx';
 import byHelpfulness from '../../../utils/byHelpfulness.js';
-import Spacer from '../../../utils/smallSpacer.jsx'
-import randomId from '../../../utils/randomId.js'
+import Spacer from '../../../utils/smallSpacer.jsx';
+import randomId from '../../../utils/randomId.js';
 import AnswerModal from './AnswerModal.jsx';
 
-function QaListItem({ result, productMetadata, setTrigger }) {
+function QaListItem({ result, productMetadata, setTrigger, questions, setQuestions }) {
   const [answers, setAnswers] = useState(
-    Object.entries(result.answers).sort(byHelpfulness),
+    Object.values(result.answers).sort(byHelpfulness),
   );
   const [answerLimit, setAnswerLimit] = useState(2);
   const [isAnswerModalOpen, setIsAnswerModalOpen] = useState(false);
@@ -26,7 +26,6 @@ function QaListItem({ result, productMetadata, setTrigger }) {
   const [hasVoted, setHasVoted] = useState(
     localStorage.getItem(`hasVoted-question${result.question_id}`) || false,
   );
-
   function handleVoteQ() {
     axios
       .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${result.question_id}/helpful`, {}, {
@@ -37,7 +36,7 @@ function QaListItem({ result, productMetadata, setTrigger }) {
       .then(() => {
         setQVote(qVote + 1);
         setHasVoted(true);
-        localStorage.setItem(`hasVoted-question${result.question_id}`, true);
+        localStorage.setItem(`hasVoted-question${result.question_id}`, qVote + 1);
       })
       .catch((err) => console.error(err));
   }
@@ -57,10 +56,10 @@ function QaListItem({ result, productMetadata, setTrigger }) {
             Helpful?
             <SubActionBtn type="button" onClick={() => handleVoteQ()} value={hasVoted} data-testid="q-helpful-yes-button" disabled={!!(hasVoted)}>Yes</SubActionBtn>
             (
-            {qVote}
+            {localStorage.getItem(`hasVoted-question${result.question_id}`) || qVote}
             )
             <Spacer />
-            <SubActionBtn data-testid="add-answer-button" type="button" onClick={handleAnswerModal}>Add Answer</SubActionBtn>
+            <SubActionBtn data-testid="add-answer-button" type="button" onClick={() => handleAnswerModal()}>Add Answer</SubActionBtn>
           </small>
         </QuestionWrap>
         {
@@ -70,7 +69,7 @@ function QaListItem({ result, productMetadata, setTrigger }) {
               <div className="answer_label">A:</div>
               <div className="answers_list">
                 {answers.slice(0, answerLimit).map((answer) => (
-                  <AnswerSubItem key={answer[0]} answer={answer} />
+                  <AnswerSubItem key={randomId()} answer={answer} question_id={result.question_id} />
                 ))}
                 {answers.length > 2
                   && (
@@ -83,11 +82,11 @@ function QaListItem({ result, productMetadata, setTrigger }) {
 
               </div>
             </AnswerWrapper>
-            )
+          )
         }
       </details>
       {isAnswerModalOpen
-        && <AnswerModal key={randomId()} className="answermodal" productMetadata={productMetadata} question={result} isAnswerModalOpen={isAnswerModalOpen} setIsAnswerModalOpen={() => setIsAnswerModalOpen()} setTrigger={setTrigger} />
+        && <AnswerModal key={randomId()} className="answermodal" productMetadata={productMetadata} question={result} isAnswerModalOpen={isAnswerModalOpen} setIsAnswerModalOpen={() => setIsAnswerModalOpen()} setTrigger={setTrigger} setAnswers={setAnswers} questions={questions} setQuestions={setQuestions} />
       }
     </Wrapper>
   );
