@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
+import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 
 function MainImage(
   {
@@ -35,7 +37,15 @@ function MainImage(
 
     return (
       <div>
-        <h2>Main Image Carousel</h2>
+        <ImageDefaultThumbnail
+          images={images}
+          currImgIndex={currImgIndex}
+          setCurrImgIndex={setCurrImgIndex}
+          thumbnailIndexMin={thumbnailIndexMin}
+          thumbnailIndexMax={thumbnailIndexMax}
+          setThumbnailIndexMin={setThumbnailIndexMin}
+          setThumbnailIndexMax={setThumbnailIndexMax}
+        />
         {images.map((image, index) => (
           <div key={index}>
             {index === currImgIndex && index > 0
