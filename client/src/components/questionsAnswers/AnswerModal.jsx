@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -34,7 +35,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
     // Convert images to text (base64)
     const convertedImages = [];
     if (selectedImages) {
-      for (let i = 0; i < selectedImages.length; i++) {
+      for (let i = 0; i < selectedImages.length; i += 1) {
         convertedImages.push(convertImageToBase64(selectedImages[i]));
       }
       // Send those converted images to Cloudinary
@@ -42,51 +43,44 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
       Promise.all(convertedImages)
         .then((blobs) => {
           const cloudPromises = [];
-          for (let i = 0; i < blobs.length; i++) {
+          for (let i = 0; i < blobs.length; i += 1) {
             cloudPromises.push(
               axios
                 .post(`https://api.cloudinary.com/v1_1/drf3dli0i/image/upload`, {
                   file: blobs[i],
-                  upload_preset: "wvbnvl8l",
+                  upload_preset: 'wvbnvl8l',
                 })
                 .then(({ data }) => data.secure_url),
             );
           }
           // Send the array of urls with the POST request to Hack Reactor
           Promise.all(cloudPromises)
-            .then((photos) => {
-              return axios
-                .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
-                  body,
-                  name,
-                  email,
-                  photos,
-                }, {
+            .then((photos) => axios
+              .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
+                body,
+                name,
+                email,
+                photos,
+              }, {
+                headers: {
+                  Authorization: process.env.GITKEY,
+                },
+              })
+              .then(() => axios
+                .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers?count=15`, {
                   headers: {
                     Authorization: process.env.GITKEY,
-                  },
+                  }
                 })
-                .then(() => {
-                  return axios
-                    .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers?count=15`, {
-                      headers: {
-                        Authorization: process.env.GITKEY
-                      }
-                    })
-                    .then(({ data }) => {
-                      let formattedData = data.results.map((result) => {
-                        console.log(result);
-                        return { ...result, id: question.question_id, photos: result.photos?.map(photo => photo.url) }
-                      });
-                      let quest = questions.find((q) => q.question_id === question.question_id);
-                      quest.answers = formattedData;
-                      let newQuestionIndex = questions.indexOf(quest);
-                      questions.splice(newQuestionIndex, 1, quest);
-                      setQuestions([...questions]);
-                    });
+                .then(({ data }) => {
                   setIsAnswerModalOpen(false);
-                });
-            });
+                  const formattedData = data.results.map((result) => ({ ...result, id: question.question_id, photos: result.photos?.map((photo) => photo.url) }));
+                  const quest = questions.find((q) => q.question_id === question.question_id);
+                  quest.answers = formattedData;
+                  const newQuestionIndex = questions.indexOf(quest);
+                  questions.splice(newQuestionIndex, 1, quest);
+                  setQuestions([...questions]);
+                })));
         })
         .catch((err) => console.error(err));
     } else {
@@ -102,6 +96,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
           },
         })
         .then(() => {
+          setIsAnswerModalOpen(false);
           return axios
             .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers?count=15`, {
               headers: {
@@ -109,19 +104,13 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
               }
             })
             .then(({ data }) => {
-              let formattedData = data.results.map((result) => {
-                console.log(result);
-                return { ...result, id: question.question_id, photos: result.photos?.map(photo => photo.url) }
-              });
-              let quest = questions.find((q) => q.question_id === question.question_id);
+              const formattedData = data.results.map((result) => ({ ...result, id: question.question_id, photos: result.photos?.map((photo) => photo.url) }));
+              const quest = questions.find((q) => q.question_id === question.question_id);
               quest.answers = formattedData;
-              let newQuestionIndex = questions.indexOf(quest);
+              const newQuestionIndex = questions.indexOf(quest);
               questions.splice(newQuestionIndex, 1, quest);
               setQuestions([...questions]);
-
-
             });
-          setIsAnswerModalOpen(false);
         })
         .catch((err) => {
           console.error(err);
