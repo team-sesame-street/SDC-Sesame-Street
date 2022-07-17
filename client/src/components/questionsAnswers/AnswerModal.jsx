@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { IoClose } from 'react-icons/io5';
 import convertImageToBase64 from '../../../utils/convertImageToBase64.js';
 import randomId from '../../../utils/randomId';
+import Modal from '../../../utils/Modal.jsx';
 
 function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, questions, setQuestions }) {
   const [selectedImages, setSelectedImages] = useState(null);
@@ -119,35 +119,34 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
   }
 
   return (
-    <Wrapper data-testid="add-answer-modal">
-      <div className="modal-backdrop" data-testid="ans-modal-backdrop"></div>
-      <Form onSubmit={handleSubmit}>
+    <Modal cb={() => setIsAnswerModalOpen(false)}>
+      <form onSubmit={handleSubmit}>
         <h2>Submit your Answer</h2>
         <h3>
           {productMetadata.productName}
           :
           <span className="header-question">{question.question_body}</span>
         </h3>
-        <InputWrapper htmlFor="answer">
+        <label htmlFor="answer">
           Your Answer:
           <textarea id="answer" maxLength={1000} name="answer" required />
-        </InputWrapper>
+        </label>
         <div className="nicknameAndemail">
-          <InputWrapper htmlFor="username">
+          <label htmlFor="username">
             Your Nickname:
             <input type="textbox" id="username" maxLength={60} placeholder="Example: jack543!" name="username" required />
             <small>For privacy reasons, do not use your full name or email address.</small>
-          </InputWrapper>
-          <InputWrapper htmlFor="email">
+          </label>
+          <label htmlFor="email">
             Your email:
             <input type="email" id="email" maxLength={60} placeholder="Example: jack@email.com" name="email" required />
             <small>For authentication reasons, you will not be emailed.</small>
-          </InputWrapper>
+          </label>
         </div>
-        <InputWrapper htmlFor="file-input" id="file-input-label">
+        <FileInputWrapper htmlFor="file-input" id="file-input-label">
           <input type="file" accept=".jpg, .jpeg, .png, .webp" multiple onChange={handleImages} id="file-input" />
           <small>Click here to add up to 5 images to upload...</small>
-        </InputWrapper>
+        </FileInputWrapper>
         <ThumbnailWrapper>
           {selectedImages && (
             <div>
@@ -160,39 +159,23 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
         <SubmitWrapper>
           <button type="submit">Submit</button>
         </SubmitWrapper>
-        <IoClose onClick={() => setIsAnswerModalOpen(false)} className="close-button" />
-      </Form>
-    </Wrapper>
+      </form>
+    </Modal>
   );
 }
 
 export default AnswerModal;
 
-const Wrapper = styled.div`
-isolation: auto;
-  & .modal-backdrop {
-    position: fixed;
-    z-index: -1;
-    top: 0;
-    right: 0;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: black;
-    opacity: 0.1;
-    margin: 0;
-    padding: 0;
-  }
-
-  & #file-input {
+const FileInputWrapper = styled.label`
+  background-color: #ddd;
+  padding: 5px 10px;
+  & input {
     position: absolute !important;
     height: 1px;
     width: 1px;
     overflow: hidden;
     clip: rect(1px, 1px, 1px, 1px);
   }
-
   & #file-input-label {
     display: inline-block;
     padding: 5px 10px;
@@ -202,82 +185,8 @@ isolation: auto;
     background: #ccc;
   }
 
-  .close-button {
-    position: absolute;
-    top:0;
-    right:0;
-    transform: scale(2);
-    margin: 20px;
-  }
-  input, textarea {
-    display: block;
-  }
-`;
-
-const Form = styled.form`
-  overflow: auto;
-  overscroll-behavior: contain;
-  z-index: 1000;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  background: whitesmoke;
-  width: 40%;
-  height: min-content;
-  padding: 2.5rem 3.1rem;
-  margin: 100px auto;
-  box-shadow: 2px 2px 10px #bbb;
-  border-radius: 4px;
-  & h2 {
-    margin: 0.5rem 0 1rem 0;
-  }
-
-  & h3 {
-    & .header-question {
-      margin-left: 5px;
-      font-weight: 400;
-    }
-  }
-
-  & .nicknameAndemail {
-    display: flex;
-    gap: 10px;
-    @media(max-width: 500px) {
-      flex-direction: column;
-      gap: 0;
-    }
-  }
-
-  & input[type="textbox"], input[type="email"] {
-    width: 100%;
-    height: 3rem;
-    border: 1px solid #ddd;
-    &:hover {
-      border: 1px solid #bbb;
-    }
-  }
-
-  & textarea {
-    width: 100%;
-    height: 4rem;
-    resize: none;
-    border: 1px solid #ddd;
-    &:hover {
-      border: 1px solid #bbb;
-    }
-
-    @media(max-width: 500px) {
-      height: 8rem;
-    }
-  }
-
-  @media(max-width: 500px) {
-    margin: 0;
-    width: 100%;
-    height: 100%;
+  & small {
+    font-style: italic;
   }
 `;
 
@@ -298,13 +207,6 @@ const Thumbnail = styled.img`
   width: ${100 / 5}%;
   height: 100px;
   padding: 5px;
-`;
-
-const InputWrapper = styled.label`
-  margin-top: 0.5rem;
-  & small {
-    font-style: italic;
-  }
 `;
 
 const SubmitWrapper = styled.div`
