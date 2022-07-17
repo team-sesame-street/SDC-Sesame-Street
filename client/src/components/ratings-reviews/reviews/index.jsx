@@ -15,7 +15,7 @@ import ReviewsMoreReviews from './ReviewsMoreReviews.jsx';
 import getTotalRatings from '../../../../utils/getTotalRatings.js';
 import ReviewsNewReview from './ReviewsNewReview.jsx';
 
-function Reviews({ reviews, setSort, count, setCount, meta, filterRatings,
+export default function Reviews({ reviews, setSort, count, setCount, meta, filterRatings,
   showModal, setShowModal }) {
   let totalReviews;
   if (meta) {
@@ -24,6 +24,23 @@ function Reviews({ reviews, setSort, count, setCount, meta, filterRatings,
       setCount(totalReviews);
     } else {
       totalReviews = getTotalRatings(meta.ratings);
+    }
+  }
+
+  function openModal() {
+    setShowModal(true);
+  }
+
+  // Closes modal and makes DOM scrollable again
+  function closeModal() {
+    setShowModal(false);
+    document.body.style.overflow = 'auto';
+  }
+
+  // Escape button closes modal
+  function onKeyDown(event) {
+    if (event.keyCode === 27) {
+      closeModal();
     }
   }
 
@@ -79,8 +96,13 @@ function Reviews({ reviews, setSort, count, setCount, meta, filterRatings,
         <div style={buttonStyle}>
           <ReviewsMoreReviews count={count} setCount={setCount} totalReviews={totalReviews} />
         </div>
-        <div>
-          <ReviewsNewReview showModal={showModal} setShowModal={setShowModal}/>
+        <div onKeyDown={(event) => onKeyDown(event)} role="button" tabIndex="0">
+          <ReviewsNewReview
+            showModal={showModal}
+            setShowModal={setShowModal}
+            onOpen={() => { openModal(); }}
+            onClose={() => { closeModal(); }}
+          />
         </div>
       </div>
     </div>
@@ -131,5 +153,3 @@ const summaryContainer = {
 const bodyContainer = {
   fontWeight: 'normal',
 };
-
-export default Reviews;

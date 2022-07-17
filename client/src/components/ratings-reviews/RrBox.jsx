@@ -6,9 +6,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Reviews from './reviews/index.jsx';
 import Ratings from './ratings/index.jsx';
-import FormModal from './reviews/FormModal.jsx';
 
-function RrBox({ id }) {
+export default function RrBox({ id }) {
   const [reviews, setReviews] = useState([]);
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('relevant');
@@ -60,6 +59,7 @@ function RrBox({ id }) {
     })
       .then((res) => {
         const metaData = res.data;
+        console.log(metaData)
         const ratingArray = Object.values(currRating);
         const mapped = ratingArray.flatMap((bool, index) => {
           if (bool) {
@@ -86,19 +86,15 @@ function RrBox({ id }) {
 
   return (
     <div>
-    {showModal ? (
-      <FormModal setShowModal={setShowModal} />
-    ) : (
-    <div className="RrBox-container" style={flexContainer}>
-      <div style={ratingsContainer}>
-        Ratings & Reviews
-        <Ratings meta={meta} currRating={currRating} setRating={setRating} filterRatings={filterRatings} />
+      <div className="RrBox-container" style={flexContainer}>
+        <div style={ratingsContainer}>
+          Ratings & Reviews
+          <Ratings meta={meta} currRating={currRating} setRating={setRating} filterRatings={filterRatings} />
+        </div>
+        <div style={reviewsContainer}>
+          <Reviews reviews={reviews} setSort={setSort} count={count} meta={meta} setCount={setCount} filterRatings={filterRatings} showModal={showModal} setShowModal={setShowModal} />
+        </div>
       </div>
-      <div style={reviewsContainer}>
-        <Reviews reviews={reviews} setSort={setSort} count={count} meta={meta} setCount={setCount} filterRatings={filterRatings} showModal={showModal} setShowModal={setShowModal} />
-      </div>
-    </div>
-    )}
     </div>
   );
 }
@@ -121,5 +117,3 @@ const ratingsContainer = {
 const reviewsContainer = {
   flex: 1,
 };
-
-export default RrBox;

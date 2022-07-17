@@ -1,23 +1,23 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import FormModal from './FormModal.jsx';
 
-function ReviewsNewReview( {showModal, setShowModal }) {
-  function handleClick() {
-    setShowModal(true);
-  }
+function ReviewsNewReview({ showModal, onOpen, onClose }) {
+  const addReviewBtn = {
+    cursor: 'pointer',
+  };
 
   return (
     <div>
       <div className="new-review">
-        <button type="button" style={newReviewBtnStyling} onClick={handleClick}>ADD REVIEW</button>
+        <button type="button" style={addReviewBtn} onClick={onOpen}>ADD REVIEW</button>
       </div>
-      {showModal && <FormModal setShowModal={setShowModal} />}
+      <FormModal
+        showModal={showModal}
+        onClose={onClose}
+      />
     </div>
   );
 }
-
-const newReviewBtnStyling = {
-  cursor: 'pointer',
-};
 
 export default ReviewsNewReview;
