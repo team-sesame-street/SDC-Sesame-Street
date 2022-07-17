@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import FormModal from './FormModal.jsx';
+import FormModal from './form/Modal.jsx';
 
 function ReviewsNewReview({ showModal, onOpen, onClose }) {
   const addReviewBtn = {
