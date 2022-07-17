@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
-import { product1 } from '../../overview/MainOverview.jsx';
+import React, { useState, useEffect } from 'react';
+import FormRating from './FormRating.jsx';
 
 const MODAL_STYLES = {
   position: 'fixed',
@@ -42,6 +42,11 @@ const submitReviewBtn = {
 export default function FormModal({ showModal, onClose }) {
   if (!showModal) return null;
 
+  const [starRating, setStarRating] = useState();
+  const [recommendProduct, setRecommendProduct] = useState();
+
+  const ratingType = ['Poor', 'Fair', 'Average', 'Good', 'Great'];
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
   }, [showModal]);
@@ -55,20 +60,38 @@ export default function FormModal({ showModal, onClose }) {
           <br />
           <h1>Write Your Review</h1>
           <br />
-          <h2>About the {product}</h2>
+          <h2>
+            {`About the ${localStorage.getItem('productName')}`}
+          </h2>
           <br />
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label>Overall Rating*</label>
+          <FormRating starRating={starRating} changeRating={(rating) => setStarRating(rating)} />
+          {ratingType[starRating - 1]}
+          <br />
+          Do You Recommend This Product?*
           <label>
-            Overall Rating*
-            <input type="text" />
-            <br />
-            Do You Recommend This Product?*
-            <input type="text" />
-            <br />
-            Characteristics *
-            <input type="text" />
-            <br />
+            <input
+              type="radio"
+              value="yes"
+              checked={recommendProduct === 'yes'}
+              onChange={() => { setRecommendProduct('yes'); }}
+            />
+            yes
           </label>
+          <label>
+            <input
+              type="radio"
+              value="no"
+              checked={recommendProduct === 'no'}
+              onChange={() => { setRecommendProduct('no'); }}
+            />
+            no
+          </label>
+          <br />
+          Characteristics *
+          <input type="text" />
+          <br />
           <input type="button" value="Cancel" onClick={onClose} style={cancelReviewBtn} />
           <input type="submit" style={submitReviewBtn} value="Submit" />
         </form>
