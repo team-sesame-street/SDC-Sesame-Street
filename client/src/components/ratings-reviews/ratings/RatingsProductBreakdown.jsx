@@ -3,17 +3,31 @@ import React from 'react';
 import { GoTriangleDown } from 'react-icons/go';
 import RatingsBar from '../../../../utils/RatingsBar.jsx';
 
-function ProductBreakdown({ meta }) {
+const styles = {
+  sizeContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    fontSize: '14px',
+  },
+  sizeItems: {
+    display: 'flex',
+    flexDirection: 'space-between',
+  },
+};
+
+export default function ProductBreakdown({ meta }) {
   const barArr = [];
   const nameArr = [];
   const nameVal = [];
   const sizeObj = {
-    Fit: 'Poor',
-    Length: 'Too small',
-    Size: 'Too small',
-    Comfort: 'Poor',
-    Quality: 'Poor',
+    Comfort: ['Uncomfortable', 'Perfect'],
+    Fit: ['Runs tight', 'Perfect', 'Runs loose'],
+    Length: ['Runs short', 'Perfect', 'Runs long'],
+    Size: ['A size small', 'Perfect', 'A size big'],
+    Quality: ['Poor', 'Perfect'],
+    Width: ['Runs narrow', 'Perfect', 'Runs Wide'],
   };
+
   if (meta) {
     const char = meta.characteristics;
     const keysArr = Object.keys(char);
@@ -41,42 +55,17 @@ function ProductBreakdown({ meta }) {
             {name}
             {bar}
             <GoTriangleDown size={30} style={{ position: 'absolute', transform: `translate(${percent}%, -70%)` }} />
-
-            {sizeObj[name] === 'Poor' ? (
-              <div style={poorStyle}>
-                Poor
-                <div>
-                  Great
+            <div style={styles.sizeContainer }>
+              {sizeObj[name].map((size) => (
+                <div style={styles.sizeItems}>
+                  { size }
                 </div>
-              </div>
-            ) : (
-              <div style={poorStyle}>
-                Too small
-                <div style={poorSubStyle}>
-                  Perfect
-                </div>
-                <div style={poorSubStyle}>
-                  Too large
-                </div>
-              </div>
-            )}
-            <br/>
+              ))}
+            </div>
+            <br />
           </div>
         );
       })}
     </div>
   );
 }
-
-const poorStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  fontSize: '14px',
-};
-
-const poorSubStyle = {
-  display: 'flex',
-  flexDirection: 'space-between',
-};
-
-export default ProductBreakdown;
