@@ -1,30 +1,16 @@
-const express = require('express')
-const axios = require('axios')
-require('dotenv').config()
+/* eslint-disable no-loop-func */
+const express = require('express');
+const path = require('path');
+require('dotenv').config();
 
-const app = express()
-const PORT = process.env.PORT || 3000
+const {getAll} = require('./getAll.js');
 
-app.use(express.static('../client/dist'))
-app.use(express.json())
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.get('/qa/questions/:id',(req, res) => {
-  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${req.params.id}&page=5&count=10`, {
-    headers: {
-      Authorization: process.env.GITKEY
-    }
-  })
-    .then(result => res.status(200).json(result.data))
-})
+app.use(express.json());
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 
-app.get('/qa/questions/:id/answers',(req, res) => {
-  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${req.params.id}/answers?page=5&count=10`, {
-    headers: {
-      Authorization: process.env.GITKEY
-    }
-  })
-    .then(result => res.status(200).json(result.data))
-})
+app.get('/qa/questions/:id/all/:page', getAll);
 
-app.listen(PORT)
-
+app.listen(PORT, () => console.log(`Server running on localhost:${PORT}`));
