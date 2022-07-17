@@ -5,17 +5,17 @@ import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 
 const SubWrapper = styled.div`
-  background-color: grey;
+  background-color: #F8F7F2;
   position: relative;
   display: grid;
   height: 60vh;
   width: 90vh;
-  // min-height: 200px;
-  // min-width: 300px;
+  min-height: 390px;
+  min-width: 510px;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(8, 1fr);
-  // justify-content: center;
-  // align-content: center;
+  justify-content: center;
+  align-content: center;
   justify-items: center;
   align-items: center;
 `;
@@ -27,8 +27,8 @@ const Image = styled.img`
   grid-column: 1/ 13;
   height: 100%;
   width: 100%;
-  min-width: 600px;
-  min-height: 400px;
+  min-width: 510px;
+  min-height: 390px;
   object-fit: contain;
   cursor: zoom-in;
 `;

@@ -5,15 +5,16 @@ import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 
 const Wrapper = styled.div`
   grid-column: 2 / 4;
-  grid-row: span 9;
+  grid-row: 1 / 9;
   position: absolute;
   z-index: 100;
   display: grid;
   width: max-content;
-  height: 100%;
+  height: max-content;
+  max-width: 100%;
+  max-height: 100%;
   grid-template-rows: repeat(3, max-content);
   grid-template-columns: 1fr;
-  justify-items: center;
   cursor: pointer;
 `;
 
@@ -73,7 +74,7 @@ function ImageDefaultThumbnail({
             };
 
             return (
-              <div key={index} style={{ backgroundColor: 'grey' }}>
+              <div key={index}>
                 {index >= thumbnailIndexMin && index <= thumbnailIndexMax
                 && (<img src={image.thumbnail_url} style={style} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} loading="lazy"/>)}
 
