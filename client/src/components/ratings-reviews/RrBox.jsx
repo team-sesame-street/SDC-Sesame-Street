@@ -59,7 +59,6 @@ export default function RrBox({ id }) {
     })
       .then((res) => {
         const metaData = res.data;
-        console.log(metaData)
         const ratingArray = Object.values(currRating);
         const mapped = ratingArray.flatMap((bool, index) => {
           if (bool) {
