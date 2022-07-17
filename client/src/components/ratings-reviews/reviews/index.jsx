@@ -13,8 +13,10 @@ import ReviewsHelpful from './ReviewsHelpful.jsx';
 import ReviewsSort from './ReviewsSort.jsx';
 import ReviewsMoreReviews from './ReviewsMoreReviews.jsx';
 import getTotalRatings from '../../../../utils/getTotalRatings.js';
+import ReviewsNewReview from './ReviewsNewReview.jsx';
 
-function Reviews({ reviews, setSort, count, setCount, meta, filterRatings }) {
+function Reviews({ reviews, setSort, count, setCount, meta, filterRatings,
+  showModal, setShowModal }) {
   let totalReviews;
   if (meta) {
     if (filterRatings) {
@@ -73,8 +75,13 @@ function Reviews({ reviews, setSort, count, setCount, meta, filterRatings }) {
           );
         })}
       </div>
-      <div style={buttonStyle}>
-        <ReviewsMoreReviews count={count} setCount={setCount} totalReviews={totalReviews} />
+      <div style={buttonContainer}>
+        <div style={buttonStyle}>
+          <ReviewsMoreReviews count={count} setCount={setCount} totalReviews={totalReviews} />
+        </div>
+        <div>
+          <ReviewsNewReview showModal={showModal} setShowModal={setShowModal}/>
+        </div>
       </div>
     </div>
   );
@@ -97,6 +104,11 @@ const reviewsSubContainer = {
 const individualReview = {
   borderBottomStyle: 'solid',
   marginTop: '40px',
+};
+
+const buttonContainer = {
+  display: 'flex',
+  justifyContent: 'space-evenly',
 };
 
 const buttonStyle = {
