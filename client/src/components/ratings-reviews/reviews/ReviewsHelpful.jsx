@@ -29,8 +29,7 @@ function ReviewsHelpful({ helpfulness, reviewId }) {
         },
       },
     )
-      .then((results) => {
-        console.log('successful put request', results);
+      .then(() => {
         if (targetId === 'helpful') {
           setHelpful(helpful + 1);
           setVoted(true);
