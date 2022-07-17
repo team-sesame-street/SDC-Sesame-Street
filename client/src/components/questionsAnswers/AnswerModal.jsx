@@ -101,8 +101,8 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
             Authorization: process.env.GITKEY,
           },
         })
-        .then(async () => {
-          await axios
+        .then(() => {
+          return axios
             .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers?count=15`, {
               headers: {
                 Authorization: process.env.GITKEY,
