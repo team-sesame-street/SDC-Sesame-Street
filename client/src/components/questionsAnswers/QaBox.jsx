@@ -89,7 +89,7 @@ function QaBox({ id }) {
   }, [indexes.page]);
 
   useEffect(() => {
-      document.querySelector('.qa-wrapper')?.scrollTo({ top: document.querySelector('.qa-wrapper').scrollHeight, behavior: 'smooth' });
+    document.querySelector('.qa-wrapper')?.scrollTo({ top: document.querySelector('.qa-wrapper').scrollHeight, behavior: 'smooth' });
   }, [indexes.questionIndex]);
 
   function handleMoreQuestions() {
@@ -124,9 +124,9 @@ function QaBox({ id }) {
         page={indexes.page}
       />
       <PrimaryBtnGroup>
-      {!checks.isDone
-        && (<button type="button" onClick={() => handleMoreQuestions()} disabled={checks.isLoading} className="QAButton">More Questions</button>)}
-      <button type="button" disabled={checks.isLoading} onClick={() => handleAddQuestion()} className="QAButton" data-testid="qa-addqbtn">Add a Question</button>
+        {!checks.isDone
+          && (<button type="button" onClick={() => handleMoreQuestions()} disabled={checks.isLoading} className="QAButton">More Questions</button>)}
+        <button type="button" disabled={checks.isLoading} onClick={() => handleAddQuestion()} className="QAButton" data-testid="qa-addqbtn">Add a Question</button>
       </PrimaryBtnGroup>
     </Wrapper>
   );
@@ -135,7 +135,7 @@ function QaBox({ id }) {
 export default QaBox;
 
 const Wrapper = styled.div`
-  position: relative;
+  isolation: isolate;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   margin: 50px auto 0 auto;
   padding-bottom: 4rem;
