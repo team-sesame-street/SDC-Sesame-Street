@@ -5,38 +5,6 @@ import { IoExitOutline } from 'react-icons/io5';
 import { BsCircleFill } from 'react-icons/bs';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
-  position: relative;
-  // background-color: grey;
-  margin: auto;
-  width: 100vh;
-  height: 75vh;
-`;
-
-const NavSymbols = styled.div`
-  // background-color: red;
-  display: grid;
-  width: 100%;
-  height: 100%;
-  gap: 5px;
-  grid-auto-flow: column;
-  grid-template-rows: max-content;
-  grid-auto-columns: max-content;
-  justify-content: center;
-  align-content: end;
-  justify-items: center;
-  align-items: center;
-`;
-
-const Image = styled.img`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: -100;
-  cursor: crosshair;
-  object-fit: contain;
-`;
-
 const styleMainCircle = {
   width: '11px',
   height: '15px',
@@ -54,12 +22,12 @@ const styleCircles = {
 
 const styleLeftArrow = {
   position: 'absolute',
+  zIndex: 100,
   color: 'black',
-  width: '3vh',
-  height: '3vh',
+  width: '4vh',
+  height: '4vh',
   minWidth: '20px',
   minHeight: '20px',
-  zIndex: 100,
   cursor: 'pointer',
   top: '50%',
   left: '5%',
@@ -67,12 +35,12 @@ const styleLeftArrow = {
 
 const styleRightArrow = {
   position: 'absolute',
+  zIndex: 100,
   color: 'black',
-  width: '3vh',
-  height: '3vh',
+  width: '4vh',
+  height: '4vh',
   minWidth: '20px',
   minHeight: '20px',
-  zIndex: 100,
   cursor: 'pointer',
   top: '50%',
   right: '5%',
@@ -80,12 +48,12 @@ const styleRightArrow = {
 
 const styleExit = {
   position: 'absolute',
+  zIndex: 100,
   color: 'black',
-  width: '3vh',
-  height: '3vh',
+  width: '4vh',
+  height: '4vh',
   minWidth: '20px',
   minHeight: '20px',
-  zIndex: 100,
   cursor: 'pointer',
   top: '5%',
   right: '5%',
@@ -96,27 +64,27 @@ function ExpandedImage({
 }) {
   if (images.length > 0) {
     return (
-      <Wrapper>
+      <div>
         {images.map((image, index) => (
           <div key={index}>
-            {index === currImgIndex && index > 0
-            && (
-              <IoIosArrowDropleft
-                style={styleLeftArrow}
-                onClick={() => { setCurrImgIndex(currImgIndex - 1); }}
-              />
-            )}
             {index === currImgIndex && (
-              <Image src={images[currImgIndex].url} alt="A representation of this product" loading="lazy" />
+              <Wrapper>
+                {index > 0 && (
+                  <IoIosArrowDropleft
+                    style={styleLeftArrow}
+                    onClick={() => { setCurrImgIndex(currImgIndex - 1); }}
+                  />
+                )}
+                <Image src={images[currImgIndex].url} alt="A representation of this product" loading="lazy" />
+                <IoExitOutline data-testid="exit-expanded-btn" style={styleExit} onClick={() => { setExpandedView(false); }} />
+                {index < images.length - 1 && (
+                  <IoIosArrowDropright
+                    style={styleRightArrow}
+                    onClick={() => { setCurrImgIndex(currImgIndex + 1); }}
+                  />
+                )}
+              </Wrapper>
             )}
-            {index === currImgIndex && index < images.length - 1
-            && (
-              <IoIosArrowDropright
-                style={styleRightArrow}
-                onClick={() => { setCurrImgIndex(currImgIndex + 1); }}
-              />
-            )}
-            <IoExitOutline data-testid="exit-expanded-btn" style={styleExit} onClick={() => { setExpandedView(false); }} />
           </div>
         ))}
         <NavSymbols>
@@ -132,7 +100,7 @@ function ExpandedImage({
             />
           ))}
         </NavSymbols>
-      </Wrapper>
+      </div>
     );
   }
 }
@@ -148,3 +116,33 @@ ExpandedImage.propTypes = {
 };
 
 export default ExpandedImage;
+
+const Wrapper = styled.div`
+  position: relative;
+  isolation: isolate;
+  margin: auto;
+  width: 100vh;
+  height: 75vh;
+`;
+
+const NavSymbols = styled.div`
+  display: grid;
+  width: 100%;
+  height: 100%;
+  gap: 5px;
+  grid-auto-flow: column;
+  grid-template-rows: max-content;
+  grid-auto-columns: max-content;
+  justify-content: center;
+  align-content: end;
+  justify-items: center;
+  align-items: center;
+`;
+
+const Image = styled.img`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  object-fit: contain;
+`;

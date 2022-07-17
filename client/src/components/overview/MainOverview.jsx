@@ -110,15 +110,6 @@ function MainOverview({ id }) {
             selectedStyle={selectedStyle}
             setSelectedStyle={setSelectedStyle}
           />
-          <ImageDefaultThumbnail
-            images={images}
-            currImgIndex={currImgIndex}
-            setCurrImgIndex={setCurrImgIndex}
-            thumbnailIndexMin={thumbnailIndexMin}
-            thumbnailIndexMax={thumbnailIndexMax}
-            setThumbnailIndexMin={setThumbnailIndexMin}
-            setThumbnailIndexMax={setThumbnailIndexMax}
-          />
           <MainImage
             images={images}
             currImgIndex={currImgIndex}
