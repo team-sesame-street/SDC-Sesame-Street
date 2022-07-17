@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Spacer from '../../../utils/smallSpacer.jsx';
 import formatDate from '../../../utils/formatDate.js';
 import randomId from '../../../utils/randomId.js';
+import ImageViewer from '../../../utils/ImageViewer.jsx';
 
 function AnswerSubItem({ answer }) {
   const {
@@ -17,6 +18,7 @@ function AnswerSubItem({ answer }) {
   );
 
   const [voteCount, setVoteCount] = useState(helpfulness);
+  const [isImageEnlarged, setIsImageEnlarged] = useState(false);
 
   function handleVote() {
     axios
@@ -56,7 +58,9 @@ function AnswerSubItem({ answer }) {
         {body}
       </div>
       <ThumbnailWrapper>
-        {photos.map((photo) => <Thumbnail key={randomId()} src={photo} loading="lazy"/>)}
+        {photos.map((photo) => <Thumbnail key={randomId()} src={photo} onClick={() => setIsImageEnlarged(!isImageEnlarged)} loading="lazy"/>)}
+        {isImageEnlarged
+        && <ImageViewer photos={photos} cb={()=>setIsImageEnlarged(!isImageEnlarged)} />}
       </ThumbnailWrapper>
       <small>
         <span>
