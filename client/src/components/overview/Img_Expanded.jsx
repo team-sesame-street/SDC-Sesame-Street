@@ -55,8 +55,8 @@ const styleCircles = {
 const styleLeftArrow = {
   position: 'absolute',
   color: 'black',
-  width: '3vh',
-  height: '3vh',
+  width: '4vh',
+  height: '4vh',
   minWidth: '20px',
   minHeight: '20px',
   zIndex: 100,
@@ -68,8 +68,8 @@ const styleLeftArrow = {
 const styleRightArrow = {
   position: 'absolute',
   color: 'black',
-  width: '3vh',
-  height: '3vh',
+  width: '4vh',
+  height: '4vh',
   minWidth: '20px',
   minHeight: '20px',
   zIndex: 100,
@@ -82,12 +82,12 @@ const styleExit = {
   position: 'absolute',
   color: 'black',
   width: '3vh',
-  height: '3vh',
+  height: '4vh',
   minWidth: '20px',
   minHeight: '20px',
   zIndex: 100,
   cursor: 'pointer',
-  top: '5%',
+  top: '3%',
   right: '5%',
 };
 

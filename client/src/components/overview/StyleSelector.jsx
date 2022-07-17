@@ -4,12 +4,9 @@ import { BsFillCheckCircleFill } from 'react-icons/bs';
 
 function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
   const styleSelectorGridStyling = {
-    // backgroundColor: 'grey',
     display: 'grid',
-    width: '36vh',
-    // gridTemplateColumns: 'repeat(4, minmax(max-content, 1fr))',
     gridTemplateColumns: 'repeat(4, max-content)',
-    gap: '1vh',
+    gap: '5%',
     gridAutoRows: 'max-content',
     // margin: 'auto',
   };
