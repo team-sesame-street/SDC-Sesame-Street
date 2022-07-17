@@ -43,6 +43,7 @@ function QaBox({ id }) {
           isQuestionModalOpen: false,
         });
         setCount(0);
+        localStorage.setItem('productName', data.name);
         setProductMetadata({ productName: data.name, product_id: data.id });
       })
       .catch((err) => console.error(err));
