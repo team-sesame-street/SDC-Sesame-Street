@@ -4,6 +4,35 @@ import styled from 'styled-components';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 
+const SubWrapper = styled.div`
+  background-color: grey;
+  position: relative;
+  display: grid;
+  height: 60vh;
+  width: 90vh;
+  // min-height: 200px;
+  // min-width: 300px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  // justify-content: center;
+  // align-content: center;
+  justify-items: center;
+  align-items: center;
+`;
+
+const Image = styled.img`
+  position: absolute;
+  z-index: 50;
+  grid-row: 1 / 9;
+  grid-column: 1/ 13;
+  height: 100%;
+  width: 100%;
+  min-width: 600px;
+  min-height: 400px;
+  object-fit: contain;
+  cursor: zoom-in;
+`;
+
 function MainImage(
   {
     images, currImgIndex, setCurrImgIndex, thumbnailIndexMin,
@@ -27,40 +56,63 @@ function MainImage(
       setCurrImgIndex(currImgIndex + 1);
     };
 
-    // minimal styling to represent smaller version of image
-    const styling = {
-      height: '500px',
-      width: '750px',
-      objectFit: 'contain',
-      cursor: 'zoom-in',
-    };
-
     return (
       <div>
-        <ImageDefaultThumbnail
-          images={images}
-          currImgIndex={currImgIndex}
-          setCurrImgIndex={setCurrImgIndex}
-          thumbnailIndexMin={thumbnailIndexMin}
-          thumbnailIndexMax={thumbnailIndexMax}
-          setThumbnailIndexMin={setThumbnailIndexMin}
-          setThumbnailIndexMax={setThumbnailIndexMax}
-        />
         {images.map((image, index) => (
           <div key={index}>
-            {index === currImgIndex && index > 0
-            && (<FaArrowCircleLeft data-testid="left-arrow" onClick={navigateLeft} />)}
-            { index === currImgIndex && (
-              <img
-                src={images[currImgIndex].url}
-                style={styling}
-                alt="A representation of this product"
-                onClick={() => { setExpandedView(true); }}
-                loading="lazy"
-              />
-            ) }
-            {index === currImgIndex && index < images.length - 1
-            && (<FaArrowCircleRight data-testid="right-arrow" onClick={navigateRight} />)}
+            {index === currImgIndex && (
+              <SubWrapper>
+                <ImageDefaultThumbnail
+                  images={images}
+                  currImgIndex={currImgIndex}
+                  setCurrImgIndex={setCurrImgIndex}
+                  thumbnailIndexMin={thumbnailIndexMin}
+                  thumbnailIndexMax={thumbnailIndexMax}
+                  setThumbnailIndexMin={setThumbnailIndexMin}
+                  setThumbnailIndexMax={setThumbnailIndexMax}
+                />
+                {index > 0 && (
+                  <FaArrowCircleLeft
+                    data-testid="left-arrow"
+                    onClick={navigateLeft}
+                    style={{
+                      position: 'absolute',
+                      zIndex: 70,
+                      height: '3vh',
+                      width: '3vh',
+                      minHeight: '20px',
+                      minWidth: '20px',
+                      gridColumn: '1 / 2',
+                      gridRow: '5 / 6',
+                      cursor: 'pointer',
+                    }}
+                  />
+                )}
+                <Image
+                  src={images[currImgIndex].url}
+                  alt="A representation of this product"
+                  onClick={() => { setExpandedView(true); }}
+                  loading="lazy"
+                />
+                {index < images.length - 1 && (
+                  <FaArrowCircleRight
+                    style={{
+                      position: 'absolute',
+                      zIndex: 70,
+                      height: '3vh',
+                      width: '3vh',
+                      minHeight: '20px',
+                      minWidth: '20px',
+                      gridColumn: '12 / 13',
+                      gridRow: '5 / 6',
+                      cursor: 'pointer',
+                    }}
+                    data-testid="right-arrow"
+                    onClick={navigateRight}
+                  />
+                )}
+              </SubWrapper>
+            )}
           </div>
         ))}
       </div>

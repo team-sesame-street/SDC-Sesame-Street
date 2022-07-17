@@ -30,9 +30,9 @@ function App() {
     <div>
       {productId}
       <MainOverview id={productId} />
-      <MainCarousel id={productId} pageChange={pageChange} />
+      {/* <MainCarousel id={productId} pageChange={pageChange} />
       <QaBox id={productId} setProductId={setProductId} />
-      <RrBox id={productId} />
+      <RrBox id={productId} /> */}
     </div>
   );
 }

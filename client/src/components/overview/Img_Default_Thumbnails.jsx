@@ -4,10 +4,13 @@ import styled from 'styled-components';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 
 const Wrapper = styled.div`
+  grid-column: 2 / 4;
+  grid-row: span 9;
   position: absolute;
   z-index: 100;
   display: grid;
   width: max-content;
+  height: 100%;
   grid-template-rows: repeat(3, max-content);
   grid-template-columns: 1fr;
   justify-items: center;
@@ -70,7 +73,7 @@ function ImageDefaultThumbnail({
             };
 
             return (
-              <div key={index}>
+              <div key={index} style={{ backgroundColor: 'grey' }}>
                 {index >= thumbnailIndexMin && index <= thumbnailIndexMax
                 && (<img src={image.thumbnail_url} style={style} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} loading="lazy"/>)}
 

@@ -6,7 +6,7 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
   const styleSelectorGridStyling = {
     display: 'grid',
     gridTemplateColumns: 'repeat(4, max-content)',
-    gap: '5%',
+    gap: '15px',
     gridAutoRows: 'max-content',
     // margin: 'auto',
   };
