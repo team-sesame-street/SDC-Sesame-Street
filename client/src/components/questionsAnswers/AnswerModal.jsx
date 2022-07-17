@@ -55,7 +55,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
           // Send the array of urls with the POST request to Hack Reactor
           Promise.all(cloudPromises)
             .then((photos) => {
-              axios
+              return axios
                 .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
                   body,
                   name,
