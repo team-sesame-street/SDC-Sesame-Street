@@ -6,21 +6,21 @@ import formatDate from '../../../utils/formatDate.js';
 import randomId from '../../../utils/randomId.js';
 
 function AnswerSubItem({ answer }) {
+  const {
+    body, date, answerer_name, helpfulness, photos, id
+  } = answer;
   const [hasVoted, setHasVoted] = useState(
-    localStorage.getItem(`hasVoted-answer${answer[0]}` || false),
+    localStorage.getItem(`hasVoted-answer${id}` || false),
   );
   const [hasReported, setHasReported] = useState(
-    localStorage.getItem(`hasReported-answer${answer[0]}` || false),
+    localStorage.getItem(`hasReported-answer${id}` || false),
   );
 
-  const {
-    body, date, answerer_name, helpfulness, photos,
-  } = answer[1];
   const [voteCount, setVoteCount] = useState(helpfulness);
 
   function handleVote() {
     axios
-      .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${answer[0]}/helpful`, {}, {
+      .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${id}/helpful`, {}, {
         headers: {
           Authorization: process.env.GITKEY,
         },
@@ -28,7 +28,7 @@ function AnswerSubItem({ answer }) {
       .then(() => {
         setHasVoted(true);
         setVoteCount(voteCount + 1);
-        localStorage.setItem(`hasVoted-answer${answer[0]}`, true);
+        localStorage.setItem(`hasVoted-answer${id}`, voteCount + 1);
         return false;
       })
       .catch((err) => {
@@ -38,14 +38,14 @@ function AnswerSubItem({ answer }) {
 
   function handleReport() {
     axios
-      .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${answer[0]}/report`, {}, {
+      .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/answers/${id}/report`, {}, {
         headers: {
           Authorization: process.env.GITKEY,
         },
       })
       .then(() => {
         setHasReported(true);
-        localStorage.setItem(`hasReported-answer${answer[0]}`, true);
+        localStorage.setItem(`hasReported-answer${id}`, true);
       })
       .catch((err) => console.error(err));
   }
@@ -62,7 +62,7 @@ function AnswerSubItem({ answer }) {
         <span>
           by
           {" "}
-          {answerer_name === 'Seller' || answerer_name === 'seller' ? <b>{answerer_name}</b> : answerer_name}
+          {answerer_name.toLowerCase() === 'seller' ? <b>{answerer_name}</b> : answerer_name}
         </span>
         <Spacer />
         <span>
@@ -79,7 +79,7 @@ function AnswerSubItem({ answer }) {
               )
               : <SubActionBtn onClick={() => handleVote()}>Yes</SubActionBtn>}
             (
-            {voteCount}
+             {localStorage.getItem(`hasVoted-answer${id}`) || voteCount}
             )
           </span>
           <Spacer />

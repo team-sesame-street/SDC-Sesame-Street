@@ -21,15 +21,11 @@ function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
       },
     })
       .then(() => {
-        setTrigger(randomId());
         setChecks({ ...checks, isQuestionModalOpen: false });
+        setTrigger(randomId());
       })
       .catch((err) => console.error(err));
   }
-
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-  }, [checks.isQuestionModalOpen]);
 
   return (
     <Wrapper data-testid="question-modal-wrapper">
@@ -58,7 +54,6 @@ function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
         </SubmitWrapper>
         <IoClose onClick={() => {
           setChecks({ ...checks, isQuestionModalOpen: false });
-          document.body.style.overflow = 'auto';
         }} className="close-button" data-testid="close-button" />
       </Form>
     </Wrapper>
@@ -97,6 +92,7 @@ const Wrapper = styled.div`
 
 const Form = styled.form`
   overflow: auto;
+  overscroll-behavior: contain;
   z-index: 1000;
   position: fixed;
   top: 0;
