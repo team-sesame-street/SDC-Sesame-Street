@@ -30,7 +30,7 @@ function Text({ product }) {
                 </li>
               )
               : (
-                <li key={feature.feature}>
+                <li key={index}>
                   <span>
                     🌟
                     &nbsp;&nbsp;

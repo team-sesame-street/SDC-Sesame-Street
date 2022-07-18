@@ -35,6 +35,7 @@ function MainImage(
   },
 ) {
   if (images.length > 0) {
+    console.log(images.length);
     const navigateLeft = () => {
       if (currImgIndex - 1 < thumbnailIndexMin) {
         setThumbnailIndexMin(thumbnailIndexMin - 1);

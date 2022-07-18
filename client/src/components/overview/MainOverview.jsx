@@ -90,11 +90,11 @@ function MainOverview({ id }) {
           setThumbnailIndexMax(images.length - 1);
         }
       }
-      if (currImgIndex && !selectedStyle.photos[currImgIndex]) {
-        setCurrImgIndex(selectedStyle.photos.length - 1);
-        setThumbnailIndexMax(selectedStyle.photos.length - 1);
+      if (currImgIndex && !images[currImgIndex]) {
+        setCurrImgIndex(images.length - 1);
+        setThumbnailIndexMax(images.length - 1);
         if (images.length >= 7) {
-          setThumbnailIndexMin(selectedStyle.photos.length - 7);
+          setThumbnailIndexMin(images.length - 7);
         } else {
           setThumbnailIndexMin(0);
         }

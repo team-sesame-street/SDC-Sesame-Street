@@ -11,21 +11,9 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
         <span data-testid="selected-style-name">{selectedStyle.name ? selectedStyle.name.toUpperCase() : null}</span>
       </p>
       <StyleSelectorGrid>
-        {styles.map((style) => {
-          const checkmarkStyling = {
-            width: 'minmax(2px, 0.5vh)',
-            top: '0.5vh',
-            right: '0.5vh',
-            color: 'black',
-            border: 'white',
-            position: 'absolute',
-            zIndex: 10,
-            visibility: style.style_id === selectedStyle.style_id ? 'visible' : 'hidden',
-          };
-
-          return (
+        {styles.map((style) => (
             <ThumbnailWrapper key={style.style_id}>
-              <BsFillCheckCircleFill style={checkmarkStyling} />
+              <BsFillCheckCircleFill className="checkmark" style={{visibility: style.style_id === selectedStyle.style_id ? 'visible' : 'hidden'}} />
               <Thumbnail
                 src={style.photos[0].thumbnail_url}
                 onClick={() => {
@@ -34,8 +22,7 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
                 alt={style.name}
               />
             </ThumbnailWrapper>
-          );
-        })}
+          ))}
       </StyleSelectorGrid>
     </div>
   );
@@ -92,6 +79,15 @@ const StyleSelectorGrid = styled.div`
 const ThumbnailWrapper = styled.div`
   position: relative;
   isolation: isolate;
+  & .checkmark {
+    width: minmax(2px, 0.5vh);
+    top: 0.5vh;
+    right: 0.5vh;
+    color: black;
+    border: white;
+    position: absolute;
+    zIndex: 10;
+  }
 `;
 
 const Thumbnail = styled.img`
