@@ -13,23 +13,11 @@ function ImageDefaultThumbnail({
       setThumbnailIndexMax(max);
     };
 
-    const upArrowStyle = {
-      // minWidth: '50px',
-      width: '50px',
-      fill: thumbnailIndexMin === 0 ? '#eeeeee' : 'default',
-    };
-
-    const downArrowStyle = {
-      // minWidth: '50px',
-      width: '50px',
-      fill: thumbnailIndexMax === images.length - 1 ? '#eeeeee' : 'default',
-    };
-
     return (
       <Wrapper>
         {images.length > 7 && (
-          <RiArrowUpSFill
-            style={upArrowStyle}
+          <RiArrowUpSFill className="arrows-thumbnail"
+            style={{fill: thumbnailIndexMin === 0 ? '#eeeeee' : 'default'}}
             data-testid="up-arrow-active"
             onClick={() => {
               if (thumbnailIndexMin > 0) {
@@ -40,30 +28,17 @@ function ImageDefaultThumbnail({
         )}
         <ThumbnailsGrid>
           {images.map((image, index) => {
-            const ThumbnailImage = styled.img`
-              opacity: ${index === currImgIndex ? 1 : 0.4};
-              minHeight: 45px;
-              minWidth: 45px;
-              height: 4.5vw;
-              width: 4.5vw;
-              objectFit: cover;
-              border: 1px solid black;
-              cursor: pointer;
-              &:hover {
-                opacity: 1;
-              }
-            `;
             if (index >= thumbnailIndexMin && index <= thumbnailIndexMax) {
               return (
-                <ThumbnailImage key={index} src={image.thumbnail_url} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} loading="lazy"/>
+                <ThumbnailImage style={{opacity: index === currImgIndex ? 1 : 0.4}} key={index} src={image.thumbnail_url} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} loading="lazy"/>
               );
             }
             return null;
           })}
         </ThumbnailsGrid>
         {images.length > 7 && (
-          <RiArrowDownSFill
-            style={downArrowStyle}
+          <RiArrowDownSFill className="arrows-thumbnail"
+            style={{fill: thumbnailIndexMax === images.length - 1 ? '#eeeeee' : 'default'}}
             onClick={() => {
               if (thumbnailIndexMax < images.length - 1) {
                 thumbnailIndexRange(thumbnailIndexMin + 1, thumbnailIndexMax + 1);
@@ -98,7 +73,6 @@ ImageDefaultThumbnail.defaultProps = {
 export default ImageDefaultThumbnail;
 
 const Wrapper = styled.div`
-
   grid-column: 1 / 3;
   grid-row: 1 / 9;
   position: absolute;
@@ -112,7 +86,9 @@ const Wrapper = styled.div`
   justify-content: center;
   justify-items: center;
   align-items: center;
-  }
+  & .arrows-thumbnail {
+    width: 50px;
+  };
 `;
 
 const ThumbnailsGrid = styled.div`
@@ -120,10 +96,25 @@ const ThumbnailsGrid = styled.div`
   width: 100%;
   height: 100%;
   min-width: 1fr;
+  // min-height: max-content;
+  // min-width: max-content;
   grid-template-columns: max-content;
   grid-template-rows: repeat(auto-fill, max-content);
   align-content: center;
   align-items: center;
+  justify-content: center;
   justify-items: center;
   gap: 6px;
+`;
+
+const ThumbnailImage = styled.img`
+  min-height: 45px;
+  min-width: 45px;
+  height: 4.5vw;
+  width: 4.5vw;
+  object-fit: cover;
+  cursor: pointer;
+  &:hover {
+    border: 2px solid #5B5E5F;
+  }
 `;
