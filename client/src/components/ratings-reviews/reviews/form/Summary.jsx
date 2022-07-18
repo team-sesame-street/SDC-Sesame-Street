@@ -14,7 +14,7 @@ export default function Summary({ summaryText, setSummaryText }) {
       <input
         type="text"
         placeholder="Example: Best purchase ever!"
-        size="60"
+        size="58"
         maxLength="60"
         onChange={(event) => setSummaryText(event.target.value)}
         value={summaryText}
