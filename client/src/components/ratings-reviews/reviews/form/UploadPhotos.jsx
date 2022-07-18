@@ -34,6 +34,17 @@ export default function UploadPhotos({ selectedImage, setSelectedImage }) {
     hiddenFileInput.current.click();
   }
 
+  function handleChange(event) {
+    setSelectedImage([...selectedImage, URL.createObjectURL(event.target.files[0])])
+  }
+
+  function handleError() {
+    alert('Error uploading');
+    const newImageArr = [...selectedImage];
+    newImageArr.pop();
+    setSelectedImage(newImageArr);
+  }
+
   return (
     <div>
       <div style={{ display: 'flex', gap: '5px' }}>
@@ -50,9 +61,7 @@ export default function UploadPhotos({ selectedImage, setSelectedImage }) {
               ref={hiddenFileInput}
               name="myImage"
               style={{ display: 'none' }}
-              onChange={(event) => setSelectedImage(
-                [...selectedImage, URL.createObjectURL(event.target.files[0])],
-              )}
+              onChange={(event) => handleChange(event)}
             />
           </div>
         )}
@@ -60,7 +69,7 @@ export default function UploadPhotos({ selectedImage, setSelectedImage }) {
           <div style={{ display: 'flex', gap: '5px' }}>
             {selectedImage.map((image) => (
               <div>
-                <Thumbnail src={image} />
+                <Thumbnail onError={() => handleError()} src={image} />
               </div>
             ))}
           </div>
