@@ -4,6 +4,7 @@ import Rating from './Rating.jsx';
 import Characteristics from './Characteristics.jsx';
 import Recommend from './Recommend.jsx';
 import Summary from './Summary.jsx';
+import Body from './Body.jsx';
 
 const styles = {
   modalContainer: {
@@ -54,6 +55,7 @@ export default function Modal({ showModal, onClose }) {
   const [starRating, setStarRating] = useState();
   const [recommendProduct, setRecommendProduct] = useState();
   const [summaryText, setSummaryText] = useState('');
+  const [bodyText, setBodyText] = useState('');
   const [descriptionRate, setDescriptionRate] = useState({
     Comfort: null,
     Fit: null,
@@ -110,8 +112,14 @@ export default function Modal({ showModal, onClose }) {
             />
             <br />
             <b>Summary:</b>
+            *
             <br />
             <Summary summaryText={summaryText} setSummaryText={setSummaryText} />
+            <br />
+            <b>Body:</b>
+            *
+            <br />
+            <Body bodyText={bodyText} setBodyText={(text) => setBodyText(text)} />
           </div>
           <br />
           <input type="button" value="Cancel" onClick={onClose} style={styles.cancelReviewBtn} />
