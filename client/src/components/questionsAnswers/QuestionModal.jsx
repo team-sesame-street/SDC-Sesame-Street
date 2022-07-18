@@ -1,8 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import axios from 'axios';
 import randomId from '../../../utils/randomId';
 import Modal from '../../../utils/Modal.jsx';
+
+import { SubmitWrapper } from './styles/questionmodal.styles';
 
 function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
   function handleSubmit(e) {
@@ -58,35 +59,3 @@ function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
 }
 
 export default QuestionModal;
-
-const SubmitWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-  & button {
-    height: 3rem;
-    padding: 0 1rem;
-    justify-content: flex-start;
-    text-transform: uppercase;
-    font-weight: 700;
-    background: none;
-    border: 1px solid #222;
-    margin-right: 10px;
-    margin-top: 15px;
-    &:hover {
-      color: #eee;
-      background: #222;
-    }
-    &:disabled {
-      background: grey;
-      color: white;
-      opacity: 0.25;
-    }
-
-    @media(max-width: 500px) {
-      flex: 1;
-      padding: 0;
-      height: 5rem;
-    }
-  }
-`;
