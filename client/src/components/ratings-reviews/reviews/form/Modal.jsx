@@ -7,6 +7,7 @@ import Summary from './Summary.jsx';
 import Body from './Body.jsx';
 import UploadPhotos from './UploadPhotos.jsx';
 import Nickname from './Nickname.jsx';
+import Email from './Email.jsx';
 
 const styles = {
   modalContainer: {
@@ -60,6 +61,7 @@ export default function Modal({ showModal, onClose }) {
   const [bodyText, setBodyText] = useState('');
   const [selectedImage, setSelectedImage] = useState([]);
   const [nickname, setNickName] = useState();
+  const [email, setEmail] = useState();
   const [descriptionRate, setDescriptionRate] = useState({
     Comfort: null,
     Fit: null,
@@ -69,7 +71,7 @@ export default function Modal({ showModal, onClose }) {
     Width: null,
   });
 
-  console.log('Selected Image: ', nickname);
+  console.log('Selected Image: ', email);
 
   const ratingType = ['Poor', 'Fair', 'Average', 'Good', 'Great'];
 
@@ -146,6 +148,14 @@ export default function Modal({ showModal, onClose }) {
             <Nickname
               nickname={nickname}
               setNickName={(value) => setNickName(value)}
+            />
+            <br />
+            <b>Email:</b>
+            *
+            <br />
+            <Email
+              email={email}
+              setEmail={(value) => setEmail(value)}
             />
           </div>
           <br />
