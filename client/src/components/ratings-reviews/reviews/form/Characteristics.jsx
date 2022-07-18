@@ -47,7 +47,7 @@ export default function Characteristics({ descriptionRate, setDescriptionRate })
     <div style={styles.mainContainer}>
       {characteristicsArr.map((characteristic) => (
         <div className={characteristic}>
-          <b>{`${characteristic}: `}</b>
+          <b>{`${characteristic}:*`}</b>
           <br />
           <div style={styles.descriptionContainer}>
             {characteristicsObj[characteristic].map((description, index) => {
