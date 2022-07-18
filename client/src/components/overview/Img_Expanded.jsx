@@ -24,8 +24,10 @@ const styleLeftArrow = {
   position: 'absolute',
   zIndex: 100,
   color: 'black',
-  width: '4vh',
-  height: '4vh',
+  width: '4vw',
+  height: '4vw',
+  maxWidth: '4vh',
+  maxHeight: '4vh',
   minWidth: '20px',
   minHeight: '20px',
   cursor: 'pointer',
@@ -37,8 +39,10 @@ const styleRightArrow = {
   position: 'absolute',
   zIndex: 100,
   color: 'black',
-  width: '4vh',
-  height: '4vh',
+  width: '4vw',
+  height: '4vw',
+  maxWidth: '4vh',
+  maxHeight: '4vh',
   minWidth: '20px',
   minHeight: '20px',
   cursor: 'pointer',
@@ -50,8 +54,10 @@ const styleExit = {
   position: 'absolute',
   zIndex: 100,
   color: 'black',
-  width: '4vh',
-  height: '4vh',
+  width: '4vw',
+  height: '4vw',
+  maxWidth: '4vh',
+  maxHeight: '4vh',
   minWidth: '20px',
   minHeight: '20px',
   cursor: 'pointer',
@@ -65,10 +71,10 @@ function ExpandedImage({
   if (images.length > 0) {
     return (
       <div>
-        {images.map((image, index) => (
-          <div key={index}>
-            {index === currImgIndex && (
-              <Wrapper>
+        {images.map((image, index) => {
+          if (index === currImgIndex) {
+            return (
+              <Wrapper key={index}>
                 {index > 0 && (
                   <IoIosArrowDropleft
                     style={styleLeftArrow}
@@ -84,9 +90,10 @@ function ExpandedImage({
                   />
                 )}
               </Wrapper>
-            )}
-          </div>
-        ))}
+            );
+          }
+          return null;
+        })}
         <NavSymbols>
           {images.map((image, index) => (
             <BsCircleFill
@@ -121,12 +128,15 @@ const Wrapper = styled.div`
   position: relative;
   isolation: isolate;
   margin: auto;
-  width: 100vh;
-  height: 75vh;
+  width: 90vw;
+  height: 60vw;
+  max-height: 80vh;
+  max-width: 80vh;
 `;
 
 const NavSymbols = styled.div`
   display: grid;
+  margin-top: 5px;
   width: 100%;
   height: 100%;
   gap: 5px;
