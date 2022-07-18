@@ -11,7 +11,7 @@ const leftArrowStyle = {
   width: '3vh',
   minHeight: '20px',
   minWidth: '20px',
-  gridColumn: '1 / 2',
+  gridColumn: '3 / 5',
   gridRow: '5 / 6',
   cursor: 'pointer',
 };
@@ -23,7 +23,7 @@ const rightArrowStyle = {
   width: '3vh',
   minHeight: '20px',
   minWidth: '20px',
-  gridColumn: '12 / 13',
+  gridColumn: '13 / 15',
   gridRow: '5 / 6',
   cursor: 'pointer',
 };
@@ -126,7 +126,7 @@ const SubWrapper = styled.div`
   width: 90vh;
   min-height: 390px;
   min-width: 510px;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(14, 1fr);
   grid-template-rows: repeat(8, 1fr);
   justify-content: center;
   align-content: center;
@@ -138,7 +138,7 @@ const Image = styled.img`
   position: absolute;
   z-index: 50;
   grid-row: 1 / 9;
-  grid-column: 1/ 13;
+  grid-column: 3 / 15;
   height: 100%;
   width: 100%;
   min-width: 510px;

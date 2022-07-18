@@ -96,7 +96,7 @@ ImageDefaultThumbnail.defaultProps = {
 export default ImageDefaultThumbnail;
 
 const Wrapper = styled.div`
-  grid-column: 2 / 4;
+  grid-column: 1 / 3;
   grid-row: 1 / 9;
   position: absolute;
   z-index: 100;
@@ -116,4 +116,5 @@ const ThumbnailsGrid = styled.div`
   height: 100%;
   grid-template-columns: max-content;
   grid-auto-rows: max-content;
+  gap: 2px;
 `;
