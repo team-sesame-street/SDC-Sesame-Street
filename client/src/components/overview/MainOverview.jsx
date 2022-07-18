@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import StyleSelector from './StyleSelector.jsx';
-import MainImage from './Img_Default_Main_Carousel.jsx';
-import ProductInfo from './ProductInfo.jsx';
-import Checkout from './Checkout.jsx';
 import ExpandedImage from './Img_Expanded.jsx';
 import Text from './Text.jsx';
+import MainImg_Sidebar from './MainImg_Sidebar.jsx';
 
 function MainOverview({ id }) {
   const [product, setProduct] = useState({});
@@ -114,13 +111,11 @@ function MainOverview({ id }) {
       )}
       {!expandedView && (
         <div>
-          <ProductInfo product={product} selectedStyle={selectedStyle} />
-          <StyleSelector
-            styles={styles}
+          <MainImg_Sidebar
+            product={product}
             selectedStyle={selectedStyle}
+            styles={styles}
             setSelectedStyle={setSelectedStyle}
-          />
-          <MainImage
             images={images}
             currImgIndex={currImgIndex}
             setCurrImgIndex={setCurrImgIndex}
@@ -129,9 +124,6 @@ function MainOverview({ id }) {
             setThumbnailIndexMin={setThumbnailIndexMin}
             setThumbnailIndexMax={setThumbnailIndexMax}
             setExpandedView={setExpandedView}
-          />
-          <Checkout
-            selectedStyle={selectedStyle}
           />
           <Text product={product} />
         </div>
