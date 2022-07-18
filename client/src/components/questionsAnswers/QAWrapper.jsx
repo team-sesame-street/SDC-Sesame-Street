@@ -5,6 +5,7 @@ import QaListItem from './QaListItem.jsx';
 import randomId from '../../../utils/randomId.js';
 import QuestionModal from './QuestionModal.jsx';
 import LoadingCircle from '../../../utils/LoadingCircle.jsx';
+import { Wrapper } from './styles/qawrapper.styles';
 
 function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks, searchTerm, questionIndex, page }) {
   const [trigger, setTrigger] = useState(0);
@@ -67,13 +68,7 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
             setTrigger={setTrigger} />
         )}
     </Wrapper>
-  )
+  );
 }
 
 export default QAWrapper;
-
-const Wrapper = styled.div`
-  height: 65vh;
-  max-height: 65vh;
-  overflow: auto;
-`;

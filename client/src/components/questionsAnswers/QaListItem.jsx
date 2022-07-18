@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 import axios from 'axios';
 import AnswerSubItem from './AnswerSubItem.jsx';
 import byHelpfulness from '../../../utils/byHelpfulness.js';
 import Spacer from '../../../utils/smallSpacer.jsx';
 import randomId from '../../../utils/randomId.js';
 import AnswerModal from './AnswerModal.jsx';
+
+import {
+  Wrapper,
+  QuestionWrap,
+  AnswerWrapper,
+  SubActionBtn,
+  PrimaryBtn,
+} from './styles/qalistitem.styles';
 
 function QaListItem({ result, productMetadata, setTrigger, questions, setQuestions }) {
   const [answers, setAnswers] = useState(
@@ -94,83 +101,3 @@ function QaListItem({ result, productMetadata, setTrigger, questions, setQuestio
 
 export default QaListItem;
 
-const Wrapper = styled.article`
-`;
-
-const QuestionWrap = styled.summary`
-  font-size: 1.10rem;
-  font-weight: 600;
-  border-bottom: 1px solid whitesmoke;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-
-
-  & span::before {
-    content: "Q: ";
-  }
-
-  & small {
-    font-weight: 400;
-    font-size: 0.75rem;
-    min-width: max-content;
-
-    @media(max-width:500px) {
-      align-self: flex-end;
-      opacity: 0.35;
-    }
-  }
-
-  @media(max-width:500px) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-`;
-
-const AnswerWrapper = styled.div`
-  max-height: max-content;
-  overflow: auto;
-  display: flex;
-  padding: 10px;
-  gap: 5px;
-
-  & .answer_label {
-    font-weight: 600;
-    font-size: 1.10rem;
-    flex-basis: min-content;
-  }
-
-  & .answers_list {
-    flex: 1;
-  }
-`;
-
-const SubActionBtn = styled.button`
-  border: none;
-  background: none;
-  text-decoration: underline;
-  cursor: pointer;
-  &:hover {
-    text-decoration: none;
-  }
-  &[disabled] {
-    color: #666;
-    text-decoration: none;
-    cursor: revert;
-  }
-`;
-
-const PrimaryBtn = styled.button`
-  text-transform: uppercase;
-  font-weight: 700;
-  border: none;
-  color: #222;
-  font-size: 0.85rem;
-  padding: 5px 10px;
-  margin: 10px 0;
-
-  &&:hover {
-    background: #ddd;
-  }
-`;
