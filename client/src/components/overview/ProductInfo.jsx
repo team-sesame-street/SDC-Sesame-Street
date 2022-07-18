@@ -85,4 +85,5 @@ const SocialSharingGrid = styled.div`
   grid-template-rows: max-content;
   grid-template-columns: repeat(3, max-content);
   gap: 1vh;
+  cursor: pointer;
 `;
