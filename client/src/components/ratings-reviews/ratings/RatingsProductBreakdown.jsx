@@ -43,6 +43,7 @@ export default function ProductBreakdown({ meta }) {
       nameArr.push(currVal);
       nameVal.push(char[currVal]);
     }
+    localStorage.setItem('characteristicsArray', nameArr);
   }
   return (
     <div>
