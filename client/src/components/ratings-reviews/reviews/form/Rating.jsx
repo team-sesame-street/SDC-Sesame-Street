@@ -8,8 +8,8 @@ export default function Rating({ starRating, changeRating }) {
       changeRating={(userRating) => { changeRating(userRating); }}
       starDimension="22px"
       starSpacing="2px"
-      starRatedColor="gold"
-      starHoverColor="gold"
+      starRatedColor="goldenrod"
+      starHoverColor="goldenrod"
       rating={starRating}
     />
   );

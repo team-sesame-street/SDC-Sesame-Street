@@ -8,7 +8,7 @@ function ReviewsRatings({ rating }) {
 
   return (
     <div>
-      <StarRatings rating={starRating} starDimension="18px" starSpacing="2px" starRatedColor="gold" />
+      <StarRatings rating={starRating} starDimension="18px" starSpacing="2px" starRatedColor="goldenrod" />
     </div>
   );
 }

@@ -26,7 +26,7 @@ function Ratings({ meta, currRating, setRating, filterRatings }) {
         <div style={numRatingStyle}>
           {numRating}
         </div>
-        <StarRatings rating={starRating} starDimension="18px" starSpacing="2px" starRatedColor="gold" />
+        <StarRatings rating={starRating} starDimension="18px" starSpacing="2px" starRatedColor="goldenrod" />
       </div>
       <div style={breakdownContainer}>
         <RatingsBreakdown
