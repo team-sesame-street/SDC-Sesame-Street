@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import StyleSelector from './StyleSelector.jsx';
-import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 import MainImage from './Img_Default_Main_Carousel.jsx';
 import ProductInfo from './ProductInfo.jsx';
 import Checkout from './Checkout.jsx';
 import ExpandedImage from './Img_Expanded.jsx';
+import Text from './Text.jsx';
 
 function MainOverview({ id }) {
   const [product, setProduct] = useState({});
@@ -58,8 +58,7 @@ function MainOverview({ id }) {
             }
           });
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
           alert('Unable to retrieve styles for this product');
         });
     }
@@ -93,7 +92,6 @@ function MainOverview({ id }) {
 
   return (
     <div>
-      <h1>Overview</h1>
       {expandedView && (
         <ExpandedImage
           images={images}
@@ -123,6 +121,7 @@ function MainOverview({ id }) {
           <Checkout
             selectedStyle={selectedStyle}
           />
+          <Text product={product} />
         </div>
       )}
     </div>

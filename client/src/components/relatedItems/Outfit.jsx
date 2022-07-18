@@ -82,13 +82,13 @@ function Outfit({
   }
 
   const slideLeft = () => {
-    imageContainer.scrollLeft -= 315;
-    setLeftSide(leftSide - 315);
+    imageContainer.scrollLeft -= 320;
+    setLeftSide(leftSide - 320);
   };
 
   const slideRight = () => {
-    imageContainer.scrollLeft += 315;
-    setLeftSide(leftSide + 315);
+    imageContainer.scrollLeft += 320;
+    setLeftSide(leftSide + 320);
   };
 
   const clickHandler = () => {

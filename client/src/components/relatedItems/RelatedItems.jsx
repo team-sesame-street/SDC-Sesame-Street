@@ -45,7 +45,7 @@ const slider = {
 };
 
 const card = {
-  width: '300px',
+  width: '310px',
   height: '365px',
   background: 'white',
   borderRadius: '10px',
@@ -98,19 +98,24 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
   const rightArrow = document.querySelector('#rightArrow');
   const leftArrow = document.querySelector('#leftArrow');
 
+
+
+  const width = imageSlider?.offsetWidth - 300
+
+
   if (carouselPos) {
     imageSlider.scrollLeft = 0;
     setCarouselPos(false);
   }
 
   const slideLeft = () => {
-    imageSlider.scrollLeft -= 315;
-    setLeftSide(leftSide - 315);
+    imageSlider.scrollLeft -= 320;
+    setLeftSide(leftSide - 320);
   };
 
   const slideRight = () => {
-    imageSlider.scrollLeft += 315;
-    setLeftSide(leftSide + 315);
+    imageSlider.scrollLeft += 320;
+    setLeftSide(leftSide + 320);
   };
 
   if (imageSlider && leftSide > imageSlider.scrollWidth - 15 && rightArrow) {
@@ -151,7 +156,9 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
             <p style={categoryStyle}>{slide.data.category}</p>
             <p style={titleStyle}>{slide.data.name}</p>
             <p style={priceStyle} data-testid='label'>
-              {!slides.urls[index].salePrice ? <label>${slides.urls[index].originalPrice}</label> : <label style={{color:'red'}}>${slides.urls[index].salePrice} <strike style={{color:'black'}}>{slides.urls[index].originalPrice}</strike></label>}
+              {!slides.urls[index].salePrice ?
+              <label>${slides.urls[index].originalPrice}</label> :
+              <label style={{color:'red'}}>${slides.urls[index].salePrice} <strike style={{color:'black'}}>{slides.urls[index].originalPrice}</strike></label>}
             </p>
              <Ratings rating={reviews[index].avg} key={index} />
           </div>

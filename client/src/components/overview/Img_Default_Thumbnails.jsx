@@ -14,14 +14,14 @@ function ImageDefaultThumbnail({
     };
 
     const upArrowStyle = {
-      minWidth: '50px',
-      width: '8vh',
+      // minWidth: '50px',
+      width: '50px',
       fill: thumbnailIndexMin === 0 ? '#eeeeee' : 'default',
     };
 
     const downArrowStyle = {
-      minWidth: '50px',
-      width: '8vh',
+      // minWidth: '50px',
+      width: '50px',
       fill: thumbnailIndexMax === images.length - 1 ? '#eeeeee' : 'default',
     };
 
@@ -42,21 +42,19 @@ function ImageDefaultThumbnail({
           {images.map((image, index) => {
             const style = {
               opacity: index === currImgIndex ? 1 : 0.4,
-              minHeight: '50px',
-              minWidth: '50px',
-              height: '8vh',
-              width: '8vh',
+              minHeight: '45px',
+              minWidth: '45px',
+              height: '4.5vw',
+              width: '4.5vw',
               objectFit: 'cover',
               border: '1px solid black',
             };
-
-            return (
-              <div key={index}>
-                {index >= thumbnailIndexMin && index <= thumbnailIndexMax
-                && (<img src={image.thumbnail_url} style={style} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} loading="lazy"/>)}
-
-              </div>
-            );
+            if (index >= thumbnailIndexMin && index <= thumbnailIndexMax) {
+              return (
+                <img key={index} src={image.thumbnail_url} style={style} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} loading="lazy"/>
+              );
+            }
+            return null;
           })}
         </ThumbnailsGrid>
         {images.length > 7 && (
@@ -96,17 +94,20 @@ ImageDefaultThumbnail.defaultProps = {
 export default ImageDefaultThumbnail;
 
 const Wrapper = styled.div`
-  grid-column: 2 / 4;
+
+  grid-column: 1 / 3;
   grid-row: 1 / 9;
   position: absolute;
   z-index: 100;
   display: grid;
-  width: max-content;
-  height: max-content;
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   grid-template-rows: repeat(3, max-content);
-  grid-template-columns: 1fr;
+  grid-template-columns: max-content;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
   cursor: pointer;
 `;
 
@@ -114,6 +115,11 @@ const ThumbnailsGrid = styled.div`
   display: grid;
   width: 100%;
   height: 100%;
+  min-width: 1fr;
   grid-template-columns: max-content;
-  grid-auto-rows: max-content;
+  grid-template-rows: repeat(auto-fill, max-content);
+  align-content: center;
+  align-items: center;
+  justify-items: center;
+  gap: 6px;
 `;

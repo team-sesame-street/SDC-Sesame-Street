@@ -27,30 +27,6 @@ function ProductInfo({ product, selectedStyle }) {
               <span style={{ textDecorationLine: 'line-through' }}>{formatPrice(selectedStyle.original_price)}</span>
             </p>
           )}
-        <div>
-          <h3>{product.slogan}</h3>
-          <p>{product.description}</p>
-        </div>
-        <div>
-        {/* Product Features Section */}
-          <ul>
-            {product.features.map((feature) => (
-              feature.value !== null
-                ? (
-                  <li key={feature.feature}>
-                    <span style={{ fontWeight: 'bold' }}>{feature.feature.concat(':')}</span>
-                    &nbsp;
-                    <span>{feature.value}</span>
-                  </li>
-                )
-                : (
-                  <li key={feature.feature}>
-                    <span style={{ fontWeight: 'bold' }}>{feature.feature}</span>
-                  </li>
-                )
-            ))}
-          </ul>
-        </div>
         <SocialSharingGrid>
           {/* Share on Social Media Section */}
           <RiFacebookCircleFill style={socialSharingStyling} />
@@ -60,6 +36,7 @@ function ProductInfo({ product, selectedStyle }) {
       </div>
     );
   }
+  return null;
 }
 
 ProductInfo.propTypes = {
