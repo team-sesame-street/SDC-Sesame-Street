@@ -8,6 +8,7 @@ const styles = {
     justifyContent: 'space-evenly',
     gap: '15px',
     fontSize: '14px',
+    marginLeft: '5%',
   },
   items: {
     display: 'flex',
