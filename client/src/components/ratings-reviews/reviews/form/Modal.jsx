@@ -60,8 +60,8 @@ export default function Modal({ showModal, onClose }) {
   const [summaryText, setSummaryText] = useState('');
   const [bodyText, setBodyText] = useState('');
   const [selectedImage, setSelectedImage] = useState([]);
-  const [nickname, setNickName] = useState();
-  const [email, setEmail] = useState();
+  const [nickname, setNickName] = useState('');
+  const [email, setEmail] = useState('');
   const [descriptionRate, setDescriptionRate] = useState({
     Comfort: null,
     Fit: null,
@@ -71,9 +71,22 @@ export default function Modal({ showModal, onClose }) {
     Width: null,
   });
 
-  console.log('Selected Image: ', email);
-
   const ratingType = ['Poor', 'Fair', 'Average', 'Good', 'Great'];
+
+  function handleSubmit(event) {
+    if (!starRating || bodyText.length < 50) {
+      if (!starRating) {
+        alert('Please rate this product');
+      }
+      if (bodyText.length < 50) {
+        event.preventDefault();
+        alert('Please type at least 50 characters in the body section');
+      }
+    } else {
+      event.preventDefault();
+      console.log('submitted: ', event.target);
+    }
+  }
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -83,7 +96,7 @@ export default function Modal({ showModal, onClose }) {
     <>
       <div style={styles.modalOverlay} />
       <div style={styles.modalContainer}>
-        <form>
+        <form onSubmit={(event) => handleSubmit(event)}>
           <button type="button" onClick={onClose} style={styles.xReviewBtn}>X</button>
           <br />
           <h1>Write Your Review for:</h1>
