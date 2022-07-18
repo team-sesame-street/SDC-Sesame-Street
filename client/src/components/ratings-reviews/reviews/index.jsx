@@ -13,8 +13,10 @@ import ReviewsHelpful from './ReviewsHelpful.jsx';
 import ReviewsSort from './ReviewsSort.jsx';
 import ReviewsMoreReviews from './ReviewsMoreReviews.jsx';
 import getTotalRatings from '../../../../utils/getTotalRatings.js';
+import ReviewsNewReview from './ReviewsNewReview.jsx';
 
-function Reviews({ reviews, setSort, count, setCount, meta, filterRatings }) {
+export default function Reviews({ reviews, setSort, count, setCount, meta, filterRatings,
+  showModal, setShowModal }) {
   let totalReviews;
   if (meta) {
     if (filterRatings) {
@@ -22,6 +24,23 @@ function Reviews({ reviews, setSort, count, setCount, meta, filterRatings }) {
       setCount(totalReviews);
     } else {
       totalReviews = getTotalRatings(meta.ratings);
+    }
+  }
+
+  function openModal() {
+    setShowModal(true);
+  }
+
+  // Closes modal and makes DOM scrollable again
+  function closeModal() {
+    setShowModal(false);
+    document.body.style.overflow = 'auto';
+  }
+
+  // Escape button closes modal
+  function onKeyDown(event) {
+    if (event.keyCode === 27) {
+      closeModal();
     }
   }
 
@@ -73,8 +92,18 @@ function Reviews({ reviews, setSort, count, setCount, meta, filterRatings }) {
           );
         })}
       </div>
-      <div style={buttonStyle}>
-        <ReviewsMoreReviews count={count} setCount={setCount} totalReviews={totalReviews} />
+      <div style={buttonContainer}>
+        <div style={buttonStyle}>
+          <ReviewsMoreReviews count={count} setCount={setCount} totalReviews={totalReviews} />
+        </div>
+        <div onKeyDown={(event) => onKeyDown(event)} role="button" tabIndex="0">
+          <ReviewsNewReview
+            showModal={showModal}
+            setShowModal={setShowModal}
+            onOpen={() => { openModal(); }}
+            onClose={() => { closeModal(); }}
+          />
+        </div>
       </div>
     </div>
   );
@@ -99,6 +128,11 @@ const individualReview = {
   marginTop: '40px',
 };
 
+const buttonContainer = {
+  display: 'flex',
+  justifyContent: 'space-evenly',
+};
+
 const buttonStyle = {
   display: 'flex',
   justifyContent: 'center',
@@ -119,5 +153,3 @@ const summaryContainer = {
 const bodyContainer = {
   fontWeight: 'normal',
 };
-
-export default Reviews;
