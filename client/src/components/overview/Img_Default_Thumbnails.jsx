@@ -42,12 +42,10 @@ function ImageDefaultThumbnail({
           {images.map((image, index) => {
             const style = {
               opacity: index === currImgIndex ? 1 : 0.4,
-              minHeight: '40x',
-              minWidth: '40px',
-              height: '8vh',
-              width: '8vh',
-              // height: '80px',
-              // width: '80px',
+              minHeight: '45px',
+              minWidth: '45px',
+              height: '4.5vw',
+              width: '4.5vw',
               objectFit: 'cover',
               border: '1px solid black',
             };

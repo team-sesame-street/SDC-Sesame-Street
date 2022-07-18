@@ -122,8 +122,8 @@ const SubWrapper = styled.div`
   position: relative;
   isolation: isolate;
   display: grid;
-  height: 70vh; // originally 60vh here
-  width: 90vh;
+  height: 39vw; // originally 60vh here
+  width: 50vw;
   min-height: 390px;
   min-width: 510px;
   grid-template-columns: repeat(14, 1fr);
