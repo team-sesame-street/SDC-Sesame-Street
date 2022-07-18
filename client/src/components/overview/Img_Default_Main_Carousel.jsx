@@ -122,7 +122,7 @@ const SubWrapper = styled.div`
   position: relative;
   isolation: isolate;
   display: grid;
-  height: 60vh;
+  height: 70vh;
   width: 90vh;
   min-height: 390px;
   min-width: 510px;
@@ -141,8 +141,8 @@ const Image = styled.img`
   grid-column: 3 / 15;
   height: 100%;
   width: 100%;
-  min-width: 510px;
-  min-height: 390px;
+  // min-width: 510px;
+  // min-height: 390px;
   object-fit: contain;
   cursor: zoom-in;
 `;
