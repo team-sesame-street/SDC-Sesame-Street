@@ -6,6 +6,7 @@ import Recommend from './Recommend.jsx';
 import Summary from './Summary.jsx';
 import Body from './Body.jsx';
 import UploadPhotos from './UploadPhotos.jsx';
+import Nickname from './Nickname.jsx';
 
 const styles = {
   modalContainer: {
@@ -58,6 +59,7 @@ export default function Modal({ showModal, onClose }) {
   const [summaryText, setSummaryText] = useState('');
   const [bodyText, setBodyText] = useState('');
   const [selectedImage, setSelectedImage] = useState([]);
+  const [nickname, setNickName] = useState();
   const [descriptionRate, setDescriptionRate] = useState({
     Comfort: null,
     Fit: null,
@@ -67,7 +69,7 @@ export default function Modal({ showModal, onClose }) {
     Width: null,
   });
 
-  console.log('Selected Image: ', selectedImage);
+  console.log('Selected Image: ', nickname);
 
   const ratingType = ['Poor', 'Fair', 'Average', 'Good', 'Great'];
 
@@ -137,11 +139,18 @@ export default function Modal({ showModal, onClose }) {
               selectedImage={selectedImage}
               setSelectedImage={(image) => setSelectedImage(image)}
             />
+            <br />
+            <b>Nickname:</b>
+            *
+            <br />
+            <Nickname
+              nickname={nickname}
+              setNickName={(value) => setNickName(value)}
+            />
           </div>
           <br />
           <input type="button" value="Cancel" onClick={onClose} style={styles.cancelReviewBtn} />
           <input type="submit" style={styles.submitReviewBtn} value="Submit" />
-
         </form>
       </div>
     </>
