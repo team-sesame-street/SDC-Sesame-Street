@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Rating from './Rating.jsx';
 import Characteristics from './Characteristics.jsx';
+import Recommend from './Recommend.jsx';
+import Summary from './Summary.jsx';
 
 const styles = {
   modalContainer: {
@@ -51,6 +53,7 @@ export default function Modal({ showModal, onClose }) {
 
   const [starRating, setStarRating] = useState();
   const [recommendProduct, setRecommendProduct] = useState();
+  const [summaryText, setSummaryText] = useState('');
   const [descriptionRate, setDescriptionRate] = useState({
     Comfort: null,
     Fit: null,
@@ -73,14 +76,14 @@ export default function Modal({ showModal, onClose }) {
         <form>
           <button type="button" onClick={onClose} style={styles.xReviewBtn}>X</button>
           <br />
-          <h1>Write Your Review</h1>
+          <h1>Write Your Review for:</h1>
           <br />
           <h2>
-            {`About the ${localStorage.getItem('productName')}`}
+            {localStorage.getItem('productName')}
           </h2>
           <br />
           <div style={styles.modalItems}>
-            <b>Overall Rating</b>
+            <b>Overall Rating:</b>
             *
             <br />
             <Rating
@@ -90,37 +93,25 @@ export default function Modal({ showModal, onClose }) {
             {' '}
             {ratingType[starRating - 1]}
             <br />
+            <br />
             <b>Do You Recommend This Product?</b>
             *
             <br />
-            <label>
-              <input
-                type="radio"
-                value="yes"
-                checked={recommendProduct === 'yes'}
-                onChange={() => { setRecommendProduct('yes'); }}
-              />
-              {' '}
-              Yes
-            </label>
-            {' '}
-            <label>
-              <input
-                type="radio"
-                value="no"
-                checked={recommendProduct === 'no'}
-                onChange={() => { setRecommendProduct('no'); }}
-              />
-              {' '}
-              No
-            </label>
+            <Recommend
+              recommendProduct={recommendProduct}
+              setRecommendProduct={(recommend) => setRecommendProduct(recommend)}
+            />
             <br />
-            <b>Characteristics</b>
+            <b>Characteristics:</b>
             *
             <Characteristics
               descriptionRate={descriptionRate}
               setDescriptionRate={(value) => { setDescriptionRate(value); }}
             />
+            <br />
+            <b>Summary:</b>
+            <br />
+            <Summary summaryText={summaryText} setSummaryText={setSummaryText} />
           </div>
           <br />
           <input type="button" value="Cancel" onClick={onClose} style={styles.cancelReviewBtn} />
