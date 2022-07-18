@@ -40,18 +40,22 @@ function ImageDefaultThumbnail({
         )}
         <ThumbnailsGrid>
           {images.map((image, index) => {
-            const style = {
-              opacity: index === currImgIndex ? 1 : 0.4,
-              minHeight: '45px',
-              minWidth: '45px',
-              height: '4.5vw',
-              width: '4.5vw',
-              objectFit: 'cover',
-              border: '1px solid black',
-            };
+            const ThumbnailImage = styled.img`
+              opacity: ${index === currImgIndex ? 1 : 0.4};
+              minHeight: 45px;
+              minWidth: 45px;
+              height: 4.5vw;
+              width: 4.5vw;
+              objectFit: cover;
+              border: 1px solid black;
+              cursor: pointer;
+              &:hover {
+                opacity: 1;
+              }
+            `;
             if (index >= thumbnailIndexMin && index <= thumbnailIndexMax) {
               return (
-                <img key={index} src={image.thumbnail_url} style={style} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} loading="lazy"/>
+                <ThumbnailImage key={index} src={image.thumbnail_url} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} loading="lazy"/>
               );
             }
             return null;
@@ -108,7 +112,7 @@ const Wrapper = styled.div`
   justify-content: center;
   justify-items: center;
   align-items: center;
-  cursor: pointer;
+  }
 `;
 
 const ThumbnailsGrid = styled.div`

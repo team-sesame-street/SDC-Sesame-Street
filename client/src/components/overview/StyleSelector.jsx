@@ -104,4 +104,7 @@ const Thumbnail = styled.img`
   border: 1px solid black;
   opacity: 0.6;
   cursor: pointer;
+  &:hover {
+    opacity: 1;
+  }
 `;
