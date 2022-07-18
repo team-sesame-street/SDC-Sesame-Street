@@ -4,30 +4,6 @@ import styled from 'styled-components';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 
-// const leftArrowStyle = {
-//   position: 'absolute',
-//   zIndex: 70,
-//   height: '3vh',
-//   width: '3vh',
-//   minHeight: '20px',
-//   minWidth: '20px',
-//   gridColumn: '3 / 5',
-//   gridRow: '5 / 6',
-//   cursor: 'pointer',
-// };
-
-// const rightArrowStyle = {
-//   position: 'absolute',
-//   zIndex: 70,
-//   height: '3vh',
-//   width: '3vh',
-//   minHeight: '20px',
-//   minWidth: '20px',
-//   gridColumn: '13 / 15',
-//   gridRow: '5 / 6',
-//   cursor: 'pointer',
-// };
-
 function MainImage(
   {
     images, currImgIndex, setCurrImgIndex, thumbnailIndexMin,
