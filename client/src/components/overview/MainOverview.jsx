@@ -99,7 +99,6 @@ function MainOverview({ id }) {
           setThumbnailIndexMin(0);
         }
       }
-
     }
   }, [images]);
 

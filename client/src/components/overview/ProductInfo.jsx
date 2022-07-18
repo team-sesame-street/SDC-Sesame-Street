@@ -3,13 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { RiPinterestFill, RiTwitterFill, RiFacebookCircleFill } from 'react-icons/ri';
 
-const socialSharingStyling = {
-  minWidth: '25px',
-  minHeight: '25px',
-  width: '3vh',
-  height: '3vh',
-};
-
 function ProductInfo({ product, selectedStyle }) {
   if (Object.keys(product).length > 0 && Object.keys(selectedStyle).length > 0) {
     const formatPrice = (price) => ('$'.concat(price.slice(0, -3)));
@@ -29,9 +22,9 @@ function ProductInfo({ product, selectedStyle }) {
           )}
         <SocialSharingGrid>
           {/* Share on Social Media Section */}
-          <RiFacebookCircleFill style={socialSharingStyling} />
-          <RiTwitterFill style={socialSharingStyling} />
-          <RiPinterestFill style={socialSharingStyling} />
+          <RiFacebookCircleFill className="social-sharing" />
+          <RiTwitterFill className="social-sharing" />
+          <RiPinterestFill className="social-sharing" />
         </SocialSharingGrid>
       </div>
     );
@@ -86,4 +79,11 @@ const SocialSharingGrid = styled.div`
   grid-template-columns: repeat(3, max-content);
   gap: 1vh;
   cursor: pointer;
+  & .social-sharing {
+    min-width: 25px;
+    min-height: 25px;
+    width: 3vh;
+    height: 3vh;
+  }
 `;
+

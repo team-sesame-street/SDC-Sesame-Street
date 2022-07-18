@@ -96,8 +96,6 @@ const ThumbnailsGrid = styled.div`
   width: 100%;
   height: 100%;
   min-width: 1fr;
-  // min-height: max-content;
-  // min-width: max-content;
   grid-template-columns: max-content;
   grid-template-rows: repeat(auto-fill, max-content);
   align-content: center;
