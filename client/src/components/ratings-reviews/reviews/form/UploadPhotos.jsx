@@ -35,7 +35,7 @@ export default function UploadPhotos({ selectedImage, setSelectedImage }) {
   }
 
   function handleChange(event) {
-    setSelectedImage([...selectedImage, URL.createObjectURL(event.target.files[0])])
+    setSelectedImage([...selectedImage, URL.createObjectURL(event.target.files[0])]);
   }
 
   function handleError() {
