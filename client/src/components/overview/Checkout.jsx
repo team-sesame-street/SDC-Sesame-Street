@@ -146,7 +146,7 @@ Checkout.propTypes = {
     })),
     skus: PropTypes.objectOf(PropTypes.shape({
       quantity: PropTypes.number,
-      size: PropTypes.oneOf(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+      size: PropTypes.string,
     })),
   }),
 };

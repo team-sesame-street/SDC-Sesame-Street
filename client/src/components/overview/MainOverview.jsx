@@ -57,6 +57,9 @@ function MainOverview({ id }) {
               setSelectedStyle(style);
             }
           });
+          if (stylesData.every((style) => !style['default?'])) {
+            setSelectedStyle(stylesData[0]);
+          }
         })
         .catch(() => {
           alert('Unable to retrieve styles for this product');

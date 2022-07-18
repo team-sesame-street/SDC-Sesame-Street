@@ -54,7 +54,7 @@ StyleSelector.propTypes = {
     })),
     skus: PropTypes.objectOf(PropTypes.shape({
       quantity: PropTypes.number,
-      size: PropTypes.oneOf(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+      size: PropTypes.string,
     })),
   })),
   selectedStyle: PropTypes.shape({
@@ -69,7 +69,7 @@ StyleSelector.propTypes = {
     })),
     skus: PropTypes.objectOf(PropTypes.shape({
       quantity: PropTypes.number,
-      size: PropTypes.oneOf(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+      size: PropTypes.string,
     })),
   }),
   setSelectedStyle: PropTypes.func.isRequired,
