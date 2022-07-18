@@ -83,10 +83,10 @@ const Wrapper = styled.div`
     color: black;
     width: 4vw;
     height: 4vw;
-    maxWidth: 4vh;
-    maxHeight: 4vh;
-    minWidth: 20px;
-    minHeight: 20px;
+    max-width: 4vh;
+    max-height: 4vh;
+    min-width: 20px;
+    min-height: 20px;
     cursor: pointer;
   };
   & .exit-icon {
