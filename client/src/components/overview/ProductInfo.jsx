@@ -86,4 +86,3 @@ const SocialSharingGrid = styled.div`
     height: 3vh;
   }
 `;
-

@@ -4,29 +4,29 @@ import styled from 'styled-components';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import ImageDefaultThumbnail from './Img_Default_Thumbnails.jsx';
 
-const leftArrowStyle = {
-  position: 'absolute',
-  zIndex: 70,
-  height: '3vh',
-  width: '3vh',
-  minHeight: '20px',
-  minWidth: '20px',
-  gridColumn: '3 / 5',
-  gridRow: '5 / 6',
-  cursor: 'pointer',
-};
+// const leftArrowStyle = {
+//   position: 'absolute',
+//   zIndex: 70,
+//   height: '3vh',
+//   width: '3vh',
+//   minHeight: '20px',
+//   minWidth: '20px',
+//   gridColumn: '3 / 5',
+//   gridRow: '5 / 6',
+//   cursor: 'pointer',
+// };
 
-const rightArrowStyle = {
-  position: 'absolute',
-  zIndex: 70,
-  height: '3vh',
-  width: '3vh',
-  minHeight: '20px',
-  minWidth: '20px',
-  gridColumn: '13 / 15',
-  gridRow: '5 / 6',
-  cursor: 'pointer',
-};
+// const rightArrowStyle = {
+//   position: 'absolute',
+//   zIndex: 70,
+//   height: '3vh',
+//   width: '3vh',
+//   minHeight: '20px',
+//   minWidth: '20px',
+//   gridColumn: '13 / 15',
+//   gridRow: '5 / 6',
+//   cursor: 'pointer',
+// };
 
 function MainImage(
   {
@@ -35,7 +35,7 @@ function MainImage(
   },
 ) {
   if (images.length > 0) {
-    console.log(images.length);
+    // console.log(images.length);
     const navigateLeft = () => {
       if (currImgIndex - 1 < thumbnailIndexMin) {
         setThumbnailIndexMin(thumbnailIndexMin - 1);
@@ -69,9 +69,10 @@ function MainImage(
                 />
                 {index > 0 && (
                   <FaArrowCircleLeft
+                    className="arrows-default"
                     data-testid="left-arrow"
                     onClick={navigateLeft}
-                    style={leftArrowStyle}
+                    style={{  gridColumn: '3 / 5' }}
                   />
                 )}
                 <Image
@@ -82,7 +83,8 @@ function MainImage(
                 />
                 {index < images.length - 1 && (
                   <FaArrowCircleRight
-                    style={rightArrowStyle}
+                    className="arrows-default"
+                    style={{  gridColumn: '13 / 15' }}
                     data-testid="right-arrow"
                     onClick={navigateRight}
                   />
@@ -133,6 +135,16 @@ const SubWrapper = styled.div`
   align-content: center;
   justify-items: center;
   align-items: center;
+  & .arrows-default {
+    position: absolute;
+    z-index: 70;
+    height: 3vh;
+    width: 3vh;
+    min-height: 20px;
+    min-width: 20px;
+    grid-row: 5 / 6;
+    cursor: pointer;
+  };
 `;
 
 const Image = styled.img`
