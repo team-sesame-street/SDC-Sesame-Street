@@ -3,7 +3,10 @@
 import React from 'react';
 
 const styles = {
-  container: {
+  mainContainer: {
+    marginLeft: '5%',
+  },
+  descriptionContainer: {
     display: 'flex',
     justifyContent: 'space-evenly',
     gap: '15px',
@@ -41,12 +44,12 @@ export default function Characteristics({ descriptionRate, setDescriptionRate })
   };
 
   return (
-    <div>
+    <div style={styles.mainContainer}>
       {characteristicsArr.map((characteristic) => (
         <div className={characteristic}>
           <b>{`${characteristic}: `}</b>
           <br />
-          <div style={styles.container}>
+          <div style={styles.descriptionContainer}>
             {characteristicsObj[characteristic].map((description, index) => {
               const value = index + 1;
               return (
