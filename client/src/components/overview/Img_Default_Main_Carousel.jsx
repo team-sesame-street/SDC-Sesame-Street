@@ -122,7 +122,7 @@ const SubWrapper = styled.div`
   position: relative;
   isolation: isolate;
   display: grid;
-  height: 70vh;
+  height: 70vh; // originally 60vh here
   width: 90vh;
   min-height: 390px;
   min-width: 510px;

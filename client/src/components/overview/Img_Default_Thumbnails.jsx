@@ -16,14 +16,12 @@ function ImageDefaultThumbnail({
     const upArrowStyle = {
       minWidth: '50px',
       width: '8vh',
-      // alignSelf: 'end',
       fill: thumbnailIndexMin === 0 ? '#eeeeee' : 'default',
     };
 
     const downArrowStyle = {
       minWidth: '50px',
       width: '8vh',
-      // alignSelf: 'start',
       fill: thumbnailIndexMax === images.length - 1 ? '#eeeeee' : 'default',
     };
 
@@ -48,19 +46,15 @@ function ImageDefaultThumbnail({
               minWidth: '45px',
               height: '8vh',
               width: '8vh',
-              // height: '100%',
-              // width: '100%',
               objectFit: 'cover',
               border: '1px solid black',
             };
-
-            return (
-              <div key={index}>
-                {index >= thumbnailIndexMin && index <= thumbnailIndexMax
-                && (<img src={image.thumbnail_url} style={style} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} loading="lazy"/>)}
-
-              </div>
-            );
+            if (index >= thumbnailIndexMin && index <= thumbnailIndexMax) {
+              return (
+                <img src={image.thumbnail_url} style={style} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} loading="lazy"/>
+              );
+            }
+            return null;
           })}
         </ThumbnailsGrid>
         {images.length > 7 && (
