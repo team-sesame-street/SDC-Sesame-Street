@@ -14,14 +14,14 @@ function ImageDefaultThumbnail({
     };
 
     const upArrowStyle = {
-      minWidth: '50px',
-      width: '8vh',
+      // minWidth: '50px',
+      width: '50px',
       fill: thumbnailIndexMin === 0 ? '#eeeeee' : 'default',
     };
 
     const downArrowStyle = {
-      minWidth: '50px',
-      width: '8vh',
+      // minWidth: '50px',
+      width: '50px',
       fill: thumbnailIndexMax === images.length - 1 ? '#eeeeee' : 'default',
     };
 
@@ -42,10 +42,12 @@ function ImageDefaultThumbnail({
           {images.map((image, index) => {
             const style = {
               opacity: index === currImgIndex ? 1 : 0.4,
-              minHeight: '45x',
-              minWidth: '45px',
+              minHeight: '40x',
+              minWidth: '40px',
               height: '8vh',
               width: '8vh',
+              // height: '80px',
+              // width: '80px',
               objectFit: 'cover',
               border: '1px solid black',
             };
@@ -94,6 +96,7 @@ ImageDefaultThumbnail.defaultProps = {
 export default ImageDefaultThumbnail;
 
 const Wrapper = styled.div`
+
   grid-column: 1 / 3;
   grid-row: 1 / 9;
   position: absolute;
@@ -102,8 +105,9 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   grid-template-rows: repeat(3, max-content);
-  grid-template-columns: 1fr;
+  grid-template-columns: max-content;
   align-content: center;
+  justify-content: center;
   justify-items: center;
   align-items: center;
   cursor: pointer;
@@ -113,10 +117,11 @@ const ThumbnailsGrid = styled.div`
   display: grid;
   width: 100%;
   height: 100%;
-  grid-template-columns: max-content
+  min-width: 1fr;
+  grid-template-columns: max-content;
   grid-template-rows: repeat(auto-fill, max-content);
   align-content: center;
   align-items: center;
   justify-items: center;
-  gap: 2px;
+  gap: 6px;
 `;

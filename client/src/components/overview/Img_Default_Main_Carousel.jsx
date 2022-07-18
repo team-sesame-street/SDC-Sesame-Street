@@ -141,8 +141,6 @@ const Image = styled.img`
   grid-column: 3 / 15;
   height: 100%;
   width: 100%;
-  // min-width: 510px;
-  // min-height: 390px;
   object-fit: contain;
   cursor: zoom-in;
 `;

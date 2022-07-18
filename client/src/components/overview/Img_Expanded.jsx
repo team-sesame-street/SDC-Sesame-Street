@@ -65,10 +65,10 @@ function ExpandedImage({
   if (images.length > 0) {
     return (
       <div>
-        {images.map((image, index) => (
-          <div key={index}>
-            {index === currImgIndex && (
-              <Wrapper>
+        {images.map((image, index) => {
+          if (index === currImgIndex) {
+            return (
+              <Wrapper key={index}>
                 {index > 0 && (
                   <IoIosArrowDropleft
                     style={styleLeftArrow}
@@ -84,9 +84,10 @@ function ExpandedImage({
                   />
                 )}
               </Wrapper>
-            )}
-          </div>
-        ))}
+            );
+          }
+          return null;
+        })}
         <NavSymbols>
           {images.map((image, index) => (
             <BsCircleFill
