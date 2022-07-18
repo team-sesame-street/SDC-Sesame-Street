@@ -5,6 +5,7 @@ import Characteristics from './Characteristics.jsx';
 import Recommend from './Recommend.jsx';
 import Summary from './Summary.jsx';
 import Body from './Body.jsx';
+import UploadPhotos from './UploadPhotos.jsx';
 
 const styles = {
   modalContainer: {
@@ -56,6 +57,7 @@ export default function Modal({ showModal, onClose }) {
   const [recommendProduct, setRecommendProduct] = useState();
   const [summaryText, setSummaryText] = useState('');
   const [bodyText, setBodyText] = useState('');
+  const [selectedImage, setSelectedImage] = useState([]);
   const [descriptionRate, setDescriptionRate] = useState({
     Comfort: null,
     Fit: null,
@@ -64,6 +66,8 @@ export default function Modal({ showModal, onClose }) {
     Quality: null,
     Width: null,
   });
+
+  console.log('Selected Image: ', selectedImage);
 
   const ratingType = ['Poor', 'Fair', 'Average', 'Good', 'Great'];
 
@@ -114,12 +118,25 @@ export default function Modal({ showModal, onClose }) {
             <b>Summary:</b>
             *
             <br />
-            <Summary summaryText={summaryText} setSummaryText={setSummaryText} />
+            <Summary
+              summaryText={summaryText}
+              setSummaryText={setSummaryText}
+            />
             <br />
             <b>Body:</b>
             *
             <br />
-            <Body bodyText={bodyText} setBodyText={(text) => setBodyText(text)} />
+            <Body
+              bodyText={bodyText}
+              setBodyText={(text) => setBodyText(text)}
+            />
+            <br />
+            <b>Upload photos:</b>
+            <br />
+            <UploadPhotos
+              selectedImage={selectedImage}
+              setSelectedImage={(image) => setSelectedImage(image)}
+            />
           </div>
           <br />
           <input type="button" value="Cancel" onClick={onClose} style={styles.cancelReviewBtn} />
