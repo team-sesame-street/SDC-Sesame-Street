@@ -103,4 +103,5 @@ const Thumbnail = styled.img`
   border-radius: 50%;
   border: 1px solid black;
   opacity: 0.6;
+  cursor: pointer;
 `;
