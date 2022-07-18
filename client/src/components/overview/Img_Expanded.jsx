@@ -5,65 +5,6 @@ import { IoExitOutline } from 'react-icons/io5';
 import { BsCircleFill } from 'react-icons/bs';
 import styled from 'styled-components';
 
-const styleMainCircle = {
-  width: '11px',
-  height: '15px',
-  color: 'grey',
-  cursor: 'pointer',
-};
-
-const styleCircles = {
-  width: '8px',
-  height: '8px',
-  color: 'grey',
-  opacity: 0.4,
-  cursor: 'pointer',
-};
-
-const styleLeftArrow = {
-  position: 'absolute',
-  zIndex: 100,
-  color: 'black',
-  width: '4vw',
-  height: '4vw',
-  maxWidth: '4vh',
-  maxHeight: '4vh',
-  minWidth: '20px',
-  minHeight: '20px',
-  cursor: 'pointer',
-  top: '50%',
-  left: '5%',
-};
-
-const styleRightArrow = {
-  position: 'absolute',
-  zIndex: 100,
-  color: 'black',
-  width: '4vw',
-  height: '4vw',
-  maxWidth: '4vh',
-  maxHeight: '4vh',
-  minWidth: '20px',
-  minHeight: '20px',
-  cursor: 'pointer',
-  top: '50%',
-  right: '5%',
-};
-
-const styleExit = {
-  position: 'absolute',
-  zIndex: 100,
-  color: 'black',
-  width: '4vw',
-  height: '4vw',
-  maxWidth: '4vh',
-  maxHeight: '4vh',
-  minWidth: '20px',
-  minHeight: '20px',
-  cursor: 'pointer',
-  top: '5%',
-  right: '5%',
-};
 
 function ExpandedImage({
   images, currImgIndex, setCurrImgIndex, setExpandedView,
@@ -76,16 +17,14 @@ function ExpandedImage({
             return (
               <Wrapper key={index}>
                 {index > 0 && (
-                  <IoIosArrowDropleft
-                    style={styleLeftArrow}
+                  <IoIosArrowDropleft className="icon-expanded left-arrow-expanded"
                     onClick={() => { setCurrImgIndex(currImgIndex - 1); }}
                   />
                 )}
                 <Image src={images[currImgIndex].url} alt="A representation of this product" loading="lazy" />
-                <IoExitOutline data-testid="exit-expanded-btn" style={styleExit} onClick={() => { setExpandedView(false); }} />
+                <IoExitOutline data-testid="exit-expanded-btn" className="icon-expanded exit-icon" onClick={() => { setExpandedView(false); }} />
                 {index < images.length - 1 && (
-                  <IoIosArrowDropright
-                    style={styleRightArrow}
+                  <IoIosArrowDropright className="icon-expanded right-arrow-expanded"
                     onClick={() => { setCurrImgIndex(currImgIndex + 1); }}
                   />
                 )}
@@ -95,17 +34,23 @@ function ExpandedImage({
           return null;
         })}
         <NavSymbols>
-          {images.map((image, index) => (
+          {images.map((image, index) => {
+            const circleStyle = {
+              width: index === currImgIndex ? '11px' : '8px',
+              height: index === currImgIndex ? '11px': '8px',
+            };
+            return (
             <BsCircleFill
+              className="nav-symbols-circles"
               key={index}
-              style={index === currImgIndex ? styleMainCircle : styleCircles}
+              style={circleStyle}
               onClick={() => {
                 if (index !== currImgIndex) {
                   setCurrImgIndex(index);
                 }
               }}
             />
-          ))}
+          )})}
         </NavSymbols>
       </div>
     );
@@ -132,6 +77,30 @@ const Wrapper = styled.div`
   height: 60vw;
   max-height: 80vh;
   max-width: 80vh;
+  & .icon-expanded {
+    position: absolute;
+    z-index: 100;
+    color: black;
+    width: 4vw;
+    height: 4vw;
+    maxWidth: 4vh;
+    maxHeight: 4vh;
+    minWidth: 20px;
+    minHeight: 20px;
+    cursor: pointer;
+  };
+  & .exit-icon {
+    top: 5%;
+    right: 5%;
+  };
+  & .left-arrow-expanded {
+    top: 50%;
+    left: 5%;
+  };
+  & .right-arrow-expanded {
+    top: 50%;
+    right: 5%;
+  };
 `;
 
 const NavSymbols = styled.div`
@@ -147,6 +116,10 @@ const NavSymbols = styled.div`
   align-content: end;
   justify-items: center;
   align-items: center;
+  & .nav-symbols-circles {
+    color: grey;
+    cursor: pointer;
+  };
 `;
 
 const Image = styled.img`
