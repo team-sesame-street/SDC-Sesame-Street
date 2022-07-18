@@ -11,6 +11,7 @@ export default function Rating({ starRating, changeRating }) {
       starRatedColor="goldenrod"
       starHoverColor="goldenrod"
       rating={starRating}
+      required
     />
   );
 }

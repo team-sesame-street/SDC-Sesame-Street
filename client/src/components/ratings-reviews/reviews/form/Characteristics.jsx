@@ -56,11 +56,13 @@ export default function Characteristics({ descriptionRate, setDescriptionRate })
                 <label>
                   <input
                     type="radio"
+                    name={characteristic}
                     value={value}
                     checked={descriptionRate[characteristic] === value}
                     onChange={() => setDescriptionRate(
                       { ...descriptionRate, [characteristic]: value },
                     )}
+                    required
                   />
                   <br />
                   {description}

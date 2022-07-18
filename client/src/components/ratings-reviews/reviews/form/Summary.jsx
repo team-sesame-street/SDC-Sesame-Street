@@ -18,10 +18,19 @@ export default function Summary({ summaryText, setSummaryText }) {
         maxLength="60"
         onChange={(event) => setSummaryText(event.target.value)}
         value={summaryText}
+        required
       />
       <br />
       <div style={styles.warning}>
-        {`${60 - summaryText.length} characters remaining`}
+        {summaryText.length === 60 ? (
+          <div style={{ color: 'red' }}>
+            0 characters remaining
+          </div>
+        ) : (
+          <div>
+            {`${60 - summaryText.length} characters remaining`}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -18,6 +18,7 @@ export default function Nickname({ nickname, setNickName }) {
         maxLength="60"
         onChange={(event) => setNickName(event.target.value)}
         value={nickname}
+        required
       />
       <br />
       <div style={styles.warning}>

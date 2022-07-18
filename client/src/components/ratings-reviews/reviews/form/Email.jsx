@@ -18,6 +18,7 @@ export default function Email({ email, setEmail }) {
         maxLength="60"
         onChange={(event) => setEmail(event.target.value)}
         value={email}
+        required
       />
       <br />
       <div style={styles.warning}>

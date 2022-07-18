@@ -20,21 +20,23 @@ export default function Body({ bodyText, setBodyText }) {
         value={bodyText}
         onChange={(event) => setBodyText(event.target.value)}
         type="text"
-        minLength="50"
+        name="body"
+        minLength={50}
         maxLength="1000"
         placeholder="Why did you like the product or not?"
         cols="58"
+        height="20"
         rows="3"
         required
       />
       <div style={styles.required}>
-        {bodyText.length > 50 ? (
-          <div>
+        {bodyText.length > 49 ? (
+          <div style={{ color: 'green' }}>
             Minimum reached
           </div>
         ) : (
-          <div>
-            {`Minimum required characters left: ${51 - bodyText.length}`}
+          <div style={{ color: 'red' }}>
+            {`Minimum required characters left: ${50 - bodyText.length}`}
           </div>
         )}
       </div>
