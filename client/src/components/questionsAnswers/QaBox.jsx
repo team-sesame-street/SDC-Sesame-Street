@@ -4,17 +4,15 @@ import SearchBar from './SearchBar.jsx';
 import QAWrapper from './QAWrapper.jsx';
 import { Wrapper, PrimaryBtnGroup } from './styles/qabox.styles';
 
-function QaBox({ id }) {
+function QaBox({ currProduct }) {
   const [questions, setQuestions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [count, setCount] = useState(0);
-  const [indexes, setIndexes] = useState({
-    page: 1,
-    questionIndex: 0,
-  });
+  const [page, setPage] = useState(1);
+  const [questionIndex, setQuestionIndex] = useState(0);
   const [productMetadata, setProductMetadata] = useState({
-    product_id: id,
-    productName: '',
+    product_id: currProduct.id,
+    productName: currProduct.name,
   });
   const [checks, setChecks] = useState({
     isLoading: true,
@@ -24,38 +22,27 @@ function QaBox({ id }) {
   const [isPageDone, setIsPageDone] = useState(false);
 
   useEffect(() => {
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
-      headers: {
-        Authorization: process.env.GITKEY,
-      },
-    })
-      .then(({ data }) => {
-        setQuestions([]);
-        setIndexes({
-          page: 1,
-          questionIndex: 0,
-        });
-        setIsPageDone(false);
-        setSearchTerm('');
-        setChecks({
-          isLoading: true,
-          isDone: false,
-          isQuestionModalOpen: false,
-        });
-        setCount(0);
-        localStorage.setItem('productName', data.name);
-        setProductMetadata({ productName: data.name, product_id: data.id });
-      })
-      .catch((err) => console.error(err));
-  }, [id]);
+    setProductMetadata({ productName: currProduct.name, product_id: currProduct.id });
+    setQuestions([]);
+    setPage(1);
+    setQuestionIndex(0);
+    setIsPageDone(false);
+    setSearchTerm('');
+    setChecks({
+      isLoading: true,
+      isDone: false,
+      isQuestionModalOpen: false,
+    });
+    setCount(0);
+  }, [currProduct]);
 
   useEffect(() => {
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${id}`, {
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${currProduct.id}`, {
       headers: {
         Authorization: process.env.GITKEY,
       },
       params: {
-        page: indexes.page,
+        page,
       },
     })
       .then(({ data }) => {
@@ -64,7 +51,7 @@ function QaBox({ id }) {
           if (count >= 7) {
             setIsPageDone(true);
           } else if ((count < 7 && !isPageDone) || data.results.length === 1) {
-            setIndexes({ ...indexes, page: indexes.page + 1 });
+            setPage(page + 1);
           }
         } else {
           const freshData = [...questions, ...data.results];
@@ -81,29 +68,31 @@ function QaBox({ id }) {
           setQuestions(qsWithoutDups);
 
           if (questions.length < 2 && !isPageDone) {
-            setIndexes({ ...indexes, page: indexes.page + 1 });
+            setPage(page + 1);
           }
         }
         setChecks({ ...checks, isLoading: false });
       })
       .catch((err) => console.error(err));
-  }, [indexes.page]);
+  }, [page]);
 
   useEffect(() => {
     document.querySelector('.qa-wrapper')?.scrollTo({ top: document.querySelector('.qa-wrapper').scrollHeight, behavior: 'smooth' });
-  }, [indexes.questionIndex]);
+  }, [questionIndex]);
 
   function handleMoreQuestions() {
+    setChecks({ ...checks, isLoading: true });
     if (!isPageDone) {
-      setIndexes({ ...indexes, page: indexes.page++ });
+      setPage(page + 1);
     }
 
-    if (questions.length - 1 > indexes.questionIndex) {
-      setIndexes({ ...indexes, questionIndex: indexes.questionIndex + 2 });
+    if (questions.length - 1 > questionIndex) {
+      setQuestionIndex(questionIndex + 2);
     } else {
-      setIndexes({ ...indexes, questionIndex: indexes.questionIndex + 1 });
-      setChecks({ ...checks, isDone: true });
+      setQuestionIndex(questionIndex + 1);
+      // setChecks({ ...checks, isDone: true });
     }
+    setChecks({ ...checks, isLoading: false });
   }
 
   function handleAddQuestion() {
@@ -118,11 +107,11 @@ function QaBox({ id }) {
         questions={questions}
         setQuestions={setQuestions}
         productMetadata={productMetadata}
-        questionIndex={indexes.questionIndex}
+        questionIndex={questionIndex}
         searchTerm={searchTerm}
         checks={checks}
         setChecks={setChecks}
-        page={indexes.page}
+        page={page}
       />
       <PrimaryBtnGroup>
         {!checks.isDone
