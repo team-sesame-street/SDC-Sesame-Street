@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
+import { MdStars } from 'react-icons/md';
 
 function Checkout({ selectedStyle }) {
   const [skusInStock, setSkusInStock] = useState([]);
@@ -269,7 +270,14 @@ function Checkout({ selectedStyle }) {
           {console.log(selectedSku, selectedQuantity, typeof selectedQuantity)}
         </QuantitySelector>
 
-        <SubmitButton type="button" onClick={addToCart}>Add to Cart</SubmitButton>
+        <SubmitButton
+          style={{ visibility: skusInStock.length === 0 ? 'hidden' : 'visible' }}
+          type="button"
+          onClick={addToCart}
+        >
+          Add to Cart
+        </SubmitButton>
+        <MdStars />
       </Wrapper>
     );
   }
@@ -301,28 +309,55 @@ Checkout.defaultProps = {
 export default Checkout;
 
 const Wrapper = styled.div`
-
+  width: inherit;
+  height: inherit;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, max-content);
+  justify-items: left;
+  padding: 0;
 `;
 
 const TextWrapper = styled.div`
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
 `;
 
 const SizeSelector = styled.ul`
   list-style-type: none;
-
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  width: 100%;
+  & li {
+    // position: relative;
+  }
   & button {
+    // position: absolute;
+    top: 0;
+    left: 0;
     border: none;
+    width: 100%;
+    height: 2vh;
+    // padding: 0;
   }
 `;
 
 const QuantitySelector = styled.ul`
   list-style-type: none;
-
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  width: 100%;
   & button {
     border: none;
+    // padding: 0;
+    width: 100%;
+    height: 2vh;
   }
 `;
 
 const SubmitButton = styled.button`
-
+  grid-column: 1 / 2;
+  grid-row: 3 / 4;
+  width: 100%;
+  hieght: 100%;
 `;

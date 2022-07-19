@@ -27,9 +27,10 @@ export default Sidebar;
 const Wrapper = styled.div`
   display: grid;
   width: 100%;
+  height: max-content;
   min-width: min(550px, 1fr);
   max-width: max-content;
-  grid-template-rows: repeat(3, max-content);
+  grid-template-rows: max-content max-content 100px;
   grid-template-columns: max-content;
   align-content: center;
   align-items: center;
