@@ -97,13 +97,15 @@ function Checkout({ selectedStyle }) {
   };
 
   const expandSelectSize = () => {
-    setSelectingSize(!selectingSize);
+    setSelectingSize(true);
     if (selectingQuantity) {
       setSelectingQuantity(false);
     }
-    if (selectedSku) {
-      setSelectedSku(null);
-    }
+  };
+
+  const resetSelectedSize = () => {
+    setSelectedSku(null);
+    setSelectingSize(false);
   };
 
   const expandSelectQuantity = () => {
@@ -202,7 +204,7 @@ function Checkout({ selectedStyle }) {
           {/* expanded view */}
           {skusInStock.length > 0 && selectingSize && (
             <li>
-              <button type="button" onClick={expandSelectSize}>Select Size</button>
+              <button type="button" onClick={resetSelectedSize}>Select Size</button>
             </li>
           )}
           {skusInStock.length > 0 && selectingSize && skusInStock.map((sku) => (
@@ -211,23 +213,27 @@ function Checkout({ selectedStyle }) {
             </li>
           ))}
         </SizeSelector>
+
         <QuantitySelector>
-          {!selectedSku && (
-            <li>
-              <button type="button" onClick={expandSelectQuantity}>-</button>
-            </li>
-          )}
+          {/* collapsed view */}
           {maxQuantity === 0 && (
             <li>
               <button type="button">OUT OF STOCK</button>
             </li>
           )}
-          {selectedQuantity > 0 && (
+          {!selectedSku && (
+            <li>
+              <button type="button" onClick={expandSelectQuantity}>-</button>
+            </li>
+          )}
+          {maxQuantity > 0 && selectedQuantity && !selectingQuantity && (
             <li>
               <button type="button" onClick={expandSelectQuantity}>{selectedQuantity}</button>
             </li>
           )}
-          {selectingQuantity && (
+
+          {/* expanded view */}
+          {selectingQuantity && maxQuantity > 0 && (
             quantityRange.map((quantity) => (
               <li key={quantity}>
                 <button type="button" onClick={handleSelectQuantity}>{quantity}</button>
@@ -266,11 +272,6 @@ Checkout.defaultProps = {
 
 export default Checkout;
 
-const Form = styled.form`
-  margin-top: 10px;
-  margin-bottom: 10px;
-`;
-
 const Wrapper = styled.div`
 
 `;
@@ -282,10 +283,6 @@ const SizeSelector = styled.ul`
     border: none;
   }
 `;
-
-// const SizeSelectorWrapper = styled.div`
-
-// `;
 
 const QuantitySelector = styled.ul`
   list-style-type: none;
