@@ -5,27 +5,28 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
-const modalStyle = {
-  position: 'fixed',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  backgroundColor: '#FFF',
-  padding: '20px',
-  zIndex: 1000,
-  cursor: 'pointer',
-};
+const Modals = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #FFF;
+  padding: 20px;
+  z-index: 1000;
+  cursor: pointer;
+`
 
-const overlayStyle = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-  backgroundColor: 'rgba(0, 0, 0, .7)',
-  zIndex: 1000,
-};
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, .7);
+  z-index: 1000;
+`
 
 const textStyle = {
   textAlign: 'center',
@@ -50,8 +51,8 @@ function Modal({ open, closeModal, currOutfit, id }) {
 
   return (
     <>
-      <div style={overlayStyle} />
-      <div onClick={closeModal} style={modalStyle}>
+      <Overlay/>
+      <Modals onClick={closeModal}>
         <section>
           <table style={{ width: '100%' }}>
             <thead>
@@ -72,7 +73,7 @@ function Modal({ open, closeModal, currOutfit, id }) {
             ))}
           </table>
         </section>
-      </div>
+      </Modals>
     </>
   );
 }

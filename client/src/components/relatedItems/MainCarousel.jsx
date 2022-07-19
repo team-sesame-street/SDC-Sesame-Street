@@ -5,17 +5,18 @@
 /* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import Outfit from './Outfit.jsx';
 import RelatedItems from './RelatedItems.jsx';
 
-const style = {
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  position: 'relative',
-};
+const MainContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`
 
 function MainCarousel({ id, pageChange }) {
   const [relatedItemsInfo, setRelatedItemInfo] = useState({info:[], urls:[]});
@@ -24,6 +25,7 @@ function MainCarousel({ id, pageChange }) {
   const [currentOutfitInfo, setCurrOutfitInfo] = useState({
     info: {},
     styles: {},
+    avg: null,
   });
 
   const productInfo = (id) => {
@@ -77,7 +79,11 @@ function MainCarousel({ id, pageChange }) {
           Authorization: process.env.GITKEY,
         },
       }).then((res) => {
-        res.data.forEach(id => {
+        const seen = {}
+        for(const id of res.data) {
+          seen[id] = true
+        }
+        Object.keys(seen).forEach(id => {
           const promise1 = Promise.all([productInfo(id)])
           infoPromises.push(promise1)
           const promise2 = Promise.all([productStyle(id)])
@@ -114,6 +120,7 @@ function MainCarousel({ id, pageChange }) {
           }
           setRelatedItemInfo((relatedItemsInfo) => ({...relatedItemsInfo, urls: results}));
         });
+
         Promise.all(ratingPromises).then(data => {
           const results = []
           for (let x = 0; x < data.length; x++) {
@@ -133,23 +140,22 @@ function MainCarousel({ id, pageChange }) {
         })
       })
         .catch((err) => console.log(err));
-      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
-        headers: {
-          Authorization: process.env.GITKEY,
-        },
-      }).then((res) => {
-        setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, info: res.data }));
-      })
-        .catch((err) => console.log(err));
 
-      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`, {
-        headers: {
-          Authorization: process.env.GITKEY,
-        },
-      }).then((res) => {
-        setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, styles: res.data.results[0] }));
-      })
-        .catch((err) => console.log(err));
+      Promise.all([productInfo(id), productStyle(id), productRatings(id)])
+       .then(res => {
+          setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, info: res[0].data }));
+          setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, styles: res[1].data.results[0] }));
+          let avg = 0
+          let count = 0
+          if (Object.keys(res[2].data.ratings) !== 0) {
+            for (const rating in res[2].data.ratings) {
+              avg += parseInt(rating) * parseInt(res[2].data.ratings[rating])
+              count += parseInt(res[2].data.ratings[rating])
+            }
+            const results = avg / count;
+            setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, avg: Number(results) }));
+          }
+       })
     }
   }, [id]);
 
@@ -158,16 +164,16 @@ function MainCarousel({ id, pageChange }) {
   },[])
 
   return (
-    <div data-testId='main'>
-      <div style={style}>
+    <div data-testid='main'>
+      <MainContainer>
         <RelatedItems slides={relatedItemsInfo} id={id} pageChange={pageChange} reviews={reviews} />
-      </div>
+      </MainContainer>
       <br />
       <br />
       <br />
-      <div style={style}>
+      <MainContainer>
         <Outfit currOutfit={currentOutfitInfo} deleteOutfit={deleteOutfit} outfitSlides={outfitSlides} addOutfit={addOutfit} />
-      </div>
+      </MainContainer>
     </div>
   );
 }

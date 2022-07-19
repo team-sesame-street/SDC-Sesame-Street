@@ -3,21 +3,14 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { RiPinterestFill, RiTwitterFill, RiFacebookCircleFill } from 'react-icons/ri';
 
-const socialSharingStyling = {
-  minWidth: '25px',
-  minHeight: '25px',
-  width: '3vh',
-  height: '3vh',
-};
-
 function ProductInfo({ product, selectedStyle }) {
   if (Object.keys(product).length > 0 && Object.keys(selectedStyle).length > 0) {
     const formatPrice = (price) => ('$'.concat(price.slice(0, -3)));
 
     return (
-      <div>
+      <Wrapper>
         <p>{product.category.toUpperCase()}</p>
-        <h2>{product.name}</h2>
+        <h2 size={{ maxHeight: 'max-content' }}>{product.name}</h2>
         {selectedStyle.sale_price === null
           ? (<p>{formatPrice(selectedStyle.original_price)}</p>)
           : (
@@ -29,11 +22,11 @@ function ProductInfo({ product, selectedStyle }) {
           )}
         <SocialSharingGrid>
           {/* Share on Social Media Section */}
-          <RiFacebookCircleFill style={socialSharingStyling} />
-          <RiTwitterFill style={socialSharingStyling} />
-          <RiPinterestFill style={socialSharingStyling} />
+          <RiFacebookCircleFill className="social-sharing" />
+          <RiTwitterFill className="social-sharing" />
+          <RiPinterestFill className="social-sharing" />
         </SocialSharingGrid>
-      </div>
+      </Wrapper>
     );
   }
   return null;
@@ -67,7 +60,7 @@ ProductInfo.propTypes = {
     })),
     skus: PropTypes.objectOf(PropTypes.shape({
       quantity: PropTypes.number,
-      size: PropTypes.oneOf(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+      size: PropTypes.string,
     })),
   }),
 };
@@ -79,10 +72,26 @@ ProductInfo.defaultProps = {
 
 export default ProductInfo;
 
+const Wrapper = styled.div`
+  display: grid;
+  width: 100%;
+  height: max-content;
+  grid-template-rows: repeat(4, max-content);
+  grid-template-columns: 1fr;
+`;
+
 const SocialSharingGrid = styled.div`
   display: grid;
+  height: min-content;
   width: 12vh;
   grid-template-rows: max-content;
   grid-template-columns: repeat(3, max-content);
   gap: 1vh;
+  cursor: pointer;
+  & .social-sharing {
+    min-width: 25px;
+    min-height: 25px;
+    width: 3vh;
+    height: 3vh;
+  }
 `;
