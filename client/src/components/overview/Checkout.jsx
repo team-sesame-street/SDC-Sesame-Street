@@ -65,14 +65,9 @@ function Checkout({ selectedStyle }) {
             }
           }
         });
-    // } else if (selectedSku.length === 0) {
-    //   setSelectedQuantity(null);
-    //   setMaxQuantity(null);
-    //   setClickSubmit(false);
+    } else if (selectedSku === null) {
+      setSelectedQuantity(null);
     }
-    // else {
-    //   setS'1394805'
-    // }
   }, [selectedSku]);
 
   const clickSubmitWithNoQuantity = () => {
@@ -105,6 +100,9 @@ function Checkout({ selectedStyle }) {
     setSelectingSize(!selectingSize);
     if (selectingQuantity) {
       setSelectingQuantity(false);
+    }
+    if (selectedSku) {
+      setSelectedSku(null);
     }
   };
 
@@ -182,29 +180,36 @@ function Checkout({ selectedStyle }) {
       </Form>
 */
       <Wrapper>
+
         <SizeSelector>
+          {/* collapsed view */}
+          {skusInStock.length > 0 && !selectedSku && !selectingSize && (
+            <li>
+              <button type="button" onClick={expandSelectSize}>Select Size</button>
+            </li>
+          )}
+          {skusInStock.length > 0 && selectedSku && !selectingSize && (
+            <li>
+              <button type="button" onClick={expandSelectSize}>{selectedStyle.skus[selectedSku].size}</button>
+            </li>
+          )}
           {skusInStock.length === 0 && (
             <li>
               <button type="button">OUT OF STOCK</button>
             </li>
           )}
-          {!selectedSku && (
+
+          {/* expanded view */}
+          {skusInStock.length > 0 && selectingSize && (
             <li>
               <button type="button" onClick={expandSelectSize}>Select Size</button>
             </li>
           )}
-          {skusInStock.length > 0 && selectingSize && (
-            skusInStock.map((sku, index) => (
-              <li key={index}>
-                <button type="button" onClick={handleSelectSize}>{selectedStyle.skus[sku].size}</button>
-              </li>
-            ))
-          )}
-          {selectedSku && (
-            <li>
-              <button type="button" onClick={expandSelectSize}>{selectedStyle.skus[selectedSku].size}</button>
+          {skusInStock.length > 0 && selectingSize && skusInStock.map((sku) => (
+            <li key={sku}>
+              <button type="button" onClick={handleSelectSize}>{selectedStyle.skus[sku].size}</button>
             </li>
-          )}
+          ))}
         </SizeSelector>
         <QuantitySelector>
           {!selectedSku && (
@@ -277,6 +282,10 @@ const SizeSelector = styled.ul`
     border: none;
   }
 `;
+
+// const SizeSelectorWrapper = styled.div`
+
+// `;
 
 const QuantitySelector = styled.ul`
   list-style-type: none;
