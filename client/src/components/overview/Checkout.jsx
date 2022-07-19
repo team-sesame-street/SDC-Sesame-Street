@@ -9,7 +9,7 @@ function Checkout({ selectedStyle }) {
   const [selectedQuantity, setSelectedQuantity] = useState(null);
   const [maxQuantity, setMaxQuantity] = useState(null);
   const [clickSubmit, setClickSubmit] = useState(false);
-  const [selectingStyle, setSelectingStyle] = useState(false);
+  const [selectingSize, setSelectingSize] = useState(false);
   const [selectingQuantity, setSelectingQuantity] = useState(false);
 
   useEffect(() => {
@@ -101,15 +101,14 @@ function Checkout({ selectedStyle }) {
   };
 
   const expandSelectSize = () => {
-    setSelectingStyle(true);
+    setSelectingSize(true);
   };
 
   const handleSelectSize = (e) => {
-    console.log('I was called');
-    // console.log(skusInStock)
     skusInStock.forEach((sku) => {
       if (selectedStyle.skus[sku].size === e.target.innerText) {
-        setSelectedSku(selectedStyle.skus[sku]);
+        setSelectedSku(sku);
+        setSelectingSize(false);
       }
     });
   };
@@ -171,7 +170,6 @@ function Checkout({ selectedStyle }) {
           {skusInStock.length > 0 && (
             skusInStock.map((sku, index) => (
               <li key={index}>
-                {console.log(selectedSku)}
                 <button type="button" onClick={handleSelectSize}>{selectedStyle.skus[sku].size}</button>
               </li>
             )))}
