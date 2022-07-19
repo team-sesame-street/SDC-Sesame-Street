@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Rating from './Rating.jsx';
 import Characteristics from './Characteristics.jsx';
 import Recommend from './Recommend.jsx';
@@ -60,7 +61,7 @@ export default function Modal({ showModal, onClose }) {
   const [summaryText, setSummaryText] = useState('');
   const [bodyText, setBodyText] = useState('');
   const [selectedImage, setSelectedImage] = useState([]);
-  const [nickname, setNickName] = useState('');
+  const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [descriptionRate, setDescriptionRate] = useState({
     Comfort: null,
@@ -72,6 +73,34 @@ export default function Modal({ showModal, onClose }) {
   });
 
   const ratingType = ['Poor', 'Fair', 'Average', 'Good', 'Great'];
+
+  // function postReview() {
+  //   const id = Number(localStorage.getItem('productId'));
+  //   const characteristicsIds = JSON.parse(localStorage.getItem('characteristicsObj'));
+  //   const nameArray = localStorage.getItem('characteristicsArray').split(',');
+  //   const charPostObj = {};
+
+  //   for (let i = 0; i < nameArray.length; i += 1) {
+  //     const val = characteristicsIds[nameArray[i]];
+  //     charPostObj[val] = descriptionRate[nameArray[i]];
+  //   }
+  //   console.log('charPostObj: ', charPostObj);
+  //   axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
+  //     headers: {
+  //       Authorization: process.env.GITKEY,
+  //     },
+  //     params: {
+  //       product_id: id,
+  //       rating: starRating,
+  //       summary: bodyText,
+  //       recommend: recommendProduct,
+  //       name: nickname,
+  //       email,
+  //       photos: selectedImage,
+  //       characteristics: charPostObj,
+  //     },
+  //   })
+  // }
 
   function handleSubmit(event) {
     if (!starRating || bodyText.length < 50) {
@@ -85,6 +114,7 @@ export default function Modal({ showModal, onClose }) {
     } else {
       event.preventDefault();
       console.log('submitted: ', event.target);
+      postReview();
     }
   }
 
@@ -160,7 +190,7 @@ export default function Modal({ showModal, onClose }) {
             <br />
             <Nickname
               nickname={nickname}
-              setNickName={(value) => setNickName(value)}
+              setNickname={(value) => setNickname(value)}
             />
             <br />
             <b>Email:</b>
