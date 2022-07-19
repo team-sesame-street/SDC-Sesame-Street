@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import styled from 'styled-components';
 import ExpandedImage from './Img_Expanded.jsx';
 import Text from './Text.jsx';
 import MainImg_Sidebar from './MainImg_Sidebar.jsx';
@@ -100,7 +101,7 @@ function MainOverview({ id }) {
   }, [images]);
 
   return (
-    <div>
+    <Wrapper>
       {expandedView && (
         <ExpandedImage
           images={images}
@@ -128,7 +129,7 @@ function MainOverview({ id }) {
           <Text product={product} />
         </div>
       )}
-    </div>
+    </Wrapper>
   );
 }
 
@@ -141,3 +142,9 @@ MainOverview.defaultProps = {
 };
 
 export default MainOverview;
+
+const Wrapper = styled.div`
+  // margin: auto;
+  // background-color: #9D93C0;
+  justify-content: center;
+`;

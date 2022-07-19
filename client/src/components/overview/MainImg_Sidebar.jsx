@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+// import PropTypes from 'prop-types';
 import MainImage from './Img_Default_Main_Carousel.jsx';
 import Sidebar from './Sidebar.jsx';
 
@@ -34,5 +35,9 @@ function MainImg_Sidebar(
 export default MainImg_Sidebar;
 
 const Wrapper = styled.div`
-
+  margin: auto;
+  // background-color: grey;
+  display: grid;
+  gap: 0.5vh;
+  grid-template-columns: repeat(auto-fill, minmax(550px, max-content));
 `;

@@ -29,11 +29,11 @@ function MainImage(
     };
 
     return (
-      <div>
-        {images.map((image, index) => (
-          <div key={index}>
-            {index === currImgIndex && (
-              <SubWrapper>
+      <Wrapper>
+        {images.map((image, index) => {
+          if (index === currImgIndex) {
+            return (
+              <SubWrapper key={index}>
                 <ImageDefaultThumbnail
                   images={images}
                   currImgIndex={currImgIndex}
@@ -66,12 +66,14 @@ function MainImage(
                   />
                 )}
               </SubWrapper>
-            )}
-          </div>
-        ))}
-      </div>
+            );
+          }
+          return null;
+        })}
+      </Wrapper>
     );
   }
+  return null;
 }
 
 MainImage.propTypes = {
@@ -132,4 +134,10 @@ const Image = styled.img`
   width: 100%;
   object-fit: contain;
   cursor: zoom-in;
+`;
+
+const Wrapper = styled.div`
+  height: max-content;
+  width: 50vw;
+  min-width: min(550px, 80vw);
 `;

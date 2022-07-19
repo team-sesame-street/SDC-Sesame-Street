@@ -71,7 +71,7 @@ Text.defaultProps = {
 export default Text;
 
 const Wrapper = styled.div`
-  margin-left: 10vw;
+  margin: auto;
   display: grid;
   gap: 0.5vh;
   grid-template-columns: repeat(auto-fit, minmax(550px, max-content));
