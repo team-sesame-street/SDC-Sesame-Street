@@ -22,16 +22,16 @@ function Checkout({ selectedStyle }) {
       setSelectedQuantity(null);
       setMaxQuantity(null);
       setClickSubmit(false);
-      setSelectingStyle(false);
+      setSelectingSize(false);
       setSelectingQuantity(false);
     }
   }, [selectedStyle]);
 
-  useEffect(() => {
-    if (Object.keys(selectedStyle).length > 0 & skusInStock.length > 0) {
-      setSelectedSku('1394805');
-    }
-  }, [skusInStock]);
+  // useEffect(() => {
+  //   if (Object.keys(selectedStyle).length > 0 & skusInStock.length > 0) {
+  //     setSelectedSku('1394805');
+  //   }
+  // }, [skusInStock]);
 
   useEffect(() => {
     if (Object.keys(selectedStyle).length > 0 && selectedSku) {
@@ -101,7 +101,7 @@ function Checkout({ selectedStyle }) {
   };
 
   const expandSelectSize = () => {
-    setSelectingSize(true);
+    setSelectingSize(!selectingSize);
   };
 
   const handleSelectSize = (e) => {
@@ -164,15 +164,24 @@ function Checkout({ selectedStyle }) {
         <SizeSelector>
           {/* {console.log(selectedStyle)} */}
           {/* {console.log(skusInStock)} */}
-          <li>
-            <button type="button" onClick={expandSelectSize}>Select Size</button>
-          </li>
-          {skusInStock.length > 0 && (
+          {!selectedSku && (
+            <li>
+              <button type="button" onClick={expandSelectSize}>Select Size</button>
+            </li>
+          )}
+          {skusInStock.length > 0 && selectingSize && (
             skusInStock.map((sku, index) => (
               <li key={index}>
                 <button type="button" onClick={handleSelectSize}>{selectedStyle.skus[sku].size}</button>
               </li>
-            )))}
+            ))
+          )}
+          {selectedSku && (
+            <li>
+              <button type="button" onClick={expandSelectSize}>{selectedStyle.skus[selectedSku].size}</button>
+            </li>
+          )}
+            {console.log(selectedSku)}
         </SizeSelector>
       </Wrapper>
     );
