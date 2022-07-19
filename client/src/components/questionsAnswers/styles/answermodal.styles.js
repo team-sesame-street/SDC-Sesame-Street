@@ -55,11 +55,18 @@ export const SubmitWrapper = styled.div`
     font-weight: 700;
     background: none;
     border: 1px solid #222;
+    border-radius: 4px;
     margin-right: 10px;
     margin-top: 15px;
+    cursor: pointer;
+    transition: all 100ms ease-in-out;
     &:hover {
+      transition: all 200ms ease-in-out;
       color: #eee;
       background: #222;
+    }
+    &:active {
+      background: #444;
     }
     &:disabled {
       background: grey;
