@@ -149,8 +149,6 @@ MainOverview.defaultProps = {
 export default MainOverview;
 
 const Wrapper = styled.div`
-  // margin: auto;
-  // background-color: #9D93C0;
   justify-content: center;
 `;
 

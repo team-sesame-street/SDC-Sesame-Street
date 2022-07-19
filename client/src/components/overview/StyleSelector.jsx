@@ -91,7 +91,6 @@ const ThumbnailWrapper = styled.div`
 `;
 
 const Thumbnail = styled.img`
-  // position: absolute;
   object-fit: cover;
   width: 80px;
   height: 80px;
