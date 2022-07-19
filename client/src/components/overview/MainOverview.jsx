@@ -113,6 +113,7 @@ function MainOverview({ id }) {
         />
       )}
       {!expandedView && (
+      <Wrapper>
         <SubWrapper>
           <MainImage
             images={images}
@@ -130,9 +131,12 @@ function MainOverview({ id }) {
             styles={styles}
             setSelectedStyle={setSelectedStyle}
           />
+        </SubWrapper>
+        <SubWrapper>
           <SloganDescription product={product} />
           <Features product={product} />
         </SubWrapper>
+      </Wrapper>
       )}
     </Wrapper>
   );
@@ -157,11 +161,11 @@ const SubWrapper = styled.div`
   width: 100%:
   height: max-content;
   grid-template-columns: 6fr 4fr;
-  grid-template-rows: max-content max-content;
+  grid-template-rows: max-content;
   align-items: center;
   @media(max-width: 700px) {
     width: 85%;
-    grid-template-rows: repeat(4, max-content);
+    grid-template-rows: repeat(2, max-content);
     grid-template-columns: 90%;
   };
 `;

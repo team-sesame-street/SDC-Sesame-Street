@@ -15,9 +15,9 @@ function Sidebar({
         selectedStyle={selectedStyle}
         setSelectedStyle={setSelectedStyle}
       />
-      <Checkout
+      {/* <Checkout
         selectedStyle={selectedStyle}
-      />
+      /> */}
     </Wrapper>
   );
 }
