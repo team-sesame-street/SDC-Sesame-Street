@@ -5,10 +5,12 @@ import axios from 'axios';
 
 function Checkout({ selectedStyle }) {
   const [skusInStock, setSkusInStock] = useState([]);
-  const [selectedSku, setSelectedSku] = useState('');
+  const [selectedSku, setSelectedSku] = useState('1394805');
   const [selectedQuantity, setSelectedQuantity] = useState(null);
   const [maxQuantity, setMaxQuantity] = useState(null);
   const [clickSubmit, setClickSubmit] = useState(false);
+  const [selectingStyle, setSelectingStyle] = useState(false);
+  const [selectingQuantity, setSelectingQuantity] = useState(false);
 
   useEffect(() => {
     if (Object.keys(selectedStyle).length > 0) {
@@ -16,15 +18,23 @@ function Checkout({ selectedStyle }) {
         (sku) => (selectedStyle.skus[sku].quantity > 0),
       );
       setSkusInStock(inStock);
-      setSelectedSku('');
+      setSelectedSku(null);
       setSelectedQuantity(null);
       setMaxQuantity(null);
       setClickSubmit(false);
+      setSelectingStyle(false);
+      setSelectingQuantity(false);
     }
   }, [selectedStyle]);
 
   useEffect(() => {
-    if (selectedSku && selectedSku.length > 0) {
+    if (Object.keys(selectedStyle).length > 0 & skusInStock.length > 0) {
+      setSelectedSku('1394805');
+    }
+  }, [skusInStock]);
+
+  useEffect(() => {
+    if (Object.keys(selectedStyle).length > 0 && selectedSku) {
       let alreadyInCart = 0;
       axios({
         url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart',
@@ -41,22 +51,27 @@ function Checkout({ selectedStyle }) {
               alreadyInCart = Number(cart[i].count);
             }
           }
-          const availableToOrder = selectedStyle.skus[selectedSku].quantity - alreadyInCart;
-          if (availableToOrder > 15) {
-            setMaxQuantity(15);
-            setSelectedQuantity(1);
-          } else if (availableToOrder > 0) {
-            setMaxQuantity(availableToOrder);
-            setSelectedQuantity(1);
-          } else {
-            setMaxQuantity(0);
+          if (selectedStyle.skus[selectedSku]) {
+            const availableToOrder = selectedStyle.skus[selectedSku].quantity - alreadyInCart;
+            if (availableToOrder > 15) {
+              setMaxQuantity(15);
+              setSelectedQuantity(1);
+            } else if (availableToOrder > 0) {
+              setMaxQuantity(availableToOrder);
+              setSelectedQuantity(1);
+            } else {
+              setMaxQuantity(0);
+            }
           }
         });
-    } else if (selectedSku.length === 0) {
-      setSelectedQuantity(null);
-      setMaxQuantity(null);
-      setClickSubmit(false);
+    // } else if (selectedSku.length === 0) {
+    //   setSelectedQuantity(null);
+    //   setMaxQuantity(null);
+    //   setClickSubmit(false);
     }
+    // else {
+    //   setS'1394805'
+    // }
   }, [selectedSku]);
 
   const clickSubmitWithNoQuantity = () => {
@@ -85,6 +100,20 @@ function Checkout({ selectedStyle }) {
     setSelectedSku('');
   };
 
+  const expandSelectSize = () => {
+    setSelectingStyle(true);
+  };
+
+  const handleSelectSize = (e) => {
+    console.log('I was called');
+    // console.log(skusInStock)
+    skusInStock.forEach((sku) => {
+      if (selectedStyle.skus[sku].size === e.target.innerText) {
+        setSelectedSku(selectedStyle.skus[sku]);
+      }
+    });
+  };
+
   if (Object.keys(selectedStyle).length > 0
     && skusInStock.every((sku) => (Object.keys(selectedStyle.skus).indexOf(sku) !== -1))) {
     const range = [];
@@ -95,6 +124,7 @@ function Checkout({ selectedStyle }) {
     }
 
     return (
+      /*
       <Form onSubmit={handleSubmit}>
         {clickSubmit && (<div>Please select size</div>)}
         <select
@@ -130,8 +160,26 @@ function Checkout({ selectedStyle }) {
         && maxQuantity > 0
         && (<button type="submit">Add to Cart</button>)}
       </Form>
+*/
+      <Wrapper>
+        <SizeSelector>
+          {/* {console.log(selectedStyle)} */}
+          {/* {console.log(skusInStock)} */}
+          <li>
+            <button type="button" onClick={expandSelectSize}>Select Size</button>
+          </li>
+          {skusInStock.length > 0 && (
+            skusInStock.map((sku, index) => (
+              <li key={index}>
+                {console.log(selectedSku)}
+                <button type="button" onClick={handleSelectSize}>{selectedStyle.skus[sku].size}</button>
+              </li>
+            )))}
+        </SizeSelector>
+      </Wrapper>
     );
   }
+  return null;
 }
 
 Checkout.propTypes = {
@@ -161,4 +209,16 @@ export default Checkout;
 const Form = styled.form`
   margin-top: 10px;
   margin-bottom: 10px;
+`;
+
+const Wrapper = styled.div`
+
+`;
+
+const SizeSelector = styled.ul`
+  list-style-type: none;
+
+  & button {
+    border: none;
+  }
 `;
