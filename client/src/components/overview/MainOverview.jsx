@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import styled from 'styled-components';
 import ExpandedImage from './Img_Expanded.jsx';
-import Text from './Text.jsx';
-import MainImg_Sidebar from './MainImg_Sidebar.jsx';
+import SloganDescription from './SloganDescription.jsx';
+import Features from './Features.jsx';
+import Sidebar from './Sidebar.jsx';
+import MainImage from './Img_Default_Gallery.jsx';
 
 function MainOverview({ id }) {
   const [product, setProduct] = useState({});
@@ -111,12 +113,8 @@ function MainOverview({ id }) {
         />
       )}
       {!expandedView && (
-        <div>
-          <MainImg_Sidebar
-            product={product}
-            selectedStyle={selectedStyle}
-            styles={styles}
-            setSelectedStyle={setSelectedStyle}
+        <SubWrapper>
+          <MainImage
             images={images}
             currImgIndex={currImgIndex}
             setCurrImgIndex={setCurrImgIndex}
@@ -126,8 +124,15 @@ function MainOverview({ id }) {
             setThumbnailIndexMax={setThumbnailIndexMax}
             setExpandedView={setExpandedView}
           />
-          <Text product={product} />
-        </div>
+          <Sidebar
+            product={product}
+            selectedStyle={selectedStyle}
+            styles={styles}
+            setSelectedStyle={setSelectedStyle}
+          />
+          <SloganDescription product={product} />
+          <Features product={product} />
+        </SubWrapper>
       )}
     </Wrapper>
   );
@@ -147,4 +152,18 @@ const Wrapper = styled.div`
   // margin: auto;
   // background-color: #9D93C0;
   justify-content: center;
+`;
+
+const SubWrapper = styled.div`
+  display: grid;
+  width: 100%:
+  height: max-content;
+  grid-template-columns: 6fr 4fr;
+  grid-template-rows: max-content max-content;
+  align-items: center;
+  @media(max-width: 700px) {
+    width: 85%;
+    grid-template-rows: repeat(4, max-content);
+    grid-template-columns: 90%;
+  };
 `;

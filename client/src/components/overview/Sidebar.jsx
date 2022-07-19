@@ -4,7 +4,7 @@ import ProductInfo from './ProductInfo.jsx';
 import Checkout from './Checkout.jsx';
 import StyleSelector from './StyleSelector.jsx';
 
-function Sidebar ({ product, selectedStyle, styles, setSelectedStyle }) {
+function Sidebar({ product, selectedStyle, styles, setSelectedStyle }) {
   return (
     <Wrapper>
       <ProductInfo product={product} selectedStyle={selectedStyle} />

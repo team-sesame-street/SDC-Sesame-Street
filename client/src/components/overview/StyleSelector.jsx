@@ -22,7 +22,7 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
                 alt={style.name}
               />
             </ThumbnailWrapper>
-          ))}
+        ))}
       </StyleSelectorGrid>
     </div>
   );
@@ -80,7 +80,7 @@ const ThumbnailWrapper = styled.div`
   position: relative;
   isolation: isolate;
   & .checkmark {
-    width: minmax(2px, 0.5vh);
+    width: minmax(2px, 2vw);
     top: 0.5vh;
     right: 0.5vh;
     color: black;
@@ -91,16 +91,19 @@ const ThumbnailWrapper = styled.div`
 `;
 
 const Thumbnail = styled.img`
+  // position: absolute;
   object-fit: cover;
-  min-width: 50px;
-  min-height: 50px;
-  width: 8vh;
-  height: 8vh;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   border: 1px solid black;
   opacity: 0.6;
   cursor: pointer;
   &:hover {
     opacity: 1;
+  }
+  @media(max-width:500px) {
+    width: 60px;
+    height: 60px;
   }
 `;
