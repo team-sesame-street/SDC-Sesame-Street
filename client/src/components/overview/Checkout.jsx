@@ -8,7 +8,7 @@ function Checkout({ selectedStyle }) {
   const [selectedSku, setSelectedSku] = useState(null);
   const [selectedQuantity, setSelectedQuantity] = useState(null);
   const [maxQuantity, setMaxQuantity] = useState(null);
-  const [clickSubmit, setClickSubmit] = useState(false);
+  const [invalidSubmit, setInvalidSubmit] = useState(false);
   const [selectingSize, setSelectingSize] = useState(false);
   const [selectingQuantity, setSelectingQuantity] = useState(false);
 
@@ -21,7 +21,7 @@ function Checkout({ selectedStyle }) {
       setSelectedSku(null);
       setSelectedQuantity(null);
       setMaxQuantity(null);
-      setClickSubmit(false);
+      setInvalidSubmit(false);
       setSelectingSize(false);
       setSelectingQuantity(false);
     }
@@ -75,25 +75,48 @@ function Checkout({ selectedStyle }) {
     setSelectedSku(skusInStock[0]);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setClickSubmit(false);
-    let count = selectedQuantity;
-    while (count > 0) {
-      count -= 1;
-      axios({
-        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart',
-        method: 'post',
-        headers: {
-          Authorization: process.env.GITKEY,
-        },
-        data: {
-          sku_id: selectedSku,
-        },
-      });
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setClickSubmit(false);
+  //   let count = selectedQuantity;
+  //   while (count > 0) {
+  //     count -= 1;
+  //     axios({
+  //       url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart',
+  //       method: 'post',
+  //       headers: {
+  //         Authorization: process.env.GITKEY,
+  //       },
+  //       data: {
+  //         sku_id: selectedSku,
+  //       },
+  //     });
+  //   }
+  //   e.target.reset();
+  //   setSelectedSku('');
+  // };
+
+  const addToCart = () => {
+    if (!selectedSku) {
+      setInvalidSubmit(true);
+    } else {
+      setInvalidSubmit(false);
+      let count = selectedQuantity;
+      while (count > 0) {
+        count -= 1;
+        axios({
+          url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart',
+          method: 'post',
+          headers: {
+            Authorization: process.env.GITKEY,
+          },
+          data: {
+            sku_id: selectedSku,
+          },
+        });
+      }
     }
-    e.target.reset();
-    setSelectedSku('');
+    setSelectedSku(null);
   };
 
   const expandSelectSize = () => {
@@ -116,6 +139,7 @@ function Checkout({ selectedStyle }) {
   };
 
   const handleSelectSize = (e) => {
+    setInvalidSubmit(false);
     skusInStock.forEach((sku) => {
       if (selectedStyle.skus[sku].size === e.target.innerText) {
         setSelectedSku(sku);
@@ -182,7 +206,9 @@ function Checkout({ selectedStyle }) {
       </Form>
 */
       <Wrapper>
-
+        <TextWrapper style={{ visibility: invalidSubmit ? 'visible' : 'hidden' }}>
+          <p>Please select size</p>
+        </TextWrapper>
         <SizeSelector>
           {/* collapsed view */}
           {skusInStock.length > 0 && !selectedSku && !selectingSize && (
@@ -242,6 +268,8 @@ function Checkout({ selectedStyle }) {
           )}
           {console.log(selectedSku, selectedQuantity, typeof selectedQuantity)}
         </QuantitySelector>
+
+        <SubmitButton type="button" onClick={addToCart}>Add to Cart</SubmitButton>
       </Wrapper>
     );
   }
@@ -276,6 +304,9 @@ const Wrapper = styled.div`
 
 `;
 
+const TextWrapper = styled.div`
+`;
+
 const SizeSelector = styled.ul`
   list-style-type: none;
 
@@ -290,4 +321,8 @@ const QuantitySelector = styled.ul`
   & button {
     border: none;
   }
+`;
+
+const SubmitButton = styled.button`
+
 `;
