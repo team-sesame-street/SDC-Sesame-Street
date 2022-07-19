@@ -78,7 +78,6 @@ const Wrapper = styled.div`
   height: max-content;
   grid-template-rows: repeat(4, max-content);
   grid-template-columns: 1fr;
-  align-self: end;
 `;
 
 const SocialSharingGrid = styled.div`
