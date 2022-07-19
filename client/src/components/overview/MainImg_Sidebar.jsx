@@ -38,6 +38,6 @@ const Wrapper = styled.div`
   margin: auto;
   // background-color: grey;
   display: grid;
-  gap: 0.5vh;
-  grid-template-columns: repeat(auto-fill, minmax(550px, max-content));
+  gap: 2vw;
+  grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
 `;

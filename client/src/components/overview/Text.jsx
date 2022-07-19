@@ -72,20 +72,21 @@ export default Text;
 
 const Wrapper = styled.div`
   margin: auto;
+  width: 100%;
   display: grid;
-  gap: 0.5vh;
-  grid-template-columns: repeat(auto-fit, minmax(550px, max-content));
+  gap: 2vw;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  align-content: center;
+  align-items: center;
 `;
 
 const SloganDescription = styled.div`
   height: max-content;
-  width: 40vw;
-  min-width: min(550px, 80vw);
+  // min-width: 500px;
+  justify-self: start;
 `;
 
 const Features = styled.ul`
   height: max-content;
-  width: 25vw;
-  min-width: min(550px, 80vw);
   list-style: none;
 `;
