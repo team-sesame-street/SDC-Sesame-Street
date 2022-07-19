@@ -18,6 +18,8 @@ export default function RrBox({ id }) {
     1: false, 2: false, 3: false, 4: false, 5: false,
   });
 
+  localStorage.setItem('productId', id);
+
   useEffect(() => {
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
       headers: {
