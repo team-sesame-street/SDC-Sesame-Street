@@ -1,10 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 
 function Modal({ children, cb }) {
   return (
-    <Wrapper>
+    <Wrapper className="modal">
       <Backdrop />
       <ChildrenWrapper>
         {children}
@@ -16,7 +16,31 @@ function Modal({ children, cb }) {
 
 export default Modal;
 
+const fadeInAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.2;
+  }
+`;
+
+const popOut = keyframes`
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+    box-shadow: none;
+
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 2px 2px 10px #bbb;
+  }
+`;
+
 const Wrapper = styled.div`
+  transition: 1s ease-in-out;
 `;
 
 const Backdrop = styled.div`
@@ -31,9 +55,12 @@ const Backdrop = styled.div`
   opacity: 0.2;
   margin: 0;
   padding: 0;
+  animation-name: ${fadeInAnimation};
+  animation-duration: 1s;
 `;
 
 const ChildrenWrapper = styled.div`
+  transition: all 0.15s ease-in-out;
   overflow: auto;
   overscroll-behavior: contain;
   z-index: 10;
@@ -50,6 +77,11 @@ const ChildrenWrapper = styled.div`
   margin: 100px auto;
   box-shadow: 2px 2px 10px #bbb;
   border-radius: 4px;
+  animation-name: ${popOut};
+  animation-fill-mode: backwards;
+  animation-delay: 200ms;
+  animation-duration: 500ms;
+
   & h2 {
     margin: 0.5rem 0 1rem 0;
   }
@@ -105,7 +137,12 @@ const ChildrenWrapper = styled.div`
      top:0;
      right:0;
      transform: scale(2);
-     z-index: 990;
+     z-index: 999;
      margin: 40px;
+     cursor: pointer;
+
+     &:hover {
+      opacity: 0.65;
+     }
    }
 `;
