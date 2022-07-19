@@ -5,15 +5,16 @@
 /* eslint-disable no-use-before-define */
 import React, { useState } from 'react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
+import styled from 'styled-components';
 import OutfitList from './OutfitList.jsx';
 
-const sliderContainer = {
-  width: '50%',
-  height: '380px',
-  display: 'flex',
-  position: 'relative',
-  alignItems: 'center',
-};
+const SliderContainer = styled.div`
+  width: 50%;
+  height: 400px;
+  display: flex;
+  position: relative;
+  align-items: center;
+`
 
 const left = {
   backgroundColor: 'white',
@@ -33,14 +34,14 @@ const right = {
   cursor: 'pointer',
 };
 
-const slider = {
-  width: '100%',
-  height: '100%',
-  whiteSpace: 'nowrap',
-  overflowX: 'scroll',
-  scrollbarWidth: 'none',
-  scrollBehavior: 'smooth',
-};
+const Slider = styled.div`
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+`
 
 const addOutfitStyle = {
   color: 'gray',
@@ -101,6 +102,7 @@ function Outfit({
     obj.name = currOutfit.info.name;
     obj.category = currOutfit.info.category;
     obj.price = currOutfit.info.default_price;
+    obj.avg = currOutfit.avg;
     addOutfit(obj);
     const currentList = JSON.parse(localStorage.getItem('list')) || []
     localStorage.setItem('list', JSON.stringify([...currentList, obj]));
@@ -117,9 +119,9 @@ function Outfit({
   };
 
   return (
-    <div style={sliderContainer}>
+    <SliderContainer>
       <MdChevronLeft size={40} style={left} onClick={slideLeft} id="outfitLeftArrow" />
-      <div id="slider2" style={slider}>
+      <Slider id="slider2">
         {imageRender()}
         {outfitSlides.length !== 0 ? (<>
         <button style={{...plusSignStyle, transform: 'translateY(-175px)' }} onClick={clickHandler}>+</button>
@@ -128,9 +130,9 @@ function Outfit({
         <button style={{...plusSignStyle, transform: 'translateY(145px)' }} onClick={clickHandler}>+</button>
         <button style={{...addOutfitStyle, transform: 'translate(-200px, 175px)' }} onClick={clickHandler}>Add an Outfit</button>
         </>)}
-      </div>
+      </Slider>
       <MdChevronRight size={40} style={right} onClick={slideRight} id="outfitRightArrow" />
-    </div>
+    </SliderContainer>
   );
 }
 

@@ -8,7 +8,6 @@ function Ratings({ rating }) {
   return (
     <div data-testid='ratings'>
       <StarRatings rating={starRating} starDimension="18px" starSpacing="2px" starRatedColor="black" />
-     { console.log(starRating)}
     </div>
   );
 }
