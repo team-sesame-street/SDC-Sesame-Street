@@ -5,7 +5,7 @@ import axios from 'axios';
 
 function Checkout({ selectedStyle }) {
   const [skusInStock, setSkusInStock] = useState([]);
-  const [selectedSku, setSelectedSku] = useState('1394805');
+  const [selectedSku, setSelectedSku] = useState(null);
   const [selectedQuantity, setSelectedQuantity] = useState(null);
   const [maxQuantity, setMaxQuantity] = useState(null);
   const [clickSubmit, setClickSubmit] = useState(false);
@@ -61,6 +61,7 @@ function Checkout({ selectedStyle }) {
               setSelectedQuantity(1);
             } else {
               setMaxQuantity(0);
+              setSelectedQuantity(0);
             }
           }
         });
@@ -102,6 +103,16 @@ function Checkout({ selectedStyle }) {
 
   const expandSelectSize = () => {
     setSelectingSize(!selectingSize);
+    if (selectingQuantity) {
+      setSelectingQuantity(false);
+    }
+  };
+
+  const expandSelectQuantity = () => {
+    setSelectingQuantity(true);
+    if (selectingSize) {
+      setSelectingSize(false);
+    }
   };
 
   const handleSelectSize = (e) => {
@@ -109,16 +120,26 @@ function Checkout({ selectedStyle }) {
       if (selectedStyle.skus[sku].size === e.target.innerText) {
         setSelectedSku(sku);
         setSelectingSize(false);
+        if (maxQuantity > 0) {
+          setSelectedQuantity(1);
+        } else {
+          setSelectedQuantity(0);
+        }
       }
     });
   };
 
+  const handleSelectQuantity = (e) => {
+    setSelectedQuantity(Number(e.target.innerText));
+    setSelectingQuantity(false);
+  };
+
   if (Object.keys(selectedStyle).length > 0
     && skusInStock.every((sku) => (Object.keys(selectedStyle.skus).indexOf(sku) !== -1))) {
-    const range = [];
+    const quantityRange = [];
     if (maxQuantity !== null && maxQuantity > 0) {
       for (let i = 1; i <= maxQuantity; i += 1) {
-        range.push(i);
+        quantityRange.push(i);
       }
     }
 
@@ -162,8 +183,11 @@ function Checkout({ selectedStyle }) {
 */
       <Wrapper>
         <SizeSelector>
-          {/* {console.log(selectedStyle)} */}
-          {/* {console.log(skusInStock)} */}
+          {skusInStock.length === 0 && (
+            <li>
+              <button type="button">OUT OF STOCK</button>
+            </li>
+          )}
           {!selectedSku && (
             <li>
               <button type="button" onClick={expandSelectSize}>Select Size</button>
@@ -181,8 +205,32 @@ function Checkout({ selectedStyle }) {
               <button type="button" onClick={expandSelectSize}>{selectedStyle.skus[selectedSku].size}</button>
             </li>
           )}
-            {console.log(selectedSku)}
         </SizeSelector>
+        <QuantitySelector>
+          {!selectedSku && (
+            <li>
+              <button type="button" onClick={expandSelectQuantity}>-</button>
+            </li>
+          )}
+          {maxQuantity === 0 && (
+            <li>
+              <button type="button">OUT OF STOCK</button>
+            </li>
+          )}
+          {selectedQuantity > 0 && (
+            <li>
+              <button type="button" onClick={expandSelectQuantity}>{selectedQuantity}</button>
+            </li>
+          )}
+          {selectingQuantity && (
+            quantityRange.map((quantity) => (
+              <li key={quantity}>
+                <button type="button" onClick={handleSelectQuantity}>{quantity}</button>
+              </li>
+            ))
+          )}
+          {console.log(selectedSku, selectedQuantity, typeof selectedQuantity)}
+        </QuantitySelector>
       </Wrapper>
     );
   }
@@ -223,6 +271,14 @@ const Wrapper = styled.div`
 `;
 
 const SizeSelector = styled.ul`
+  list-style-type: none;
+
+  & button {
+    border: none;
+  }
+`;
+
+const QuantitySelector = styled.ul`
   list-style-type: none;
 
   & button {
