@@ -15,9 +15,9 @@ function Sidebar({
         selectedStyle={selectedStyle}
         setSelectedStyle={setSelectedStyle}
       />
-      {/* <Checkout
+      <Checkout
         selectedStyle={selectedStyle}
-      /> */}
+      />
     </Wrapper>
   );
 }
@@ -27,7 +27,9 @@ export default Sidebar;
 const Wrapper = styled.div`
   display: grid;
   height: max-content;
-  width: max-content;
-  min-width: min(550px, 80vw);
+  width: 100%;
+  min-width: min(550px, 1fr);
   max-width: max-content;
+  grid-template-rows: repeat(3, max-content);
+  grid-template-columns: 1fr;
 `;
