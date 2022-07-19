@@ -4,17 +4,18 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import Modal from './Modal.jsx';
 import Ratings from './Ratings.jsx';
 
-const sliderContainer = {
-  width: '50%',
-  height: '380px',
-  display: 'flex',
-  position: 'relative',
-  alignItems: 'center',
-};
+const SliderContainer = styled.div`
+  width: 50%;
+  height: 380px;
+  display: flex;
+  position: relative;
+  align-items: center;
+`;
 
 const left = {
   backgroundColor: 'white',
@@ -35,59 +36,60 @@ const right = {
   cursor: 'pointer',
 };
 
-const slider = {
-  width: '100%',
-  height: '100%',
-  whiteSpace: 'nowrap',
-  overflowX: 'scroll',
-  scrollbarWidth: 'none',
-  scrollBehavior: 'smooth',
-};
+const Slider = styled.div`
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+`;
 
-const card = {
-  width: '310px',
-  height: '365px',
-  background: 'white',
-  borderRadius: '10px',
-  display: 'inline-block',
-  marginLeft: '5px',
-  marginRight: '5px',
-  cursor: 'pointer',
-};
+const Card = styled.div`
+  width: 310px;
+  height: 365px;
+  background: white;
+  border-radius: 10px;
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+`;
 
-const imageStyle = {
-  width: '100%',
-  height: '75%',
-  backgroundColor: 'rgb(240 240 240 / 80%)',
-  borderTopLeftRadius: '10px',
-  borderTopRightRadius: '10px',
-  backgroundSize: 'cover',
-};
+const Image = styled.div`
+  width: 100%;
+  height: 75%;
+  background-color: rgb(240 240 240 / 80%);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-size: cover;
+  background-image: URL(${({url}) => url});
+`;
 
-const titleStyle = {
-  margin: '0px 0px 3px 10px',
-  fontWeight: '900',
-};
+const Title = styled.p`
+  margin: 0px 0px 3px 10px;
+  font-weight: 900;
+`
 
-const priceStyle = {
-  margin: '1px 0px 0px 10px',
-  fontSize: '12px',
-};
+const Price = styled.p`
+  margin: 1px 0px 0px 10px;
+  font-size: 12px;
+`
 
-const categoryStyle = {
-  marginLeft: '10px',
-  fontSize: '13px',
-};
+const Category = styled.p`
+  margin-left: 10px;
+  font-size: 13px;
+`
 
-const star = {
-  background: 'gold',
-  clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
-  height: '22px',
-  width: '22px',
-  float: 'right',
-  marginRight: '10px',
-  marginTop: '10px',
-};
+const Star = styled.div`
+  background: gold;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  height: 22px;
+  width: 22px;
+  float: right;
+  margin-right: 10px;
+  margin-top: 10px;
+`
 
 function RelatedItems({ slides, id, pageChange, reviews }) {
   const [modal, setModal] = useState(false);
@@ -97,11 +99,6 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
   const imageSlider = document.querySelector('#slider');
   const rightArrow = document.querySelector('#rightArrow');
   const leftArrow = document.querySelector('#leftArrow');
-
-
-
-  const width = imageSlider?.offsetWidth - 300
-
 
   if (carouselPos) {
     imageSlider.scrollLeft = 0;
@@ -131,42 +128,42 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
   }
 
   return (
-    <div data-testid='related' style={sliderContainer}>
+    <SliderContainer data-testid='related'>
       <MdChevronLeft size={40} style={left} onClick={slideLeft} id="leftArrow" data-testid='left-arrow'/>
-      <div id="slider" style={slider}>
-        {slides.info.length !== 0 && slides.info.length === slides.urls.length && reviews.length === slides.info.length ? slides.info.map((slide, index) => (
-          <div
-            style={card}
+      <Slider id="slider">
+        {slides.info.length !== 0
+        && slides.info.length === slides.urls.length
+        && reviews.length === slides.info.length ? slides.info.map((slide, index) => (
+          <Card
             key={index}
           >
-            <div
-              style={star}
+            <Star
               onClick={() => {
                 setCurrOutfit(slide);
                 setModal(true);
               }}
             />
-            <div style={{ ...imageStyle, backgroundImage: `URL(${slides.urls[index].url})`, }} onClick={() => {
+            <Image url={slides.urls[index].url}
+              onClick={() => {
                 setCarouselPos(true)
                 setLeftSide(0)
                 pageChange(slide.data.id)
               }}
-            >
-            </div>
-            <p style={categoryStyle}>{slide.data.category}</p>
-            <p style={titleStyle}>{slide.data.name}</p>
-            <p style={priceStyle} data-testid='label'>
-              {!slides.urls[index].salePrice ?
-              <label>${slides.urls[index].originalPrice}</label> :
-              <label style={{color:'red'}}>${slides.urls[index].salePrice} <strike style={{color:'black'}}>{slides.urls[index].originalPrice}</strike></label>}
-            </p>
+            />
+            <Category>{slide.data.category}</Category>
+            <Title>{slide.data.name}</Title>
+            <Price data-testid='label'>
+              {!slides.urls[index].salePrice
+              ? <label>${slides.urls[index].originalPrice}</label>
+              : <label style={{color:'red'}}>${slides.urls[index].salePrice} <strike style={{color:'black'}}>{slides.urls[index].originalPrice}</strike></label>}
+            </Price>
              <Ratings rating={reviews[index].avg} key={index} />
-          </div>
+          </Card>
         )) : <></>}
         <Modal open={modal} closeModal={() => setModal(false)} currOutfit={currOutfit} id={id} />
-      </div>
+      </Slider>
       <MdChevronRight id="rightArrow" size={40} style={right} onClick={slideRight} data-testid='right-arrow' />
-    </div>
+    </SliderContainer>
   );
 }
 
