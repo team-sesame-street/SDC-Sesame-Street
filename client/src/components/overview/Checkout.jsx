@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import axios from 'axios';
 
 function Checkout({ selectedStyle }) {
@@ -94,7 +95,7 @@ function Checkout({ selectedStyle }) {
     }
 
     return (
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         {clickSubmit && (<div>Please select size</div>)}
         <select
           defaultValue={selectedSku}
@@ -128,7 +129,7 @@ function Checkout({ selectedStyle }) {
         && selectedQuantity
         && maxQuantity > 0
         && (<button type="submit">Add to Cart</button>)}
-      </form>
+      </Form>
     );
   }
 }
@@ -146,7 +147,7 @@ Checkout.propTypes = {
     })),
     skus: PropTypes.objectOf(PropTypes.shape({
       quantity: PropTypes.number,
-      size: PropTypes.oneOf(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+      size: PropTypes.string,
     })),
   }),
 };
@@ -156,3 +157,8 @@ Checkout.defaultProps = {
 };
 
 export default Checkout;
+
+const Form = styled.form`
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;

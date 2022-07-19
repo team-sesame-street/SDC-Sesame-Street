@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import StyleSelector from './StyleSelector.jsx';
-import MainImage from './Img_Default_Main_Carousel.jsx';
-import ProductInfo from './ProductInfo.jsx';
-import Checkout from './Checkout.jsx';
+import styled from 'styled-components';
 import ExpandedImage from './Img_Expanded.jsx';
-import Text from './Text.jsx';
+import SloganDescription from './SloganDescription.jsx';
+import Features from './Features.jsx';
+import Sidebar from './Sidebar.jsx';
+import MainImage from './Img_Default_Gallery.jsx';
 
 function MainOverview({ id }) {
   const [product, setProduct] = useState({});
@@ -57,6 +57,9 @@ function MainOverview({ id }) {
               setSelectedStyle(style);
             }
           });
+          if (stylesData.every((style) => !style['default?'])) {
+            setSelectedStyle(stylesData[0]);
+          }
         })
         .catch(() => {
           alert('Unable to retrieve styles for this product');
@@ -87,11 +90,20 @@ function MainOverview({ id }) {
           setThumbnailIndexMax(images.length - 1);
         }
       }
+      if (currImgIndex && !images[currImgIndex]) {
+        setCurrImgIndex(images.length - 1);
+        setThumbnailIndexMax(images.length - 1);
+        if (images.length >= 7) {
+          setThumbnailIndexMin(images.length - 7);
+        } else {
+          setThumbnailIndexMin(0);
+        }
+      }
     }
   }, [images]);
 
   return (
-    <div>
+    <Wrapper>
       {expandedView && (
         <ExpandedImage
           images={images}
@@ -101,13 +113,8 @@ function MainOverview({ id }) {
         />
       )}
       {!expandedView && (
-        <div>
-          <ProductInfo product={product} selectedStyle={selectedStyle} />
-          <StyleSelector
-            styles={styles}
-            selectedStyle={selectedStyle}
-            setSelectedStyle={setSelectedStyle}
-          />
+      <Wrapper>
+        <SubWrapper>
           <MainImage
             images={images}
             currImgIndex={currImgIndex}
@@ -118,13 +125,20 @@ function MainOverview({ id }) {
             setThumbnailIndexMax={setThumbnailIndexMax}
             setExpandedView={setExpandedView}
           />
-          <Checkout
+          <Sidebar
+            product={product}
             selectedStyle={selectedStyle}
+            styles={styles}
+            setSelectedStyle={setSelectedStyle}
           />
-          <Text product={product} />
-        </div>
+        </SubWrapper>
+        <SubWrapper>
+          <SloganDescription product={product} />
+          <Features product={product} />
+        </SubWrapper>
+      </Wrapper>
       )}
-    </div>
+    </Wrapper>
   );
 }
 
@@ -137,3 +151,22 @@ MainOverview.defaultProps = {
 };
 
 export default MainOverview;
+
+const Wrapper = styled.div`
+  justify-content: center;
+  width: 100%;
+`;
+
+const SubWrapper = styled.div`
+  display: grid;
+  width: 100%:
+  height: max-content;
+  grid-template-columns: 6fr 4fr;
+  grid-template-rows: max-content;
+  align-items: center;
+  @media(max-width: 700px) {
+    width: 85%;
+    grid-template-rows: repeat(2, max-content);
+    grid-template-columns: 90%;
+  };
+`;

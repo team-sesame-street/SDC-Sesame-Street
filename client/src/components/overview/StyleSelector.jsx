@@ -11,31 +11,18 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
         <span data-testid="selected-style-name">{selectedStyle.name ? selectedStyle.name.toUpperCase() : null}</span>
       </p>
       <StyleSelectorGrid>
-        {styles.map((style) => {
-          const checkmarkStyling = {
-            width: 'minmax(2px, 0.5vh)',
-            top: '0.5vh',
-            right: '0.5vh',
-            color: 'black',
-            border: 'white',
-            position: 'absolute',
-            zIndex: 10,
-            visibility: style.style_id === selectedStyle.style_id ? 'visible' : 'hidden',
-          };
-
-          return (
-            <ThumbnailWrapper key={style.style_id}>
-              <BsFillCheckCircleFill style={checkmarkStyling} />
-              <Thumbnail
-                src={style.photos[0].thumbnail_url}
-                onClick={() => {
-                  setSelectedStyle(style);
-                }}
-                alt={style.name}
-              />
-            </ThumbnailWrapper>
-          );
-        })}
+        {styles.map((style) => (
+          <ThumbnailWrapper key={style.style_id}>
+            <BsFillCheckCircleFill className="checkmark" style={{ visibility: style.style_id === selectedStyle.style_id ? 'visible' : 'hidden' }} />
+            <Thumbnail
+              src={style.photos[0].thumbnail_url}
+              onClick={() => {
+                setSelectedStyle(style);
+              }}
+              alt={style.name}
+            />
+          </ThumbnailWrapper>
+        ))}
       </StyleSelectorGrid>
     </div>
   );
@@ -54,7 +41,7 @@ StyleSelector.propTypes = {
     })),
     skus: PropTypes.objectOf(PropTypes.shape({
       quantity: PropTypes.number,
-      size: PropTypes.oneOf(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+      size: PropTypes.string,
     })),
   })),
   selectedStyle: PropTypes.shape({
@@ -69,7 +56,7 @@ StyleSelector.propTypes = {
     })),
     skus: PropTypes.objectOf(PropTypes.shape({
       quantity: PropTypes.number,
-      size: PropTypes.oneOf(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+      size: PropTypes.string,
     })),
   }),
   setSelectedStyle: PropTypes.func.isRequired,
@@ -92,15 +79,30 @@ const StyleSelectorGrid = styled.div`
 const ThumbnailWrapper = styled.div`
   position: relative;
   isolation: isolate;
+  & .checkmark {
+    width: minmax(2px, 2vw);
+    top: 0.5vh;
+    right: 0.5vh;
+    color: black;
+    border: white;
+    position: absolute;
+    zIndex: 10;
+  }
 `;
 
 const Thumbnail = styled.img`
   object-fit: cover;
-  min-width: 50px;
-  min-height: 50px;
-  width: 8vh;
-  height: 8vh;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   border: 1px solid black;
   opacity: 0.6;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+  }
+  @media(max-width:500px) {
+    width: 60px;
+    height: 60px;
+  }
 `;
