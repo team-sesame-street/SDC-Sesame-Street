@@ -8,9 +8,9 @@ function ProductInfo({ product, selectedStyle }) {
     const formatPrice = (price) => ('$'.concat(price.slice(0, -3)));
 
     return (
-      <div>
+      <Wrapper>
         <p>{product.category.toUpperCase()}</p>
-        <h2>{product.name}</h2>
+        <h2 size={{ maxHeight: 'max-content' }}>{product.name}</h2>
         {selectedStyle.sale_price === null
           ? (<p>{formatPrice(selectedStyle.original_price)}</p>)
           : (
@@ -26,7 +26,7 @@ function ProductInfo({ product, selectedStyle }) {
           <RiTwitterFill className="social-sharing" />
           <RiPinterestFill className="social-sharing" />
         </SocialSharingGrid>
-      </div>
+      </Wrapper>
     );
   }
   return null;
@@ -72,8 +72,18 @@ ProductInfo.defaultProps = {
 
 export default ProductInfo;
 
+const Wrapper = styled.div`
+  display: grid;
+  width: 100%;
+  height: max-content;
+  grid-template-rows: repeat(4, max-content);
+  grid-template-columns: 1fr;
+  align-self: end;
+`;
+
 const SocialSharingGrid = styled.div`
   display: grid;
+  height: min-content;
   width: 12vh;
   grid-template-rows: max-content;
   grid-template-columns: repeat(3, max-content);

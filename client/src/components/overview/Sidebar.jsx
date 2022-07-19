@@ -26,10 +26,11 @@ export default Sidebar;
 
 const Wrapper = styled.div`
   display: grid;
-  height: max-content;
   width: 100%;
   min-width: min(550px, 1fr);
   max-width: max-content;
   grid-template-rows: repeat(3, max-content);
-  grid-template-columns: 1fr;
+  grid-template-columns: max-content;
+  align-content: center;
+  align-items: center;
 `;
