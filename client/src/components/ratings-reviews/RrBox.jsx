@@ -7,12 +7,13 @@ import axios from 'axios';
 import Reviews from './reviews/index.jsx';
 import Ratings from './ratings/index.jsx';
 
-function RrBox({ id }) {
+export default function RrBox({ id }) {
   const [reviews, setReviews] = useState([]);
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('relevant');
   const [meta, setMeta] = useState();
   const [filterRatings, setFilterRatings] = useState();
+  const [showModal, setShowModal] = useState(false);
   const [currRating, setRating] = useState({
     1: false, 2: false, 3: false, 4: false, 5: false,
   });
@@ -83,13 +84,15 @@ function RrBox({ id }) {
   }, [id, currRating]);
 
   return (
-    <div className="RrBox-container" style={flexContainer}>
-      <div style={ratingsContainer}>
-        Ratings & Reviews
-        <Ratings meta={meta} currRating={currRating} setRating={setRating} filterRatings={filterRatings} />
-      </div>
-      <div style={reviewsContainer}>
-        <Reviews reviews={reviews} setSort={setSort} count={count} meta={meta} setCount={setCount} filterRatings={filterRatings} />
+    <div>
+      <div className="RrBox-container" style={flexContainer}>
+        <div style={ratingsContainer}>
+          Ratings & Reviews
+          <Ratings meta={meta} currRating={currRating} setRating={setRating} filterRatings={filterRatings} />
+        </div>
+        <div style={reviewsContainer}>
+          <Reviews reviews={reviews} setSort={setSort} count={count} meta={meta} setCount={setCount} filterRatings={filterRatings} showModal={showModal} setShowModal={setShowModal} />
+        </div>
       </div>
     </div>
   );
@@ -113,5 +116,3 @@ const ratingsContainer = {
 const reviewsContainer = {
   flex: 1,
 };
-
-export default RrBox;
