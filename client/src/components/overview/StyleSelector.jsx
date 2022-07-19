@@ -12,16 +12,16 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
       </p>
       <StyleSelectorGrid>
         {styles.map((style) => (
-            <ThumbnailWrapper key={style.style_id}>
-              <BsFillCheckCircleFill className="checkmark" style={{visibility: style.style_id === selectedStyle.style_id ? 'visible' : 'hidden'}} />
-              <Thumbnail
-                src={style.photos[0].thumbnail_url}
-                onClick={() => {
-                  setSelectedStyle(style);
-                }}
-                alt={style.name}
-              />
-            </ThumbnailWrapper>
+          <ThumbnailWrapper key={style.style_id}>
+            <BsFillCheckCircleFill className="checkmark" style={{ visibility: style.style_id === selectedStyle.style_id ? 'visible' : 'hidden' }} />
+            <Thumbnail
+              src={style.photos[0].thumbnail_url}
+              onClick={() => {
+                setSelectedStyle(style);
+              }}
+              alt={style.name}
+            />
+          </ThumbnailWrapper>
         ))}
       </StyleSelectorGrid>
     </div>
