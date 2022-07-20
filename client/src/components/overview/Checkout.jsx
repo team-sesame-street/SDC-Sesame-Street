@@ -28,12 +28,6 @@ function Checkout({ selectedStyle }) {
     }
   }, [selectedStyle]);
 
-  // useEffect(() => {
-  //   if (Object.keys(selectedStyle).length > 0 & skusInStock.length > 0) {
-  //     setSelectedSku('1394805');
-  //   }
-  // }, [skusInStock]);
-
   useEffect(() => {
     if (Object.keys(selectedStyle).length > 0 && selectedSku) {
       let alreadyInCart = 0;
@@ -71,32 +65,6 @@ function Checkout({ selectedStyle }) {
     }
   }, [selectedSku]);
 
-  const clickSubmitWithNoQuantity = () => {
-    setClickSubmit(true);
-    setSelectedSku(skusInStock[0]);
-  };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setClickSubmit(false);
-  //   let count = selectedQuantity;
-  //   while (count > 0) {
-  //     count -= 1;
-  //     axios({
-  //       url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/cart',
-  //       method: 'post',
-  //       headers: {
-  //         Authorization: process.env.GITKEY,
-  //       },
-  //       data: {
-  //         sku_id: selectedSku,
-  //       },
-  //     });
-  //   }
-  //   e.target.reset();
-  //   setSelectedSku('');
-  // };
-
   const addToCart = () => {
     if (!selectedSku) {
       setInvalidSubmit(true);
@@ -130,6 +98,10 @@ function Checkout({ selectedStyle }) {
   const resetSelectedSize = () => {
     setSelectedSku(null);
     setSelectingSize(false);
+    // if (invalidSubmit) {
+    //   setInvalidSubmit(false);
+    // figure out when would be a good time for this message to disappear
+    // }
   };
 
   const expandSelectQuantity = () => {
@@ -140,7 +112,7 @@ function Checkout({ selectedStyle }) {
   };
 
   const handleSelectSize = (e) => {
-    setInvalidSubmit(false);
+    // setInvalidSubmit(false);
     skusInStock.forEach((sku) => {
       if (selectedStyle.skus[sku].size === e.target.innerText) {
         setSelectedSku(sku);
@@ -169,43 +141,6 @@ function Checkout({ selectedStyle }) {
     }
 
     return (
-      /*
-      <Form onSubmit={handleSubmit}>
-        {clickSubmit && (<div>Please select size</div>)}
-        <select
-          defaultValue={selectedSku}
-          size={clickSubmit && skusInStock.length > 0 ? 3 : 0}
-          onChange={(e) => { setSelectedSku(e.target.value); }}
-        >
-          {skusInStock.length === 0 && ((<option value="">OUT OF STOCK</option>))}
-          {(!clickSubmit && skusInStock.length > 0) && (<option value="">Select Size</option>)}
-          {skusInStock.length > 0 && (
-            skusInStock.map((sku) => (
-              <option value={sku} key={sku}>
-                {selectedStyle.skus[sku].size}
-              </option>
-            )))}
-        </select>
-        {skusInStock.length > 0 && (
-          <select onChange={(e) => { setSelectedQuantity(e.target.value); }}>
-            {(selectedSku.length === 0 || (selectedSku.length > 0 && maxQuantity === null)) && (<option value="">-</option>)}
-            {maxQuantity === 0 && (<option value={0}>Out Of Stock</option>)}
-            {selectedSku.length > 0 && maxQuantity && (range.map((quantity) => (
-              <option value={quantity} key={quantity}>
-                {quantity}
-              </option>
-            )))}
-          </select>
-        )}
-        {skusInStock.length > 0 && selectedSku.length === 0
-        && (<button type="button" onClick={clickSubmitWithNoQuantity}>Add to Cart</button>)}
-        {skusInStock.length > 0
-        && selectedSku.length > 0
-        && selectedQuantity
-        && maxQuantity > 0
-        && (<button type="submit">Add to Cart</button>)}
-      </Form>
-*/
       <Wrapper>
         <TextWrapper style={{ visibility: invalidSubmit ? 'visible' : 'hidden' }}>
           <p>Please select size</p>
