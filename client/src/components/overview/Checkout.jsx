@@ -112,7 +112,7 @@ function Checkout({ selectedStyle }) {
   };
 
   const handleSelectSize = (e) => {
-    // setInvalidSubmit(false);
+    setInvalidSubmit(false);
     skusInStock.forEach((sku) => {
       if (selectedStyle.skus[sku].size === e.target.innerText) {
         setSelectedSku(sku);

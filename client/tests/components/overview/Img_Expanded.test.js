@@ -31,7 +31,7 @@ describe('rendering Expanded View', () => {
 
   it('has no effect when the symbol representing the currently selected img is clicked on', () => {
     fireEvent(
-      screen.getByTestId('inactive-circle'),
+      screen.getAllByTestId('nav-symbols-circles')[2],
       new MouseEvent('click', {
         bubbles: true,
       }),
@@ -42,7 +42,7 @@ describe('rendering Expanded View', () => {
   });
 
   it('invokes once a fn that will select a new image when another symbol is clicked', () => {
-    const symbols = screen.getAllByTestId('active-circle');
+    const symbols = screen.getAllByTestId('nav-symbols-circles');
     const target = symbols[0];
     fireEvent(
       target,
