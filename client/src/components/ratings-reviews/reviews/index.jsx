@@ -76,13 +76,11 @@ export default function Reviews({
     setShowModal(true);
   }
 
-  // Closes modal and makes DOM scrollable again
   function closeModal() {
     setShowModal(false);
     document.body.style.overflow = 'auto';
   }
 
-  // Escape button closes modal
   function onKeyDown(event) {
     if (event.keyCode === 27) {
       closeModal();
