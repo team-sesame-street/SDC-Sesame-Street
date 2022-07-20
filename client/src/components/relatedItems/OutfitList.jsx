@@ -4,18 +4,19 @@ import Ratings from './Ratings.jsx'
 import styled from 'styled-components';
 
 const Card = styled.div`
-  width: 310px;
-  height: 365px;
+  min-width: 310px;
+  min-height: min-content;
   background: white;
   border-radius: 10px;
   display: inline-block;
   margin-left: 5px;
   margin-right: 5px;
+  position: relative;
 `
 
 const Image = styled.div`
   width: 100%;
-  height: 75%;
+  height: 280px;
   background-color: rgb(240 240 240 / 80%);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -26,6 +27,7 @@ const Image = styled.div`
   justify-content: center;
   align-items: center;
   background-image: URL(${({url}) => url});
+  background-size: cover;
 `
 
 const Title = styled.p`
@@ -44,12 +46,10 @@ const Category = styled.p`
 `
 
 const Button = styled.div`
-  width: 97%;
-  transform: translateY(32px);
+  position: absolute;
   cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
+  top: 10px;
+  right: 10px;
   color: white;
 `
 

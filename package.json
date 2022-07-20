@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./server/index.js",
-    "server-dev": "webpack --mode development --watch & nodemon ./server/index.js",
+    "server-dev": "webpack --mode development --watch & npx nodemon ./server/index.js",
     "build": "webpack --config ./webpack.config.js",
     "lint": "eslint --fix --ext .js,.jsx .",
     "test": "npx jest"

@@ -15,6 +15,9 @@ const SliderContainer = styled.div`
   display: flex;
   position: relative;
   align-items: center;
+  @media(max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 const left = {
@@ -25,6 +28,7 @@ const left = {
   boxShadow: '2px 2px 2px 2px rgb(0 0 0 / 12%)',
   cursor: 'pointer',
   visibility: 'hidden',
+  zIndex: 1000,
 };
 
 const right = {
@@ -38,27 +42,36 @@ const right = {
 
 const Slider = styled.div`
   width: 100%;
-  height: 100%;
+  height: min-content;
   white-space: nowrap;
-  overflow-x: scroll;
+  overflow-x: hidden;
   scrollbar-width: none;
   scroll-behavior: smooth;
+  overflow-y: hidden;
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+  @media(max-width: 500px) {
+    overflow-x: auto;
+  }
 `;
 
 const Card = styled.div`
-  width: 310px;
-  height: 365px;
+  min-width: 310px;
+  min-height: min-content;
   background: white;
   border-radius: 10px;
   display: inline-block;
   margin-left: 5px;
   margin-right: 5px;
   cursor: pointer;
+  position: relative;
 `;
 
 const Image = styled.div`
   width: 100%;
-  height: 75%;
+  height: 280px;
   background-color: rgb(240 240 240 / 80%);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -86,7 +99,9 @@ const Star = styled.div`
   clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
   height: 22px;
   width: 22px;
-  float: right;
+  position: absolute;
+  top: 0;
+  right: 0;
   margin-right: 10px;
   margin-top: 10px;
 `
