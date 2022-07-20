@@ -99,7 +99,7 @@ export default function Reviews({ reviews, setSort, count, setCount, meta, filte
         <div onKeyDown={(event) => onKeyDown(event)} role="button" tabIndex="0">
           <ReviewsNewReview
             showModal={showModal}
-            setShowModal={setShowModal}
+            closeModal={() => { closeModal(); }}
             onOpen={() => { openModal(); }}
             onClose={() => { closeModal(); }}
           />

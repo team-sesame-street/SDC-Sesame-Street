@@ -8,7 +8,7 @@ const styles = {
   },
 };
 
-export default function Nickname({ nickname, setNickName }) {
+export default function Nickname({ nickname, setNickname }) {
   return (
     <div>
       <input
@@ -16,7 +16,7 @@ export default function Nickname({ nickname, setNickName }) {
         placeholder="Example: jackson11!"
         size="58"
         maxLength="60"
-        onChange={(event) => setNickName(event.target.value)}
+        onChange={(event) => setNickname(event.target.value)}
         value={nickname}
         required
       />
