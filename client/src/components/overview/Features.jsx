@@ -13,12 +13,12 @@ function Features({ product }) {
           feature.value !== null
             ? (
               <li key={index}>
-                <span>
+                <span data-testid="feature-description">
                   🌟
                   &nbsp;&nbsp;
-                  <span style={{ fontWeight: 'bold' }}>{feature.feature.concat(':')}</span>
+                  <span data-testid="feature" style={{ fontWeight: 'bold' }}>{feature.feature.concat(':')}</span>
                   &nbsp;
-                  <span>{feature.value}</span>
+                  <span data-testid="feature-value">{feature.value}</span>
                 </span>
               </li>
             )
