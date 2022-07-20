@@ -48,10 +48,11 @@ function MainImage(
                     className="arrows-default"
                     data-testid="left-arrow"
                     onClick={navigateLeft}
-                    style={{  gridColumn: '3 / 5' }}
+                    style={{ gridColumn: '3 / 5' }}
                   />
                 )}
                 <Image
+                  data-testid="main-image"
                   src={images[currImgIndex].url}
                   alt="A representation of this product"
                   onClick={() => { setExpandedView(true); }}

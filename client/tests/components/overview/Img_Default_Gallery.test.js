@@ -2,8 +2,8 @@ import React from 'react';
 import {
   render, screen, cleanup, fireEvent, act,
 } from '@testing-library/react';
-import { toBeVisible, toBeInTheDocument } from '@testing-library/jest-dom';
-import MainImage from '../../../src/components/overview/Img_Default_Main_Carousel.jsx';
+import '@testing-library/jest-dom';
+import MainImage from '../../../src/components/overview/Img_Default_Gallery.jsx';
 import imagesSet from './ImagesDataTest.js';
 
 const images = imagesSet.photos;
@@ -33,7 +33,7 @@ describe('rendering Main Image in Default View', () => {
       />);
     });
 
-    const photos = screen.getAllByRole('img');
+    const photos = screen.getAllByTestId('main-image');
     expect(photos).toHaveLength(1);
   });
 
@@ -224,7 +224,7 @@ describe('rendering Main Image in Default View', () => {
     });
 
     fireEvent(
-      screen.getByRole('img'),
+      screen.getByTestId('main-image'),
       new MouseEvent('click', {
         bubbles: true,
       }),
@@ -234,5 +234,26 @@ describe('rendering Main Image in Default View', () => {
     expect(setThumbnailIndexMax).toHaveBeenCalledTimes(2);
     expect(setThumbnailIndexMin).toHaveBeenCalledTimes(2);
     expect(setExpandedView).toHaveBeenCalledTimes(1);
+  });
+
+  it('correctly displays the thumbnail', () => {
+    // repeat tests from thumbnails
+    act(() => {
+      render(<MainImage
+        images={images}
+        currImgIndex={0}
+        thumbnailIndexMin={0}
+        thumbnailIndexMax={6}
+        setCurrImgIndex={setCurrImgIndex}
+        setThumbnailIndexMax={setThumbnailIndexMax}
+        setThumbnailIndexMin={setThumbnailIndexMin}
+        setExpandedView={setExpandedView}
+      />);
+    });
+
+    expect(screen.queryByAltText('product representation #3')).toBeVisible();
+    const thumbnails = screen.getAllByRole('img');
+    expect(thumbnails).toHaveLength(7);
+    expect(screen.queryByAltText('product representation #9')).not.toBeInTheDocument();
   });
 });

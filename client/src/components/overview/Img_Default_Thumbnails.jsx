@@ -16,8 +16,9 @@ function ImageDefaultThumbnail({
     return (
       <Wrapper>
         {images.length > 7 && (
-          <RiArrowUpSFill className="arrows-thumbnail"
-            style={{fill: thumbnailIndexMin === 0 ? '#eeeeee' : 'default'}}
+          <RiArrowUpSFill
+            className="arrows-thumbnail"
+            style={{ fill: thumbnailIndexMin === 0 ? '#eeeeee' : 'default' }}
             data-testid="up-arrow-active"
             onClick={() => {
               if (thumbnailIndexMin > 0) {
@@ -37,7 +38,8 @@ function ImageDefaultThumbnail({
           })}
         </ThumbnailsGrid>
         {images.length > 7 && (
-          <RiArrowDownSFill className="arrows-thumbnail"
+          <RiArrowDownSFill
+            className="arrows-thumbnail"
             style={{fill: thumbnailIndexMax === images.length - 1 ? '#eeeeee' : 'default'}}
             onClick={() => {
               if (thumbnailIndexMax < images.length - 1) {

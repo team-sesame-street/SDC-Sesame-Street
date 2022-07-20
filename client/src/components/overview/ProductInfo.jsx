@@ -9,12 +9,12 @@ function ProductInfo({ product, selectedStyle }) {
 
     return (
       <Wrapper>
-        <p>{product.category.toUpperCase()}</p>
-        <h2 size={{ maxHeight: 'max-content' }}>{product.name}</h2>
+        <p data-testid="category">{product.category.toUpperCase()}</p>
+        <h2 data-testid="product-name" size={{ maxHeight: 'max-content' }}>{product.name}</h2>
         {selectedStyle.sale_price === null
-          ? (<p>{formatPrice(selectedStyle.original_price)}</p>)
+          ? (<p data-testid="price">{formatPrice(selectedStyle.original_price)}</p>)
           : (
-            <p>
+            <p data-testid="price">
               <span style={{ color: 'red' }}>{formatPrice(selectedStyle.sale_price)}</span>
               &nbsp;
               <span style={{ textDecorationLine: 'line-through' }}>{formatPrice(selectedStyle.original_price)}</span>
