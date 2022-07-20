@@ -1,9 +1,8 @@
-/* eslint-disable no-use-before-define */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import StarRatings from 'react-star-ratings';
 
-function ReviewsRatings({ rating }) {
+export default function ReviewsRatings({ rating }) {
   const starRating = Math.round(rating * 4) / 4;
 
   return (
@@ -12,5 +11,3 @@ function ReviewsRatings({ rating }) {
     </div>
   );
 }
-
-export default ReviewsRatings;

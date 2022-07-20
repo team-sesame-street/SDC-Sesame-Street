@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
@@ -17,7 +18,6 @@ const styles = {
   },
 };
 
-// cursor: pointer;
 const Thumbnail = styled.img`
   aspect-ratio: 1/1;
   object-fit: cover;
@@ -27,7 +27,9 @@ const Thumbnail = styled.img`
   margin-top: 5px;
 `;
 
-export default function UploadPhotos({ selectedImage, setSelectedImage, originalImage, setOriginalImage }) {
+export default function UploadPhotos({
+  selectedImage, setSelectedImage, originalImage, setOriginalImage,
+}) {
   const hiddenFileInput = React.useRef(null);
 
   function handleClick() {

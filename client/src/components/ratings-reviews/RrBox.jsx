@@ -1,11 +1,30 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable max-len */
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
-/* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Reviews from './reviews/index.jsx';
 import Ratings from './ratings/index.jsx';
+
+const styles = {
+  flexContainer: {
+    display: 'flex',
+    margin: '50px auto 50px auto',
+    width: '70%',
+    gap: '80px',
+    alignItems: 'stretch',
+  },
+
+  ratingsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '30px',
+    fontSize: '20px',
+  },
+
+  reviewsContainer: {
+    flex: 1,
+  },
+};
 
 export default function RrBox({ id }) {
   const [reviews, setReviews] = useState([]);
@@ -87,34 +106,30 @@ export default function RrBox({ id }) {
 
   return (
     <div>
-      <div className="RrBox-container" style={flexContainer}>
-        <div style={ratingsContainer}>
+      <div className="RrBox-container" style={styles.flexContainer}>
+        <div style={styles.ratingsContainer}>
           Ratings & Reviews
-          <Ratings meta={meta} currRating={currRating} setRating={setRating} filterRatings={filterRatings} />
+          <Ratings
+            meta={meta}
+            currRating={currRating}
+            setRating={setRating}
+            filterRatings={filterRatings}
+          />
         </div>
-        <div style={reviewsContainer}>
-          <Reviews reviews={reviews} setSort={setSort} count={count} meta={meta} setCount={setCount} filterRatings={filterRatings} showModal={showModal} setShowModal={setShowModal} id={id} />
+        <div style={styles.reviewsContainer}>
+          <Reviews
+            reviews={reviews}
+            setSort={setSort}
+            count={count}
+            meta={meta}
+            setCount={setCount}
+            filterRatings={filterRatings}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            id={id}
+          />
         </div>
       </div>
     </div>
   );
 }
-
-const flexContainer = {
-  display: 'flex',
-  margin: '50px auto 50px auto',
-  width: '70%',
-  gap: '80px',
-  alignItems: 'stretch',
-};
-
-const ratingsContainer = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '30px',
-  fontSize: '20px',
-};
-
-const reviewsContainer = {
-  flex: 1,
-};
