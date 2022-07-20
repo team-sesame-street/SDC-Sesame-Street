@@ -267,7 +267,6 @@ function Checkout({ selectedStyle }) {
               </li>
             ))
           )}
-          {console.log(selectedSku, selectedQuantity, typeof selectedQuantity)}
         </QuantitySelector>
 
         <SubmitButton
@@ -309,27 +308,35 @@ Checkout.defaultProps = {
 export default Checkout;
 
 const Wrapper = styled.div`
+  align-self: start;
   width: inherit;
   height: inherit;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(3, max-content);
+  grid-template-rows: max-content 70px max-content;
   justify-items: left;
-  padding: 0;
+  column-gap: 5px;
 `;
 
 const TextWrapper = styled.div`
   grid-column: 1 / 3;
   grid-row: 1 / 2;
+  align-self: end;
 `;
 
 const SizeSelector = styled.ul`
   list-style-type: none;
+  max-height: 70px;
   grid-column: 1 / 2;
   grid-row: 2 / 3;
+  align-self: center;
   width: 100%;
+  padding: 0;
+  margin: 0;
+  overflow-y: scroll;
   & li {
     // position: relative;
+    height: 30px;
   }
   & button {
     // position: absolute;
@@ -337,21 +344,31 @@ const SizeSelector = styled.ul`
     left: 0;
     border: none;
     width: 100%;
-    height: 2vh;
-    // padding: 0;
+    height: 100%;
+    cursor: pointer;
   }
 `;
 
 const QuantitySelector = styled.ul`
   list-style-type: none;
+  max-height: 70px;
   grid-column: 2 / 3;
   grid-row: 2 / 3;
+  align-self: center;
   width: 100%;
+  padding: 0;
+  margin: 0;
+  overflow-y: scroll;
+
+  & li {
+    // position: relative;
+    height: 30px;
+  }
   & button {
     border: none;
-    // padding: 0;
     width: 100%;
-    height: 2vh;
+    height: 100%;
+    cursor: pointer;
   }
 `;
 
@@ -359,5 +376,7 @@ const SubmitButton = styled.button`
   grid-column: 1 / 2;
   grid-row: 3 / 4;
   width: 100%;
-  hieght: 100%;
+  height: 30px;
+  border: none;
+  cursor: pointer;
 `;

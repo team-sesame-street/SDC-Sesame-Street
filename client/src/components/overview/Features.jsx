@@ -42,4 +42,6 @@ export default Features;
 
 const Wrapper = styled.ul`
   list-style: none;
+  padding: 0;
+  margin: 0;
 `;

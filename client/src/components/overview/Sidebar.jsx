@@ -32,6 +32,8 @@ const Wrapper = styled.div`
   max-width: max-content;
   grid-template-rows: max-content max-content 100px;
   grid-template-columns: max-content;
+  align-self: start;
   align-content: center;
   align-items: center;
+  gap: 10px;
 `;
