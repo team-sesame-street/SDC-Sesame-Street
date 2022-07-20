@@ -16,6 +16,7 @@ const MainContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  margin-top: 40px;
 `
 
 function MainCarousel({ id, pageChange }) {
