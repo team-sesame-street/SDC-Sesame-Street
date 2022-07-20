@@ -158,15 +158,21 @@ const Wrapper = styled.div`
 `;
 
 const SubWrapper = styled.div`
+  // background-color: grey;
   display: grid;
   width: 100%:
   height: max-content;
   grid-template-columns: 6fr 4fr;
   grid-template-rows: max-content;
   align-items: center;
+  margin-right: 0;
+  column-gap: 3vw;
   @media(max-width: 700px) {
-    width: 85%;
+    // width: 85%;
+    width: 100%
+    justify-content: center;
     grid-template-rows: repeat(2, max-content);
-    grid-template-columns: 90%;
+    grid-template-columns: 100%;
+    row-gap: 3vh;
   };
 `;
