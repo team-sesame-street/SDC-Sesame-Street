@@ -48,7 +48,7 @@ export default function RrBox({ id }) {
         }
       })
       .catch((err) => console.log('Error RrBox: ', err));
-  }, [id, sort, count, currRating]);
+  }, [id, sort, count, currRating, showModal]);
 
   useEffect(() => {
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
@@ -83,7 +83,7 @@ export default function RrBox({ id }) {
         }
       })
       .catch((err) => console.log('Error getting meta data (RrBox): ', err));
-  }, [id, currRating]);
+  }, [id, currRating, showModal]);
 
   return (
     <div>
@@ -93,7 +93,7 @@ export default function RrBox({ id }) {
           <Ratings meta={meta} currRating={currRating} setRating={setRating} filterRatings={filterRatings} />
         </div>
         <div style={reviewsContainer}>
-          <Reviews reviews={reviews} setSort={setSort} count={count} meta={meta} setCount={setCount} filterRatings={filterRatings} showModal={showModal} setShowModal={setShowModal} />
+          <Reviews reviews={reviews} setSort={setSort} count={count} meta={meta} setCount={setCount} filterRatings={filterRatings} showModal={showModal} setShowModal={setShowModal} id={id} />
         </div>
       </div>
     </div>
