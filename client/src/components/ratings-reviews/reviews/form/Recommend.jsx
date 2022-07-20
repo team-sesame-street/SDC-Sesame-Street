@@ -8,8 +8,8 @@ export default function Recommend({ recommendProduct, setRecommendProduct }) {
         type="radio"
         name="recommend"
         value="yes"
-        checked={recommendProduct === 'yes'}
-        onChange={() => { setRecommendProduct('yes'); }}
+        checked={recommendProduct === true}
+        onChange={() => { setRecommendProduct(true); }}
         required
       />
       {' '}
@@ -19,8 +19,8 @@ export default function Recommend({ recommendProduct, setRecommendProduct }) {
         type="radio"
         name="recommend"
         value="no"
-        checked={recommendProduct === 'no'}
-        onChange={() => { setRecommendProduct('no'); }}
+        checked={recommendProduct === false}
+        onChange={() => { setRecommendProduct(false); }}
       />
       {' '}
       No

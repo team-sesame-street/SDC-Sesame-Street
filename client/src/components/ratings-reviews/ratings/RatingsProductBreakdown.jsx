@@ -17,6 +17,7 @@ const styles = {
 
 export default function ProductBreakdown({ meta }) {
   const barArr = [];
+  const charObj = {};
   const nameArr = [];
   const nameVal = [];
   const sizeObj = {
@@ -42,8 +43,10 @@ export default function ProductBreakdown({ meta }) {
       const currVal = keysArr[i];
       nameArr.push(currVal);
       nameVal.push(char[currVal]);
+      charObj[currVal] = char[currVal].id;
     }
     localStorage.setItem('characteristicsArray', nameArr);
+    localStorage.setItem('characteristicsObj', JSON.stringify(charObj));
   }
   return (
     <div>
