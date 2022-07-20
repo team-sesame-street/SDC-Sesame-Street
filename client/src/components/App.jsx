@@ -32,7 +32,7 @@ function App() {
 
   return (
     <div>
-      {productId}
+      {/* {productId} */}
       <MainOverview id={productId} />
       <MainCarousel id={productId} pageChange={pageChange} />
       <QaBox currProduct={currProduct} />

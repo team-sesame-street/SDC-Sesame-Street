@@ -27,7 +27,7 @@ const Thumbnail = styled.img`
   margin-top: 5px;
 `;
 
-export default function UploadPhotos({ selectedImage, setSelectedImage }) {
+export default function UploadPhotos({ selectedImage, setSelectedImage, originalImage, setOriginalImage }) {
   const hiddenFileInput = React.useRef(null);
 
   function handleClick() {
@@ -35,6 +35,7 @@ export default function UploadPhotos({ selectedImage, setSelectedImage }) {
   }
 
   function handleChange(event) {
+    setOriginalImage([...originalImage, event.target.files]);
     setSelectedImage([...selectedImage, URL.createObjectURL(event.target.files[0])]);
   }
 

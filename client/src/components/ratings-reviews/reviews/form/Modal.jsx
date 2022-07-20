@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Rating from './Rating.jsx';
 import Characteristics from './Characteristics.jsx';
 import Recommend from './Recommend.jsx';
@@ -8,6 +9,7 @@ import Body from './Body.jsx';
 import UploadPhotos from './UploadPhotos.jsx';
 import Nickname from './Nickname.jsx';
 import Email from './Email.jsx';
+import convertImageToBase64 from '../../../../../utils/convertImageToBase64.js';
 
 const styles = {
   modalContainer: {
@@ -52,15 +54,16 @@ const styles = {
   },
 };
 
-export default function Modal({ showModal, onClose }) {
+export default function Modal({ showModal, closeModal, onClose }) {
   if (!showModal) return null;
 
   const [starRating, setStarRating] = useState();
   const [recommendProduct, setRecommendProduct] = useState();
   const [summaryText, setSummaryText] = useState('');
   const [bodyText, setBodyText] = useState('');
+  const [originalImage, setOriginalImage] = useState([]);
   const [selectedImage, setSelectedImage] = useState([]);
-  const [nickname, setNickName] = useState('');
+  const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [descriptionRate, setDescriptionRate] = useState({
     Comfort: null,
@@ -72,6 +75,77 @@ export default function Modal({ showModal, onClose }) {
   });
 
   const ratingType = ['Poor', 'Fair', 'Average', 'Good', 'Great'];
+
+  function postReview() {
+    const id = Number(localStorage.getItem('productId'));
+    const characteristicsIds = JSON.parse(localStorage.getItem('characteristicsObj'));
+    const nameArray = localStorage.getItem('characteristicsArray').split(',');
+    const charPostObj = {};
+
+    for (let i = 0; i < nameArray.length; i += 1) {
+      const val = characteristicsIds[nameArray[i]];
+      charPostObj[val] = descriptionRate[nameArray[i]];
+    }
+    const convertedImages = [];
+    if (originalImage.length > 0) {
+      for (let i = 0; i < originalImage.length; i += 1) {
+        convertedImages.push(convertImageToBase64(originalImage[i][0]));
+      }
+      Promise.all(convertedImages)
+        .then((blobs) => {
+          const cloudPromises = [];
+          for (let i = 0; i < blobs.length; i += 1) {
+            cloudPromises.push(
+              axios
+                .post('https://api.cloudinary.com/v1_1/vfdf56s/image/upload', {
+                  file: blobs[i],
+                  upload_preset: 'ayfvgtch',
+                })
+                .then(({ data }) => data.secure_url),
+            );
+          }
+          Promise.all(cloudPromises)
+            .then((photos) => axios
+              .post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
+                product_id: id,
+                rating: starRating,
+                summary: summaryText,
+                body: bodyText,
+                recommend: recommendProduct,
+                name: nickname,
+                email,
+                photos,
+                characteristics: charPostObj,
+              }, {
+                headers: {
+                  Authorization: process.env.GITKEY,
+                },
+              }))
+            .then(() => closeModal())
+            .catch((error) => console.log(error));
+        })
+        .catch((err) => console.error(err));
+    } else {
+      return axios
+        .post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
+          product_id: id,
+          rating: starRating,
+          summary: summaryText,
+          body: bodyText,
+          recommend: recommendProduct,
+          name: nickname,
+          email,
+          photos: [],
+          characteristics: charPostObj,
+        }, {
+          headers: {
+            Authorization: process.env.GITKEY,
+          },
+        })
+        .then(() => closeModal())
+        .catch((error) => console.log(error));
+    }
+  }
 
   function handleSubmit(event) {
     if (!starRating || bodyText.length < 50) {
@@ -85,6 +159,7 @@ export default function Modal({ showModal, onClose }) {
     } else {
       event.preventDefault();
       console.log('submitted: ', event.target);
+      postReview();
     }
   }
 
@@ -153,6 +228,8 @@ export default function Modal({ showModal, onClose }) {
             <UploadPhotos
               selectedImage={selectedImage}
               setSelectedImage={(image) => setSelectedImage(image)}
+              originalImage={originalImage}
+              setOriginalImage={(image) => setOriginalImage(image)}
             />
             <br />
             <b>Nickname:</b>
@@ -160,7 +237,7 @@ export default function Modal({ showModal, onClose }) {
             <br />
             <Nickname
               nickname={nickname}
-              setNickName={(value) => setNickName(value)}
+              setNickname={(value) => setNickname(value)}
             />
             <br />
             <b>Email:</b>
