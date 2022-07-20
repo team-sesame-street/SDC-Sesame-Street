@@ -2,7 +2,7 @@ import React from 'react';
 import {
   render, screen, cleanup, fireEvent, act,
 } from '@testing-library/react';
-import { toBeVisible, toBeInTheDocument } from '@testing-library/jest-dom';
+import '@testing-library/jest-dom';
 import MainImage from '../../../src/components/overview/Img_Default_Thumbnails.jsx';
 import imagesSet from './ImagesDataTest.js';
 
@@ -58,7 +58,7 @@ describe('rendering Thumbnail in Default View', () => {
 
   it('has no effect if the up arrow is clicked on when the selected img is the first in the set', () => {
     fireEvent(
-      screen.getByTestId('up-arrow-inactive'),
+      screen.getByTestId('up-arrow-active'),
       new MouseEvent('click', {
         bubbles: true,
       }),

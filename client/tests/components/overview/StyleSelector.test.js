@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  render, screen, cleanup, fireEvent,
+  render, screen, cleanup, fireEvent
 } from '@testing-library/react';
-import { toHaveTextContent } from '@testing-library/jest-dom';
+import '@testing-library/jest-dom';
 import StyleSelector from '../../../src/components/overview/StyleSelector.jsx';
 import product from './ProductDataTest.js';
 
@@ -11,7 +11,7 @@ describe('rendering StyleSelector', () => {
 
   beforeEach(() => {
     const styles = product.results;
-    let selectedStyle = styles[0];
+    const selectedStyle = styles[0];
 
     render(
       <StyleSelector

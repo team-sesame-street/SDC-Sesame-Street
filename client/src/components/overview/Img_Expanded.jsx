@@ -5,7 +5,6 @@ import { IoExitOutline } from 'react-icons/io5';
 import { BsCircleFill } from 'react-icons/bs';
 import styled from 'styled-components';
 
-
 function ExpandedImage({
   images, currImgIndex, setCurrImgIndex, setExpandedView,
 }) {
@@ -17,14 +16,16 @@ function ExpandedImage({
             return (
               <Wrapper key={index}>
                 {index > 0 && (
-                  <IoIosArrowDropleft className="icon-expanded left-arrow-expanded"
+                  <IoIosArrowDropleft
+                    className="icon-expanded left-arrow-expanded"
                     onClick={() => { setCurrImgIndex(currImgIndex - 1); }}
                   />
                 )}
                 <Image src={images[currImgIndex].url} alt="A representation of this product" loading="lazy" />
                 <IoExitOutline data-testid="exit-expanded-btn" className="icon-expanded exit-icon" onClick={() => { setExpandedView(false); }} />
                 {index < images.length - 1 && (
-                  <IoIosArrowDropright className="icon-expanded right-arrow-expanded"
+                  <IoIosArrowDropright
+                    className="icon-expanded right-arrow-expanded"
                     onClick={() => { setCurrImgIndex(currImgIndex + 1); }}
                   />
                 )}
@@ -37,20 +38,22 @@ function ExpandedImage({
           {images.map((image, index) => {
             const circleStyle = {
               width: index === currImgIndex ? '11px' : '8px',
-              height: index === currImgIndex ? '11px': '8px',
+              height: index === currImgIndex ? '11px' : '8px',
             };
             return (
-            <BsCircleFill
-              className="nav-symbols-circles"
-              key={index}
-              style={circleStyle}
-              onClick={() => {
-                if (index !== currImgIndex) {
-                  setCurrImgIndex(index);
-                }
-              }}
-            />
-          )})}
+              <BsCircleFill
+                data-testid="nav-symbols-circles"
+                className="nav-symbols-circles"
+                key={index}
+                style={circleStyle}
+                onClick={() => {
+                  if (index !== currImgIndex) {
+                    setCurrImgIndex(index);
+                  }
+                }}
+              />
+            );
+          })}
         </NavSymbols>
       </div>
     );
