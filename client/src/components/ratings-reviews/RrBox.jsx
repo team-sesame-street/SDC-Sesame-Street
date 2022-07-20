@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Reviews from './reviews/index.jsx';
 import Ratings from './ratings/index.jsx';
+import getTotalRatings from '../../../utils/getTotalRatings';
 
 const styles = {
   flexContainer: {
@@ -26,7 +27,7 @@ const styles = {
   },
 };
 
-export default function RrBox({ id }) {
+export default function RrBox({ id, setTotalRatings, setAvgRating }) {
   const [reviews, setReviews] = useState([]);
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('relevant');
@@ -80,6 +81,7 @@ export default function RrBox({ id }) {
     })
       .then((res) => {
         const metaData = res.data;
+        setTotalRatings(getTotalRatings(metaData.ratings));
         const ratingArray = Object.values(currRating);
         const mapped = ratingArray.flatMap((bool, index) => {
           if (bool) {
@@ -114,6 +116,7 @@ export default function RrBox({ id }) {
             currRating={currRating}
             setRating={setRating}
             filterRatings={filterRatings}
+            setAvgRating={(num) => { setAvgRating(num); }}
           />
         </div>
         <div style={styles.reviewsContainer}>

@@ -29,7 +29,7 @@ const styles = {
 };
 
 export default function Ratings({
-  meta, currRating, setRating, filterRatings,
+  meta, currRating, setRating, filterRatings, setAvgRating,
 }) {
   let rating = 0;
   let totalRatings = 0;
@@ -43,6 +43,7 @@ export default function Ratings({
   }
   const numRating = Math.round(rating * 10) / 10;
   const starRating = Math.round(rating * 4) / 4;
+  setAvgRating(starRating);
   return (
     <div style={styles.ratingsContainer}>
       <div style={styles.flexContainer}>
