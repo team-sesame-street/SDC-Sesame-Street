@@ -1,54 +1,57 @@
 import React from 'react';
 import { TiDeleteOutline } from "react-icons/ti";
+import Ratings from './Ratings.jsx'
+import styled from 'styled-components';
 
-const card = {
-  width: '310px',
-  height: '365px',
-  background: 'white',
-  borderRadius: '10px',
-  display: 'inline-block',
-  marginLeft: '5px',
-  marginRight: '5px',
-};
+const Card = styled.div`
+  width: 310px;
+  height: 365px;
+  background: white;
+  border-radius: 10px;
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+`
 
-const imageStyle = {
-  width: '100%',
-  height: '75%',
-  backgroundColor: 'rgb(240 240 240 / 80%)',
-  borderTopLeftRadius: '10px',
-  borderTopRightRadius: '10px',
-  backgroundSize: 'cover',
-  fontSize: '30px',
-  color: 'gray',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
+const Image = styled.div`
+  width: 100%;
+  height: 75%;
+  background-color: rgb(240 240 240 / 80%);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-size: cover;
+  font-size: 30px;
+  color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: URL(${({url}) => url});
+`
 
-const titleStyle = {
-  margin: '0px 0px 3px 10px',
-  fontWeight: '900',
-};
+const Title = styled.p`
+  margin: 0px 0px 3px 10px;
+  font-weight: 900;
+`
 
-const priceStyle = {
-  margin: '1px 0px 0px 10px',
-  fontSize: '12px',
-};
+const Price = styled.p`
+  margin: 1px 0px 0px 10px;
+  font-size: 12px;
+`
 
-const categoryStyle = {
-  marginLeft: '10px',
-  fontSize: '13px',
-};
+const Category = styled.p`
+  margin-left: 10px;
+  font-size: 13px;
+`
 
-const btnStyle = {
-  width: '97%',
-  transform: 'translateY(32px)',
-  cursor: 'pointer',
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'end',
-  color: 'white',
-};
+const Button = styled.div`
+  width: 97%;
+  transform: translateY(32px);
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  color: white;
+`
 
 function OutfitList({ slide, deleteOutfit }) {
   const deleteHandler = () => {
@@ -56,18 +59,19 @@ function OutfitList({ slide, deleteOutfit }) {
   };
 
   return (
-    <div style={card}>
-      <div style={btnStyle}>
+    <Card>
+      <Button>
       <TiDeleteOutline size={25} onClick={deleteHandler} />
-      </div>
-      <div style={{ ...imageStyle, backgroundImage: `url(${slide.url})` }} />
-      <p style={categoryStyle}>{slide.category}</p>
-      <p style={titleStyle}>{slide.name}</p>
-      <p style={priceStyle}>
+      </Button>
+      <Image url={slide.url} />
+      <Category>{slide.category}</Category>
+      <Title>{slide.name}</Title>
+      <Price>
         $
         {slide.price}
-      </p>
-    </div>
+      </Price>
+      <Ratings rating={slide?.avg}/>
+    </Card>
   );
 }
 
