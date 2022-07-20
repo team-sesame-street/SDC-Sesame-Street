@@ -1,14 +1,26 @@
-/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-script-url */
 /* eslint-disable react/jsx-no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable no-use-before-define */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Lightbox from 'react-image-lightbox';
+import ImageViewer from '../../../../utils/ImageViewer.jsx';
 
-function ReviewsBody({ reviewBody, reviewImages }) {
+const Thumbnail = styled.img`
+  cursor: pointer;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  width: 100px;
+`;
+
+const styles = {
+  imageContainer: {
+    display: 'flex',
+    gap: '20px',
+  },
+};
+
+export default function ReviewsBody({ reviewBody, reviewImages }) {
   const [focused, setFocus] = useState(false);
   const [imgUrl, setImgUrl] = useState('');
   const [showMore, setShowMore] = useState(false);
@@ -28,10 +40,9 @@ function ReviewsBody({ reviewBody, reviewImages }) {
   return (
     <div>
       {focused && (
-        <Lightbox
-          imageLoadErrorMessage="This image failed to load"
-          mainSrc={imgUrl}
-          onCloseRequest={() => setFocus(false)}
+        <ImageViewer
+          photos={[imgUrl]}
+          cb={() => setFocus(false)}
         />
       )}
       {reviewBody.length > 250 && !showMore ? (
@@ -44,25 +55,16 @@ function ReviewsBody({ reviewBody, reviewImages }) {
           {reviewBody}
         </div>
       )}
-      <div style={imageContainer}>
+      <div style={styles.imageContainer}>
         {reviewImages.map((image) => (
-          <Thumbnail key={image.id} src={image.url} onClick={handleClick} id="thumbnail" />
+          <Thumbnail
+            key={image.id}
+            src={image.url}
+            onClick={(e) => handleClick(e)}
+            id="thumbnail"
+          />
         ))}
       </div>
     </div>
   );
 }
-
-const imageContainer = {
-  display: 'flex',
-  gap: '20px',
-};
-
-const Thumbnail = styled.img`
-  cursor: pointer;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  width: 100px;
-`;
-
-export default ReviewsBody;
