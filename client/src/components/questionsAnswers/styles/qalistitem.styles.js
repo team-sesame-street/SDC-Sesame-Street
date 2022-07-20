@@ -57,6 +57,7 @@ export const SubActionBtn = styled.button`
   background: none;
   text-decoration: underline;
   cursor: pointer;
+
   &:hover {
     text-decoration: none;
   }
@@ -75,8 +76,16 @@ export const PrimaryBtn = styled.button`
   font-size: 0.85rem;
   padding: 5px 10px;
   margin: 10px 0;
+  cursor: pointer;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
 
-  &&:hover {
+  &:hover {
+    transition: all 200ms ease-in-out;
     background: #ddd;
   }
+  &:active {
+      background: #ccc;
+    }
 `;

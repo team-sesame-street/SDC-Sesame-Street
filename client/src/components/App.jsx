@@ -9,17 +9,21 @@ import MainOverview from './overview/MainOverview.jsx';
 
 function App() {
   const [productId, setProductId] = useState(40346);
-  // 40344
+  const [currProduct, setCurrProduct] = useState({ id: productId });
 
-  // useEffect(() => {
-  //   axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products', {
-  //     headers: {
-  //       Authorization: process.env.GITKEY,
-  //     },
-  //   })
-  //     .then((res) => setProductId(res.data[2].id))
-  //     .catch((err) => alert(err));
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${productId}`, {
+        headers: {
+          Authorization: process.env.GITKEY,
+        },
+      })
+      .then(({ data }) => {
+        localStorage.setItem('productName', data.name);
+        setCurrProduct(data);
+      })
+      .catch((err) => console.error(err));
+  }, [productId]);
 
   const pageChange = (id) => {
     setProductId(id);
@@ -31,7 +35,7 @@ function App() {
       {/* {productId} */}
       <MainOverview id={productId} />
       <MainCarousel id={productId} pageChange={pageChange} />
-      <QaBox id={productId} setProductId={setProductId} />
+      <QaBox currProduct={currProduct} />
       <RrBox id={productId} />
     </div>
   );
