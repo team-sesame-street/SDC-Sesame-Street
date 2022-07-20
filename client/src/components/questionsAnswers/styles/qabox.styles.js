@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   margin: 50px auto 0 auto;
   padding-bottom: 4rem;
-  width: 50%;
+  width: 70%;
   @media (max-width: 500px) {
     margin: 25px 0 0 0;
     width: 100%;
@@ -38,11 +38,18 @@ export const PrimaryBtnGroup = styled.div`
     font-weight: 700;
     background: none;
     border: 1px solid #222;
+    border-radius: 4px;
     margin-right: 10px;
     margin-top: 15px;
+    transition: all 100ms ease-in-out;
     &:hover {
+      transition: all 200ms ease-in-out;
       color: #eee;
       background: #222;
+      cursor: pointer;
+    }
+    &:active {
+      background: #444;
     }
     &:disabled {
       background: grey;

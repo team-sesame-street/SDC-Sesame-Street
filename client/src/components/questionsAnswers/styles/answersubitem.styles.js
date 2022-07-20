@@ -39,6 +39,13 @@ export const Thumbnail = styled.img`
   width: 150px;
   height: 75px;
   margin: 10px 10px 5px 0;
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
+
+  &:hover {
+    transition: all 200ms ease-in-out;
+    opacity: 0.9;
+  }
 `;
 
 export const ThumbnailWrapper = styled.div`

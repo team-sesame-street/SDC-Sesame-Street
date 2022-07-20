@@ -23,6 +23,7 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
         .then(({ data }) => {
           setQuestions(data);
           setChecks({ ...checks, isLoading: false });
+          document.querySelector('.qa-wrapper')?.scrollTo({ top: document.querySelector('.qa-wrapper').scrollHeight});
         })
         .catch((err) => console.error(err));
     }
@@ -30,8 +31,8 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
 
   return (
     <Wrapper data-testid="qa-wrapper" className="qa-wrapper">
-      {checks.isLoading ? <LoadingCircle /> :
-        questions
+      {checks.isLoading ? <LoadingCircle />
+        : questions
           .filter(
             (question) => {
               if (searchTerm.length >= 3) {
@@ -65,7 +66,8 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
             productMetadata={productMetadata}
             checks={checks}
             setChecks={setChecks}
-            setTrigger={setTrigger} />
+            setTrigger={setTrigger}
+          />
         )}
     </Wrapper>
   );

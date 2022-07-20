@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 require('dotenv').config();
 
-const {getAll} = require('./getAll.js');
+const { getAll } = require('./getAll.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
