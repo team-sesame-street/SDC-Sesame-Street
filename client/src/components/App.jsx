@@ -6,6 +6,9 @@ import QaBox from './questionsAnswers/QaBox.jsx';
 import RrBox from './ratings-reviews/RrBox.jsx';
 import MainCarousel from './relatedItems/MainCarousel.jsx';
 import MainOverview from './overview/MainOverview.jsx';
+import Navbar from '../../utils/Navbar.jsx';
+import styled from 'styled-components';
+import Button from '../../utils/Button.jsx';
 
 function App() {
   const [productId, setProductId] = useState(40346);
@@ -33,18 +36,26 @@ function App() {
   };
 
   return (
-    <div>
-      {/* {productId} */}
-      <MainOverview id={productId} />
-      <MainCarousel id={productId} pageChange={pageChange} />
-      <QaBox currProduct={currProduct} />
-      <RrBox
-        id={productId}
-        setTotalRatings={(num) => { setTotalRatings(num); }}
-        setAvgRating={(num) => { setAvgRating(num); }}
-      />
-    </div>
+    <>
+      <Navbar />
+      <Wrapper>
+        {/* {productId} */}
+        <MainOverview id={productId} />
+        <MainCarousel id={productId} pageChange={pageChange} />
+        <QaBox currProduct={currProduct} />
+        <RrBox
+          id={productId}
+          setTotalRatings={(num) => { setTotalRatings(num); }}
+          setAvgRating={(num) => { setAvgRating(num); }}
+        />
+      </Wrapper>
+    </>
   );
 }
 
 export default App;
+
+const Wrapper = styled.div`
+  width: 80%;
+  margin: 0 auto;
+`;
