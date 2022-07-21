@@ -12,6 +12,18 @@ afterEach(() => {
   cleanup();
 });
 
+test('This should render the Answer Modal component', () => {
+  const { getByTestId } = render(
+    <QaListItem
+      result={questions[0]}
+      productMetadata={productMetadata}
+      checks={checks}
+    />,
+  );
+  const element = getByTestId('qa-listItem');
+  expect(element).toBeInTheDocument();
+});
+
 test('This should update the questions provided a search term', () => {
   const st = 'Question 3';
   const { getByTestId } = render(
@@ -25,22 +37,6 @@ test('This should update the questions provided a search term', () => {
   const el = getByTestId('qa-listItem');
   const toSearchFor = `<span>${st}</span>`;
   expect(el).toContainHTML(toSearchFor);
-});
-
-test('on add answer button click, show answer modal', () => {
-  const { getByTestId } = render(
-    <QaListItem
-      result={questions[0]}
-      productMetadata={productMetadata}
-      checks={checks}
-    />,
-  );
-
-  const answerbtn = getByTestId('add-answer-button');
-  fireEvent.click(answerbtn);
-
-  const answermod = getByTestId('add-answer-modal');
-  expect(answermod).toBeInTheDocument();
 });
 
 test('on helpful vote button press, disable helpful vote button', () => {
@@ -62,6 +58,7 @@ test('on helpful vote button press, disable helpful vote button', () => {
   expect(onClick).not.toHaveBeenCalled();
 });
 
+
 test('on load more answers button press, collapse answers text is shown', ()=> {
   const { getByTestId } = render(
     <QaListItem
@@ -72,7 +69,7 @@ test('on load more answers button press, collapse answers text is shown', ()=> {
   );
 
   const btn = getByTestId('load-more-answers-btn');
-  expect(btn).toHaveTextContent('Load More Answers');
+  expect(btn).toHaveTextContent('See More Answers');
   fireEvent.click(btn);
   expect(btn).toHaveTextContent('Collapse Answers');
 });
