@@ -1,20 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { IoIosArrowDropright, IoIosArrowDropleft } from 'react-icons/io';
 import { IoExitOutline } from 'react-icons/io5';
 import { BsCircleFill } from 'react-icons/bs';
 import styled from 'styled-components';
-// import Zoom from './Img_Zoomed.jsx';
 
 function ExpandedImage({
   images, currImgIndex, setCurrImgIndex, setExpandedView,
 }) {
   const [zoom, setZoom] = useState(false);
-  // const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const [offsetPercentage, setOffsetPercentage] = useState({ x: 0, y: 0 });
-  const container = useRef(null);
-  // const expandedImg = useRef(null);
+  const container = useRef();
 
   const getSizingRatio = (e) => {
     const offset = { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY };
@@ -22,10 +19,6 @@ function ExpandedImage({
       width: container.current.clientWidth,
       height: container.current.clientHeight,
     });
-    // const containerSize = {
-    //   width: container.current.clientWidth,
-    //   height: container.current.clientHeight,
-    // };
 
     setOffsetPercentage({
       x: (offset.x / containerSize.width) * 100,
@@ -33,17 +26,26 @@ function ExpandedImage({
     });
   };
 
+  const moveBackgroundImg = (e) => {
+    if (zoom) {
+      const offset = { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY };
+      setOffsetPercentage({
+        x: (offset.x / containerSize.width) * 100,
+        y: (offset.y / containerSize.height) * 100,
+      });
+      container.current.style.backgroundPosition = `-${offsetPercentage.x}% -${offsetPercentage.y}%`;
+    }
+  };
+
   if (images.length > 0) {
     return (
       <ExtraWrapper>
-        {/* {zoom && (
-          <Zoom imageURL={images[currImgIndex].url} setZoom={setZoom} offsetPosition={offset} />
-        )} */}
         {console.log('offset%:', offsetPercentage)}
         {images.map((image, index) => {
           if (index === currImgIndex) {
             return (
-              <Wrapper ref={container}
+              <Wrapper
+                ref={container}
                 key={index}
                 onClick={!zoom ? getSizingRatio : () => { setZoom(false); }}
                 style={{
@@ -51,6 +53,7 @@ function ExpandedImage({
                   backgroundSize: `${containerSize.height * 2.5}px`,
                   backgroundPosition: `${offsetPercentage.x}% ${offsetPercentage.y}%`,
                 }}
+                // onMouseMove={moveBackgroundImg}
               >
                 {!zoom && index > 0 && (
                   <IoIosArrowDropleft
@@ -58,17 +61,9 @@ function ExpandedImage({
                     onClick={() => { setCurrImgIndex(currImgIndex - 1); }}
                   />
                 )}
-                {/* {zoom && (
-                  <ZoomImg
-                    useRef={zoomedImg}
-                    src={images[currImgIndex].url}
-                    alt="A zoomed in perspective"
-                    onClick={() => { setZoom(false); }}
-                    style={{ objectPosition: `-${offsetPercentage.x}% -${offsetPercentage.y}%` }}
-                  />
-                )} */}
                 {!zoom && (
                   <Image
+                    classname="main-img"
                     src={images[currImgIndex].url}
                     alt="A representation of this product"
                     loading="lazy"
@@ -89,29 +84,28 @@ function ExpandedImage({
           }
           return null;
         })}
-        {!zoom && (
-          <NavSymbols>
-            {images.map((image, index) => {
-              const circleStyle = {
-                width: index === currImgIndex ? '11px' : '8px',
-                height: index === currImgIndex ? '11px' : '8px',
-              };
-              return (
-                <BsCircleFill
-                  data-testid="nav-symbols-circles"
-                  className="nav-symbols-circles"
-                  key={index}
-                  style={circleStyle}
-                  onClick={() => {
-                    if (index !== currImgIndex) {
-                      setCurrImgIndex(index);
-                    }
-                  }}
-                />
-              );
-            })}
-          </NavSymbols>
-        )}
+        <NavSymbols>
+          {images.map((image, index) => {
+            const circleStyle = {
+              width: index === currImgIndex ? '11px' : '8px',
+              height: index === currImgIndex ? '11px' : '8px',
+              visibility: zoom ? 'hidden' : 'visible',
+            };
+            return (
+              <BsCircleFill
+                data-testid="nav-symbols-circles"
+                className="nav-symbols-circles"
+                key={index}
+                style={circleStyle}
+                onClick={() => {
+                  if (index !== currImgIndex) {
+                    setCurrImgIndex(index);
+                  }
+                }}
+              />
+            );
+          })}
+        </NavSymbols>
       </ExtraWrapper>
     );
   }
@@ -136,7 +130,7 @@ const ExtraWrapper = styled.div`
 `;
 
 const Wrapper = styled.div`
-  background-color: grey;
+  // background-color: grey;
   position: relative;
   isolation: isolate;
   margin: auto;
@@ -178,19 +172,6 @@ const Wrapper = styled.div`
     width: 100%;
   }
 `;
-
-// const ZoomImg = styled.img`
-//   position: absolute;
-//   height: 250%;
-//   width: 250%;
-//   // min-width: auto;
-//   object-fit: none;
-//   // transform: scale(2.5);
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   object-position: center center;
-// `;
 
 const NavSymbols = styled.div`
   display: grid;
