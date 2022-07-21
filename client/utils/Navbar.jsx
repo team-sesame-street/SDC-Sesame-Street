@@ -26,18 +26,29 @@ function Navbar() {
 const Nav = styled.nav`
   font-weight: 600;
   background: whitesmoke;
-  height: 80px;
+  height: 90px;
   color: #023E8A;
   margin: 0;
   padding: 0;
 overflow: hidden;
-border-bottom: 2px solid #eee;
 margin-bottom: 5px;
+background-image: linear-gradient(
+  0deg,
+  hsl(0deg 0% 100%) 0%,
+  hsl(192deg 62% 100%) 21%,
+  hsl(192deg 62% 99%) 30%,
+  hsl(192deg 62% 99%) 39%,
+  hsl(192deg 62% 99%) 46%,
+  hsl(192deg 62% 98%) 54%,
+  hsl(192deg 62% 98%) 61%,
+  hsl(192deg 62% 98%) 69%,
+  hsl(192deg 62% 97%) 79%,
+  hsl(192deg 63% 97%) 100%
+);
 `;
 
 const ListWrapper = styled.ul`
   margin: 0 auto;
-  padding: 0;
   display: flex;
   list-style-type: none;
   justify-content: center;
@@ -50,7 +61,7 @@ const ListWrapper = styled.ul`
   }
 
   & li:hover {
-    background: #eee;
+    /* background: #eee; */
     text-decoration: underline;
   }
 
