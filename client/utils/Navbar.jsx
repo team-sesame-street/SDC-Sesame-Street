@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { GiHamburgerMenu } from 'react-icons/gi';
 
 function Navbar() {
   return (
@@ -13,10 +14,10 @@ function Navbar() {
       </ListWrapper>
       <MobileNav>
         <span>
-          Atelier
+        👻 Soulful
         </span>
         <span>
-          =
+          <GiHamburgerMenu/>
         </span>
       </MobileNav>
     </Nav>
@@ -61,7 +62,6 @@ const ListWrapper = styled.ul`
   }
 
   & li:hover {
-    /* background: #eee; */
     text-decoration: underline;
     color: #222;
   }
@@ -80,19 +80,18 @@ const ListWrapper = styled.ul`
     background: revert;
     color: #222;
   }
+
+  @media(max-width: 500px) {
+    display: none;
+  }
 `;
 
 const MobileNav = styled.div`
-  display: none;
-  height: 100%;
-
-  @media(max-width: 500px) {
-    display: flex;
-    height: 100%;
-    padding: 0 25px;
-    justify-content: space-between;
-    align-items: center;
-  }
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem;
+  font-size: 1.25rem;
+  font-weight: 800;
 `;
 
 export default Navbar;
