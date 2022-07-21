@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   isolation: isolate;
   margin: 50px auto 0 auto;
   padding-bottom: 4rem;
-  width: 80%;
+  width: 70%;
   @media (max-width: 500px) {
     margin: 25px 0 0 0;
     width: 100%;
