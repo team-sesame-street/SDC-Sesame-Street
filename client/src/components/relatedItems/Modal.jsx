@@ -10,13 +10,13 @@ import styled, { keyframes } from 'styled-components';
 import { MdTransitEnterexit } from 'react-icons/md';
 
 const rainbowRoad = keyframes`
-  0%    {color: red;}
-  14%    {color: orange;}
-  28%    {color: yellow;}
-  42%    {color: green;}
-  56%    {color: blue;}
-  77%    {color: indigo;}
-  100%    {color: purple;}
+  0%    {background-color: red;}
+  14%    {background-color: orange;}
+  28%    {background-color: yellow;}
+  42%    {background-color: green;}
+  56%    {background-color: blue;}
+  77%    {background-color: indigo;}
+  100%    {background-color: purple;}
 `
 
 const fadein = keyframes`
@@ -45,6 +45,7 @@ const Overlay = styled.div`
   bottom: 0;
   right: 0;
   z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.4)
 `;
 
 const Header = styled.div`

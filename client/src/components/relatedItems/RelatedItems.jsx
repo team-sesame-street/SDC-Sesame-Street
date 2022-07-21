@@ -97,19 +97,20 @@ const Image = styled.div`
   background-image: URL(${({url}) => url});
 `;
 
-const Title = styled.p`
-  margin: 0px 0px 3px 10px;
+const Name = styled.p`
+  padding: 0px 0px 1px 8px;
   font-weight: 900;
   cursor: pointer;
 `;
 
 const Price = styled.p`
-  margin: 1px 0px 0px 10px;
+  padding: 1px 0px 0px 9px;
   font-size: 12px;
 `;
 
 const Category = styled.p`
-  margin-left: 10px;
+  padding-left: 8px;
+  padding-top: 2px;
   font-size: 13px;
 `;
 
@@ -188,7 +189,7 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
               }}
             />
             <Category>{slide.data.category}</Category>
-            <Title onClick={() => pageChange(slide.data.id)}>{slide.data.name}</Title>
+            <Name onClick={() => pageChange(slide.data.id)}>{slide.data.name}</Name>
             <Price data-testid='label'>
               {!slides.urls[index].salePrice
               ? <label>${slides.urls[index].originalPrice}</label>

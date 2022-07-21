@@ -9,8 +9,7 @@ const Card = styled.div`
   background: whitesmoke;
   border-radius: 10px;
   display: inline-block;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin: 0 5px;
   position: relative;
   padding: 8px;
 `
@@ -32,18 +31,19 @@ const Image = styled.div`
   cursor: pointer;
 `
 
-const Title = styled.p`
-  margin: 0px 0px 3px 10px;
+const Name = styled.p`
+  padding: 0px 0px 1px 8px;
   font-weight: 900;
 `
 
 const Price = styled.p`
-  margin: 1px 0px 0px 10px;
+  padding: 1px 0px 0px 9px;
   font-size: 12px;
 `
 
 const Category = styled.p`
-  margin-left: 10px;
+  padding-left: 9px;
+  padding-top: 2px;
   font-size: 13px;
 `
 
@@ -67,7 +67,7 @@ function OutfitList({ slide, deleteOutfit, pageChange }) {
       </Button>
       <Image url={slide.url} onClick={() => pageChange(slide.id)}/>
       <Category>{slide.category}</Category>
-      <Title onClick={() => pageChange(slide.id)}>{slide.name}</Title>
+      <Name onClick={() => pageChange(slide.id)}>{slide.name}</Name>
       <Price>
         $
         {slide.price}

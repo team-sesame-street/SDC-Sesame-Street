@@ -166,7 +166,7 @@ function MainCarousel({ id, pageChange }) {
       <br />
       <br />
       <br />
-      <MainContainer style={{ marginBottom: '30px' }}>
+      <MainContainer>
         <Outfit currOutfit={currentOutfitInfo} deleteOutfit={deleteOutfit} outfitSlides={outfitSlides} addOutfit={addOutfit} pageChange={pageChange} />
       </MainContainer>
     </div>

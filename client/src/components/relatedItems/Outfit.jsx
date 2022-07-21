@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 /* eslint-disable import/extensions */
 /* eslint-disable react/button-has-type */
 /* eslint-disable no-restricted-syntax */
@@ -10,7 +11,7 @@ import OutfitList from './OutfitList.jsx';
 
 const SliderContainer = styled.div`
   width: 100%;
-  height: min-content;
+  height: 401px;
   display: flex;
   position: relative;
   align-items: center;
@@ -29,6 +30,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 401px;
   & h2 {
     align-self: flex-start;
     margin-bottom: 10px;
@@ -76,18 +78,18 @@ const Slider = styled.div`
 
 const addOutfitStyle = {
   color: 'gray',
-  background: 'white',
+  background: 'whitesmoke',
   fontWeight: '700',
-  fontSize: '15px',
+  fontSize: '20px',
   borderStyle: 'none',
   cursor: 'pointer  ',
 };
 
 const plusSignStyle = {
   color: 'gray',
-  background: 'white',
-  fontWeight: '700',
-  fontSize: '35px',
+  background: 'whitesmoke',
+  fontWeight: '600',
+  fontSize: '45px',
   borderStyle: 'none',
   cursor: 'pointer  ',
   width: '290px',
@@ -98,6 +100,12 @@ const Button = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 310px;
+  min-height: 370px;
+  background: whitesmoke !important;
+  border-radius: 10px;
+  margin: 0 5px;
+  padding: 8px;
 `;
 
 function Outfit({
