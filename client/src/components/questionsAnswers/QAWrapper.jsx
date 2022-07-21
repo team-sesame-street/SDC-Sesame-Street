@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import axios from 'axios';
 import QaListItem from './QaListItem.jsx';
 import randomId from '../../../utils/randomId.js';
@@ -9,24 +8,18 @@ import { Wrapper } from './styles/qawrapper.styles';
 
 function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks, searchTerm, questionIndex, page }) {
   const [trigger, setTrigger] = useState(0);
-  const [oldTrigger, setOldTrigger] = useState(trigger);
 
   useEffect(() => {
-    setOldTrigger(trigger);
-    if (trigger !== 0) {
-      if (trigger !== oldTrigger) {
-        setQuestions([]);
-      }
-
-      setChecks({ ...checks, isLoading: true });
-      axios.get(`/qa/questions/${productMetadata.product_id}/all/${page}`)
-        .then(({ data }) => {
-          setQuestions(data);
-          setChecks({ ...checks, isLoading: false });
-          document.querySelector('.qa-wrapper')?.scrollTo({ top: document.querySelector('.qa-wrapper').scrollHeight});
-        })
-        .catch((err) => console.error(err));
-    }
+    // when question modal sends a POST request
+    setChecks({ ...checks, isLoading: true });
+    // download all pages up to a certain page
+    axios.get(`/qa/questions/${productMetadata.product_id}/all/${page}`)
+      .then(({ data }) => {
+        setQuestions(data);
+        setChecks({ ...checks, isLoading: false });
+        document.querySelector('.qa-wrapper')?.scrollTo({ top: document.querySelector('.qa-wrapper').scrollHeight });
+      })
+      .catch((err) => console.error(err));
   }, [trigger]);
 
   return (
