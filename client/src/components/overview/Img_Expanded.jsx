@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { IoIosArrowDropright, IoIosArrowDropleft } from 'react-icons/io';
 import { IoExitOutline } from 'react-icons/io5';
@@ -10,11 +10,27 @@ function ExpandedImage({
   images, currImgIndex, setCurrImgIndex, setExpandedView,
 }) {
   const [zoom, setZoom] = useState(false);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  // const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+  const [offsetPercentage, setOffsetPercentage] = useState({ x: 0, y: 0 });
+  const container = useRef(null);
+  // const expandedImg = useRef(null);
 
-  const getMouseClickPosition = (e) => {
-    console.log('I was called');
-    setOffset({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
+  const getSizingRatio = (e) => {
+    const offset = { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY };
+    setContainerSize({
+      width: container.current.clientWidth,
+      height: container.current.clientHeight,
+    });
+    // const containerSize = {
+    //   width: container.current.clientWidth,
+    //   height: container.current.clientHeight,
+    // };
+
+    setOffsetPercentage({
+      x: (offset.x / containerSize.width) * 100,
+      y: (offset.y / containerSize.height) * 100,
+    });
   };
 
   if (images.length > 0) {
@@ -23,25 +39,34 @@ function ExpandedImage({
         {/* {zoom && (
           <Zoom imageURL={images[currImgIndex].url} setZoom={setZoom} offsetPosition={offset} />
         )} */}
-        {console.log(offset)}
+        {console.log('offset%:', offsetPercentage)}
         {images.map((image, index) => {
           if (index === currImgIndex) {
             return (
-              <Wrapper key={index} onClick={getMouseClickPosition}>
+              <Wrapper ref={container}
+                key={index}
+                onClick={!zoom ? getSizingRatio : () => { setZoom(false); }}
+                style={{
+                  backgroundImage: !zoom ? 'none' : `url(${images[currImgIndex].url})`,
+                  backgroundSize: `${containerSize.height * 2.5}px`,
+                  backgroundPosition: `${offsetPercentage.x}% ${offsetPercentage.y}%`,
+                }}
+              >
                 {!zoom && index > 0 && (
                   <IoIosArrowDropleft
                     className="icon-expanded left-arrow-expanded"
                     onClick={() => { setCurrImgIndex(currImgIndex - 1); }}
                   />
                 )}
-                {zoom && (
+                {/* {zoom && (
                   <ZoomImg
+                    useRef={zoomedImg}
                     src={images[currImgIndex].url}
                     alt="A zoomed in perspective"
                     onClick={() => { setZoom(false); }}
-                    style={{ objectPosition: `-${offset.x}px -${offset.y}px`}}
+                    style={{ objectPosition: `-${offsetPercentage.x}% -${offsetPercentage.y}%` }}
                   />
-                )}
+                )} */}
                 {!zoom && (
                   <Image
                     src={images[currImgIndex].url}
@@ -50,12 +75,14 @@ function ExpandedImage({
                     onClick={() => { setZoom(true); }}
                   />
                 )}
-                <IoExitOutline data-testid="exit-expanded-btn" className="icon-expanded exit-icon" onClick={() => { setExpandedView(false); }} />
+                {!zoom && (
+                  <IoExitOutline data-testid="exit-expanded-btn" className="icon-expanded exit-icon" onClick={() => { setExpandedView(false); }} />
+                )}
                 {!zoom && index < images.length - 1 && (
-                  <IoIosArrowDropright
-                    className="icon-expanded right-arrow-expanded"
-                    onClick={() => { setCurrImgIndex(currImgIndex + 1); }}
-                  />
+                <IoIosArrowDropright
+                  className="icon-expanded right-arrow-expanded"
+                  onClick={() => { setCurrImgIndex(currImgIndex + 1); }}
+                />
                 )}
               </Wrapper>
             );
@@ -115,11 +142,14 @@ const Wrapper = styled.div`
   margin: auto;
   width: 60vw;
   height: 60vw;
+  background-repeat: no-repeat;
+  // background-position: center;
   // width: 90%;
   // height: 90%;
-  max-height: 80vh;
-  max-width: 80vh;
-  overflow: hidden;
+  // max-height: 80vh;
+  // max-width: 80vh;
+  // overflow: hidden;
+
   & .icon-expanded {
     position: absolute;
     z-index: 100;
@@ -149,6 +179,19 @@ const Wrapper = styled.div`
   }
 `;
 
+// const ZoomImg = styled.img`
+//   position: absolute;
+//   height: 250%;
+//   width: 250%;
+//   // min-width: auto;
+//   object-fit: none;
+//   // transform: scale(2.5);
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   object-position: center center;
+// `;
+
 const NavSymbols = styled.div`
   display: grid;
   margin-top: 5px;
@@ -176,14 +219,4 @@ const Image = styled.img`
   // height: auto;
   cursor: crosshair;
   object-fit: contain;
-`;
-
-const ZoomImg = styled.img`
-  position: absolute;
-  // width: 250%;
-  // height: 250%;
-  object-fit: cover;
-  transform: scale(2.5);
-  top: 0;
-  left: 0;
 `;

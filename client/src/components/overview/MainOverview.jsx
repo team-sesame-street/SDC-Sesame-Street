@@ -153,7 +153,7 @@ MainOverview.defaultProps = {
 export default MainOverview;
 
 const Wrapper = styled.div`
-  justify-content: center;
+  // justify-content: center;
   width: 100%;
 `;
 
