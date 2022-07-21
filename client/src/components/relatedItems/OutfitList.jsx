@@ -6,12 +6,13 @@ import styled from 'styled-components';
 const Card = styled.div`
   min-width: 310px;
   min-height: min-content;
-  background: white;
+  background: whitesmoke;
   border-radius: 10px;
   display: inline-block;
   margin-left: 5px;
   margin-right: 5px;
   position: relative;
+  padding: 8px;
 `
 
 const Image = styled.div`
@@ -28,6 +29,7 @@ const Image = styled.div`
   align-items: center;
   background-image: URL(${({url}) => url});
   background-size: cover;
+  cursor: pointer;
 `
 
 const Title = styled.p`
@@ -53,7 +55,7 @@ const Button = styled.div`
   color: white;
 `
 
-function OutfitList({ slide, deleteOutfit }) {
+function OutfitList({ slide, deleteOutfit, pageChange }) {
   const deleteHandler = () => {
     deleteOutfit(slide.id);
   };
@@ -63,9 +65,9 @@ function OutfitList({ slide, deleteOutfit }) {
       <Button>
       <TiDeleteOutline size={25} onClick={deleteHandler} />
       </Button>
-      <Image url={slide.url} />
+      <Image url={slide.url} onClick={() => pageChange(slide.id)}/>
       <Category>{slide.category}</Category>
-      <Title>{slide.name}</Title>
+      <Title onClick={() => pageChange(slide.id)}>{slide.name}</Title>
       <Price>
         $
         {slide.price}

@@ -6,8 +6,25 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { MdTransitEnterexit } from 'react-icons/md';
+
+const rainbowRoad = keyframes`
+  0%    {color: red;}
+  14%    {color: orange;}
+  28%    {color: yellow;}
+  42%    {color: green;}
+  56%    {color: blue;}
+  77%    {color: indigo;}
+  100%    {color: purple;}
+`
+
+const fadein = keyframes`
+0%    { opacity: 0;}
+20%   { opacity: 0;}
+80%   { opacity: 1;}
+100%  { opacity: 1;}
+`
 
 const Modals = styled.div`
   position: fixed;
@@ -18,6 +35,7 @@ const Modals = styled.div`
   z-index: 1000;
   width: 600px;
   padding-top: 7px;
+  animation: ${fadein} 0.7s ease-in;
 `;
 
 const Overlay = styled.div`

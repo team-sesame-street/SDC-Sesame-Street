@@ -9,14 +9,31 @@ import styled from 'styled-components';
 import OutfitList from './OutfitList.jsx';
 
 const SliderContainer = styled.div`
-  width: 50%;
+  width: 100%;
   height: min-content;
   display: flex;
   position: relative;
   align-items: center;
   @media(max-width: 500px) {
     width: 100%;
-  };
+  }
+  & #outfitRightArrow, #oufitLeftArrow {
+    &:hover {
+      transform: scale(1.15);
+    }
+  }
+`;
+
+const Wrapper = styled.div`
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  & h2 {
+    align-self: flex-start;
+    margin-bottom: 10px;
+    padding-left: 5px;
+  }
 `;
 
 const left = {
@@ -24,7 +41,7 @@ const left = {
   borderRadius: '100%',
   position: 'absolute',
   left: '0',
-  boxShadow: '2px 2px 2px 2px rgb(0 0 0 / 12%)',
+  boxShadow: '2px 2px 1px 1px rgb(0 0 0 / 5%)',
   cursor: 'pointer',
   zIndex: 1000,
 };
@@ -34,7 +51,7 @@ const right = {
   borderRadius: '100%',
   position: 'absolute',
   right: '0',
-  boxShadow: '2px 2px 2px 2px rgb(0 0 0 / 12%)',
+  boxShadow: '2px 2px 1px 1px rgb(0 0 0 / 12%)',
   cursor: 'pointer',
 };
 
@@ -84,9 +101,9 @@ const Button = styled.div`
 `;
 
 function Outfit({
-  currOutfit, addOutfit, outfitSlides, deleteOutfit,
+  currOutfit, addOutfit, outfitSlides, deleteOutfit, pageChange,
 }) {
-  const [leftSide, setLeftSide] = useState(700);
+  const [leftSide, setLeftSide] = useState(900);
   const imageContainer = document.querySelector('#slider2');
   const rightArrow = document.querySelector('#outfitRightArrow');
   const leftArrow = document.querySelector('#outfitLeftArrow');
@@ -97,9 +114,9 @@ function Outfit({
     rightArrow.style.visibility = 'visible';
   }
 
-  if (leftSide <= 700 && leftArrow) {
+  if (leftSide <= 900 && leftArrow) {
     leftArrow.style.visibility = 'hidden';
-  } else if (leftSide > 700 && leftArrow) {
+  } else if (leftSide > 900 && leftArrow) {
     leftArrow.style.visibility = 'visible';
   }
 
@@ -133,34 +150,27 @@ function Outfit({
     if (outfitSlides.length !== 0) {
       return (
         outfitSlides.map((slide, index) => (
-          <OutfitList key={index} slide={slide} deleteOutfit={deleteOutfit} />
+          <OutfitList key={index} slide={slide} deleteOutfit={deleteOutfit} pageChange={pageChange} />
         ))
       );
     }
   };
 
   return (
-    <SliderContainer>
-      <MdChevronLeft size={40} style={left} onClick={slideLeft} id="outfitLeftArrow" />
-      <Slider id="slider2">
-        {imageRender()}
-        {outfitSlides.length !== 0 ? (
-        <>
-          <Button>
-            <button style={{...plusSignStyle}} onClick={clickHandler}>+</button>
-            <button style={{...addOutfitStyle}} onClick={clickHandler}>Add an Outfit</button>
-          </Button>
-        </>)
-        : (
-        <>
-          <Button>
-            <button style={{...plusSignStyle}} onClick={clickHandler}>+</button>
-            <button style={{...addOutfitStyle}} onClick={clickHandler}>Add an Outfit</button>
-          </Button>
-        </>)}
-      </Slider>
-      <MdChevronRight size={40} style={right} onClick={slideRight} id="outfitRightArrow" />
-    </SliderContainer>
+    <Wrapper>
+      <h2>Your Outfit</h2>
+      <SliderContainer>
+        <MdChevronLeft size={40} style={left} onClick={slideLeft} id="outfitLeftArrow" />
+        <Slider id="slider2">
+          {imageRender()}
+            <Button>
+              <button style={{ ...plusSignStyle }} onClick={clickHandler}>+</button>
+              <button style={{ ...addOutfitStyle }} onClick={clickHandler}>Add an Outfit</button>
+            </Button>
+        </Slider>
+        <MdChevronRight size={40} style={right} onClick={slideRight} id="outfitRightArrow" />
+      </SliderContainer>
+    </Wrapper>
   );
 }
 

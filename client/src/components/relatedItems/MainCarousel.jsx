@@ -16,6 +16,7 @@ const MainContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  flex-direction: column;
 `;
 
 function MainCarousel({ id, pageChange }) {
@@ -165,8 +166,8 @@ function MainCarousel({ id, pageChange }) {
       <br />
       <br />
       <br />
-      <MainContainer style={{marginBottom: '30px'}}>
-        <Outfit currOutfit={currentOutfitInfo} deleteOutfit={deleteOutfit} outfitSlides={outfitSlides} addOutfit={addOutfit} />
+      <MainContainer style={{ marginBottom: '30px' }}>
+        <Outfit currOutfit={currentOutfitInfo} deleteOutfit={deleteOutfit} outfitSlides={outfitSlides} addOutfit={addOutfit} pageChange={pageChange} />
       </MainContainer>
     </div>
   );
