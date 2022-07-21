@@ -16,10 +16,10 @@ const MainContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-`
+`;
 
 function MainCarousel({ id, pageChange }) {
-  const [relatedItemsInfo, setRelatedItemInfo] = useState({info:[], urls:[]});
+  const [relatedItemsInfo, setRelatedItemInfo] = useState({ info: [], urls: [] });
   const [reviews, setReviews] = useState([]);
   const [outfitSlides, setCurrOutfitSlides] = useState([]);
   const [currentOutfitInfo, setCurrOutfitInfo] = useState({
@@ -28,29 +28,23 @@ function MainCarousel({ id, pageChange }) {
     avg: null,
   });
 
-  const productInfo = (id) => {
-    return axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
-      headers: {
-        Authorization: process.env.GITKEY,
-      },
-    })
-  }
+  const productInfo = (id) => axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}`, {
+    headers: {
+      Authorization: process.env.GITKEY,
+    },
+  });
 
-  const productStyle = (id) => {
-    return axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`, {
-      headers: {
-        Authorization: process.env.GITKEY,
-      },
-    })
-  }
+  const productStyle = (id) => axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`, {
+    headers: {
+      Authorization: process.env.GITKEY,
+    },
+  });
 
-  const productRatings = (id) => {
-    return axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta?product_id=${id}`, {
-      headers: {
-        Authorization: process.env.GITKEY,
-      },
-    })
-  }
+  const productRatings = (id) => axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta?product_id=${id}`, {
+    headers: {
+      Authorization: process.env.GITKEY,
+    },
+  });
 
   const addOutfit = (newOutfit) => {
     setCurrOutfitSlides([...outfitSlides, newOutfit]);
@@ -68,9 +62,9 @@ function MainCarousel({ id, pageChange }) {
     localStorage.setItem('list', JSON.stringify(copy));
   };
 
-  let infoPromises = []
-  let stylePromises = []
-  let ratingPromises = []
+  const infoPromises = [];
+  const stylePromises = [];
+  const ratingPromises = [];
 
   useEffect(() => {
     if (id) {
@@ -79,26 +73,26 @@ function MainCarousel({ id, pageChange }) {
           Authorization: process.env.GITKEY,
         },
       }).then((res) => {
-        const seen = {}
+        const seen = {};
         for(const id of res.data) {
-          seen[id] = true
+          seen[id] = true;
         }
-        Object.keys(seen).forEach(id => {
-          const promise1 = Promise.all([productInfo(id)])
-          infoPromises.push(promise1)
-          const promise2 = Promise.all([productStyle(id)])
-          stylePromises.push(promise2)
-          const promise3 = Promise.all([productRatings(id)])
-          ratingPromises.push(promise3)
-        })
-        Promise.all(infoPromises).then(data => {
-          const results = []
+        Object.keys(seen).forEach((id) => {
+          const promise1 = Promise.all([productInfo(id)]);
+          infoPromises.push(promise1);
+          const promise2 = Promise.all([productStyle(id)]);
+          stylePromises.push(promise2);
+          const promise3 = Promise.all([productRatings(id)]);
+          ratingPromises.push(promise3);
+        });
+        Promise.all(infoPromises).then((data) => {
+          const results = [];
           for (const subArr of data) {
-            results.push(subArr[0])
+            results.push(subArr[0]);
           }
-          setRelatedItemInfo((relatedItemsInfo) => ({...relatedItemsInfo, info: results}))
-        })
-        Promise.all(stylePromises).then(data => {
+          setRelatedItemInfo((relatedItemsInfo) => ({...relatedItemsInfo, info: results}));
+        });
+        Promise.all(stylePromises).then((data) => {
           const results = [];
           for (let x = 0; x < data.length; x++) {
             const obj = {};
@@ -109,69 +103,69 @@ function MainCarousel({ id, pageChange }) {
               url = 'https://images.unsplash.com/photo-1515243061678-14fc18b93935?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=800';
             }
             let salePrice;
-            let originalPrice = data[x][0].data.results[0].original_price
+            const originalPrice = data[x][0].data.results[0].original_price;
             !data[x][0].data.results[0].sale_price
               ? salePrice = false
               : salePrice = data[x][0].data.results[0].sale_price;
             obj.salePrice = salePrice;
             obj.url = url;
-            obj.originalPrice = originalPrice
+            obj.originalPrice = originalPrice;
             results.push(obj);
           }
           setRelatedItemInfo((relatedItemsInfo) => ({...relatedItemsInfo, urls: results}));
         });
 
-        Promise.all(ratingPromises).then(data => {
-          const results = []
+        Promise.all(ratingPromises).then((data) => {
+          const results = [];
           for (let x = 0; x < data.length; x++) {
-            const obj = {}
+            const obj = {};
             const id = data[x][0].data.product_id;
-            let avg = 0
-            let count = 0
+            let avg = 0;
+            let count = 0;
             for (const rating in data[x][0].data.ratings) {
-             avg += parseInt(rating) * parseInt(data[x][0].data.ratings[rating])
-             count += parseInt(data[x][0].data.ratings[rating])
+              avg += parseInt(rating) * parseInt(data[x][0].data.ratings[rating]);
+              count += parseInt(data[x][0].data.ratings[rating]);
             }
             obj.id = id;
             obj.avg = avg / count;
             results.push(obj);
           }
           setReviews(results);
-        })
+        });
       })
         .catch((err) => console.log(err));
 
       Promise.all([productInfo(id), productStyle(id), productRatings(id)])
-       .then(res => {
+        .then((res) => {
           setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, info: res[0].data }));
           setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, styles: res[1].data.results[0] }));
-          let avg = 0
-          let count = 0
+          let avg = 0;
+          let count = 0;
           if (Object.keys(res[2].data.ratings) !== 0) {
             for (const rating in res[2].data.ratings) {
-              avg += parseInt(rating) * parseInt(res[2].data.ratings[rating])
-              count += parseInt(res[2].data.ratings[rating])
+              avg += parseInt(rating) * parseInt(res[2].data.ratings[rating]);
+              count += parseInt(res[2].data.ratings[rating]);
             }
             const results = avg / count;
             setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, avg: Number(results) }));
           }
-       })
+        });
     }
   }, [id]);
 
   useEffect(() => {
-    setCurrOutfitSlides(JSON.parse(localStorage.getItem('list')) || [])
-  },[])
+    setCurrOutfitSlides(JSON.parse(localStorage.getItem('list')) || []);
+  }, []);
 
   return (
-    <div data-testid='main'>
-      <MainContainer>
+    <div data-testid="main">
+      <MainContainer style={{ marginTop: '40px' }}>
         <RelatedItems slides={relatedItemsInfo} id={id} pageChange={pageChange} reviews={reviews} />
       </MainContainer>
       <br />
       <br />
       <br />
-      <MainContainer>
+      <MainContainer style={{marginBottom: '30px'}}>
         <Outfit currOutfit={currentOutfitInfo} deleteOutfit={deleteOutfit} outfitSlides={outfitSlides} addOutfit={addOutfit} />
       </MainContainer>
     </div>
