@@ -63,6 +63,7 @@ const ListWrapper = styled.ul`
   & li:hover {
     /* background: #eee; */
     text-decoration: underline;
+    color: #222;
   }
 
   & > li#logo {
