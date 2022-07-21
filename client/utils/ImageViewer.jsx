@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { VscClose } from 'react-icons/vsc';
 
@@ -13,7 +13,7 @@ function ImageViewer({ photos, cb }) {
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (index === 0) {
       document.querySelector('#left').style.visibility = 'hidden';
     } else {
@@ -28,8 +28,8 @@ function ImageViewer({ photos, cb }) {
 
   return (
     <>
-      <Backdrop onClick={() => cb()} />
-      <Wrapper>
+      <Backdrop onClick={() => cb()} data-testid="image-viewer-backdrop"/>
+      <Wrapper data-testid="image-viewer">
         <Button type="button" id="left" data-direction="left" onClick={(e) => handleNavigation(e)}>←</Button>
         <Image src={(photos[index])} />
         <CloseButton onClick={() => cb()}> <VscClose/> </CloseButton>

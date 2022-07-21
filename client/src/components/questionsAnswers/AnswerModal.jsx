@@ -126,7 +126,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
 
   return (
     <Modal cb={() => setIsAnswerModalOpen(false)}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="ans-modal">
         <h2>Submit your Answer</h2>
         <h3>
           {productMetadata.productName}
@@ -135,17 +135,17 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
         </h3>
         <label htmlFor="answer">
           Your Answer:
-          <textarea id="answer" maxLength={1000} name="answer" required />
+          <textarea id="answer" maxLength={1000} name="answer" data-testid="ans-answer" required />
         </label>
         <div className="nicknameAndemail">
           <label htmlFor="username">
             Your Nickname:
-            <input type="textbox" id="username" maxLength={60} placeholder="Example: jack543!" name="username" required />
+            <input type="textbox" id="username" maxLength={60} placeholder="Example: jack543!" data-testid="ans-username" name="username" required />
             <small>For privacy reasons, do not use your full name or email address.</small>
           </label>
           <label htmlFor="email">
             Your email:
-            <input type="email" id="email" maxLength={60} placeholder="Example: jack@email.com" name="email" required />
+            <input type="email" id="email" maxLength={60} placeholder="Example: jack@email.com" data-testid="ans-email" name="email" required />
             <small>For authentication reasons, you will not be emailed.</small>
           </label>
         </div>
@@ -157,7 +157,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
           {selectedImages && (
             <div>
               {
-                urls.map((url) => <Thumbnail key={randomId()} src={url} loading="lazy" />)
+                urls.map((url) => <Thumbnail data-testid="ans_thumbnail"  key={randomId()} src={url} loading="lazy" />)
               }
             </div>
           )}

@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   margin: 50px auto 0 auto;
   padding-bottom: 4rem;
-  width: 70%;
+  width: 80%;
   @media (max-width: 500px) {
     margin: 25px 0 0 0;
     width: 100%;
