@@ -2,12 +2,10 @@
 import React from 'react';
 import formatDate from '../../../../utils/formatDate';
 
-function ReviewsDate({ date }) {
+export default function ReviewsDate({ date }) {
   return (
     <div>
       {formatDate(date)}
     </div>
   );
 }
-
-export default ReviewsDate;

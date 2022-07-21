@@ -1,12 +1,24 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-console */
-/* eslint-disable no-use-before-define */
-/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function ReviewsHelpful({ helpfulness, reviewId }) {
+const styles = {
+  flexDisplay: {
+    display: 'flex',
+    gap: '15px',
+    width: '40%',
+    whiteSpace: 'nowrap',
+    fontSize: 14,
+    marginBottom: '20px',
+  },
+  greyedOut: {
+    color: 'grey',
+  },
+};
+
+export default function ReviewsHelpful({ helpfulness, reviewId }) {
   const [helpful, setHelpful] = useState(helpfulness);
   const [voted, setVoted] = useState(
     localStorage.getItem(`hasVoted-${reviewId}`) || false,
@@ -44,7 +56,7 @@ function ReviewsHelpful({ helpfulness, reviewId }) {
   }
 
   return (
-    <div style={flexDisplay}>
+    <div style={styles.flexDisplay}>
       Was this review helpful?
       {' '}
       {!voted ? (
@@ -55,7 +67,7 @@ function ReviewsHelpful({ helpfulness, reviewId }) {
           {`(${helpful})`}
         </div>
       ) : (
-        <div style={greyedOut}>
+        <div style={styles.greyedOut}>
           Yes
           {`(${helpful})`}
         </div>
@@ -70,7 +82,7 @@ function ReviewsHelpful({ helpfulness, reviewId }) {
           </a>
         </div>
       ) : (
-        <div style={greyedOut}>
+        <div style={styles.greyedOut}>
           Report
         </div>
       )}
@@ -78,18 +90,3 @@ function ReviewsHelpful({ helpfulness, reviewId }) {
     </div>
   );
 }
-
-const flexDisplay = {
-  display: 'flex',
-  gap: '15px',
-  width: '40%',
-  whiteSpace: 'nowrap',
-  fontSize: 14,
-  marginBottom: '20px',
-};
-
-const greyedOut = {
-  color: 'grey',
-};
-
-export default ReviewsHelpful;

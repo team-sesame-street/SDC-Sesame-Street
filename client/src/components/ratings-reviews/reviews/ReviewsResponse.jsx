@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-function ReviewsResponse({ responseBody }) {
+export default function ReviewsResponse({ responseBody }) {
   return (
     <div>
       {responseBody && (
@@ -14,5 +14,3 @@ function ReviewsResponse({ responseBody }) {
     </div>
   );
 }
-
-export default ReviewsResponse;

@@ -10,6 +10,8 @@ import MainOverview from './overview/MainOverview.jsx';
 function App() {
   const [productId, setProductId] = useState(40346);
   const [currProduct, setCurrProduct] = useState({ id: productId });
+  const [totalRatings, setTotalRatings] = useState(0);
+  const [avgRating, setAvgRating] = useState(0);
 
   useEffect(() => {
     axios
@@ -36,7 +38,11 @@ function App() {
       <MainOverview id={productId} />
       <MainCarousel id={productId} pageChange={pageChange} />
       <QaBox currProduct={currProduct} />
-      <RrBox id={productId} />
+      <RrBox
+        id={productId}
+        setTotalRatings={(num) => { setTotalRatings(num); }}
+        setAvgRating={(num) => { setAvgRating(num); }}
+      />
     </div>
   );
 }
