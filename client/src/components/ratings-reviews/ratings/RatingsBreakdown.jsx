@@ -1,13 +1,58 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable no-use-before-define */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 import RatingsBar from '../../../../utils/RatingsBar.jsx';
 import getPercentage from '../../../../utils/getPercentage.js';
 
-function RatingsBreakdown({ ratings, totalRatings, currRating, setRating, filterRatings, meta }) {
+const IndividualBreakdown = styled.div`
+  &:hover {
+    background: lightGreen;
+  }
+`;
+
+const styles = {
+  barStyling: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+
+  recommendStyling: {
+    fontFamily: 'arial',
+    fontSize: '16.5px',
+  },
+
+  stylingContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+  },
+
+  removeFilterStyling: {
+    display: 'flex',
+    color: 'crimson',
+    width: '150px',
+  },
+
+  individualBreakdown: {
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+    fontSize: '18px',
+  },
+
+  individualBreakdownSelected: {
+    display: 'flex',
+    alignItems: 'baseline',
+    cursor: 'pointer',
+    fontSize: '18px',
+    backgroundColor: 'lightGreen',
+  },
+};
+
+export default function RatingsBreakdown({
+  ratings, totalRatings, currRating, setRating, filterRatings, meta,
+}) {
   const barArr = [];
   for (let i = 5; i >= 1; i -= 1) {
     barArr.push(
@@ -40,15 +85,15 @@ function RatingsBreakdown({ ratings, totalRatings, currRating, setRating, filter
   }
 
   return (
-    <div style={stylingContainer}>
-      <div style={recommendStyling}>
+    <div style={styles.stylingContainer}>
+      <div style={styles.recommendStyling}>
         {meta && getRecommended()}
         of reviews recommend this product
       </div>
-      {filterRatings && (<a href="#" onClick={handleClick} id="remove-filter" style={removeFilterStyling}>Remove all filters</a>)}
-      <div style={barStyling}>
+      {filterRatings && (<a href="#" onClick={handleClick} id="remove-filter" style={styles.removeFilterStyling}>Remove all filters</a>)}
+      <div style={styles.barStyling}>
         {barArr.map((ratingBar, i) => (
-          <IndividualBreakdown style={currRating[5 - i] ? individualBreakdownSelected : individualBreakdown} key={[i]} id={5 - i} role="button" tabIndex="0" onClick={handleClick}>
+          <IndividualBreakdown style={currRating[5 - i] ? styles.individualBreakdownSelected : styles.individualBreakdown} key={[i]} id={5 - i} role="button" tabIndex="0" onClick={(event) => handleClick(event)}>
             {5 - i}
             {' '}
             stars
@@ -61,48 +106,3 @@ function RatingsBreakdown({ ratings, totalRatings, currRating, setRating, filter
     </div>
   );
 }
-
-const barStyling = {
-  display: 'flex',
-  flexDirection: 'column',
-};
-
-const recommendStyling = {
-  fontFamily: 'arial',
-  fontSize: '16.5px',
-};
-
-const stylingContainer = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '10px',
-};
-
-const removeFilterStyling = {
-  display: 'flex',
-  color: 'crimson',
-  width: '150px',
-};
-
-const individualBreakdown = {
-  display: 'flex',
-  alignItems: 'center',
-  cursor: 'pointer',
-  fontSize: '18px',
-};
-
-const individualBreakdownSelected = {
-  display: 'flex',
-  alignItems: 'baseline',
-  cursor: 'pointer',
-  fontSize: '18px',
-  backgroundColor: 'lightGreen',
-};
-
-const IndividualBreakdown = styled.div`
-  &:hover {
-    background: lightGreen;
-  }
-`;
-
-export default RatingsBreakdown;

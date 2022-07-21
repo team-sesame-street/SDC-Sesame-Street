@@ -2,7 +2,9 @@
 import React from 'react';
 import Modal from './form/Modal.jsx';
 
-function ReviewsNewReview({ closeModal, showModal, onOpen, onClose }) {
+export default function ReviewsNewReview({
+  closeModal, showModal, onOpen, onClose,
+}) {
   const addReviewBtn = {
     cursor: 'pointer',
   };
@@ -20,5 +22,3 @@ function ReviewsNewReview({ closeModal, showModal, onOpen, onClose }) {
     </div>
   );
 }
-
-export default ReviewsNewReview;
