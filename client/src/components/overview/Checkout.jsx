@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -13,7 +13,7 @@ function Checkout({ selectedStyle }) {
   const [selectingSize, setSelectingSize] = useState(false);
   const [selectingQuantity, setSelectingQuantity] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (Object.keys(selectedStyle).length > 0) {
       const inStock = Object.keys(selectedStyle.skus).filter(
         (sku) => (selectedStyle.skus[sku].quantity > 0),
