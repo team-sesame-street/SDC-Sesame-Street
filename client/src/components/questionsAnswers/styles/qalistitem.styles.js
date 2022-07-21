@@ -72,20 +72,21 @@ export const PrimaryBtn = styled.button`
   text-transform: uppercase;
   font-weight: 700;
   border: none;
-  color: #222;
+  color: #022F6B;
   font-size: 0.85rem;
   padding: 5px 10px;
   margin: 10px 0;
   cursor: pointer;
+  border: 1px solid #022F6B;
   border-radius: 4px;
   cursor: pointer;
   transition: all 100ms ease-in-out;
-
+  background-color: white;
   &:hover {
     transition: all 200ms ease-in-out;
-    background: #ddd;
+    background: #CAF0F8;
   }
   &:active {
-      background: #ccc;
+      background: #ACE8F4;
     }
 `;

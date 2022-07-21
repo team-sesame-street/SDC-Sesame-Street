@@ -12,15 +12,14 @@ const GlobalStyle = createGlobalStyle`
   margin: 0;
 }
 html, body {
-  @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&display=swap');
-  font-family: 'Raleway';
+  font-family: 'Open Sans';
+  font-weight: 400;
+
   height: 100%;
 }
 body {
   line-height: calc(1em + 0.5rem);
   -webkit-font-smoothing: antialiased;
-  width: 80%;
-  margin: 0 auto;
 }
 img, picture, video, canvas, svg {
   display: block;

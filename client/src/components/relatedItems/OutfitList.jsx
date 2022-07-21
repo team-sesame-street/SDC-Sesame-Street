@@ -6,12 +6,12 @@ import styled from 'styled-components';
 const Card = styled.div`
   min-width: 310px;
   min-height: min-content;
-  background: white;
+  background: whitesmoke;
   border-radius: 10px;
   display: inline-block;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin: 0 5px;
   position: relative;
+  padding: 8px;
 `
 
 const Image = styled.div`
@@ -28,20 +28,22 @@ const Image = styled.div`
   align-items: center;
   background-image: URL(${({url}) => url});
   background-size: cover;
+  cursor: pointer;
 `
 
-const Title = styled.p`
-  margin: 0px 0px 3px 10px;
+const Name = styled.p`
+  padding: 0px 0px 1px 8px;
   font-weight: 900;
 `
 
 const Price = styled.p`
-  margin: 1px 0px 0px 10px;
+  padding: 1px 0px 0px 9px;
   font-size: 12px;
 `
 
 const Category = styled.p`
-  margin-left: 10px;
+  padding-left: 9px;
+  padding-top: 2px;
   font-size: 13px;
 `
 
@@ -53,7 +55,7 @@ const Button = styled.div`
   color: white;
 `
 
-function OutfitList({ slide, deleteOutfit }) {
+function OutfitList({ slide, deleteOutfit, pageChange }) {
   const deleteHandler = () => {
     deleteOutfit(slide.id);
   };
@@ -63,9 +65,9 @@ function OutfitList({ slide, deleteOutfit }) {
       <Button>
       <TiDeleteOutline size={25} onClick={deleteHandler} />
       </Button>
-      <Image url={slide.url} />
+      <Image url={slide.url} onClick={() => pageChange(slide.id)}/>
       <Category>{slide.category}</Category>
-      <Title>{slide.name}</Title>
+      <Name onClick={() => pageChange(slide.id)}>{slide.name}</Name>
       <Price>
         $
         {slide.price}
