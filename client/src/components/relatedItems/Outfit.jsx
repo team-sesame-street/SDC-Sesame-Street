@@ -17,7 +17,7 @@ const SliderContainer = styled.div`
   @media(max-width: 500px) {
     width: 100%;
   };
-`
+`;
 
 const left = {
   backgroundColor: 'white',
@@ -55,7 +55,7 @@ const Slider = styled.div`
     width: 0px;
     background: transparent;
   };
-`
+`;
 
 const addOutfitStyle = {
   color: 'gray',
@@ -74,14 +74,14 @@ const plusSignStyle = {
   borderStyle: 'none',
   cursor: 'pointer  ',
   width: '290px',
-}
+};
 
 const Button = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`
+`;
 
 function Outfit({
   currOutfit, addOutfit, outfitSlides, deleteOutfit,
@@ -125,7 +125,7 @@ function Outfit({
     obj.price = currOutfit.info.default_price;
     obj.avg = currOutfit.avg;
     addOutfit(obj);
-    const currentList = JSON.parse(localStorage.getItem('list')) || []
+    const currentList = JSON.parse(localStorage.getItem('list')) || [];
     localStorage.setItem('list', JSON.stringify([...currentList, obj]));
   };
 
