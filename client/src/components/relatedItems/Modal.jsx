@@ -7,7 +7,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { MdTransitEnterexit } from "react-icons/md";
+import { MdTransitEnterexit } from 'react-icons/md';
 
 const Modals = styled.div`
   position: fixed;
@@ -32,21 +32,26 @@ const Overlay = styled.div`
 const Header = styled.div`
   text-align: center;
   position: relative;
-`
+`;
 
 const Button = styled.div`
   cursor: pointer;
   float: right;
   padding-right: 5px;
   padding-bottom: 5px;
-`
+`;
 
 const Table = styled.table`
   width: 100%;
   min-height: 30vh;
   max-height: 30vh;
-`
+`;
 
+const Th = styled.th`
+  border-top: 0.7px solid black;
+  border-bottom: 0.7px solid black;
+  border-right: 0.7px solid black;
+`;
 
 const textStyle = {
   width: '33.33%',
@@ -105,9 +110,9 @@ function Modal({ open, closeModal, currOutfit, id }) {
           <Table>
             <thead>
               <tr>
-                <th style={{ borderTop: '0.7px solid black', borderBottom: '0.7px solid black', borderRight: '0.7px solid black'}}>{siteIdInfo.name}</th>
+                <Th>{siteIdInfo.name}</Th>
                 <th style={{ borderTop: '0.7px solid black', borderBottom: '0.7px solid black'}}>Characteristics</th>
-                <th style={{ borderTop: '0.7px solid black', borderBottom: '0.7px solid black', borderLeft: '0.7px solid black'}}>{currOutfit.data.name}</th>
+                <Th>{currOutfit.data.name}</Th>
               </tr>
             </thead>
             {Object.keys(features).length !== 0 ? Object.keys(features.seen).map((feature) => (
