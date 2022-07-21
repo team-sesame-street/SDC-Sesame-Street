@@ -16,6 +16,7 @@ const MainContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  flex-direction: column;
 `;
 
 function MainCarousel({ id, pageChange }) {
@@ -85,6 +86,7 @@ function MainCarousel({ id, pageChange }) {
           const promise3 = Promise.all([productRatings(id)]);
           ratingPromises.push(promise3);
         });
+
         Promise.all(infoPromises).then((data) => {
           const results = [];
           for (const subArr of data) {
@@ -92,6 +94,7 @@ function MainCarousel({ id, pageChange }) {
           }
           setRelatedItemInfo((relatedItemsInfo) => ({...relatedItemsInfo, info: results}));
         });
+
         Promise.all(stylePromises).then((data) => {
           const results = [];
           for (let x = 0; x < data.length; x++) {
@@ -149,7 +152,8 @@ function MainCarousel({ id, pageChange }) {
             const results = avg / count;
             setCurrOutfitInfo((currentOutfitInfo) => ({ ...currentOutfitInfo, avg: Number(results) }));
           }
-        });
+        })
+        .catch((err) => console.log(err));
     }
   }, [id]);
 
@@ -165,8 +169,8 @@ function MainCarousel({ id, pageChange }) {
       <br />
       <br />
       <br />
-      <MainContainer style={{marginBottom: '30px'}}>
-        <Outfit currOutfit={currentOutfitInfo} deleteOutfit={deleteOutfit} outfitSlides={outfitSlides} addOutfit={addOutfit} />
+      <MainContainer>
+        <Outfit currOutfit={currentOutfitInfo} deleteOutfit={deleteOutfit} outfitSlides={outfitSlides} addOutfit={addOutfit} pageChange={pageChange} />
       </MainContainer>
     </div>
   );

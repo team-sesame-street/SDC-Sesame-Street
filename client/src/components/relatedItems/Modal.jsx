@@ -6,8 +6,25 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { MdTransitEnterexit } from 'react-icons/md';
+
+const rainbowRoad = keyframes`
+  0%    {background-color: red;}
+  14%    {background-color: orange;}
+  28%    {background-color: yellow;}
+  42%    {background-color: green;}
+  56%    {background-color: blue;}
+  77%    {background-color: indigo;}
+  100%    {background-color: purple;}
+`
+
+const fadein = keyframes`
+0%    { opacity: 0;}
+20%   { opacity: 0;}
+80%   { opacity: 1;}
+100%  { opacity: 1;}
+`
 
 const Modals = styled.div`
   position: fixed;
@@ -18,6 +35,7 @@ const Modals = styled.div`
   z-index: 1000;
   width: 600px;
   padding-top: 7px;
+  animation: ${fadein} 0.7s ease-in;
 `;
 
 const Overlay = styled.div`
@@ -27,6 +45,7 @@ const Overlay = styled.div`
   bottom: 0;
   right: 0;
   z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.4)
 `;
 
 const Header = styled.div`
@@ -47,10 +66,16 @@ const Table = styled.table`
   max-height: 30vh;
 `;
 
-const Th = styled.th`
+const Th1 = styled.th`
   border-top: 0.7px solid black;
   border-bottom: 0.7px solid black;
   border-right: 0.7px solid black;
+`;
+
+const Th2 = styled.th`
+  border-top: 0.7px solid black;
+  border-bottom: 0.7px solid black;
+  border-left: 0.7px solid black;
 `;
 
 const textStyle = {
@@ -104,23 +129,23 @@ function Modal({ open, closeModal, currOutfit, id }) {
       <Modals>
         <Header>
           <b>Comparison</b>
-          <Button><MdTransitEnterexit size={20} onClick={closeModal} /></Button>
+          <Button><MdTransitEnterexit size={25} onClick={closeModal} /></Button>
         </Header>
         <section>
           <Table>
             <thead>
               <tr>
-                <Th>{siteIdInfo.name}</Th>
+                <Th1>{siteIdInfo.name}</Th1>
                 <th style={{ borderTop: '0.7px solid black', borderBottom: '0.7px solid black'}}>Characteristics</th>
-                <Th>{currOutfit.data.name}</Th>
+                <Th2>{currOutfit.data.name}</Th2>
               </tr>
             </thead>
             {Object.keys(features).length !== 0 ? Object.keys(features.seen).map((feature) => (
               <tbody key={Math.random()}>
                 <tr>
-                  <td style={{...textStyle, borderRight: '0.7px solid black'}}>{features.main[feature] ? features.main[feature] + ' ✔' : ' '}</td>
+                  <td style={{...textStyle, borderRight: '0.7px solid black'}}>{features.main[feature] ? features.main[feature] + '  ✔' : ' '}</td>
                   <td style={textStyle}><b>{feature}</b></td>
-                  <td style={{...textStyle, borderLeft: '0.7px solid black'}}>{features.clickedOutfit[feature] ? features.clickedOutfit[feature] + ' ✔': ' '}</td>
+                  <td style={{...textStyle, borderLeft: '0.7px solid black'}}>{features.clickedOutfit[feature] ? features.clickedOutfit[feature] + '  ✔': ' '}</td>
                 </tr>
               </tbody>
             )) : <></>}
