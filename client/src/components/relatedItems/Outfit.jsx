@@ -10,11 +10,14 @@ import OutfitList from './OutfitList.jsx';
 
 const SliderContainer = styled.div`
   width: 50%;
-  height: 400px;
+  height: min-content;
   display: flex;
   position: relative;
   align-items: center;
-`
+  @media(max-width: 500px) {
+    width: 100%;
+  };
+`;
 
 const left = {
   backgroundColor: 'white',
@@ -23,6 +26,7 @@ const left = {
   left: '0',
   boxShadow: '2px 2px 2px 2px rgb(0 0 0 / 12%)',
   cursor: 'pointer',
+  zIndex: 1000,
 };
 
 const right = {
@@ -35,13 +39,23 @@ const right = {
 };
 
 const Slider = styled.div`
-  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
   height: 100%;
   white-space: nowrap;
-  overflow-x: scroll;
+  overflow-x: hidden;
   scrollbar-width: none;
   scroll-behavior: smooth;
-`
+  overflow-y: hidden;
+  @media(max-width: 500px) {
+    overflow-x: scroll;
+  };
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  };
+`;
 
 const addOutfitStyle = {
   color: 'gray',
@@ -60,7 +74,14 @@ const plusSignStyle = {
   borderStyle: 'none',
   cursor: 'pointer  ',
   width: '290px',
-}
+};
+
+const Button = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 function Outfit({
   currOutfit, addOutfit, outfitSlides, deleteOutfit,
@@ -104,7 +125,7 @@ function Outfit({
     obj.price = currOutfit.info.default_price;
     obj.avg = currOutfit.avg;
     addOutfit(obj);
-    const currentList = JSON.parse(localStorage.getItem('list')) || []
+    const currentList = JSON.parse(localStorage.getItem('list')) || [];
     localStorage.setItem('list', JSON.stringify([...currentList, obj]));
   };
 
@@ -123,12 +144,19 @@ function Outfit({
       <MdChevronLeft size={40} style={left} onClick={slideLeft} id="outfitLeftArrow" />
       <Slider id="slider2">
         {imageRender()}
-        {outfitSlides.length !== 0 ? (<>
-        <button style={{...plusSignStyle, transform: 'translateY(-175px)' }} onClick={clickHandler}>+</button>
-        <button style={{...addOutfitStyle, transform: 'translate(-200px, -145px)' }} onClick={clickHandler}>Add an Outfit</button></>)
-        : (<>
-        <button style={{...plusSignStyle, transform: 'translateY(145px)' }} onClick={clickHandler}>+</button>
-        <button style={{...addOutfitStyle, transform: 'translate(-200px, 175px)' }} onClick={clickHandler}>Add an Outfit</button>
+        {outfitSlides.length !== 0 ? (
+        <>
+          <Button>
+            <button style={{...plusSignStyle}} onClick={clickHandler}>+</button>
+            <button style={{...addOutfitStyle}} onClick={clickHandler}>Add an Outfit</button>
+          </Button>
+        </>)
+        : (
+        <>
+          <Button>
+            <button style={{...plusSignStyle}} onClick={clickHandler}>+</button>
+            <button style={{...addOutfitStyle}} onClick={clickHandler}>Add an Outfit</button>
+          </Button>
         </>)}
       </Slider>
       <MdChevronRight size={40} style={right} onClick={slideRight} id="outfitRightArrow" />
