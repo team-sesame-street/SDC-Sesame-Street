@@ -76,7 +76,7 @@ function QaListItem({ result, productMetadata, setTrigger, questions, setQuestio
               <div className="answer_label">A:</div>
               <div className="answers_list">
                 {answers.slice(0, answerLimit).map((answer) => (
-                  <AnswerSubItem key={randomId()} answer={answer} question_id={result.question_id} />
+                  <AnswerSubItem key={randomId()} answer={answer} />
                 ))}
                 {answers.length > 2
                   && (
@@ -93,7 +93,19 @@ function QaListItem({ result, productMetadata, setTrigger, questions, setQuestio
         }
       </details>
       {isAnswerModalOpen
-        && <AnswerModal key={randomId()} className="answermodal" productMetadata={productMetadata} question={result} isAnswerModalOpen={isAnswerModalOpen} setIsAnswerModalOpen={() => setIsAnswerModalOpen()} setTrigger={setTrigger} setAnswers={setAnswers} questions={questions} setQuestions={setQuestions} />
+        && (
+          <AnswerModal
+            key={randomId()}
+            productMetadata={productMetadata}
+            question={result}
+            isAnswerModalOpen={isAnswerModalOpen}
+            setIsAnswerModalOpen={() => setIsAnswerModalOpen()}
+            setTrigger={setTrigger}
+            setAnswers={setAnswers}
+            questions={questions}
+            setQuestions={setQuestions}
+          />
+        )
       }
     </Wrapper>
   );

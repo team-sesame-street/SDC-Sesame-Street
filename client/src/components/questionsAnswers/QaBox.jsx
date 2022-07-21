@@ -16,23 +16,23 @@ function QaBox({ currProduct }) {
   });
   const [checks, setChecks] = useState({
     isLoading: true,
-    isDone: false,
     isQuestionModalOpen: false,
   });
-  const [isPageDone, setIsPageDone] = useState(false);
+  const [isDone, setIsDone] = useState(false);
+  const [isPageCallsDone, setisPageCallsDone] = useState(false);
 
   useEffect(() => {
     setProductMetadata({ productName: currProduct.name, product_id: currProduct.id });
     setQuestions([]);
     setPage(1);
     setQuestionIndex(0);
-    setIsPageDone(false);
+    setisPageCallsDone(false);
     setSearchTerm('');
     setChecks({
       isLoading: true,
-      isDone: false,
       isQuestionModalOpen: false,
     });
+    setIsDone(false);
     setCount(0);
   }, [currProduct]);
 
@@ -46,28 +46,20 @@ function QaBox({ currProduct }) {
       },
     })
       .then(({ data }) => {
-        if (data.results.length === 0 && !isPageDone) {
+        // if the api pull is empty, start counting
+        if (data.results.length === 0 && !isPageCallsDone) {
           setCount(count + 1);
+          // if count gets to 7, stop api calls for pages
           if (count >= 7) {
-            setIsPageDone(true);
-          } else if ((count < 7 && !isPageDone) || data.results.length === 1) {
+            setisPageCallsDone(true);
+          } else if ((count < 7) || data.results.length === 1) {
             setPage(page + 1);
           }
         } else {
-          const freshData = [...questions, ...data.results];
+          setQuestions([...questions, ...data.results]);
 
-          const uniq = [];
-          const qsWithoutDups = freshData.filter((el) => {
-            const duplicate = uniq.includes(el.question_id);
-            if (!duplicate) {
-              uniq.push(el.question_id);
-              return true;
-            }
-            return false;
-          });
-          setQuestions(qsWithoutDups);
-
-          if (questions.length < 2 && !isPageDone) {
+          // add the questions are less than two, add another page
+          if (questions.length < 2 && !isPageCallsDone) {
             setPage(page + 1);
           }
         }
@@ -76,13 +68,14 @@ function QaBox({ currProduct }) {
       .catch((err) => console.error(err));
   }, [page]);
 
+  // scrolls the component to the bottom
   useEffect(() => {
     document.querySelector('.qa-wrapper')?.scrollTo({ top: document.querySelector('.qa-wrapper').scrollHeight, behavior: 'smooth' });
   }, [questionIndex]);
 
   function handleMoreQuestions() {
     setChecks({ ...checks, isLoading: true });
-    if (!isPageDone) {
+    if (!isPageCallsDone) {
       setPage(page + 1);
     }
 
@@ -90,7 +83,7 @@ function QaBox({ currProduct }) {
       setQuestionIndex(questionIndex + 2);
     } else {
       setQuestionIndex(questionIndex + 1);
-      // setChecks({ ...checks, isDone: true });
+      setIsDone(true);
     }
     setChecks({ ...checks, isLoading: false });
   }
@@ -114,7 +107,7 @@ function QaBox({ currProduct }) {
         page={page}
       />
       <PrimaryBtnGroup>
-        {!checks.isDone
+        {!isDone
           && (<button type="button" onClick={() => handleMoreQuestions()} disabled={checks.isLoading} className="QAButton">More Questions</button>)}
         <button type="button" disabled={checks.isLoading} onClick={() => handleAddQuestion()} className="QAButton" data-testid="qa-addqbtn">Add a Question</button>
       </PrimaryBtnGroup>
