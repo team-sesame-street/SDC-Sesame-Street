@@ -82,17 +82,17 @@ const Image = styled.div`
 const Title = styled.p`
   margin: 0px 0px 3px 10px;
   font-weight: 900;
-`
+`;
 
 const Price = styled.p`
   margin: 1px 0px 0px 10px;
   font-size: 12px;
-`
+`;
 
 const Category = styled.p`
   margin-left: 10px;
   font-size: 13px;
-`
+`;
 
 const Star = styled.div`
   background: gold;
@@ -104,7 +104,7 @@ const Star = styled.div`
   right: 0;
   margin-right: 10px;
   margin-top: 10px;
-`
+`;
 
 function RelatedItems({ slides, id, pageChange, reviews }) {
   const [modal, setModal] = useState(false);
@@ -160,9 +160,9 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
             />
             <Image url={slides.urls[index].url}
               onClick={() => {
-                setCarouselPos(true)
-                setLeftSide(0)
-                pageChange(slide.data.id)
+                setCarouselPos(true);
+                setLeftSide(0);
+                pageChange(slide.data.id);
               }}
             />
             <Category>{slide.data.category}</Category>
