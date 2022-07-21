@@ -6,7 +6,7 @@ function Navbar() {
   return (
     <Nav>
       <ListWrapper>
-        <li id="logo">👻 Soulful</li>
+        <li id="logo">👻 <span>Soulful</span></li>
         <li>Men</li>
         <li>Women</li>
         <li>Baby</li>
@@ -74,6 +74,12 @@ const ListWrapper = styled.ul`
     justify-self: start;
     font-size: 1.5rem;
     text-decoration: revert;
+  }
+
+  & > li#logo > span{
+    @media(max-width: 1200px) {
+      display: none;
+    }
   }
 
   & > li#logo:hover {
