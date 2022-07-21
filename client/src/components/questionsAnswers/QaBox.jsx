@@ -3,6 +3,7 @@ import axios from 'axios';
 import SearchBar from './SearchBar.jsx';
 import QAWrapper from './QAWrapper.jsx';
 import { Wrapper, PrimaryBtnGroup } from './styles/qabox.styles';
+import Button from '../../../utils/Button.jsx';
 
 function QaBox({ currProduct }) {
   const [questions, setQuestions] = useState([]);
@@ -108,8 +109,8 @@ function QaBox({ currProduct }) {
       />
       <PrimaryBtnGroup>
         {!isDone
-          && (<button type="button" onClick={() => handleMoreQuestions()} disabled={checks.isLoading} className="QAButton">More Questions</button>)}
-        <button type="button" disabled={checks.isLoading} onClick={() => handleAddQuestion()} className="QAButton" data-testid="qa-addqbtn">Add a Question</button>
+          && (<Button type="button" onClick={() => handleMoreQuestions()} disabled={checks.isLoading}>More Questions</Button>)}
+        <Button type="button" disabled={checks.isLoading} onClick={() => handleAddQuestion()} data-testid="qa-addqbtn">Add a Question</Button>
       </PrimaryBtnGroup>
     </Wrapper>
   );
