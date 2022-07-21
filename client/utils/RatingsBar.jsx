@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-function RatingsBar({ fillWidth, className, width, borderRadius, margin }) {
+export default function RatingsBar({
+  fillWidth, className, width, borderRadius, margin,
+}) {
   const containerStyles = {
     height: 12,
     width: `${width}px`,
@@ -24,5 +26,3 @@ function RatingsBar({ fillWidth, className, width, borderRadius, margin }) {
     </div>
   );
 }
-
-export default RatingsBar;

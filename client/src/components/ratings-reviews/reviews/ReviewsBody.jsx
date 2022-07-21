@@ -1,5 +1,3 @@
-/* eslint-disable no-script-url */
-/* eslint-disable react/jsx-no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';

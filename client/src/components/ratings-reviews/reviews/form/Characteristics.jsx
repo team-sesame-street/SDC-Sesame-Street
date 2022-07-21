@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
+import randomId from '../../../../../utils/randomId.js';
 
 const styles = {
   mainContainer: {
@@ -46,14 +46,14 @@ export default function Characteristics({ descriptionRate, setDescriptionRate })
   return (
     <div style={styles.mainContainer}>
       {characteristicsArr.map((characteristic) => (
-        <div className={characteristic}>
+        <div className={characteristic} key={randomId()}>
           <b>{`${characteristic}:*`}</b>
           <br />
           <div style={styles.descriptionContainer}>
             {characteristicsObj[characteristic].map((description, index) => {
               const value = index + 1;
               return (
-                <label>
+                <label key={randomId()} htmlFor="#">
                   <input
                     type="radio"
                     name={characteristic}

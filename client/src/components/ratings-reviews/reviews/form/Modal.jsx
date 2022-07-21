@@ -1,3 +1,6 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -158,7 +161,6 @@ export default function Modal({ showModal, closeModal, onClose }) {
       }
     } else {
       event.preventDefault();
-      console.log('submitted: ', event.target);
       postReview();
     }
   }
