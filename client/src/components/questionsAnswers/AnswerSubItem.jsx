@@ -14,7 +14,12 @@ import {
 
 function AnswerSubItem({ answer }) {
   const {
-    body, date, answerer_name, helpfulness, photos, id
+    body,
+    date,
+    answerer_name,
+    helpfulness,
+    photos,
+    id
   } = answer;
   const [hasVoted, setHasVoted] = useState(
     localStorage.getItem(`hasVoted-answer${id}` || false),

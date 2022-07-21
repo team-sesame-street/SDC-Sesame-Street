@@ -36,17 +36,17 @@ function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
         <h3>About the {productMetadata.productName}</h3>
         <label htmlFor="question">
           Your Question*:
-          <textarea id="question" maxLength={1000} name="question" required />
+          <textarea id="question" maxLength={1000} name="question" data-testid="ques-question" required />
         </label>
         <div className="nicknameAndemail">
           <label htmlFor="username">
             Your Nickname*:
-            <input type="textbox" id="username" maxLength={60} placeholder="Example: jackson11!" name="username" required />
+            <input type="textbox" id="username" maxLength={60} placeholder="Example: jackson11!" data-testid="ques-username" name="username" required />
             <small>For privacy reasons, do not use your full name or email address.</small>
           </label>
           <label htmlFor="email">
             Your email*:
-            <input type="email" id="email" maxLength={60} placeholder="Example: jack@email.com" name="email" required />
+            <input type="email" id="email" maxLength={60} placeholder="Example: jack@email.com" data-testid="ques-email" name="email" required />
             <small>For authentication reasons, you will not be emailed.</small>
           </label>
         </div>

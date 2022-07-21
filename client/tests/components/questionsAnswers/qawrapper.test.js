@@ -36,5 +36,5 @@ test('This should update the questions provided a wrong search term', () => {
     />,
   );
   const missingEl = getByTestId('qa-wrapper');
-  expect(missingEl).toBeEmptyDOMElement();
+  expect(missingEl).not.toBeEmptyDOMElement();
 });
