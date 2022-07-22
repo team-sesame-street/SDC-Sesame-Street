@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import QaBox from './questionsAnswers/QaBox.jsx';
 import RrBox from './ratings-reviews/RrBox.jsx';
@@ -15,6 +15,8 @@ function App() {
   const [currProduct, setCurrProduct] = useState({ id: productId });
   const [totalRatings, setTotalRatings] = useState(0);
   const [avgRating, setAvgRating] = useState(0);
+
+  const ratingsReviewsNode = useRef(null);
 
   useEffect(() => {
     axios
@@ -40,11 +42,16 @@ function App() {
       <Navbar />
       <Wrapper>
         {/* {productId} */}
-        <MainOverview id={productId} totalRatings={totalRatings} avgRating={avgRating} />
+        <MainOverview
+          id={productId}
+          totalRatings={totalRatings}
+          avgRating={avgRating}
+          ratingsReviewsNode={ratingsReviewsNode}
+        />
         <MainCarousel id={productId} pageChange={pageChange} />
         <QaBox currProduct={currProduct} />
         <RrBox
-          id="ratings-reviews"
+          ratingsReviewsNode={ratingsReviewsNode}
           productId={productId}
           setTotalRatings={(num) => { setTotalRatings(num); }}
           setAvgRating={(num) => { setAvgRating(num); }}

@@ -259,6 +259,7 @@ const Wrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: max-content 70px max-content;
   justify-items: left;
+  align-content: center;;
   column-gap: 5px;
 `;
 

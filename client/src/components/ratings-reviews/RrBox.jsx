@@ -27,7 +27,7 @@ const styles = {
   },
 };
 
-export default function RrBox({ productId, setTotalRatings, setAvgRating }) {
+export default function RrBox({ productId, setTotalRatings, setAvgRating, ratingsReviewsNode }) {
   const [reviews, setReviews] = useState([]);
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('relevant');
@@ -108,7 +108,7 @@ export default function RrBox({ productId, setTotalRatings, setAvgRating }) {
 
   return (
     <div>
-      <div className="RrBox-container" style={styles.flexContainer}>
+      <div className="RrBox-container" style={styles.flexContainer} ref={ratingsReviewsNode}>
         <div style={styles.ratingsContainer}>
           Ratings & Reviews
           <Ratings

@@ -130,18 +130,12 @@ const ExtraWrapper = styled.div`
 `;
 
 const Wrapper = styled.div`
-  // background-color: grey;
   position: relative;
   isolation: isolate;
   margin: auto;
   width: 60vw;
   height: 60vw;
   background-repeat: no-repeat;
-  // background-position: center;
-  // width: 90%;
-  // height: 90%;
-  // max-height: 80vh;
-  // max-width: 80vh;
   // overflow: hidden;
 
   & .icon-expanded {
@@ -186,6 +180,7 @@ const NavSymbols = styled.div`
   align-content: end;
   justify-items: center;
   align-items: center;
+  user-select: none;
   & .nav-symbols-circles {
     color: grey;
     cursor: pointer;
@@ -200,4 +195,5 @@ const Image = styled.img`
   // height: auto;
   cursor: crosshair;
   object-fit: contain;
+  user-select: none;
 `;

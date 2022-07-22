@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { RiPinterestFill, RiTwitterFill, RiFacebookCircleFill } from 'react-icons/ri';
 import StarRatings from 'react-star-ratings';
 
-function ProductInfo({ product, selectedStyle, avgRating, totalRatings }) {
+function ProductInfo({ product, selectedStyle, avgRating, totalRatings, ratingsReviewsNode }) {
   if (Object.keys(product).length > 0 && Object.keys(selectedStyle).length > 0) {
     const formatPrice = (price) => ('$'.concat(price.slice(0, -3)));
 
@@ -14,15 +14,14 @@ function ProductInfo({ product, selectedStyle, avgRating, totalRatings }) {
           <StarRatings rating={avgRating} starDimension="18px" starSpacing="2px" starRatedColor="goldenrod" />
           &nbsp;
           &nbsp;
-          <a href="#ratings-reviews">
-            Read all &nbsp;
+          <SyntheticLink onClick={() => { ratingsReviewsNode.current.scrollIntoView(); }}>
+            Read all&nbsp;
             {totalRatings}
-            &nbsp; reviews
-          </a>
+            &nbsp;reviews
+          </SyntheticLink>
         </div>
         <p data-testid="category">{product.category.toUpperCase()}</p>
         <h2 data-testid="product-name" size={{ maxHeight: 'max-content' }}>{product.name}</h2>
-        {console.log(avgRating, totalRatings)}
         {selectedStyle.sale_price === null
           ? (<p data-testid="price">{formatPrice(selectedStyle.original_price)}</p>)
           : (
@@ -106,5 +105,13 @@ const SocialSharingGrid = styled.div`
     min-height: 25px;
     width: 3vh;
     height: 3vh;
+  }
+`;
+
+const SyntheticLink = styled.span`
+  color: blue;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
   }
 `;

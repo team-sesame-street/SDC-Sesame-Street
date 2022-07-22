@@ -8,7 +8,7 @@ import Features from './Features.jsx';
 import Sidebar from './Sidebar.jsx';
 import MainImage from './Img_Default_Gallery.jsx';
 
-function MainOverview({ id, avgRating, totalRatings }) {
+function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
   const [product, setProduct] = useState({});
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
@@ -131,6 +131,7 @@ function MainOverview({ id, avgRating, totalRatings }) {
             setSelectedStyle={setSelectedStyle}
             avgRating={avgRating}
             totalRatings={totalRatings}
+            ratingsReviewsNode={ratingsReviewsNode}
           />
         </TopOverview>
         <BottomOverview className="bottom-overview overview-grid">
@@ -161,6 +162,7 @@ const Wrapper = styled.div`
     height: max-content;
     grid-template-columns: 6fr 4fr;
     grid-template-rows: max-content;
+    align-content: center;
     align-items: center;
     margin-right: 0;
     column-gap: 3vw;
@@ -190,4 +192,7 @@ const TopOverview = styled.div`
 
 const BottomOverview = styled.div`
   margin-top: 4vh;
+  @media(max-width: 900px) {
+    margin-top: 10vh;
+  }
 `;

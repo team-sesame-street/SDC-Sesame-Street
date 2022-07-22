@@ -105,7 +105,7 @@ const SubWrapper = styled.div`
   display: grid;
   height: 50vw;
   max-height: 60vh;
-  min-height: 390px;
+  min-height: 550px;
   min-width: 100%;
   grid-template-columns: repeat(14, 1fr);
   grid-template-rows: repeat(8, 1fr);

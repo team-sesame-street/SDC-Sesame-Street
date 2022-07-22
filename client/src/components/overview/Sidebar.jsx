@@ -5,7 +5,7 @@ import Checkout from './Checkout.jsx';
 import StyleSelector from './StyleSelector.jsx';
 
 function Sidebar({
-  product, selectedStyle, styles, setSelectedStyle, avgRating, totalRatings
+  product, selectedStyle, styles, setSelectedStyle, avgRating, totalRatings, ratingsReviewsNode
 }) {
   return (
     <Wrapper>
@@ -14,6 +14,7 @@ function Sidebar({
         selectedStyle={selectedStyle}
         avgRating={avgRating}
         totalRatings={totalRatings}
+        ratingsReviewsNode={ratingsReviewsNode}
       />
       <StyleSelector
         styles={styles}
@@ -35,7 +36,7 @@ const Wrapper = styled.div`
   height: max-content;
   min-width: max(550px, 1fr);
   max-width: 100%;
-  grid-template-rows: max-content max-content 100px;
+  grid-template-rows: max-content max-content 150px;
   grid-template-columns: 1fr;
   align-self: center;
   align-content: center;
