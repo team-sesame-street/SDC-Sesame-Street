@@ -8,7 +8,8 @@ function Navbar() {
       <ListWrapper>
         <li id="logo">
           <span style={{display: 'flex', gap: '1rem'}}>
-            <img src="https://i.imgur.com/RYU33AI.png" style={{width: '50px', position: 'relative', top: '-10px'}}/>Soulful
+            <img src="https://i.imgur.com/RYU33AI.png" style={{width: '70px', position: 'relative', top: '-10px'}}/>
+            <h1>Soulful</h1>
           </span>
         </li>
         <li>Men</li>
@@ -30,33 +31,19 @@ function Navbar() {
 }
 
 const Nav = styled.nav`
-  & #logo {
-    font-family: 'Homemade Apple';
-  }
-
   font-weight: 600;
-  background-image: linear-gradient(
-  180deg,
-  hsl(21deg 32% 91%) 0%,
-  hsl(21deg 32% 92%) 21%,
-  hsl(21deg 32% 93%) 30%,
-  hsl(21deg 32% 94%) 39%,
-  hsl(21deg 32% 95%) 46%,
-  hsl(21deg 32% 96%) 54%,
-  hsl(21deg 32% 97%) 61%,
-  hsl(21deg 33% 98%) 69%,
-  hsl(21deg 33% 99%) 79%,
-  hsl(0deg 0% 100%) 100%
-);
+  background: #D6CCC2;
   height: 90px;
   color: #36261D;
   margin: 0;
   padding: 0;
 overflow: hidden;
-margin-bottom: 5px;
+margin-bottom: 25px;
 `;
 
 const ListWrapper = styled.ul`
+  text-transform: lowercase;
+  font-size: 1.5rem;
   margin: 0 auto;
   display: flex;
   list-style-type: none;
@@ -65,7 +52,7 @@ const ListWrapper = styled.ul`
   align-items: center;
 
   & li {
-    padding: 30px 50px;
+    padding: 10px 50px;
     cursor: pointer;
   }
 
@@ -74,17 +61,19 @@ const ListWrapper = styled.ul`
     color: #222;
   }
 
-  & > li#logo {
+  & > li#logo, h1 {
     font-family: 'Homemade Apple';
+    text-transform: none;
     cursor: revert;
     flex: 1;
     color: #222;
     font-weight: 900;
     justify-self: start;
-    font-size: 2rem;
+    font-size: 2.25rem;
     text-decoration: revert;
     position: relative;
-    top: 0.5rem;
+    top: 0.60rem;
+
   }
 
   & > li#logo > span{

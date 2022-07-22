@@ -15,9 +15,10 @@ const Wrapper = styled.button`
     justify-content: flex-start;
     text-transform: uppercase;
     font-weight: 800;
-    background: #201d1a;
+    background: #D6CCC2;
     border: none;
-    color: #f2dcc7;
+    color: #111;
+    border: 1px solid #111;
     border-radius: 4px;
     margin-right: 10px;
     margin-top: 15px;

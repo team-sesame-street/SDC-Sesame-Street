@@ -6,12 +6,13 @@ import styled from 'styled-components';
 const Card = styled.div`
   min-width: 310px;
   min-height: min-content;
-  background: whitesmoke;
+  background: white;
   border-radius: 10px;
   display: inline-block;
   margin: 0 5px;
   position: relative;
   padding: 8px;
+  box-shadow: 2px 2px 5px rgba(0 0 0 / 12%);
 `
 
 const Image = styled.div`
@@ -52,7 +53,7 @@ const Button = styled.div`
   cursor: pointer;
   top: 10px;
   right: 10px;
-  color: white;
+  color: #d9d9d9;
 `
 
 function OutfitList({ slide, deleteOutfit, pageChange }) {
