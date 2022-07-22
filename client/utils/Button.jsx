@@ -6,7 +6,7 @@ function Button(props) {
     <Wrapper {...props}>
       {props.children}
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.button`
@@ -45,7 +45,6 @@ const Wrapper = styled.button`
       padding: 0 2rem;
       height: 4rem;
     }
-
 `;
 
 export default Button;

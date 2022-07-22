@@ -27,7 +27,7 @@ const styles = {
   },
 };
 
-export default function RrBox({ id, setTotalRatings, setAvgRating }) {
+export default function RrBox({ productId, setTotalRatings, setAvgRating, ratingsReviewsNode }) {
   const [reviews, setReviews] = useState([]);
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('relevant');
@@ -38,7 +38,7 @@ export default function RrBox({ id, setTotalRatings, setAvgRating }) {
     1: false, 2: false, 3: false, 4: false, 5: false,
   });
 
-  localStorage.setItem('productId', id);
+  localStorage.setItem('productId', productId);
 
   useEffect(() => {
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews', {
@@ -46,7 +46,7 @@ export default function RrBox({ id, setTotalRatings, setAvgRating }) {
         Authorization: process.env.GITKEY,
       },
       params: {
-        product_id: id,
+        product_id: productId,
         count,
         sort,
       },
@@ -68,7 +68,7 @@ export default function RrBox({ id, setTotalRatings, setAvgRating }) {
         }
       })
       .catch((err) => console.log('Error RrBox: ', err));
-  }, [id, sort, count, currRating, showModal]);
+  }, [productId, sort, count, currRating, showModal]);
 
   useEffect(() => {
     axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/meta', {
@@ -76,7 +76,7 @@ export default function RrBox({ id, setTotalRatings, setAvgRating }) {
         Authorization: process.env.GITKEY,
       },
       params: {
-        product_id: id,
+        product_id: productId,
       },
     })
       .then((res) => {
@@ -104,11 +104,11 @@ export default function RrBox({ id, setTotalRatings, setAvgRating }) {
         }
       })
       .catch((err) => console.log('Error getting meta data (RrBox): ', err));
-  }, [id, currRating, showModal]);
+  }, [productId, currRating, showModal]);
 
   return (
     <div>
-      <div className="RrBox-container" style={styles.flexContainer}>
+      <div className="RrBox-container" style={styles.flexContainer} ref={ratingsReviewsNode}>
         <div style={styles.ratingsContainer}>
           Ratings & Reviews
           <Ratings
@@ -129,7 +129,7 @@ export default function RrBox({ id, setTotalRatings, setAvgRating }) {
             filterRatings={filterRatings}
             showModal={showModal}
             setShowModal={setShowModal}
-            id={id}
+            id={productId}
           />
         </div>
       </div>

@@ -4,6 +4,7 @@ import { IoIosArrowDropright, IoIosArrowDropleft } from 'react-icons/io';
 import { IoExitOutline } from 'react-icons/io5';
 import { BsCircleFill } from 'react-icons/bs';
 import styled from 'styled-components';
+import Modal from '../../../utils/Modal.jsx';
 
 function ExpandedImage({
   images, currImgIndex, setCurrImgIndex, setExpandedView,
@@ -11,7 +12,7 @@ function ExpandedImage({
   const [zoom, setZoom] = useState(false);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const [offsetPercentage, setOffsetPercentage] = useState({ x: 0, y: 0 });
-  const container = useRef();
+  const container = useRef(null);
 
   const getSizingRatio = (e) => {
     const offset = { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY };
@@ -40,7 +41,8 @@ function ExpandedImage({
   if (images.length > 0) {
     return (
       <ExtraWrapper>
-        {console.log('offset%:', offsetPercentage)}
+        <Modal>
+        {/* {console.log('offset%:', offsetPercentage)} */}
         {images.map((image, index) => {
           if (index === currImgIndex) {
             return (
@@ -53,7 +55,7 @@ function ExpandedImage({
                   backgroundSize: `${containerSize.height * 2.5}px`,
                   backgroundPosition: `${offsetPercentage.x}% ${offsetPercentage.y}%`,
                 }}
-                // onMouseMove={moveBackgroundImg}
+                onMouseMove={moveBackgroundImg}
               >
                 {!zoom && index > 0 && (
                   <IoIosArrowDropleft
@@ -106,6 +108,7 @@ function ExpandedImage({
             );
           })}
         </NavSymbols>
+        </Modal>
       </ExtraWrapper>
     );
   }
@@ -130,18 +133,12 @@ const ExtraWrapper = styled.div`
 `;
 
 const Wrapper = styled.div`
-  // background-color: grey;
   position: relative;
   isolation: isolate;
   margin: auto;
   width: 60vw;
   height: 60vw;
   background-repeat: no-repeat;
-  // background-position: center;
-  // width: 90%;
-  // height: 90%;
-  // max-height: 80vh;
-  // max-width: 80vh;
   // overflow: hidden;
 
   & .icon-expanded {
@@ -155,6 +152,9 @@ const Wrapper = styled.div`
     min-width: 20px;
     min-height: 20px;
     cursor: pointer;
+    & :hover {
+      opacity: 0.4;
+    }
   };
   & .exit-icon {
     top: 5%;
@@ -186,6 +186,7 @@ const NavSymbols = styled.div`
   align-content: end;
   justify-items: center;
   align-items: center;
+  user-select: none;
   & .nav-symbols-circles {
     color: grey;
     cursor: pointer;
@@ -200,4 +201,5 @@ const Image = styled.img`
   // height: auto;
   cursor: crosshair;
   object-fit: contain;
+  user-select: none;
 `;

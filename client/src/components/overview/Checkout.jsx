@@ -2,7 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
-import { MdStars } from 'react-icons/md';
+import Button from '../../../utils/Button.jsx';
 
 function Checkout({ selectedStyle }) {
   const [skusInStock, setSkusInStock] = useState([]);
@@ -98,6 +98,7 @@ function Checkout({ selectedStyle }) {
   const resetSelectedSize = () => {
     setSelectedSku(null);
     setSelectingSize(false);
+    setMaxQuantity(null);
     // if (invalidSubmit) {
     //   setInvalidSubmit(false);
     // figure out when would be a good time for this message to disappear
@@ -143,7 +144,7 @@ function Checkout({ selectedStyle }) {
     return (
       <Wrapper>
         <TextWrapper style={{ visibility: invalidSubmit ? 'visible' : 'hidden' }}>
-          <p>Please select size</p>
+          <p>‼️ Please select size ‼️</p>
         </TextWrapper>
         <SizeSelector>
           {/* collapsed view */}
@@ -188,7 +189,7 @@ function Checkout({ selectedStyle }) {
               <button type="button" onClick={expandSelectQuantity}>-</button>
             </li>
           )}
-          {maxQuantity > 0 && selectedQuantity && !selectingQuantity && (
+          {selectedSku && maxQuantity > 0 && selectedQuantity && !selectingQuantity && (
             <li>
               <button type="button" onClick={expandSelectQuantity}>{selectedQuantity}</button>
             </li>
@@ -204,14 +205,23 @@ function Checkout({ selectedStyle }) {
           )}
         </QuantitySelector>
 
-        <SubmitButton
-          style={{ visibility: skusInStock.length === 0 ? 'hidden' : 'visible' }}
+        <Button
+          className="cart-btn"
+          style={{
+            visibility: skusInStock.length === 0 ? 'hidden' : 'visible',
+            gridColumn: '1 / 3',
+            gridRow: '3 / 4',
+            justifySelf: 'center',
+            margin: 0,
+            padding: 0,
+            width: '80%',
+            display: 'inline-block',
+          }}
           type="button"
           onClick={addToCart}
         >
           Add to Cart
-        </SubmitButton>
-        <MdStars />
+        </Button>
       </Wrapper>
     );
   }
@@ -250,6 +260,7 @@ const Wrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: max-content 70px max-content;
   justify-items: left;
+  align-content: center;;
   column-gap: 5px;
 `;
 
@@ -264,13 +275,12 @@ const SizeSelector = styled.ul`
   max-height: 70px;
   grid-column: 1 / 2;
   grid-row: 2 / 3;
-  align-self: center;
+  align-self: top;
   width: 100%;
   padding: 0;
   margin: 0;
   overflow-y: scroll;
   & li {
-    // position: relative;
     height: 30px;
   }
   & button {
@@ -289,14 +299,13 @@ const QuantitySelector = styled.ul`
   max-height: 70px;
   grid-column: 2 / 3;
   grid-row: 2 / 3;
-  align-self: center;
+  align-self: top;
   width: 100%;
   padding: 0;
   margin: 0;
   overflow-y: scroll;
 
   & li {
-    // position: relative;
     height: 30px;
   }
   & button {
@@ -305,13 +314,4 @@ const QuantitySelector = styled.ul`
     height: 100%;
     cursor: pointer;
   }
-`;
-
-const SubmitButton = styled.button`
-  grid-column: 1 / 2;
-  grid-row: 3 / 4;
-  width: 100%;
-  height: 30px;
-  border: none;
-  cursor: pointer;
 `;

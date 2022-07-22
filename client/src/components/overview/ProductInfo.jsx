@@ -2,15 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { RiPinterestFill, RiTwitterFill, RiFacebookCircleFill } from 'react-icons/ri';
+import StarRatings from 'react-star-ratings';
 
-function ProductInfo({ product, selectedStyle }) {
+function ProductInfo({ product, selectedStyle, avgRating, totalRatings, ratingsReviewsNode }) {
   if (Object.keys(product).length > 0 && Object.keys(selectedStyle).length > 0) {
     const formatPrice = (price) => ('$'.concat(price.slice(0, -3)));
 
     return (
       <Wrapper>
-        <p data-testid="category">{product.category.toUpperCase()}</p>
-        <h2 data-testid="product-name" size={{ maxHeight: 'max-content' }}>{product.name}</h2>
+        {totalRatings && (
+          <div>
+            <StarRatings rating={avgRating} starDimension="18px" starSpacing="2px" starRatedColor="goldenrod" />
+            &nbsp;
+            &nbsp;
+            <SyntheticLink onClick={() => { ratingsReviewsNode.current.scrollIntoView(); }}>
+              Read all&nbsp;
+              {totalRatings}
+              &nbsp;reviews
+            </SyntheticLink>
+          </div>
+        )}
+        <h3 data-testid="category">{product.category.toUpperCase()}</h3>
+        <h1 data-testid="product-name" size={{ maxHeight: 'max-content' }}>{product.name}</h1>
         {selectedStyle.sale_price === null
           ? (<p data-testid="price">{formatPrice(selectedStyle.original_price)}</p>)
           : (
@@ -76,8 +89,9 @@ const Wrapper = styled.div`
   display: grid;
   width: 100%;
   height: max-content;
-  grid-template-rows: repeat(4, max-content);
+  grid-template-rows: repeat(5, max-content);
   grid-template-columns: 1fr;
+  gap: 5px;
 `;
 
 const SocialSharingGrid = styled.div`
@@ -93,5 +107,13 @@ const SocialSharingGrid = styled.div`
     min-height: 25px;
     width: 3vh;
     height: 3vh;
+  }
+`;
+
+const SyntheticLink = styled.span`
+  color: blue;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
   }
 `;

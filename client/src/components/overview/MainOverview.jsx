@@ -8,7 +8,7 @@ import Features from './Features.jsx';
 import Sidebar from './Sidebar.jsx';
 import MainImage from './Img_Default_Gallery.jsx';
 
-function MainOverview({ id }) {
+function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
   const [product, setProduct] = useState({});
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
@@ -32,8 +32,7 @@ function MainOverview({ id }) {
         .then((response) => {
           setProduct(response.data);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
           alert('Unable to retrieve information regarding this product');
         });
     }
@@ -112,32 +111,33 @@ function MainOverview({ id }) {
           setExpandedView={setExpandedView}
         />
       )}
-      {!expandedView && (
-      <Wrapper>
-        <SubWrapper>
-          <MainImage
-            images={images}
-            currImgIndex={currImgIndex}
-            setCurrImgIndex={setCurrImgIndex}
-            thumbnailIndexMin={thumbnailIndexMin}
-            thumbnailIndexMax={thumbnailIndexMax}
-            setThumbnailIndexMin={setThumbnailIndexMin}
-            setThumbnailIndexMax={setThumbnailIndexMax}
-            setExpandedView={setExpandedView}
-          />
-          <Sidebar
-            product={product}
-            selectedStyle={selectedStyle}
-            styles={styles}
-            setSelectedStyle={setSelectedStyle}
-          />
-        </SubWrapper>
-        <SubWrapper>
-          <SloganDescription product={product} />
-          <Features product={product} />
-        </SubWrapper>
-      </Wrapper>
-      )}
+      {/* {!expandedView && (
+      <SubWrapper> */}
+      <TopOverview className="top-overview overview-grid">
+        <MainImage
+          images={images}
+          currImgIndex={currImgIndex}
+          setCurrImgIndex={setCurrImgIndex}
+          thumbnailIndexMin={thumbnailIndexMin}
+          thumbnailIndexMax={thumbnailIndexMax}
+          setThumbnailIndexMin={setThumbnailIndexMin}
+          setThumbnailIndexMax={setThumbnailIndexMax}
+          setExpandedView={setExpandedView}
+        />
+        <Sidebar
+          product={product}
+          selectedStyle={selectedStyle}
+          styles={styles}
+          setSelectedStyle={setSelectedStyle}
+          avgRating={avgRating}
+          totalRatings={totalRatings}
+          ratingsReviewsNode={ratingsReviewsNode}
+        />
+      </TopOverview>
+      <BottomOverview className="bottom-overview overview-grid">
+        <SloganDescription product={product} />
+        <Features product={product} />
+      </BottomOverview>
     </Wrapper>
   );
 }
@@ -153,26 +153,42 @@ MainOverview.defaultProps = {
 export default MainOverview;
 
 const Wrapper = styled.div`
-  // justify-content: center;
   width: 100%;
+  & .overview-grid {
+    display: grid;
+    width: 100%:
+    height: max-content;
+    grid-template-columns: 6fr 4fr;
+    grid-template-rows: max-content;
+    align-content: center;
+    align-items: center;
+    margin-right: 0;
+    column-gap: 3vw;
+    @media(max-width: 900px) {
+      width: 100%
+      justify-content: center;
+      grid-template-rows: repeat(2, max-content);
+      grid-template-columns: 100%;
+      row-gap: 3vh;
+    };
+    @media(min-width: 1200px) {
+      justify-content: center;
+      grid-template-columns: 7fr 3fr;
+      grid-template-rows: max-content;
+      row-gap: 3vh;
+    }
+  }
 `;
 
-const SubWrapper = styled.div`
-  // background-color: grey;
-  display: grid;
-  width: 100%:
-  height: max-content;
-  grid-template-columns: 6fr 4fr;
-  grid-template-rows: max-content;
-  align-items: center;
-  margin-right: 0;
-  column-gap: 3vw;
-  @media(max-width: 700px) {
-    // width: 85%;
-    width: 100%
-    justify-content: center;
-    grid-template-rows: repeat(2, max-content);
-    grid-template-columns: 100%;
-    row-gap: 3vh;
-  };
+const TopOverview = styled.div`
+
+`;
+
+const BottomOverview = styled.div`
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-top: 4vh;
+  @media(max-width: 900px) {
+    margin-top: 6vh;
+  }
 `;
