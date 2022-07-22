@@ -99,18 +99,7 @@ const ThumbnailWrapper = styled.div`
     user-select: none;
     @media(min-width: 501px) and (max-width: 900px) {
       right: 25%;
-      color: red;
     }
-    // @media(min-width: 901px) and (max-width: 1100px) {
-    //   right: 10%;
-    //   color: red;
-    // }
-  }
-  // @media(max-width: 500px) {
-  //   & .checkmark {
-  //     right: 15%;
-  //   }
-  // }
 `;
 
 const Thumbnail = styled.img`

@@ -32,8 +32,7 @@ function MainOverview({ id }) {
         .then((response) => {
           setProduct(response.data);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
           alert('Unable to retrieve information regarding this product');
         });
     }
@@ -132,7 +131,7 @@ function MainOverview({ id }) {
             setSelectedStyle={setSelectedStyle}
           />
         </SubWrapper>
-        <SubWrapper>
+        <SubWrapper style={{ marginTop: '4vh' }}>
           <SloganDescription product={product} />
           <Features product={product} />
         </SubWrapper>
@@ -153,7 +152,6 @@ MainOverview.defaultProps = {
 export default MainOverview;
 
 const Wrapper = styled.div`
-  // justify-content: center;
   width: 100%;
 `;
 
