@@ -8,7 +8,7 @@ function Navbar() {
       <ListWrapper>
         <li id="logo">
           <span style={{display: 'flex', gap: '1rem'}}>
-            <img src="https://i.imgur.com/RYU33AI.png" style={{width: '40px', position: 'relative', top: '-10px'}}/>Soulful
+            <img src="https://i.imgur.com/RYU33AI.png" style={{width: '50px', position: 'relative', top: '-10px'}}/>Soulful
           </span>
         </li>
         <li>Men</li>
@@ -17,9 +17,10 @@ function Navbar() {
         <li>Kids</li>
       </ListWrapper>
       <MobileNav>
-        <span id="logo">
-        <img src="https://i.imgur.com/RYU33AI.png" style={{width: '40px'}}/> Soulful
-        </span>
+        <div id="logo">
+          <img src="https://i.imgur.com/RYU33AI.png" style={{width: '40px'}}/>
+          <span>Soulful</span>
+        </div>
         <span>
           <GiHamburgerMenu/>
         </span>
@@ -109,10 +110,18 @@ const MobileNav = styled.div`
   font-size: 1.25rem;
   font-weight: 800;
 
-  & span > #logo {
-    position: absolute;
-    top: 0;
-    left: 200px;
+
+  & div#logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    top: -10px;
+    gap: 1rem;
+  }
+
+  & div#logo > img {
+
   }
 `;
 

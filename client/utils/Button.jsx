@@ -31,7 +31,7 @@ const Wrapper = styled.button`
       transform: translateY(2px 2px);
     }
     &:active {
-      background: #012e68;
+      background: #3e3d3b;
     }
 
     &:disabled {
