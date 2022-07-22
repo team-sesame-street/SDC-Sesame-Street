@@ -1,14 +1,12 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { IoExitOutline } from 'react-icons/io5';
 
-function ModalExpanded({ children, cb1, cb2, cb3, zoom }) {
+function ModalExpanded({ children}) {
   return (
     <Wrapper className="modal">
       <Backdrop />
       <ChildrenWrapper>
         {children}
-        {!zoom && (<IoExitOutline onClick={() => cb3()} data-testid="exit-expanded-btn" className="icon-expanded exit-icon" />)}
       </ChildrenWrapper>
     </Wrapper>
   );
@@ -90,9 +88,14 @@ const ChildrenWrapper = styled.div`
   }
 
   @media(max-width: 500px) {
-    margin: 0;
+    margin-top: 40%;
     width: 100%;
-    height: 100%;
+    height: 50%;
+  }
+
+  @media(min-width: 1200px) {
+    width: 50%;
+    height: max-content;
   }
 
   label {
@@ -104,17 +107,17 @@ const ChildrenWrapper = styled.div`
     }
   }
 
-  .exit-icon {
-     position: absolute;
-     top:0;
-     right:0;
-     transform: scale(2);
-     z-index: 999;
-     margin: 40px;
-     cursor: pointer;
+  // .exit-icon {
+  //    position: absolute;
+  //    top:0;
+  //    right:0;
+  //    transform: scale(2);
+  //    z-index: 999;
+  //    margin: 40px;
+  //    cursor: pointer;
 
-     &:hover {
-      opacity: 0.65;
-     }
-   }
+  //    &:hover {
+  //     opacity: 0.65;
+  //    }
+  //  }
 `;
