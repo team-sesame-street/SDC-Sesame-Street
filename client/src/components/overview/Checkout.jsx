@@ -2,6 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
+import Button from '../../../utils/Button.jsx';
 import { MdStars } from 'react-icons/md';
 
 function Checkout({ selectedStyle }) {
@@ -98,6 +99,7 @@ function Checkout({ selectedStyle }) {
   const resetSelectedSize = () => {
     setSelectedSku(null);
     setSelectingSize(false);
+    setMaxQuantity(null);
     // if (invalidSubmit) {
     //   setInvalidSubmit(false);
     // figure out when would be a good time for this message to disappear
@@ -162,6 +164,7 @@ function Checkout({ selectedStyle }) {
               <button type="button">OUT OF STOCK</button>
             </li>
           )}
+          {console.log(selectedSku)}
 
           {/* expanded view */}
           {skusInStock.length > 0 && selectingSize && (
@@ -188,7 +191,7 @@ function Checkout({ selectedStyle }) {
               <button type="button" onClick={expandSelectQuantity}>-</button>
             </li>
           )}
-          {maxQuantity > 0 && selectedQuantity && !selectingQuantity && (
+          {selectedSku && maxQuantity > 0 && selectedQuantity && !selectingQuantity && (
             <li>
               <button type="button" onClick={expandSelectQuantity}>{selectedQuantity}</button>
             </li>
@@ -204,14 +207,21 @@ function Checkout({ selectedStyle }) {
           )}
         </QuantitySelector>
 
-        <SubmitButton
-          style={{ visibility: skusInStock.length === 0 ? 'hidden' : 'visible' }}
+        <Button
+          style={{
+            visibility: skusInStock.length === 0 ? 'hidden' : 'visible',
+            gridColumn: '1 / 3',
+            gridRow: '3 / 4',
+            justifySelf: 'center',
+            margin: 0,
+            padding: 0,
+            width: '80%',
+          }}
           type="button"
           onClick={addToCart}
         >
           Add to Cart
-        </SubmitButton>
-        <MdStars />
+        </Button>
       </Wrapper>
     );
   }
@@ -264,7 +274,7 @@ const SizeSelector = styled.ul`
   max-height: 70px;
   grid-column: 1 / 2;
   grid-row: 2 / 3;
-  align-self: center;
+  align-self: top;
   width: 100%;
   padding: 0;
   margin: 0;
@@ -289,7 +299,7 @@ const QuantitySelector = styled.ul`
   max-height: 70px;
   grid-column: 2 / 3;
   grid-row: 2 / 3;
-  align-self: center;
+  align-self: top;
   width: 100%;
   padding: 0;
   margin: 0;
@@ -305,13 +315,4 @@ const QuantitySelector = styled.ul`
     height: 100%;
     cursor: pointer;
   }
-`;
-
-const SubmitButton = styled.button`
-  grid-column: 1 / 2;
-  grid-row: 3 / 4;
-  width: 100%;
-  height: 30px;
-  border: none;
-  cursor: pointer;
 `;
