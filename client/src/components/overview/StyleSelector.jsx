@@ -87,6 +87,7 @@ const ThumbnailWrapper = styled.div`
     border: white;
     position: absolute;
     zIndex: 10;
+    user-select: none;
   }
 `;
 
@@ -98,6 +99,7 @@ const Thumbnail = styled.img`
   border: 1px solid black;
   opacity: 0.6;
   cursor: pointer;
+  user-select: none;
   &:hover {
     opacity: 1;
   }

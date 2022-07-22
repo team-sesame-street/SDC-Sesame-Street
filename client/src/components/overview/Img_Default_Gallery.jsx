@@ -11,7 +11,6 @@ function MainImage(
   },
 ) {
   if (images.length > 0) {
-    // console.log(images.length);
     const navigateLeft = () => {
       if (currImgIndex - 1 < thumbnailIndexMin) {
         setThumbnailIndexMin(thumbnailIndexMin - 1);
@@ -115,6 +114,7 @@ const SubWrapper = styled.div`
   align-content: center;
   justify-items: center;
   align-items: center;
+  user-select: none;
   & .arrows-default {
     position: absolute;
     z-index: 70;
@@ -136,11 +136,12 @@ const Image = styled.img`
   width: 100%;
   object-fit: contain;
   cursor: zoom-in;
+  user-select: none;
 `;
 
 const Wrapper = styled.div`
   height: max-content;
-  // width: 50vw;
   width: 100%;
   min-width: min(550px, 80vw);
+  user-select: none;
 `;
