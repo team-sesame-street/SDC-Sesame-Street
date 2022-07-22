@@ -103,8 +103,8 @@ const SubWrapper = styled.div`
   position: relative;
   isolation: isolate;
   display: grid;
-  height: 39vw; // originally 60vh here
-  // width: 50vw;
+  height: 50vw;
+  max-height: 80vh;
   min-height: 390px;
   min-width: 100%;
   grid-template-columns: repeat(14, 1fr);
@@ -142,6 +142,5 @@ const Image = styled.img`
 const Wrapper = styled.div`
   height: max-content;
   width: 100%;
-  min-width: min(550px, 80vw);
   user-select: none;
 `;

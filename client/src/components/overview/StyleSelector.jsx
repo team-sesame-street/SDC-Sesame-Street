@@ -71,9 +71,17 @@ export default StyleSelector;
 
 const StyleSelectorGrid = styled.div`
   display: grid;
+  width: min(100%);
   grid-template-columns: repeat(4, max-content);
   gap: 15px;
   grid-auto-rows: max-content;
+  @media(max-width: 900px) and (min-width: 501px) {
+    width: 60%;
+    grid-template-columns: repeat(4, 80px);
+  }
+  @media(max-width: 500px) {
+    width: 90%;
+  }
 `;
 
 const ThumbnailWrapper = styled.div`
@@ -81,20 +89,35 @@ const ThumbnailWrapper = styled.div`
   isolation: isolate;
   & .checkmark {
     width: minmax(2px, 2vw);
-    top: 0.5vh;
-    right: 0.5vh;
+    top: minmax(2px, 5%);
+    // right: 20%;
+    right: 5%;
     color: black;
     border: white;
     position: absolute;
     zIndex: 10;
     user-select: none;
+    @media(min-width: 501px) and (max-width: 900px) {
+      right: 25%;
+      color: red;
+    }
+    // @media(min-width: 901px) and (max-width: 1100px) {
+    //   right: 10%;
+    //   color: red;
+    // }
   }
+  // @media(max-width: 500px) {
+  //   & .checkmark {
+  //     right: 15%;
+  //   }
+  // }
 `;
 
 const Thumbnail = styled.img`
   object-fit: cover;
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  // min-width: 70px;
+  height: 60px;
   border-radius: 50%;
   border: 1px solid black;
   opacity: 0.6;

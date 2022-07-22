@@ -167,12 +167,17 @@ const SubWrapper = styled.div`
   align-items: center;
   margin-right: 0;
   column-gap: 3vw;
-  @media(max-width: 700px) {
-    // width: 85%;
+  @media(max-width: 900px) {
     width: 100%
     justify-content: center;
     grid-template-rows: repeat(2, max-content);
     grid-template-columns: 100%;
     row-gap: 3vh;
   };
+  @media(min-width: 1200px) {
+    justify-content: center;
+    grid-template-columns: 7fr 3fr;
+    grid-template-rows: max-content;
+    row-gap: 3vh;
+  }
 `;
