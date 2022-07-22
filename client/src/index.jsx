@@ -14,7 +14,6 @@ const GlobalStyle = createGlobalStyle`
 html, body {
   font-family: 'Lora';
   font-weight: 400;
-  height: 100%;
 }
 body {
   line-height: calc(1em + 0.5rem);

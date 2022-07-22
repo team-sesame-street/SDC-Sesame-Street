@@ -11,9 +11,10 @@ const styles = {
     display: 'flex',
     margin: '50px auto 50px auto',
     width: '70%',
-    gap: '80px',
+    gap: '60px',
     alignItems: 'stretch',
     backgroundColor: '#EDEDE9',
+    padding: '20px',
   },
 
   ratingsContainer: {
@@ -28,7 +29,9 @@ const styles = {
   },
 };
 
-export default function RrBox({ productId, setTotalRatings, setAvgRating, ratingsReviewsNode }) {
+export default function RrBox({
+  productId, setTotalRatings, setAvgRating, ratingsReviewsNode,
+}) {
   const [reviews, setReviews] = useState([]);
   const [count, setCount] = useState(2);
   const [sort, setSort] = useState('relevant');
@@ -108,33 +111,31 @@ export default function RrBox({ productId, setTotalRatings, setAvgRating, rating
   }, [productId, currRating, showModal]);
 
   return (
-    <div>
-      <div className="RrBox-container" style={styles.flexContainer} ref={ratingsReviewsNode}>
-        <div style={styles.ratingsContainer}>
-          <div style={{ fontSize: '25px', fontWeight: 'bold' }}>
-            Ratings & Reviews
-          </div>
-          <Ratings
-            meta={meta}
-            currRating={currRating}
-            setRating={setRating}
-            filterRatings={filterRatings}
-            setAvgRating={(num) => { setAvgRating(num); }}
-          />
+    <div className="RrBox-container" style={styles.flexContainer} ref={ratingsReviewsNode}>
+      <div style={styles.ratingsContainer}>
+        <div style={{ fontSize: '25px', fontWeight: 'bold' }}>
+          Ratings & Reviews
         </div>
-        <div style={styles.reviewsContainer}>
-          <Reviews
-            reviews={reviews}
-            setSort={setSort}
-            count={count}
-            meta={meta}
-            setCount={setCount}
-            filterRatings={filterRatings}
-            showModal={showModal}
-            setShowModal={setShowModal}
-            id={productId}
-          />
-        </div>
+        <Ratings
+          meta={meta}
+          currRating={currRating}
+          setRating={setRating}
+          filterRatings={filterRatings}
+          setAvgRating={(num) => { setAvgRating(num); }}
+        />
+      </div>
+      <div style={styles.reviewsContainer}>
+        <Reviews
+          reviews={reviews}
+          setSort={setSort}
+          count={count}
+          meta={meta}
+          setCount={setCount}
+          filterRatings={filterRatings}
+          showModal={showModal}
+          setShowModal={setShowModal}
+          id={productId}
+        />
       </div>
     </div>
   );
