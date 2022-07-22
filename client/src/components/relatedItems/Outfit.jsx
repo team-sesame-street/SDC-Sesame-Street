@@ -78,7 +78,7 @@ const Slider = styled.div`
 
 const addOutfitStyle = {
   color: 'gray',
-  background: 'whitesmoke',
+  background: 'white',
   fontWeight: '700',
   fontSize: '20px',
   borderStyle: 'none',
@@ -87,7 +87,7 @@ const addOutfitStyle = {
 
 const plusSignStyle = {
   color: 'gray',
-  background: 'whitesmoke',
+  background: 'white',
   fontWeight: '600',
   fontSize: '45px',
   borderStyle: 'none',
@@ -102,7 +102,7 @@ const Button = styled.div`
   justify-content: center;
   width: 310px;
   min-height: 370px;
-  background: whitesmoke !important;
+  background: white !important;
   border-radius: 10px;
   margin: 0 5px;
   padding: 8px;

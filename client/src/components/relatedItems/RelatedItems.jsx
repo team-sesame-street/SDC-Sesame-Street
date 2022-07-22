@@ -77,13 +77,14 @@ const Slider = styled.div`
 const Card = styled.div`
   min-width: 310px;
   min-height: min-content;
-  background: whitesmoke;
+  background: white;
   border-radius: 10px;
   display: inline-block;
   margin-left: 5px;
   margin-right: 5px;
   position: relative;
   padding: 8px;
+  box-shadow: 2px 2px 5px rgba(0 0 0 / 12%);
 `;
 
 const Image = styled.div`
@@ -115,7 +116,7 @@ const Category = styled.p`
 `;
 
 const Star = styled.div`
-  background: white;
+  background: #d9d9d9;
   clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
   height: 22px;
   width: 22px;
