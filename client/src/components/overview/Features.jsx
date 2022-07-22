@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 function Features({ product }) {
   if (Object.keys(product).length > 0) {
     // copying the features list and description to create dummy data for increased text length
-    const features = product.features.concat(product.features);
+    // const features = product.features.concat(product.features);
     return (
       <Wrapper>
-        {/* {product.features.map((feature) => ( */}
-        {features.map((feature, index) => (
+        {product.features.map((feature, index) => (
+        // {features.map((feature, index) => (
           feature.value !== null
             ? (
               <li key={index}>

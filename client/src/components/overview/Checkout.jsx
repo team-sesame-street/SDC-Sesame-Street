@@ -315,7 +315,7 @@ const SizeSelector = styled.ul`
   width: 100%;
   padding: 0;
   margin: 0;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   & li {
     height: 30px;
   }
@@ -330,6 +330,7 @@ const SizeSelector = styled.ul`
     grid-template-rows: repeat(5, 1fr);
     justify-content: center;
     align-content: center;
+    align-items: center;
     background: #D6CCC2;
   }
   & .options {
@@ -349,8 +350,7 @@ const QuantitySelector = styled.ul`
   width: 100%;
   padding: 0;
   margin: 0;
-  overflow-y: scroll;
-
+  // overflow-y: scroll;
   & li {
     height: 30px;
   }
@@ -361,6 +361,7 @@ const QuantitySelector = styled.ul`
     cursor: pointer;
     background: #D6CCC2;
     align-content: center;
+    align-items: center;
   }
   & .options {
     &:hover {
