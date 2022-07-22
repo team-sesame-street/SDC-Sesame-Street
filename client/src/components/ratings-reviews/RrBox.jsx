@@ -13,6 +13,7 @@ const styles = {
     width: '70%',
     gap: '80px',
     alignItems: 'stretch',
+    backgroundColor: '#EDEDE9',
   },
 
   ratingsContainer: {
@@ -110,7 +111,9 @@ export default function RrBox({ productId, setTotalRatings, setAvgRating, rating
     <div>
       <div className="RrBox-container" style={styles.flexContainer} ref={ratingsReviewsNode}>
         <div style={styles.ratingsContainer}>
-          Ratings & Reviews
+          <div style={{ fontSize: '25px', fontWeight: 'bold' }}>
+            Ratings & Reviews
+          </div>
           <Ratings
             meta={meta}
             currRating={currRating}

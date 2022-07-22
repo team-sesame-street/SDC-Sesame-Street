@@ -8,6 +8,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     fontSize: '14px',
+    fontWeight: 'normal',
   },
   sizeItems: {
     display: 'flex',
@@ -37,7 +38,7 @@ export default function ProductBreakdown({ meta }) {
         <RatingsBar
           fillWidth={0}
           className={keysArr[i]}
-          width={300}
+          width={325}
         />,
       );
       const currVal = keysArr[i];
@@ -55,7 +56,7 @@ export default function ProductBreakdown({ meta }) {
         const nameValue = nameVal[i].value;
         const percent = (nameValue / 5) * 910;
         return (
-          <div key={name} style={{ position: 'relative', fontSize: '16px' }}>
+          <div key={name} style={{ position: 'relative', fontSize: '16px', fontWeight: 'bold' }}>
             {name}
             {bar}
             <GoTriangleDown size={30} style={{ position: 'absolute', transform: `translate(${percent}%, -70%)` }} />
