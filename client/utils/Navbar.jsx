@@ -6,15 +6,19 @@ function Navbar() {
   return (
     <Nav>
       <ListWrapper>
-        <li id="logo">👻 <span>Soulful</span></li>
+        <li id="logo">
+          <span style={{display: 'flex', gap: '1rem'}}>
+            <img src="https://i.imgur.com/RYU33AI.png" style={{width: '40px', position: 'relative', top: '-10px'}}/>Soulful
+          </span>
+        </li>
         <li>Men</li>
         <li>Women</li>
         <li>Baby</li>
         <li>Kids</li>
       </ListWrapper>
       <MobileNav>
-        <span>
-        👻 Soulful
+        <span id="logo">
+        <img src="https://i.imgur.com/RYU33AI.png" style={{width: '40px'}}/> Soulful
         </span>
         <span>
           <GiHamburgerMenu/>
@@ -25,27 +29,30 @@ function Navbar() {
 }
 
 const Nav = styled.nav`
+  & #logo {
+    font-family: 'Homemade Apple';
+  }
+
   font-weight: 600;
-  background: whitesmoke;
+  background-image: linear-gradient(
+  180deg,
+  hsl(21deg 32% 91%) 0%,
+  hsl(21deg 32% 92%) 21%,
+  hsl(21deg 32% 93%) 30%,
+  hsl(21deg 32% 94%) 39%,
+  hsl(21deg 32% 95%) 46%,
+  hsl(21deg 32% 96%) 54%,
+  hsl(21deg 32% 97%) 61%,
+  hsl(21deg 33% 98%) 69%,
+  hsl(21deg 33% 99%) 79%,
+  hsl(0deg 0% 100%) 100%
+);
   height: 90px;
-  color: #023E8A;
+  color: #36261D;
   margin: 0;
   padding: 0;
 overflow: hidden;
 margin-bottom: 5px;
-background-image: linear-gradient(
-  0deg,
-  hsl(0deg 0% 100%) 0%,
-  hsl(192deg 62% 100%) 21%,
-  hsl(192deg 62% 99%) 30%,
-  hsl(192deg 62% 99%) 39%,
-  hsl(192deg 62% 99%) 46%,
-  hsl(192deg 62% 98%) 54%,
-  hsl(192deg 62% 98%) 61%,
-  hsl(192deg 62% 98%) 69%,
-  hsl(192deg 62% 97%) 79%,
-  hsl(192deg 63% 97%) 100%
-);
 `;
 
 const ListWrapper = styled.ul`
@@ -67,13 +74,16 @@ const ListWrapper = styled.ul`
   }
 
   & > li#logo {
+    font-family: 'Homemade Apple';
     cursor: revert;
     flex: 1;
     color: #222;
     font-weight: 900;
     justify-self: start;
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-decoration: revert;
+    position: relative;
+    top: 0.5rem;
   }
 
   & > li#logo > span{
@@ -98,6 +108,12 @@ const MobileNav = styled.div`
   margin: 2rem;
   font-size: 1.25rem;
   font-weight: 800;
+
+  & span > #logo {
+    position: absolute;
+    top: 0;
+    left: 200px;
+  }
 `;
 
 export default Navbar;
