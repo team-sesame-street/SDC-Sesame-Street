@@ -99,7 +99,6 @@ MainImage.defaultProps = {
 export default MainImage;
 
 const SubWrapper = styled.div`
-  background-color: #F8F7F2;
   position: relative;
   isolation: isolate;
   display: grid;
@@ -143,4 +142,8 @@ const Wrapper = styled.div`
   height: max-content;
   width: 100%;
   user-select: none;
+  @media(max-width: 900px) {
+    background: #F5EBE0;
+    padding: 2.5%;
+  }
 `;

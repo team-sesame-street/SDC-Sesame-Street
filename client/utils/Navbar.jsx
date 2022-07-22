@@ -32,7 +32,7 @@ function Navbar() {
 
 const Nav = styled.nav`
   font-weight: 600;
-  background: #D6CCC2;
+  background: #D5BDAF;
   height: 90px;
   color: #36261D;
   margin: 0;

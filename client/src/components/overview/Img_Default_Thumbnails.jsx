@@ -18,7 +18,7 @@ function ImageDefaultThumbnail({
         {images.length > 7 && (
           <RiArrowUpSFill
             className="arrows-thumbnail"
-            style={{ fill: thumbnailIndexMin === 0 ? '#eeeeee' : 'default' }}
+            style={{ fill: thumbnailIndexMin === 0 ? '#807d7d' : 'default' }}
             data-testid="up-arrow-active"
             onClick={() => {
               if (thumbnailIndexMin > 0) {
@@ -40,7 +40,7 @@ function ImageDefaultThumbnail({
         {images.length > 7 && (
           <RiArrowDownSFill
             className="arrows-thumbnail"
-            style={{fill: thumbnailIndexMax === images.length - 1 ? '#eeeeee' : 'default'}}
+            style={{ fill: thumbnailIndexMax === images.length - 1 ? '#807d7d' : 'default' }}
             onClick={() => {
               if (thumbnailIndexMax < images.length - 1) {
                 thumbnailIndexRange(thumbnailIndexMin + 1, thumbnailIndexMax + 1);

@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { IoIosArrowDropright, IoIosArrowDropleft } from 'react-icons/io';
-import { IoExitOutline } from 'react-icons/io5';
 import { BsCircleFill } from 'react-icons/bs';
+import { IoExitOutline } from 'react-icons/io5';
 import styled from 'styled-components';
-import Modal from '../../../utils/Modal.jsx';
+import ModalExpanded from '../../../utils/ModalExpanded.jsx';
 
 function ExpandedImage({
   images, currImgIndex, setCurrImgIndex, setExpandedView,
@@ -38,10 +38,11 @@ function ExpandedImage({
     }
   };
 
+  const exitExpandedView = () => { setExpandedView(false); };
+
   if (images.length > 0) {
     return (
-      <ExtraWrapper>
-        <Modal>
+      <ModalExpanded cb3={exitExpandedView} zoom={zoom}>
         {/* {console.log('offset%:', offsetPercentage)} */}
         {images.map((image, index) => {
           if (index === currImgIndex) {
@@ -54,6 +55,7 @@ function ExpandedImage({
                   backgroundImage: !zoom ? 'none' : `url(${images[currImgIndex].url})`,
                   backgroundSize: `${containerSize.height * 2.5}px`,
                   backgroundPosition: `${offsetPercentage.x}% ${offsetPercentage.y}%`,
+                  cursor: zoom ? "url(https://i.imgur.com/LNvi84N.png), zoom-out" : 'crosshair',
                 }}
                 onMouseMove={moveBackgroundImg}
               >
@@ -76,10 +78,10 @@ function ExpandedImage({
                   <IoExitOutline data-testid="exit-expanded-btn" className="icon-expanded exit-icon" onClick={() => { setExpandedView(false); }} />
                 )}
                 {!zoom && index < images.length - 1 && (
-                <IoIosArrowDropright
-                  className="icon-expanded right-arrow-expanded"
-                  onClick={() => { setCurrImgIndex(currImgIndex + 1); }}
-                />
+                  <IoIosArrowDropright
+                    className="icon-expanded right-arrow-expanded"
+                    onClick={() => { setCurrImgIndex(currImgIndex + 1); }}
+                  />
                 )}
               </Wrapper>
             );
@@ -108,8 +110,7 @@ function ExpandedImage({
             );
           })}
         </NavSymbols>
-        </Modal>
-      </ExtraWrapper>
+      </ModalExpanded>
     );
   }
   return null;
@@ -127,11 +128,6 @@ ExpandedImage.propTypes = {
 
 export default ExpandedImage;
 
-const ExtraWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
 const Wrapper = styled.div`
   position: relative;
   isolation: isolate;
@@ -145,20 +141,20 @@ const Wrapper = styled.div`
     position: absolute;
     z-index: 100;
     color: black;
-    width: 4vw;
-    height: 4vw;
-    max-width: 4vh;
-    max-height: 4vh;
-    min-width: 20px;
-    min-height: 20px;
+    width: 30px;
+    height: 30px;
+    // max-width: 4vh;
+    // max-height: 4vh;
+    // min-width: 30px;
+    // min-height: 30px;
     cursor: pointer;
-    & :hover {
-      opacity: 0.4;
-    }
   };
   & .exit-icon {
     top: 5%;
     right: 5%;
+    & :hover {
+      opacity: 0.4;
+    }
   };
   & .left-arrow-expanded {
     top: 50%;
@@ -171,13 +167,19 @@ const Wrapper = styled.div`
   @media(max-width: 500px) {
     width: 100%;
   }
+  @media(min-width: 1200px) {
+    width: 40vw;
+    height: 40vw;
+    max-width: 600px;
+    max-height: 600px;
+  }
 `;
 
 const NavSymbols = styled.div`
   display: grid;
-  margin-top: 5px;
+  margin-top: 2.5vh;
   width: 100%;
-  height: 100%;
+  height: max-content;
   gap: 5px;
   grid-auto-flow: column;
   grid-template-rows: max-content;
@@ -191,15 +193,20 @@ const NavSymbols = styled.div`
     color: grey;
     cursor: pointer;
   };
+  // @media(max-width: 500px) {
+  //   height: max-content;;
+  // }
 `;
 
 const Image = styled.img`
   position: absolute;
   width: 100%;
   height: 100%;
-  // width: auto;
-  // height: auto;
   cursor: crosshair;
   object-fit: contain;
   user-select: none;
+  // @media(min-width: 1200px) {
+  //   max-width: 60vh;
+  //   max-height: 60vh;
+  // }
 `;

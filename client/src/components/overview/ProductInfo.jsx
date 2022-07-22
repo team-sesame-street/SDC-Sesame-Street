@@ -91,7 +91,7 @@ const Wrapper = styled.div`
   height: max-content;
   grid-template-rows: repeat(5, max-content);
   grid-template-columns: 1fr;
-  gap: 5px;
+  gap: 2vh;
 `;
 
 const SocialSharingGrid = styled.div`
