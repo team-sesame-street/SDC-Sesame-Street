@@ -111,8 +111,8 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
           setExpandedView={setExpandedView}
         />
       )}
-      {!expandedView && (
-      <SubWrapper>
+      {/* {!expandedView && (
+      <SubWrapper> */}
         <TopOverview className="top-overview overview-grid">
           <MainImage
             images={images}
@@ -138,8 +138,8 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
           <SloganDescription product={product} />
           <Features product={product} />
         </BottomOverview>
-      </SubWrapper>
-      )}
+      {/* </SubWrapper>
+      )} */}
     </Wrapper>
   );
 }
@@ -193,6 +193,6 @@ const TopOverview = styled.div`
 const BottomOverview = styled.div`
   margin-top: 4vh;
   @media(max-width: 900px) {
-    margin-top: 10vh;
+    margin-top: 6vh;
   }
 `;

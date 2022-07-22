@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 import Button from '../../../utils/Button.jsx';
-import { MdStars } from 'react-icons/md';
 
 function Checkout({ selectedStyle }) {
   const [skusInStock, setSkusInStock] = useState([]);
@@ -145,7 +144,7 @@ function Checkout({ selectedStyle }) {
     return (
       <Wrapper>
         <TextWrapper style={{ visibility: invalidSubmit ? 'visible' : 'hidden' }}>
-          <p>Please select size</p>
+          <p>‼️ Please select size ‼️</p>
         </TextWrapper>
         <SizeSelector>
           {/* collapsed view */}
@@ -207,6 +206,7 @@ function Checkout({ selectedStyle }) {
         </QuantitySelector>
 
         <Button
+          className="cart-btn"
           style={{
             visibility: skusInStock.length === 0 ? 'hidden' : 'visible',
             gridColumn: '1 / 3',
@@ -215,6 +215,7 @@ function Checkout({ selectedStyle }) {
             margin: 0,
             padding: 0,
             width: '80%',
+            display: 'inline-block',
           }}
           type="button"
           onClick={addToCart}
@@ -280,7 +281,6 @@ const SizeSelector = styled.ul`
   margin: 0;
   overflow-y: scroll;
   & li {
-    // position: relative;
     height: 30px;
   }
   & button {
@@ -306,7 +306,6 @@ const QuantitySelector = styled.ul`
   overflow-y: scroll;
 
   & li {
-    // position: relative;
     height: 30px;
   }
   & button {

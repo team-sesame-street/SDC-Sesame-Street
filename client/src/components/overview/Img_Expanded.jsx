@@ -4,6 +4,7 @@ import { IoIosArrowDropright, IoIosArrowDropleft } from 'react-icons/io';
 import { IoExitOutline } from 'react-icons/io5';
 import { BsCircleFill } from 'react-icons/bs';
 import styled from 'styled-components';
+import Modal from '../../../utils/Modal.jsx';
 
 function ExpandedImage({
   images, currImgIndex, setCurrImgIndex, setExpandedView,
@@ -40,6 +41,7 @@ function ExpandedImage({
   if (images.length > 0) {
     return (
       <ExtraWrapper>
+        <Modal>
         {/* {console.log('offset%:', offsetPercentage)} */}
         {images.map((image, index) => {
           if (index === currImgIndex) {
@@ -106,6 +108,7 @@ function ExpandedImage({
             );
           })}
         </NavSymbols>
+        </Modal>
       </ExtraWrapper>
     );
   }
@@ -149,6 +152,9 @@ const Wrapper = styled.div`
     min-width: 20px;
     min-height: 20px;
     cursor: pointer;
+    & :hover {
+      opacity: 0.4;
+    }
   };
   & .exit-icon {
     top: 5%;

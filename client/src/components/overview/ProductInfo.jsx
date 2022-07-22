@@ -20,8 +20,8 @@ function ProductInfo({ product, selectedStyle, avgRating, totalRatings, ratingsR
             &nbsp;reviews
           </SyntheticLink>
         </div>
-        <p data-testid="category">{product.category.toUpperCase()}</p>
-        <h2 data-testid="product-name" size={{ maxHeight: 'max-content' }}>{product.name}</h2>
+        <h3 data-testid="category">{product.category.toUpperCase()}</h3>
+        <h1 data-testid="product-name" size={{ maxHeight: 'max-content' }}>{product.name}</h1>
         {selectedStyle.sale_price === null
           ? (<p data-testid="price">{formatPrice(selectedStyle.original_price)}</p>)
           : (
