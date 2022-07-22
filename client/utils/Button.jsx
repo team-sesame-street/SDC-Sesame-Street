@@ -15,9 +15,9 @@ const Wrapper = styled.button`
     justify-content: flex-start;
     text-transform: uppercase;
     font-weight: 800;
-    background: #022F6B;
+    background: #201d1a;
     border: none;
-    color: #E3EFFE;
+    color: #f2dcc7;
     border-radius: 4px;
     margin-right: 10px;
     margin-top: 15px;
@@ -25,8 +25,8 @@ const Wrapper = styled.button`
     transition: all 100ms ease-in-out;
 
     &:hover {
-      color: #EEE;
-      background: #023E8A;
+      color: #faf5f3;
+      background: #585653;
       transition: all 200ms ease-in-out;
       transform: translateY(2px 2px);
     }
