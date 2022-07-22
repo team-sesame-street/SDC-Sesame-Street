@@ -11,7 +11,6 @@ function MainImage(
   },
 ) {
   if (images.length > 0) {
-    // console.log(images.length);
     const navigateLeft = () => {
       if (currImgIndex - 1 < thumbnailIndexMin) {
         setThumbnailIndexMin(thumbnailIndexMin - 1);
@@ -104,9 +103,9 @@ const SubWrapper = styled.div`
   position: relative;
   isolation: isolate;
   display: grid;
-  height: 39vw; // originally 60vh here
-  // width: 50vw;
-  min-height: 390px;
+  height: 50vw;
+  max-height: 60vh;
+  min-height: 550px;
   min-width: 100%;
   grid-template-columns: repeat(14, 1fr);
   grid-template-rows: repeat(8, 1fr);
@@ -115,6 +114,7 @@ const SubWrapper = styled.div`
   align-content: center;
   justify-items: center;
   align-items: center;
+  user-select: none;
   & .arrows-default {
     position: absolute;
     z-index: 70;
@@ -136,11 +136,11 @@ const Image = styled.img`
   width: 100%;
   object-fit: contain;
   cursor: zoom-in;
+  user-select: none;
 `;
 
 const Wrapper = styled.div`
   height: max-content;
-  // width: 50vw;
   width: 100%;
-  min-width: min(550px, 80vw);
+  user-select: none;
 `;

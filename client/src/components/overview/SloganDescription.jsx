@@ -8,8 +8,9 @@ function SloganDescription({ product }) {
     const description = [product.description, product.description, product.description].join(' ');
     return (
       <Wrapper>
-        <h3 data-testid="slogan">{product.slogan}</h3>
+        <h2 data-testid="slogan">{product.slogan}</h2>
             {/* <p test-data-id="description">{product.description}</p> */}
+        <br />
         <p data-testid="description">{description}</p>
       </Wrapper>
     );
