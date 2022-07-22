@@ -81,7 +81,7 @@ export const PrimaryBtn = styled.button`
   border-radius: 4px;
   cursor: pointer;
   transition: all 100ms ease-in-out;
-  background-color: white;
+  background-color: transparent;
   &:hover {
     transition: all 200ms ease-in-out;
     background: #faf5f3;
