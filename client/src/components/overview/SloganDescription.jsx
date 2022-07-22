@@ -8,7 +8,7 @@ function SloganDescription({ product }) {
     const description = [product.description, product.description, product.description].join(' ');
     return (
       <Wrapper>
-        <h2 data-testid="slogan">{product.slogan}</h2>
+        <Slogan data-testid="slogan">{product.slogan}</Slogan>
             {/* <p test-data-id="description">{product.description}</p> */}
         <br />
         <p data-testid="description">{description}</p>
@@ -21,4 +21,10 @@ function SloganDescription({ product }) {
 export default SloganDescription;
 
 const Wrapper = styled.div`
+`;
+
+const Slogan = styled.h2`
+  font-family: 'Homemade Apple';
+  font-weight: 700;
+  font-size: 1.25rem;
 `;
