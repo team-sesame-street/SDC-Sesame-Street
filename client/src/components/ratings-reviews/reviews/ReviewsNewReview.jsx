@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import Modal from './form/Modal.jsx';
+import Button from '../../../../utils/Button.jsx';
 
 export default function ReviewsNewReview({
   closeModal, showModal, onOpen, onClose,
@@ -12,7 +13,7 @@ export default function ReviewsNewReview({
   return (
     <div>
       <div className="new-review">
-        <button type="button" style={addReviewBtn} onClick={onOpen}>ADD REVIEW</button>
+        <Button type="button" style={addReviewBtn} onClick={onOpen}>ADD REVIEW</Button>
       </div>
       <Modal
         closeModal={() => { closeModal(); }}
