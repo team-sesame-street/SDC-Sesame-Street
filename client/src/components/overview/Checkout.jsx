@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 import AddToCartButton from '../../../utils/AddToCartButton.jsx';
+import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 
 function Checkout({ selectedStyle }) {
   const [skusInStock, setSkusInStock] = useState([]);
@@ -150,12 +151,32 @@ function Checkout({ selectedStyle }) {
           {/* collapsed view */}
           {skusInStock.length > 0 && !selectedSku && !selectingSize && (
             <li>
-              <button type="button" onClick={expandSelectSize}>Select Size</button>
+              <button type="button" onClick={expandSelectSize}>
+                Select Size
+                &nbsp;
+                <RiArrowDownSFill
+                  style={{
+                    gridColumn: '5 / 6',
+                    alignSelf: 'center',
+                    // justifySelf: 'end',
+                  }}
+                />
+              </button>
             </li>
           )}
           {skusInStock.length > 0 && selectedSku && !selectingSize && (
             <li>
-              <button type="button" onClick={expandSelectSize}>{selectedStyle.skus[selectedSku].size}</button>
+              <button type="button" onClick={expandSelectSize}>
+                {selectedStyle.skus[selectedSku].size}
+                &nbsp;
+                <RiArrowDownSFill
+                  style={{
+                    gridColumn: '5 / 6',
+                    alignSelf: 'center',
+                    justifySelf: 'end',
+                  }}
+                />
+              </button>
             </li>
           )}
           {skusInStock.length === 0 && (
@@ -167,12 +188,22 @@ function Checkout({ selectedStyle }) {
           {/* expanded view */}
           {skusInStock.length > 0 && selectingSize && (
             <li>
-              <button type="button" onClick={resetSelectedSize}>Select Size</button>
+              <button type="button" onClick={resetSelectedSize}>
+                Select Size
+                &nbsp;
+                <RiArrowUpSFill
+                  style={{
+                    gridColumn: '5 / 6',
+                    alignSelf: 'center',
+                    justifySelf: 'end',
+                  }}
+                />
+              </button>
             </li>
           )}
           {skusInStock.length > 0 && selectingSize && skusInStock.map((sku) => (
             <li key={sku}>
-              <button type="button" onClick={handleSelectSize}>{selectedStyle.skus[sku].size}</button>
+              <button type="button" className="options" onClick={handleSelectSize}>{selectedStyle.skus[sku].size}</button>
             </li>
           ))}
         </SizeSelector>
@@ -199,7 +230,7 @@ function Checkout({ selectedStyle }) {
           {selectingQuantity && maxQuantity > 0 && (
             quantityRange.map((quantity) => (
               <li key={quantity}>
-                <button type="button" onClick={handleSelectQuantity}>{quantity}</button>
+                <button type="button" className="options" onClick={handleSelectQuantity}>{quantity}</button>
               </li>
             ))
           )}
@@ -263,6 +294,8 @@ const Wrapper = styled.div`
   justify-items: left;
   align-content: center;;
   column-gap: 5px;
+  position: relative;
+  isolation: isolate;
 `;
 
 const TextWrapper = styled.div`
@@ -273,7 +306,9 @@ const TextWrapper = styled.div`
 
 const SizeSelector = styled.ul`
   list-style-type: none;
-  max-height: 70px;
+  position: absolute;
+  z-index: 100;
+  height: min-content;
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   align-self: top;
@@ -285,19 +320,29 @@ const SizeSelector = styled.ul`
     height: 30px;
   }
   & button {
-    // position: absolute;
     top: 0;
     left: 0;
     border: none;
     width: 100%;
-    height: 100%;
+    height: 2rem;
     cursor: pointer;
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    justify-content: center;
+    align-content: center;
+    background: #D6CCC2;
   }
+  & .options {
+    &:hover {
+      background: #D5BDAF;
+    }
 `;
 
 const QuantitySelector = styled.ul`
   list-style-type: none;
-  max-height: 70px;
+  position: absolute;
+  z-index: 100;
+  height: min-content;
   grid-column: 2 / 3;
   grid-row: 2 / 3;
   align-self: top;
@@ -312,7 +357,13 @@ const QuantitySelector = styled.ul`
   & button {
     border: none;
     width: 100%;
-    height: 100%;
+    height: 2rem;
     cursor: pointer;
+    background: #D6CCC2;
+    align-content: center;
   }
+  & .options {
+    &:hover {
+      background: #D5BDAF;
+    }
 `;
