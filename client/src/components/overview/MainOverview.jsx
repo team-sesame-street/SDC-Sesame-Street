@@ -181,7 +181,6 @@ const Wrapper = styled.div`
 `;
 
 const TopOverview = styled.div`
-
 `;
 
 const BottomOverview = styled.div`
@@ -190,5 +189,6 @@ const BottomOverview = styled.div`
   margin-top: 4vh;
   @media(max-width: 900px) {
     margin-top: 6vh;
+    row-gap: 10vh;
   }
 `;

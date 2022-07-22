@@ -41,8 +41,8 @@ function Features({ product }) {
 export default Features;
 
 const Wrapper = styled.ul`
-  margin-left: 5%;
+  background-color: grey;
   list-style: none;
-  padding: 0;
+  padding-left: 10%;
   margin: 0;
 `;
