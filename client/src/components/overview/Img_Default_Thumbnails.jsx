@@ -97,6 +97,7 @@ const ThumbnailsGrid = styled.div`
   display: grid;
   width: 100%;
   height: 100%;
+  max-height: 95%;
   min-width: 1fr;
   grid-template-columns: max-content;
   grid-template-rows: repeat(auto-fill, max-content);
@@ -115,6 +116,10 @@ const ThumbnailImage = styled.img`
   object-fit: cover;
   cursor: pointer;
   &:hover {
-    border: 2px solid #5B5E5F;
+    border: 2px solid black;
+  }
+  @media (min-width: 1500px) {
+    height: 70px;
+    width: 70px;
   }
 `;

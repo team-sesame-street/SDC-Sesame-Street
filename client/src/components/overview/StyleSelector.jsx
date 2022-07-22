@@ -75,6 +75,7 @@ const StyleSelectorGrid = styled.div`
   grid-template-columns: repeat(4, max-content);
   gap: 15px;
   grid-auto-rows: max-content;
+  margin-top: 2vh;
   @media(max-width: 900px) and (min-width: 501px) {
     width: 60%;
     grid-template-columns: repeat(4, 80px);

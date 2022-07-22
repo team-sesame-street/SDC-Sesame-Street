@@ -112,8 +112,8 @@ function MainOverview({ id }) {
         />
       )}
       {!expandedView && (
-      <Wrapper>
-        <SubWrapper>
+      <SubWrapper>
+        <TopOverview className="top-overview overview-grid">
           <MainImage
             images={images}
             currImgIndex={currImgIndex}
@@ -130,12 +130,12 @@ function MainOverview({ id }) {
             styles={styles}
             setSelectedStyle={setSelectedStyle}
           />
-        </SubWrapper>
-        <SubWrapper style={{ marginTop: '4vh' }}>
+        </TopOverview>
+        <BottomOverview className="bottom-overview overview-grid">
           <SloganDescription product={product} />
           <Features product={product} />
-        </SubWrapper>
-      </Wrapper>
+        </BottomOverview>
+      </SubWrapper>
       )}
     </Wrapper>
   );
@@ -153,29 +153,39 @@ export default MainOverview;
 
 const Wrapper = styled.div`
   width: 100%;
+  & .overview-grid {
+    display: grid;
+    width: 100%:
+    height: max-content;
+    grid-template-columns: 6fr 4fr;
+    grid-template-rows: max-content;
+    align-items: center;
+    margin-right: 0;
+    column-gap: 3vw;
+    @media(max-width: 900px) {
+      width: 100%
+      justify-content: center;
+      grid-template-rows: repeat(2, max-content);
+      grid-template-columns: 100%;
+      row-gap: 3vh;
+    };
+    @media(min-width: 1200px) {
+      justify-content: center;
+      grid-template-columns: 7fr 3fr;
+      grid-template-rows: max-content;
+      row-gap: 3vh;
+    }
+  }
 `;
 
 const SubWrapper = styled.div`
-  // background-color: grey;
-  display: grid;
-  width: 100%:
-  height: max-content;
-  grid-template-columns: 6fr 4fr;
-  grid-template-rows: max-content;
-  align-items: center;
-  margin-right: 0;
-  column-gap: 3vw;
-  @media(max-width: 900px) {
-    width: 100%
-    justify-content: center;
-    grid-template-rows: repeat(2, max-content);
-    grid-template-columns: 100%;
-    row-gap: 3vh;
-  };
-  @media(min-width: 1200px) {
-    justify-content: center;
-    grid-template-columns: 7fr 3fr;
-    grid-template-rows: max-content;
-    row-gap: 3vh;
-  }
+  width: 100%;
+`;
+
+const TopOverview = styled.div`
+
+`;
+
+const BottomOverview = styled.div`
+  margin-top: 4vh;
 `;
