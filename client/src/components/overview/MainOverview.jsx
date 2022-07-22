@@ -113,33 +113,31 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
       )}
       {/* {!expandedView && (
       <SubWrapper> */}
-        <TopOverview className="top-overview overview-grid">
-          <MainImage
-            images={images}
-            currImgIndex={currImgIndex}
-            setCurrImgIndex={setCurrImgIndex}
-            thumbnailIndexMin={thumbnailIndexMin}
-            thumbnailIndexMax={thumbnailIndexMax}
-            setThumbnailIndexMin={setThumbnailIndexMin}
-            setThumbnailIndexMax={setThumbnailIndexMax}
-            setExpandedView={setExpandedView}
-          />
-          <Sidebar
-            product={product}
-            selectedStyle={selectedStyle}
-            styles={styles}
-            setSelectedStyle={setSelectedStyle}
-            avgRating={avgRating}
-            totalRatings={totalRatings}
-            ratingsReviewsNode={ratingsReviewsNode}
-          />
-        </TopOverview>
-        <BottomOverview className="bottom-overview overview-grid">
-          <SloganDescription product={product} />
-          <Features product={product} />
-        </BottomOverview>
-      {/* </SubWrapper>
-      )} */}
+      <TopOverview className="top-overview overview-grid">
+        <MainImage
+          images={images}
+          currImgIndex={currImgIndex}
+          setCurrImgIndex={setCurrImgIndex}
+          thumbnailIndexMin={thumbnailIndexMin}
+          thumbnailIndexMax={thumbnailIndexMax}
+          setThumbnailIndexMin={setThumbnailIndexMin}
+          setThumbnailIndexMax={setThumbnailIndexMax}
+          setExpandedView={setExpandedView}
+        />
+        <Sidebar
+          product={product}
+          selectedStyle={selectedStyle}
+          styles={styles}
+          setSelectedStyle={setSelectedStyle}
+          avgRating={avgRating}
+          totalRatings={totalRatings}
+          ratingsReviewsNode={ratingsReviewsNode}
+        />
+      </TopOverview>
+      <BottomOverview className="bottom-overview overview-grid">
+        <SloganDescription product={product} />
+        <Features product={product} />
+      </BottomOverview>
     </Wrapper>
   );
 }
@@ -182,15 +180,13 @@ const Wrapper = styled.div`
   }
 `;
 
-const SubWrapper = styled.div`
-  width: 100%;
-`;
-
 const TopOverview = styled.div`
 
 `;
 
 const BottomOverview = styled.div`
+  padding-left: 5%;
+  padding-right: 5%;
   margin-top: 4vh;
   @media(max-width: 900px) {
     margin-top: 6vh;
