@@ -13,6 +13,7 @@ import UploadPhotos from './UploadPhotos.jsx';
 import Nickname from './Nickname.jsx';
 import Email from './Email.jsx';
 import convertImageToBase64 from '../../../../../utils/convertImageToBase64.js';
+import Button from '../../../../../utils/Button.jsx';
 
 const styles = {
   modalContainer: {
@@ -20,7 +21,7 @@ const styles = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%',
-    backgroundColor: '#fff',
+    backgroundColor: '#EDEDE9',
     padding: '50px',
     height: '75%',
     width: '50%',
@@ -36,7 +37,7 @@ const styles = {
     zIndex: 1000,
   },
   modalItems: {
-    overflow: 'scroll',
+    overflowY: 'scroll',
     maxWidth: '100%',
     maxHeight: '40vh',
     padding: '2rem',
@@ -174,7 +175,7 @@ export default function Modal({ showModal, closeModal, onClose }) {
       <div style={styles.modalOverlay} />
       <div style={styles.modalContainer}>
         <form onSubmit={(event) => handleSubmit(event)}>
-          <button type="button" onClick={onClose} style={styles.xReviewBtn}>X</button>
+          <Button type="button" onClick={onClose} style={styles.xReviewBtn}>X</Button>
           <br />
           <h1>Write Your Review for:</h1>
           <br />
@@ -251,8 +252,8 @@ export default function Modal({ showModal, closeModal, onClose }) {
             />
           </div>
           <br />
-          <input type="button" value="Cancel" onClick={onClose} style={styles.cancelReviewBtn} />
-          <input type="submit" style={styles.submitReviewBtn} value="Submit" />
+          <Button type="button" value="Cancel" onClick={onClose} style={styles.cancelReviewBtn}>Cancel</Button>
+          <Button type="submit" style={styles.submitReviewBtn} value="Submit">Submit</Button>
         </form>
       </div>
     </>

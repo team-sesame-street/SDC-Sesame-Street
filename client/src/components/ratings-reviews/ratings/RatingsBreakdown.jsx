@@ -31,7 +31,7 @@ const styles = {
   removeFilterStyling: {
     display: 'flex',
     color: 'crimson',
-    width: '150px',
+    width: '250px',
   },
 
   individualBreakdown: {
