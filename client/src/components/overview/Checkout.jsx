@@ -2,7 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
-import Button from '../../../utils/Button.jsx';
+import AddToCartButton from '../../../utils/AddToCartButton.jsx';
 
 function Checkout({ selectedStyle }) {
   const [skusInStock, setSkusInStock] = useState([]);
@@ -205,7 +205,7 @@ function Checkout({ selectedStyle }) {
           )}
         </QuantitySelector>
 
-        <Button
+        <AddToCartButton
           className="cart-btn"
           style={{
             visibility: skusInStock.length === 0 ? 'hidden' : 'visible',
@@ -215,13 +215,14 @@ function Checkout({ selectedStyle }) {
             margin: 0,
             padding: 0,
             width: '80%',
-            display: 'inline-block',
+            background: 'black',
+            color: 'white',
           }}
           type="button"
           onClick={addToCart}
         >
           Add to Cart
-        </Button>
+        </AddToCartButton>
       </Wrapper>
     );
   }

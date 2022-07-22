@@ -41,7 +41,6 @@ function Features({ product }) {
 export default Features;
 
 const Wrapper = styled.ul`
-  background-color: grey;
   list-style: none;
   padding-left: 10%;
   margin: 0;

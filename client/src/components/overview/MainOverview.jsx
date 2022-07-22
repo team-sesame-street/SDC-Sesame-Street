@@ -181,6 +181,13 @@ const Wrapper = styled.div`
 `;
 
 const TopOverview = styled.div`
+  @media(max-width: 900px) {
+    background: transparent;
+  }
+  @media(min-width: 901px) {
+    padding: 5%;
+    background: #F5EBE0;
+  }
 `;
 
 const BottomOverview = styled.div`
