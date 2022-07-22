@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { IoIosArrowDropright, IoIosArrowDropleft } from 'react-icons/io';
-import { IoExitOutline } from 'react-icons/io5';
 import { BsCircleFill } from 'react-icons/bs';
 import styled from 'styled-components';
 import ModalExpanded from '../../../utils/ModalExpanded.jsx';
@@ -42,7 +41,6 @@ function ExpandedImage({
 
   if (images.length > 0) {
     return (
-      // <ExtraWrapper>
       <ModalExpanded cb3={exitExpandedView} zoom={zoom}>
         {/* {console.log('offset%:', offsetPercentage)} */}
         {images.map((image, index) => {
@@ -53,7 +51,6 @@ function ExpandedImage({
                 key={index}
                 onClick={!zoom ? getSizingRatio : () => { setZoom(false); }}
                 style={{
-                  backgroundColor: !zoom ? 'red' : 'white',
                   backgroundImage: !zoom ? 'none' : `url(${images[currImgIndex].url})`,
                   backgroundSize: `${containerSize.height * 2.5}px`,
                   backgroundPosition: `${offsetPercentage.x}% ${offsetPercentage.y}%`,
@@ -109,7 +106,6 @@ function ExpandedImage({
           })}
         </NavSymbols>
       </ModalExpanded>
-
     );
   }
   return null;
@@ -126,12 +122,6 @@ ExpandedImage.propTypes = {
 };
 
 export default ExpandedImage;
-
-const ExtraWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-`;
 
 const Wrapper = styled.div`
   position: relative;
