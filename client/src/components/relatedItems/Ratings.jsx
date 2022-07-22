@@ -13,7 +13,7 @@ function Ratings({ rating }) {
   const starRating = Math.round(rating * 4) / 4;
   return (
     <Container data-testid='ratings'>
-      <StarRatings rating={starRating} starDimension="18px" starSpacing="2px" starRatedColor="black" />
+      <StarRatings rating={starRating} starDimension="18px" starSpacing="2px" starRatedColor="goldenrod" />
     </Container>
   );
 }
