@@ -55,6 +55,7 @@ function ExpandedImage({
                   backgroundImage: !zoom ? 'none' : `url(${images[currImgIndex].url})`,
                   backgroundSize: `${containerSize.height * 2.5}px`,
                   backgroundPosition: `${offsetPercentage.x}% ${offsetPercentage.y}%`,
+                  cursor: zoom ? "url(https://i.imgur.com/LNvi84N.png), zoom-out" : 'crosshair',
                 }}
                 onMouseMove={moveBackgroundImg}
               >
