@@ -10,16 +10,18 @@ function ProductInfo({ product, selectedStyle, avgRating, totalRatings, ratingsR
 
     return (
       <Wrapper>
-        <div>
-          <StarRatings rating={avgRating} starDimension="18px" starSpacing="2px" starRatedColor="goldenrod" />
-          &nbsp;
-          &nbsp;
-          <SyntheticLink onClick={() => { ratingsReviewsNode.current.scrollIntoView(); }}>
-            Read all&nbsp;
-            {totalRatings}
-            &nbsp;reviews
-          </SyntheticLink>
-        </div>
+        {totalRatings && (
+          <div>
+            <StarRatings rating={avgRating} starDimension="18px" starSpacing="2px" starRatedColor="goldenrod" />
+            &nbsp;
+            &nbsp;
+            <SyntheticLink onClick={() => { ratingsReviewsNode.current.scrollIntoView(); }}>
+              Read all&nbsp;
+              {totalRatings}
+              &nbsp;reviews
+            </SyntheticLink>
+          </div>
+        )}
         <h3 data-testid="category">{product.category.toUpperCase()}</h3>
         <h1 data-testid="product-name" size={{ maxHeight: 'max-content' }}>{product.name}</h1>
         {selectedStyle.sale_price === null
