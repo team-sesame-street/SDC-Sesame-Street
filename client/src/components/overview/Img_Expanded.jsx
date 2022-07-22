@@ -11,7 +11,7 @@ function ExpandedImage({
   const [zoom, setZoom] = useState(false);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const [offsetPercentage, setOffsetPercentage] = useState({ x: 0, y: 0 });
-  const container = useRef();
+  const container = useRef(null);
 
   const getSizingRatio = (e) => {
     const offset = { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY };
@@ -40,7 +40,7 @@ function ExpandedImage({
   if (images.length > 0) {
     return (
       <ExtraWrapper>
-        {console.log('offset%:', offsetPercentage)}
+        {/* {console.log('offset%:', offsetPercentage)} */}
         {images.map((image, index) => {
           if (index === currImgIndex) {
             return (
@@ -53,7 +53,7 @@ function ExpandedImage({
                   backgroundSize: `${containerSize.height * 2.5}px`,
                   backgroundPosition: `${offsetPercentage.x}% ${offsetPercentage.y}%`,
                 }}
-                // onMouseMove={moveBackgroundImg}
+                onMouseMove={moveBackgroundImg}
               >
                 {!zoom && index > 0 && (
                   <IoIosArrowDropleft

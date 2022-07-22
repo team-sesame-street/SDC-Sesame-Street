@@ -5,11 +5,16 @@ import Checkout from './Checkout.jsx';
 import StyleSelector from './StyleSelector.jsx';
 
 function Sidebar({
-  product, selectedStyle, styles, setSelectedStyle
+  product, selectedStyle, styles, setSelectedStyle, avgRating, totalRatings
 }) {
   return (
     <Wrapper>
-      <ProductInfo product={product} selectedStyle={selectedStyle} />
+      <ProductInfo
+        product={product}
+        selectedStyle={selectedStyle}
+        avgRating={avgRating}
+        totalRatings={totalRatings}
+      />
       <StyleSelector
         styles={styles}
         selectedStyle={selectedStyle}

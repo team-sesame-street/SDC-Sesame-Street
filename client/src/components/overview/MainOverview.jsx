@@ -8,7 +8,7 @@ import Features from './Features.jsx';
 import Sidebar from './Sidebar.jsx';
 import MainImage from './Img_Default_Gallery.jsx';
 
-function MainOverview({ id }) {
+function MainOverview({ id, avgRating, totalRatings }) {
   const [product, setProduct] = useState({});
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});
@@ -129,6 +129,8 @@ function MainOverview({ id }) {
             selectedStyle={selectedStyle}
             styles={styles}
             setSelectedStyle={setSelectedStyle}
+            avgRating={avgRating}
+            totalRatings={totalRatings}
           />
         </TopOverview>
         <BottomOverview className="bottom-overview overview-grid">

@@ -40,11 +40,12 @@ function App() {
       <Navbar />
       <Wrapper>
         {/* {productId} */}
-        <MainOverview id={productId} />
+        <MainOverview id={productId} totalRatings={totalRatings} avgRating={avgRating} />
         <MainCarousel id={productId} pageChange={pageChange} />
         <QaBox currProduct={currProduct} />
         <RrBox
-          id={productId}
+          id="ratings-reviews"
+          productId={productId}
           setTotalRatings={(num) => { setTotalRatings(num); }}
           setAvgRating={(num) => { setAvgRating(num); }}
         />

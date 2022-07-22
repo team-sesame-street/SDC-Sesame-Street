@@ -164,7 +164,6 @@ function Checkout({ selectedStyle }) {
               <button type="button">OUT OF STOCK</button>
             </li>
           )}
-          {console.log(selectedSku)}
 
           {/* expanded view */}
           {skusInStock.length > 0 && selectingSize && (
