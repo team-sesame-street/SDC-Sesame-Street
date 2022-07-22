@@ -4,7 +4,7 @@ import { IoIosArrowDropright, IoIosArrowDropleft } from 'react-icons/io';
 import { IoExitOutline } from 'react-icons/io5';
 import { BsCircleFill } from 'react-icons/bs';
 import styled from 'styled-components';
-import Modal from '../../../utils/Modal.jsx';
+import ModalExpanded from '../../../utils/ModalExpanded.jsx';
 
 function ExpandedImage({
   images, currImgIndex, setCurrImgIndex, setExpandedView,
@@ -38,10 +38,12 @@ function ExpandedImage({
     }
   };
 
+  const exitExpandedView = () => { setExpandedView(false); };
+
   if (images.length > 0) {
     return (
-      <ExtraWrapper>
-        <Modal>
+      // <ExtraWrapper>
+      <ModalExpanded cb3={exitExpandedView} zoom={zoom}>
         {/* {console.log('offset%:', offsetPercentage)} */}
         {images.map((image, index) => {
           if (index === currImgIndex) {
@@ -51,6 +53,7 @@ function ExpandedImage({
                 key={index}
                 onClick={!zoom ? getSizingRatio : () => { setZoom(false); }}
                 style={{
+                  backgroundColor: !zoom ? 'red' : 'white',
                   backgroundImage: !zoom ? 'none' : `url(${images[currImgIndex].url})`,
                   backgroundSize: `${containerSize.height * 2.5}px`,
                   backgroundPosition: `${offsetPercentage.x}% ${offsetPercentage.y}%`,
@@ -72,14 +75,11 @@ function ExpandedImage({
                     onClick={() => { setZoom(true); }}
                   />
                 )}
-                {!zoom && (
-                  <IoExitOutline data-testid="exit-expanded-btn" className="icon-expanded exit-icon" onClick={() => { setExpandedView(false); }} />
-                )}
                 {!zoom && index < images.length - 1 && (
-                <IoIosArrowDropright
-                  className="icon-expanded right-arrow-expanded"
-                  onClick={() => { setCurrImgIndex(currImgIndex + 1); }}
-                />
+                  <IoIosArrowDropright
+                    className="icon-expanded right-arrow-expanded"
+                    onClick={() => { setCurrImgIndex(currImgIndex + 1); }}
+                  />
                 )}
               </Wrapper>
             );
@@ -108,8 +108,8 @@ function ExpandedImage({
             );
           })}
         </NavSymbols>
-        </Modal>
-      </ExtraWrapper>
+      </ModalExpanded>
+
     );
   }
   return null;
@@ -130,6 +130,7 @@ export default ExpandedImage;
 const ExtraWrapper = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
 `;
 
 const Wrapper = styled.div`
@@ -152,13 +153,13 @@ const Wrapper = styled.div`
     min-width: 20px;
     min-height: 20px;
     cursor: pointer;
-    & :hover {
-      opacity: 0.4;
-    }
   };
   & .exit-icon {
     top: 5%;
     right: 5%;
+    & :hover {
+      opacity: 0.4;
+    }
   };
   & .left-arrow-expanded {
     top: 50%;
@@ -175,7 +176,7 @@ const Wrapper = styled.div`
 
 const NavSymbols = styled.div`
   display: grid;
-  margin-top: 5px;
+  margin-top: 2.5vh;
   width: 100%;
   height: 100%;
   gap: 5px;
