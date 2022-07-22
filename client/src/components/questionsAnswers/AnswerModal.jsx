@@ -4,6 +4,7 @@ import axios from 'axios';
 import convertImageToBase64 from '../../../utils/convertImageToBase64.js';
 import randomId from '../../../utils/randomId';
 import Modal from '../../../utils/Modal.jsx';
+import Button from '../../../utils/Button.jsx';
 
 import {
   FileInputWrapper,
@@ -162,9 +163,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
             </div>
           )}
         </ThumbnailWrapper>
-        <SubmitWrapper>
-          <button type="submit">Submit</button>
-        </SubmitWrapper>
+          <Button type="submit">Submit</Button>
       </form>
     </Modal>
   );

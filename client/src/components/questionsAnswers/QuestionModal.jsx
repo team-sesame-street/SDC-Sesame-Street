@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import randomId from '../../../utils/randomId';
 import Modal from '../../../utils/Modal.jsx';
+import Button from '../../../utils/Button.jsx';
 
 import { SubmitWrapper } from './styles/questionmodal.styles';
 
@@ -50,9 +51,7 @@ function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
             <small>For authentication reasons, you will not be emailed.</small>
           </label>
         </div>
-        <SubmitWrapper>
-          <button type="submit" data-testid="question-submit-button">submit</button>
-        </SubmitWrapper>
+          <Button type="submit" data-testid="question-submit-button">submit</Button>
       </form>
     </Modal>
   );

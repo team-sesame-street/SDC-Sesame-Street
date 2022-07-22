@@ -41,13 +41,13 @@ function App() {
     <>
       <Navbar />
       <Wrapper>
-        {/* {productId} */}
         <MainOverview
           id={productId}
           totalRatings={totalRatings}
           avgRating={avgRating}
           ratingsReviewsNode={ratingsReviewsNode}
         />
+        {/* {productId} */}
         <MainCarousel id={productId} pageChange={pageChange} />
         <QaBox currProduct={currProduct} />
         <RrBox
