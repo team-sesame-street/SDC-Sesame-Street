@@ -21,7 +21,7 @@ const styles = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%',
-    backgroundColor: '#fff',
+    backgroundColor: '#EDEDE9',
     padding: '50px',
     height: '75%',
     width: '50%',
@@ -37,7 +37,7 @@ const styles = {
     zIndex: 1000,
   },
   modalItems: {
-    overflow: 'scroll',
+    overflowY: 'scroll',
     maxWidth: '100%',
     maxHeight: '40vh',
     padding: '2rem',

@@ -10,6 +10,7 @@ export default function Rating({ starRating, changeRating }) {
       starSpacing="2px"
       starRatedColor="goldenrod"
       starHoverColor="goldenrod"
+      starEmptyColor="#b1b3b2"
       rating={starRating}
       required
     />
