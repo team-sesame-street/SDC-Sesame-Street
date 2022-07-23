@@ -192,7 +192,7 @@ function Checkout({ selectedStyle }) {
           ))}
         </SizeSelector>
 
-        <QuantitySelector className="btn-header">
+        <QuantitySelector className="btn-header" style={{ visibility: skusInStock.length === 0 ? 'hidden' : 'visible' }}>
           {/* collapsed view */}
           {/* {console.log(selectedSku)} */}
           {maxQuantity === 0 && (
