@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 import AddToCartButton from '../../../utils/AddToCartButton.jsx';
-// import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 
 function Checkout({ selectedStyle }) {
   const [skusInStock, setSkusInStock] = useState([]);
@@ -19,9 +18,17 @@ function Checkout({ selectedStyle }) {
       const inStock = Object.keys(selectedStyle.skus).filter(
         (sku) => (selectedStyle.skus[sku] && selectedStyle.skus[sku].quantity > 0),
       );
-      // STILL NEED TO CHECK FOR UNIQUENESS OF SIZES
-
-      setSkusInStock(inStock);
+      // CHECK FOR UNIQUENESS OF SIZES, returning first sku associated with duplicate size
+      const uniqueSkus = [];
+      const sizes = [];
+      inStock.forEach((sku) => {
+        const currSize = selectedStyle.skus[sku].size;
+        if (sizes.indexOf(currSize) === -1) {
+          sizes.push(currSize);
+          uniqueSkus.push(sku);
+        }
+      });
+      setSkusInStock(uniqueSkus);
       setSelectedSku(null);
       setSelectedQuantity(null);
       setMaxQuantity(null);
