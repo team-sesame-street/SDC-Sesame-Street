@@ -20,10 +20,10 @@ const rainbowRoad = keyframes`
 `
 
 const fadein = keyframes`
-0%    { opacity: 0;}
-20%   { opacity: 0;}
-80%   { opacity: 1;}
-100%  { opacity: 1;}
+  0%    { opacity: 0;}
+  20%   { opacity: 0;}
+  80%   { opacity: 1;}
+  100%  { opacity: 1;}
 `
 
 const Modals = styled.div`

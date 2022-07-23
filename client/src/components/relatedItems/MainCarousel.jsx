@@ -163,7 +163,7 @@ function MainCarousel({ id, pageChange }) {
 
   return (
     <div data-testid="main">
-      <MainContainer style={{ marginTop: '40px' }}>
+      <MainContainer style={{ marginTop: '200px' }}>
         <RelatedItems slides={relatedItemsInfo} id={id} pageChange={pageChange} reviews={reviews} />
       </MainContainer>
       <br />
