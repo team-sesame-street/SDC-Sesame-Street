@@ -40,6 +40,7 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
 
   useEffect(() => {
     if (id) {
+      console.log(0);
       axios({
         url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`,
         method: 'get',
@@ -49,6 +50,7 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
         responseType: 'json',
       })
         .then((response) => {
+          console.log(1);
           const stylesData = response.data.results;
           setStyles(stylesData);
           stylesData.forEach((style) => {
@@ -59,7 +61,13 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
           if (stylesData.every((style) => !style['default?'])) {
             setSelectedStyle(stylesData[0]);
           }
-          setCurrImgIndex(0);
+          if (currImgIndex !== null && thumbnailIndexMin !== null && thumbnailIndexMax !== null) {
+            setCurrImgIndex(null);
+            setThumbnailIndexMin(null);
+            setThumbnailIndexMax(null);
+            setExpandedView(false);
+            console.log('1');
+          }
         })
         .catch(() => {
           alert('Unable to retrieve styles for this product');
@@ -69,6 +77,7 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
 
   useEffect(() => {
     if (Object.keys(selectedStyle).length > 0) {
+      console.log('2');
       // dummy images data is duplicate of the same photos set
       // setImages(selectedStyle.photos.concat(selectedStyle.photos));
       setImages(selectedStyle.photos);
@@ -76,6 +85,7 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
   }, [selectedStyle]);
 
   useEffect(() => {
+    console.log('3');
     if (images.length > 0) {
       if (currImgIndex === null) {
         setCurrImgIndex(0);
@@ -100,8 +110,7 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
         }
       }
     }
-  }, [images]);
-
+  }, [currImgIndex, thumbnailIndexMin, thumbnailIndexMax, images]);
 
   console.log(id, images, thumbnailIndexMin, thumbnailIndexMax, currImgIndex);
 

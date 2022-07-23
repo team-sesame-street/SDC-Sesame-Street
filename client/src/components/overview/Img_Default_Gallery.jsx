@@ -82,9 +82,9 @@ function MainImage(
 
 MainImage.propTypes = {
   images: PropTypes.arrayOf(PropTypes.shape({
-    thumbnail_url: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-  })).isRequired,
+    thumbnail_url: PropTypes.string,
+    url: PropTypes.string,
+  })),
   currImgIndex: PropTypes.number,
   setCurrImgIndex: PropTypes.func.isRequired,
   thumbnailIndexMin: PropTypes.number,
@@ -95,6 +95,10 @@ MainImage.propTypes = {
 };
 
 MainImage.defaultProps = {
+  images: PropTypes.arrayOf(PropTypes.shape({
+    thumbnail_url: null,
+    url: null,
+  })),
   currImgIndex: null,
   thumbnailIndexMax: null,
   thumbnailIndexMin: null,
