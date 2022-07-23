@@ -100,7 +100,7 @@ const ThumbnailWrapper = styled.div`
     color: black;
     border: white;
     position: absolute;
-    zIndex: 10;
+    z-index: 10;
     user-select: none;
     @media(min-width: 501px) and (max-width: 900px) {
       right: 25%;
