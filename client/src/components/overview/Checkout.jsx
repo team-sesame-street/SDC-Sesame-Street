@@ -66,6 +66,12 @@ function Checkout({ selectedStyle }) {
     }
   }, [selectedSku]);
 
+  useEffect(() => {
+    if (invalidSubmit) {
+      setSelectingSize(true);
+    }
+  }, [invalidSubmit]);
+
   const addToCart = () => {
     if (!selectedSku) {
       setInvalidSubmit(true);
@@ -146,6 +152,7 @@ function Checkout({ selectedStyle }) {
       <Wrapper>
         <TextWrapper style={{ visibility: invalidSubmit ? 'visible' : 'hidden' }}>
           <p>‼️ Please select size ‼️</p>
+          {console.log(selectedSku, invalidSubmit, selectingSize)}
         </TextWrapper>
         <SizeSelector>
           {/* collapsed view */}
@@ -158,7 +165,6 @@ function Checkout({ selectedStyle }) {
                   style={{
                     gridColumn: '5 / 6',
                     alignSelf: 'center',
-                    // justifySelf: 'end',
                   }}
                 />
               </button>

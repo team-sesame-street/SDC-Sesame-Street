@@ -106,18 +106,4 @@ const ChildrenWrapper = styled.div`
     font-style: italic;
     }
   }
-
-  // .exit-icon {
-  //    position: absolute;
-  //    top:0;
-  //    right:0;
-  //    transform: scale(2);
-  //    z-index: 999;
-  //    margin: 40px;
-  //    cursor: pointer;
-
-  //    &:hover {
-  //     opacity: 0.65;
-  //    }
-  //  }
 `;
