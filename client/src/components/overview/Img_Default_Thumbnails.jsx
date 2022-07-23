@@ -13,7 +13,6 @@ function ImageDefaultThumbnail({
       setThumbnailIndexMax(max);
     };
 
-    // console.log('in thumbnail', images);
     return (
       <Wrapper>
         {images.length > 7 && (

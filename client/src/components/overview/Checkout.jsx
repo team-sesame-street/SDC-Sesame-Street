@@ -141,7 +141,6 @@ function Checkout({ selectedStyle }) {
     setSelectingQuantity(false);
   };
 
-  console.log(selectedSku);
 
   if (Object.keys(selectedStyle).length > 0
     && skusInStock.every((sku) => (Object.keys(selectedStyle.skus).indexOf(sku) !== -1))) {

@@ -44,8 +44,6 @@ function ExpandedImage({
   if (images.length > 0) {
     return (
       <ModalExpanded cb3={exitExpandedView} zoom={zoom}>
-        {console.log(zoom)}
-        {/* {console.log('offset%:', offsetPercentage)} */}
         {images.map((image, index) => {
           if (index === currImgIndex) {
             return (
