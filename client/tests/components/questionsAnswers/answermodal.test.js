@@ -24,7 +24,6 @@ test('This should check if the answer modal backdrop is shown', () => {
   expect(el).toBeVisible();
 });
 
-
 test('This should check if the answer modal backdrop is shown', () => {
   const setIsAnswerModalOpen = jest.fn();
   const setTrigger = jest.fn();

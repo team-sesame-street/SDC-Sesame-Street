@@ -2,12 +2,12 @@
 /* eslint-disable import/extensions */
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import QaBox from './questionsAnswers/QaBox.jsx';
 import RrBox from './ratings-reviews/RrBox.jsx';
 import MainCarousel from './relatedItems/MainCarousel.jsx';
 import MainOverview from './overview/MainOverview.jsx';
 import Navbar from '../../utils/Navbar.jsx';
-import styled from 'styled-components';
 import Button from '../../utils/Button.jsx';
 
 function App() {

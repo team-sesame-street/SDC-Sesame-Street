@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  render, screen, cleanup, fireEvent
+  render, screen, cleanup, fireEvent,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import StyleSelector from '../../../src/components/overview/StyleSelector.jsx';

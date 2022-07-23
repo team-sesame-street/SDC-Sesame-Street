@@ -6,18 +6,20 @@ import Button from '../../../utils/Button.jsx';
 
 import { SubmitWrapper } from './styles/questionmodal.styles';
 
-function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
+function QuestionModal({
+  productMetadata, checks, setChecks, setTrigger,
+}) {
   function handleSubmit(e) {
     e.preventDefault();
     const body = e.target.question.value;
     const name = e.target.username.value;
     const email = e.target.email.value;
 
-    axios.post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions`, {
+    axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions', {
       body,
       name,
       email,
-      product_id: productMetadata.product_id
+      product_id: productMetadata.product_id,
     }, {
       headers: {
         Authorization: process.env.GITKEY,
@@ -34,7 +36,10 @@ function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
     <Modal cb={() => setChecks({ ...checks, isQuestionModalOpen: false })}>
       <form onSubmit={handleSubmit} data-testid="qa-question-modal-form">
         <h2>Ask Your Question</h2>
-        <h3>About the {productMetadata.productName}</h3>
+        <h3>
+          About the
+          {productMetadata.productName}
+        </h3>
         <label htmlFor="question">
           Your Question*:
           <textarea id="question" maxLength={1000} name="question" data-testid="ques-question" required />
@@ -51,7 +56,7 @@ function QuestionModal({ productMetadata, checks, setChecks, setTrigger }) {
             <small>For authentication reasons, you will not be emailed.</small>
           </label>
         </div>
-          <Button type="submit" data-testid="question-submit-button">submit</Button>
+        <Button type="submit" data-testid="question-submit-button">submit</Button>
       </form>
     </Modal>
   );

@@ -75,7 +75,7 @@ function MainCarousel({ id, pageChange }) {
         },
       }).then((res) => {
         const seen = {};
-        for(const id of res.data) {
+        for (const id of res.data) {
           seen[id] = true;
         }
         Object.keys(seen).forEach((id) => {
@@ -92,7 +92,7 @@ function MainCarousel({ id, pageChange }) {
           for (const subArr of data) {
             results.push(subArr[0]);
           }
-          setRelatedItemInfo((relatedItemsInfo) => ({...relatedItemsInfo, info: results}));
+          setRelatedItemInfo((relatedItemsInfo) => ({ ...relatedItemsInfo, info: results }));
         });
 
         Promise.all(stylePromises).then((data) => {
@@ -115,7 +115,7 @@ function MainCarousel({ id, pageChange }) {
             obj.originalPrice = originalPrice;
             results.push(obj);
           }
-          setRelatedItemInfo((relatedItemsInfo) => ({...relatedItemsInfo, urls: results}));
+          setRelatedItemInfo((relatedItemsInfo) => ({ ...relatedItemsInfo, urls: results }));
         });
 
         Promise.all(ratingPromises).then((data) => {

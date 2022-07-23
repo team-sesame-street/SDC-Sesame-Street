@@ -1,9 +1,8 @@
 import React from 'react';
 
-import QuestionModal from '../../../src/components/questionsAnswers/QuestionModal.jsx';
-
 import { render, cleanup } from '@testing-library/react';
 import { toBeVisible, toBeRequired } from '@testing-library/jest-dom';
+import QuestionModal from '../../../src/components/questionsAnswers/QuestionModal.jsx';
 import { productMetadata, checks } from './qadata.js';
 
 afterEach(() => {

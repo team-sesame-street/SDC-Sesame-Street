@@ -6,7 +6,9 @@ import QuestionModal from './QuestionModal.jsx';
 import LoadingCircle from '../../../utils/LoadingCircle.jsx';
 import { Wrapper } from './styles/qawrapper.styles';
 
-function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks, searchTerm, questionIndex, page }) {
+function QAWrapper({
+  questions, setQuestions, productMetadata, checks, setChecks, searchTerm, questionIndex, page,
+}) {
   const [trigger, setTrigger] = useState(0);
 
   useEffect(() => {
@@ -35,7 +37,7 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
                   .includes(searchTerm.toLowerCase());
               }
               return question?.question_body;
-            }
+            },
           )
           .slice(0, questionIndex + 2)
           .map((result) => (
@@ -50,8 +52,7 @@ function QAWrapper({ questions, setQuestions, productMetadata, checks, setChecks
               questions={questions}
               setQuestions={setQuestions}
             />
-          ))
-      }
+          ))}
       {checks.isQuestionModalOpen
         && (
           <QuestionModal

@@ -19,7 +19,7 @@ function AnswerSubItem({ answer }) {
     answerer_name,
     helpfulness,
     photos,
-    id
+    id,
   } = answer;
   const [hasVoted, setHasVoted] = useState(
     localStorage.getItem(`hasVoted-answer${id}` || false),
@@ -69,14 +69,14 @@ function AnswerSubItem({ answer }) {
         {body}
       </div>
       <ThumbnailWrapper>
-        {photos.map((photo) => <Thumbnail key={randomId()} src={photo} onClick={() => setIsImageEnlarged(!isImageEnlarged)} loading="lazy"/>)}
+        {photos.map((photo) => <Thumbnail key={randomId()} src={photo} onClick={() => setIsImageEnlarged(!isImageEnlarged)} loading="lazy" />)}
         {isImageEnlarged
-        && <ImageViewer photos={photos} cb={()=>setIsImageEnlarged(!isImageEnlarged)} />}
+        && <ImageViewer photos={photos} cb={() => setIsImageEnlarged(!isImageEnlarged)} />}
       </ThumbnailWrapper>
       <small>
         <span>
           by
-          {" "}
+          {' '}
           {answerer_name.toLowerCase() === 'seller' ? <b>{answerer_name}</b> : answerer_name}
         </span>
         <Spacer />
@@ -94,7 +94,7 @@ function AnswerSubItem({ answer }) {
               )
               : <SubActionBtn onClick={() => handleVote()}>Yes</SubActionBtn>}
             (
-             {localStorage.getItem(`hasVoted-answer${id}`) || voteCount}
+            {localStorage.getItem(`hasVoted-answer${id}`) || voteCount}
             )
           </span>
           <Spacer />

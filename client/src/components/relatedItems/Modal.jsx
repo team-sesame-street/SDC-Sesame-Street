@@ -17,14 +17,14 @@ const rainbowRoad = keyframes`
   56%    {background-color: blue;}
   77%    {background-color: indigo;}
   100%    {background-color: purple;}
-`
+`;
 
 const fadein = keyframes`
   0%    { opacity: 0;}
   20%   { opacity: 0;}
   80%   { opacity: 1;}
   100%  { opacity: 1;}
-`
+`;
 
 const Modals = styled.div`
   position: fixed;
@@ -136,16 +136,16 @@ function Modal({ open, closeModal, currOutfit, id }) {
             <thead>
               <tr>
                 <Th1>{siteIdInfo.name}</Th1>
-                <th style={{ borderTop: '0.7px solid black', borderBottom: '0.7px solid black'}}>Characteristics</th>
+                <th style={{ borderTop: '0.7px solid black', borderBottom: '0.7px solid black' }}>Characteristics</th>
                 <Th2>{currOutfit.data.name}</Th2>
               </tr>
             </thead>
             {Object.keys(features).length !== 0 ? Object.keys(features.seen).map((feature) => (
               <tbody key={Math.random()}>
                 <tr>
-                  <td style={{...textStyle, borderRight: '0.7px solid black'}}>{features.main[feature] ? features.main[feature] + '  ✔' : ' '}</td>
+                  <td style={{ ...textStyle, borderRight: '0.7px solid black' }}>{features.main[feature] ? `${features.main[feature]}  ✔` : ' '}</td>
                   <td style={textStyle}><b>{feature}</b></td>
-                  <td style={{...textStyle, borderLeft: '0.7px solid black'}}>{features.clickedOutfit[feature] ? features.clickedOutfit[feature] + '  ✔': ' '}</td>
+                  <td style={{ ...textStyle, borderLeft: '0.7px solid black' }}>{features.clickedOutfit[feature] ? `${features.clickedOutfit[feature]}  ✔` : ' '}</td>
                 </tr>
               </tbody>
             )) : <></>}

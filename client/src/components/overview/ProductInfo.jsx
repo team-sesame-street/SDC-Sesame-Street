@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import { RiPinterestFill, RiTwitterFill, RiFacebookCircleFill } from 'react-icons/ri';
 import StarRatings from 'react-star-ratings';
 
-function ProductInfo({ product, selectedStyle, avgRating, totalRatings, ratingsReviewsNode }) {
+function ProductInfo({
+  product, selectedStyle, avgRating, totalRatings, ratingsReviewsNode,
+}) {
   if (Object.keys(product).length > 0 && Object.keys(selectedStyle).length > 0) {
     const formatPrice = (price) => ('$'.concat(price.slice(0, -3)));
 

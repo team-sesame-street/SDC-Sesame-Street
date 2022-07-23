@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-function ModalExpanded({ children}) {
+function ModalExpanded({ children }) {
   return (
     <Wrapper className="modal">
       <Backdrop />

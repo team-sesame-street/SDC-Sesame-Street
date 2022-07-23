@@ -2,7 +2,9 @@ import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import { toBeInTheDocument, toBeEmptyDOMElement } from '@testing-library/jest-dom';
 import QaWrapper from '../../../src/components/questionsAnswers/QAWrapper.jsx';
-import { questions, productMetadata, checks, searchTerm } from './qadata.js';
+import {
+  questions, productMetadata, checks, searchTerm,
+} from './qadata.js';
 
 afterEach(() => {
   cleanup();

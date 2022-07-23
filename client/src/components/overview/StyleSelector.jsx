@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { BsFillCheckCircleFill } from 'react-icons/bs';
 
-function StyleSelector({ styles, selectedStyle, setSelectedStyle, setStyleChangeButSameProduct }) {
+function StyleSelector({
+  styles, selectedStyle, setSelectedStyle, setStyleChangeButSameProduct,
+}) {
   return (
     <div>
       <p>

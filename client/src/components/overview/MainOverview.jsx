@@ -8,7 +8,9 @@ import Features from './Features.jsx';
 import Sidebar from './Sidebar.jsx';
 import MainImage from './Img_Default_Gallery.jsx';
 
-function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
+function MainOverview({
+  id, avgRating, totalRatings, ratingsReviewsNode,
+}) {
   const [product, setProduct] = useState({});
   const [styles, setStyles] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState({});

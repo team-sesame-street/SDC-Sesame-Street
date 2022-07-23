@@ -130,7 +130,9 @@ const Star = styled.div`
   cursor: pointer;
 `;
 
-function RelatedItems({ slides, id, pageChange, reviews }) {
+function RelatedItems({
+  slides, id, pageChange, reviews,
+}) {
   const [modal, setModal] = useState(false);
   const [currOutfit, setCurrOutfit] = useState({});
   const [carouselPos, setCarouselPos] = useState(false);
@@ -168,9 +170,9 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
 
   return (
     <Wrapper>
-    <h2>Related Products</h2>
-      <SliderContainer data-testid='related'>
-        <MdChevronLeft size={40} style={left} onClick={slideLeft} id="leftArrow" data-testid='left-arrow'/>
+      <h2>Related Products</h2>
+      <SliderContainer data-testid="related">
+        <MdChevronLeft size={40} style={left} onClick={slideLeft} id="leftArrow" data-testid="left-arrow" />
         <Slider id="slider">
           {slides.info.length !== 0
           && slides.info.length === slides.urls.length
@@ -184,24 +186,40 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
                   setModal(true);
                 }}
               />
-              <Img src={slides.urls[index].url} loading="lazy" onClick={() => {
-                setCarouselPos(true);
-                setLeftSide(900);
-                pageChange(slide.data.id);
-              }}/>
+              <Img
+                src={slides.urls[index].url}
+                loading="lazy"
+                onClick={() => {
+                  setCarouselPos(true);
+                  setLeftSide(900);
+                  pageChange(slide.data.id);
+                }}
+              />
               <Category>{slide.data.category}</Category>
               <Name onClick={() => pageChange(slide.data.id)}>{slide.data.name}</Name>
-              <Price data-testid='label'>
+              <Price data-testid="label">
                 {!slides.urls[index].salePrice
-                ? <label>${slides.urls[index].originalPrice}</label>
-                : <label style={{color:'red'}}>${slides.urls[index].salePrice} <strike style={{color:'black'}}>{slides.urls[index].originalPrice}</strike></label>}
+                  ? (
+                    <label>
+                      $
+                      {slides.urls[index].originalPrice}
+                    </label>
+                  )
+                  : (
+                    <label style={{ color: 'red' }}>
+                      $
+                      {slides.urls[index].salePrice}
+                      {' '}
+                      <strike style={{ color: 'black' }}>{slides.urls[index].originalPrice}</strike>
+                    </label>
+                  )}
               </Price>
               <Ratings rating={reviews[index].avg} key={index} />
             </Card>
-          )) : <></>}
+            )) : <></>}
           <Modal open={modal} closeModal={() => setModal(false)} currOutfit={currOutfit} id={id} />
         </Slider>
-        <MdChevronRight id="rightArrow" size={40} style={right} onClick={slideRight} data-testid='right-arrow' />
+        <MdChevronRight id="rightArrow" size={40} style={right} onClick={slideRight} data-testid="right-arrow" />
       </SliderContainer>
     </Wrapper>
   );

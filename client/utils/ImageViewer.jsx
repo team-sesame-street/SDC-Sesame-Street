@@ -28,11 +28,15 @@ function ImageViewer({ photos, cb }) {
 
   return (
     <>
-      <Backdrop onClick={() => cb()} data-testid="image-viewer-backdrop"/>
+      <Backdrop onClick={() => cb()} data-testid="image-viewer-backdrop" />
       <Wrapper data-testid="image-viewer">
         <Button type="button" id="left" data-direction="left" onClick={(e) => handleNavigation(e)}>←</Button>
         <Image src={(photos[index])} />
-        <CloseButton onClick={() => cb()}> <VscClose/> </CloseButton>
+        <CloseButton onClick={() => cb()}>
+          {' '}
+          <VscClose />
+          {' '}
+        </CloseButton>
         <Button type="button" id="right" data-direction="right" onClick={(e) => handleNavigation(e)}>→</Button>
       </Wrapper>
     </>

@@ -1,11 +1,13 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
-import { toBeInTheDocument, toContainHTML, toHaveBeenCalled, toHaveTextContent } from '@testing-library/jest-dom';
+import {
+  toBeInTheDocument, toContainHTML, toHaveBeenCalled, toHaveTextContent,
+} from '@testing-library/jest-dom';
 import QaListItem from '../../../src/components/questionsAnswers/QaListItem.jsx';
 import { questions, productMetadata, checks } from './qadata.js';
 
 beforeEach(() => {
-  <QaListItem id={40345} />
+  <QaListItem id={40345} />;
 });
 
 afterEach(() => {
@@ -46,7 +48,7 @@ test('on helpful vote button press, disable helpful vote button', () => {
       type="button"
       data-testid="q-helpful-yes-button"
       onClick={onClick}
-      disabled={true}
+      disabled
     >
       123
     </button>,
@@ -58,8 +60,7 @@ test('on helpful vote button press, disable helpful vote button', () => {
   expect(onClick).not.toHaveBeenCalled();
 });
 
-
-test('on load more answers button press, collapse answers text is shown', ()=> {
+test('on load more answers button press, collapse answers text is shown', () => {
   const { getByTestId } = render(
     <QaListItem
       result={questions[0]}

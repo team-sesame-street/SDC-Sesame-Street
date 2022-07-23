@@ -1,11 +1,11 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { VscLoading } from "react-icons/vsc";
+import { VscLoading } from 'react-icons/vsc';
 
 function LoadingCircle() {
   return (
     <Wrapper>
-      <VscLoading/>
+      <VscLoading />
     </Wrapper>
   );
 }

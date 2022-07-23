@@ -1,7 +1,7 @@
 import React from 'react';
-import { TiDeleteOutline } from "react-icons/ti";
-import Ratings from './Ratings.jsx';
+import { TiDeleteOutline } from 'react-icons/ti';
 import styled from 'styled-components';
+import Ratings from './Ratings.jsx';
 
 const Card = styled.div`
   min-width: 310px;
@@ -56,16 +56,16 @@ function OutfitList({ slide, deleteOutfit, pageChange }) {
   return (
     <Card>
       <Button>
-      <TiDeleteOutline size={25} onClick={deleteHandler} />
+        <TiDeleteOutline size={25} onClick={deleteHandler} />
       </Button>
-      <Img src={slide.url} loading="lazy" onClick={() => pageChange(slide.id)}/>
+      <Img src={slide.url} loading="lazy" onClick={() => pageChange(slide.id)} />
       <Category>{slide.category}</Category>
       <Name onClick={() => pageChange(slide.id)}>{slide.name}</Name>
       <Price>
         $
         {slide.price}
       </Price>
-      <Ratings rating={slide?.avg}/>
+      <Ratings rating={slide?.avg} />
     </Card>
   );
 }

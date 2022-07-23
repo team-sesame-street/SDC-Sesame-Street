@@ -14,7 +14,9 @@ import {
   PrimaryBtn,
 } from './styles/qalistitem.styles';
 
-function QaListItem({ result, productMetadata, setTrigger, questions, setQuestions }) {
+function QaListItem({
+  result, productMetadata, setTrigger, questions, setQuestions,
+}) {
   const [answers, setAnswers] = useState(
     Object.values(result.answers).sort(byHelpfulness),
   );
@@ -105,11 +107,9 @@ function QaListItem({ result, productMetadata, setTrigger, questions, setQuestio
             questions={questions}
             setQuestions={setQuestions}
           />
-        )
-      }
+        )}
     </Wrapper>
   );
 }
 
 export default QaListItem;
-

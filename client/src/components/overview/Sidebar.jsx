@@ -5,7 +5,7 @@ import Checkout from './Checkout.jsx';
 import StyleSelector from './StyleSelector.jsx';
 
 function Sidebar({
-  product, selectedStyle, styles, setSelectedStyle, avgRating, totalRatings, ratingsReviewsNode, setStyleChangeButSameProduct
+  product, selectedStyle, styles, setSelectedStyle, avgRating, totalRatings, ratingsReviewsNode, setStyleChangeButSameProduct,
 }) {
   return (
     <Wrapper>

@@ -7,8 +7,8 @@ function Navbar() {
     <Nav>
       <ListWrapper>
         <li id="logo">
-          <span style={{display: 'flex', gap: '1rem'}}>
-            <img src="https://i.imgur.com/RYU33AI.png" style={{width: '70px', position: 'relative', top: '-10px'}}/>
+          <span style={{ display: 'flex', gap: '1rem' }}>
+            <img src="https://i.imgur.com/RYU33AI.png" style={{ width: '70px', position: 'relative', top: '-10px' }} />
             <h1>Soulful</h1>
           </span>
         </li>
@@ -19,15 +19,15 @@ function Navbar() {
       </ListWrapper>
       <MobileNav>
         <div id="logo">
-          <img src="https://i.imgur.com/RYU33AI.png" style={{width: '40px'}}/>
+          <img src="https://i.imgur.com/RYU33AI.png" style={{ width: '40px' }} />
           <span>Soulful</span>
         </div>
         <span>
-          <GiHamburgerMenu/>
+          <GiHamburgerMenu />
         </span>
       </MobileNav>
     </Nav>
-  )
+  );
 }
 
 const Nav = styled.nav`

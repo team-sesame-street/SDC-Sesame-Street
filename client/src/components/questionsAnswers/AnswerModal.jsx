@@ -13,7 +13,9 @@ import {
   SubmitWrapper,
 } from './styles/answermodal.styles';
 
-function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, questions, setQuestions }) {
+function AnswerModal({
+  productMetadata, question, setIsAnswerModalOpen, questions, setQuestions,
+}) {
   const [selectedImages, setSelectedImages] = useState(null);
   const [urls, setUrls] = useState([]);
 
@@ -53,7 +55,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
           for (let i = 0; i < blobs.length; i += 1) {
             cloudPromises.push(
               axios
-                .post(`https://api.cloudinary.com/v1_1/drf3dli0i/image/upload`, {
+                .post('https://api.cloudinary.com/v1_1/drf3dli0i/image/upload', {
                   file: blobs[i],
                   upload_preset: 'wvbnvl8l',
                 })
@@ -77,7 +79,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
                 .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers?count=15`, {
                   headers: {
                     Authorization: process.env.GITKEY,
-                  }
+                  },
                 })
                 .then(({ data }) => {
                   setIsAnswerModalOpen(false);
@@ -108,7 +110,7 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
             .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers?count=15`, {
               headers: {
                 Authorization: process.env.GITKEY,
-              }
+              },
             })
             .then(({ data }) => {
               const formattedData = data.results.map((result) => ({ ...result, id: question.question_id, photos: result.photos?.map((photo) => photo.url) }));
@@ -158,12 +160,12 @@ function AnswerModal({ productMetadata, question, setIsAnswerModalOpen, question
           {selectedImages && (
             <div>
               {
-                urls.map((url) => <Thumbnail data-testid="ans_thumbnail"  key={randomId()} src={url} loading="lazy" />)
+                urls.map((url) => <Thumbnail data-testid="ans_thumbnail" key={randomId()} src={url} loading="lazy" />)
               }
             </div>
           )}
         </ThumbnailWrapper>
-          <Button type="submit">Submit</Button>
+        <Button type="submit">Submit</Button>
       </form>
     </Modal>
   );
