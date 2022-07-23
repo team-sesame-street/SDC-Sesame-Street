@@ -130,7 +130,7 @@ const ThumbnailImage = styled.img`
   width: 4.5vw;
   object-fit: cover;
   cursor: pointer;
-  box-shadow: 10px 5px 5px #D6CCC2;
+  box-shadow: -5px 5px 5px #D6CCC2;
   &:hover {
     transform: scale(1.1);
   }
