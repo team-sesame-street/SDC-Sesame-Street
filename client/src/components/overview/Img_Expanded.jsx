@@ -5,6 +5,7 @@ import { BsCircleFill } from 'react-icons/bs';
 import { IoExitOutline } from 'react-icons/io5';
 import styled from 'styled-components';
 import ModalExpanded from '../../../utils/ModalExpanded.jsx';
+// const svg = require('./Images/minus.svg');
 
 function ExpandedImage({
   images, currImgIndex, setCurrImgIndex, setExpandedView,
@@ -43,6 +44,7 @@ function ExpandedImage({
   if (images.length > 0) {
     return (
       <ModalExpanded cb3={exitExpandedView} zoom={zoom}>
+        {console.log(zoom)}
         {/* {console.log('offset%:', offsetPercentage)} */}
         {images.map((image, index) => {
           if (index === currImgIndex) {
@@ -55,7 +57,7 @@ function ExpandedImage({
                   backgroundImage: !zoom ? 'none' : `url(${images[currImgIndex].url})`,
                   backgroundSize: `${containerSize.height * 2.5}px`,
                   backgroundPosition: `${offsetPercentage.x}% ${offsetPercentage.y}%`,
-                  cursor: zoom ? "url(https://i.imgur.com/LNvi84N.png), zoom-out" : 'crosshair',
+                  cursor: zoom ? 'zoom-out' : 'crosshair',
                 }}
                 onMouseMove={moveBackgroundImg}
               >
@@ -72,6 +74,7 @@ function ExpandedImage({
                     alt="A representation of this product"
                     loading="lazy"
                     onClick={() => { setZoom(true); }}
+                    // style={{ cursor: 'crosshair' }}
                   />
                 )}
                 {!zoom && (
@@ -193,20 +196,13 @@ const NavSymbols = styled.div`
     color: grey;
     cursor: pointer;
   };
-  // @media(max-width: 500px) {
-  //   height: max-content;;
-  // }
 `;
 
 const Image = styled.img`
   position: absolute;
   width: 100%;
   height: 100%;
-  cursor: crosshair;
   object-fit: contain;
   user-select: none;
-  // @media(min-width: 1200px) {
-  //   max-width: 60vh;
-  //   max-height: 60vh;
-  // }
+  cursor: crosshair;
 `;

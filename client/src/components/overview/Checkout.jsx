@@ -17,8 +17,10 @@ function Checkout({ selectedStyle }) {
   useLayoutEffect(() => {
     if (Object.keys(selectedStyle).length > 0) {
       const inStock = Object.keys(selectedStyle.skus).filter(
-        (sku) => (selectedStyle.skus[sku].quantity > 0),
+        (sku) => (selectedStyle.skus[sku] && selectedStyle.skus[sku].quantity > 0),
       );
+      // STILL NEED TO CHECK FOR UNIQUENESS OF SIZES
+
       setSkusInStock(inStock);
       setSelectedSku(null);
       setSelectedQuantity(null);
@@ -152,7 +154,6 @@ function Checkout({ selectedStyle }) {
       <Wrapper>
         <TextWrapper style={{ visibility: invalidSubmit ? 'visible' : 'hidden' }}>
           <p>‼️ Please select size ‼️</p>
-          {console.log(selectedSku, invalidSubmit, selectingSize)}
         </TextWrapper>
         <SizeSelector>
           {/* collapsed view */}
@@ -216,6 +217,7 @@ function Checkout({ selectedStyle }) {
 
         <QuantitySelector>
           {/* collapsed view */}
+          {console.log(selectedSku)}
           {maxQuantity === 0 && (
             <li>
               <button type="button">OUT OF STOCK</button>

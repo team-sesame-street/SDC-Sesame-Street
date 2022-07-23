@@ -124,6 +124,7 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
           setThumbnailIndexMax={setThumbnailIndexMax}
           setExpandedView={setExpandedView}
         />
+        {console.log(id)}
         <Sidebar
           product={product}
           selectedStyle={selectedStyle}
