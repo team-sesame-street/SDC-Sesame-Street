@@ -1,6 +1,6 @@
 import React from 'react';
 import { TiDeleteOutline } from "react-icons/ti";
-import Ratings from './Ratings.jsx'
+import Ratings from './Ratings.jsx';
 import styled from 'styled-components';
 
 const Card = styled.div`
@@ -13,40 +13,32 @@ const Card = styled.div`
   position: relative;
   padding: 8px;
   box-shadow: 2px 2px 5px rgba(0 0 0 / 12%);
-`
+`;
 
-const Image = styled.div`
-  width: 100%;
-  height: 280px;
-  background-color: rgb(240 240 240 / 80%);
+const Img = styled.img`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  background-size: cover;
-  font-size: 30px;
-  color: gray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: URL(${({url}) => url});
-  background-size: cover;
+  width: 310px;
+  height: 280px;
+  object-fit: cover;
   cursor: pointer;
-`
+`;
 
 const Name = styled.p`
   padding: 0px 0px 1px 8px;
   font-weight: 900;
-`
+`;
 
 const Price = styled.p`
   padding: 1px 0px 0px 9px;
   font-size: 12px;
-`
+`;
 
 const Category = styled.p`
   padding-left: 9px;
   padding-top: 2px;
   font-size: 13px;
-`
+`;
 
 const Button = styled.div`
   position: absolute;
@@ -54,7 +46,7 @@ const Button = styled.div`
   top: 10px;
   right: 10px;
   color: #d9d9d9;
-`
+`;
 
 function OutfitList({ slide, deleteOutfit, pageChange }) {
   const deleteHandler = () => {
@@ -66,7 +58,7 @@ function OutfitList({ slide, deleteOutfit, pageChange }) {
       <Button>
       <TiDeleteOutline size={25} onClick={deleteHandler} />
       </Button>
-      <Image url={slide.url} onClick={() => pageChange(slide.id)}/>
+      <Img src={slide.url} onClick={() => pageChange(slide.id)}/>
       <Category>{slide.category}</Category>
       <Name onClick={() => pageChange(slide.id)}>{slide.name}</Name>
       <Price>

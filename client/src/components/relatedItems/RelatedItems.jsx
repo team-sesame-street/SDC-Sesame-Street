@@ -23,6 +23,11 @@ const SliderContainer = styled.div`
       transform: scale(1.15);
     }
   }
+  width: 100%;
+  height: 401px;
+  display: flex;
+  position: relative;
+  align-items: center;
 `;
 
 const Wrapper = styled.div`
@@ -30,6 +35,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: -10;
   & h2 {
     align-self: flex-start;
     margin-bottom: 20px;
@@ -80,22 +86,19 @@ const Card = styled.div`
   background: white;
   border-radius: 10px;
   display: inline-block;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin: 0 5px;
   position: relative;
   padding: 8px;
   box-shadow: 2px 2px 5px rgba(0 0 0 / 12%);
 `;
 
-const Image = styled.div`
-  width: 100%;
-  height: 280px;
-  background-color: rgb(240 240 240 / 80%);
+const Img = styled.img`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  background-size: cover;
+  width: 310px;
+  height: 280px;
+  object-fit: cover;
   cursor: pointer;
-  background-image: URL(${({url}) => url});
 `;
 
 const Name = styled.p`
@@ -167,42 +170,40 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
   return (
     <Wrapper>
     <h2>Related Products</h2>
-    <SliderContainer data-testid='related'>
-      <MdChevronLeft size={40} style={left} onClick={slideLeft} id="leftArrow" data-testid='left-arrow'/>
-      <Slider id="slider">
-        {slides.info.length !== 0
-        && slides.info.length === slides.urls.length
-        && reviews.length === slides.info.length ? slides.info.map((slide, index) => (
-          <Card
-            key={index}
-          >
-            <Star
-              onClick={() => {
-                setCurrOutfit(slide);
-                setModal(true);
-              }}
-            />
-            <Image url={slides.urls[index].url}
-              onClick={() => {
+      <SliderContainer data-testid='related'>
+        <MdChevronLeft size={40} style={left} onClick={slideLeft} id="leftArrow" data-testid='left-arrow'/>
+        <Slider id="slider">
+          {slides.info.length !== 0
+          && slides.info.length === slides.urls.length
+          && reviews.length === slides.info.length ? slides.info.map((slide, index) => (
+            <Card
+              key={index}
+            >
+              <Star
+                onClick={() => {
+                  setCurrOutfit(slide);
+                  setModal(true);
+                }}
+              />
+              <Img src={slides.urls[index].url} onClick={() => {
                 setCarouselPos(true);
                 setLeftSide(900);
                 pageChange(slide.data.id);
-              }}
-            />
-            <Category>{slide.data.category}</Category>
-            <Name onClick={() => pageChange(slide.data.id)}>{slide.data.name}</Name>
-            <Price data-testid='label'>
-              {!slides.urls[index].salePrice
-              ? <label>${slides.urls[index].originalPrice}</label>
-              : <label style={{color:'red'}}>${slides.urls[index].salePrice} <strike style={{color:'black'}}>{slides.urls[index].originalPrice}</strike></label>}
-            </Price>
-             <Ratings rating={reviews[index].avg} key={index} />
-          </Card>
-        )) : <></>}
-        <Modal open={modal} closeModal={() => setModal(false)} currOutfit={currOutfit} id={id} />
-      </Slider>
-      <MdChevronRight id="rightArrow" size={40} style={right} onClick={slideRight} data-testid='right-arrow' />
-    </SliderContainer>
+              }}/>
+              <Category>{slide.data.category}</Category>
+              <Name onClick={() => pageChange(slide.data.id)}>{slide.data.name}</Name>
+              <Price data-testid='label'>
+                {!slides.urls[index].salePrice
+                ? <label>${slides.urls[index].originalPrice}</label>
+                : <label style={{color:'red'}}>${slides.urls[index].salePrice} <strike style={{color:'black'}}>{slides.urls[index].originalPrice}</strike></label>}
+              </Price>
+              <Ratings rating={reviews[index].avg} key={index} />
+            </Card>
+          )) : <></>}
+          <Modal open={modal} closeModal={() => setModal(false)} currOutfit={currOutfit} id={id} />
+        </Slider>
+        <MdChevronRight id="rightArrow" size={40} style={right} onClick={slideRight} data-testid='right-arrow' />
+      </SliderContainer>
     </Wrapper>
   );
 }
