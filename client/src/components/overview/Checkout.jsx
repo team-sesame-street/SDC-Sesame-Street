@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 import AddToCartButton from '../../../utils/AddToCartButton.jsx';
-import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 
 function Checkout({ selectedStyle }) {
   const [skusInStock, setSkusInStock] = useState([]);
@@ -17,9 +16,19 @@ function Checkout({ selectedStyle }) {
   useLayoutEffect(() => {
     if (Object.keys(selectedStyle).length > 0) {
       const inStock = Object.keys(selectedStyle.skus).filter(
-        (sku) => (selectedStyle.skus[sku].quantity > 0),
+        (sku) => (selectedStyle.skus[sku] && selectedStyle.skus[sku].quantity > 0),
       );
-      setSkusInStock(inStock);
+      // CHECK FOR UNIQUENESS OF SIZES, returning first sku associated with duplicate size
+      const uniqueSkus = [];
+      const sizes = [];
+      inStock.forEach((sku) => {
+        const currSize = selectedStyle.skus[sku].size;
+        if (sizes.indexOf(currSize) === -1) {
+          sizes.push(currSize);
+          uniqueSkus.push(sku);
+        }
+      });
+      setSkusInStock(uniqueSkus);
       setSelectedSku(null);
       setSelectedQuantity(null);
       setMaxQuantity(null);
@@ -65,6 +74,12 @@ function Checkout({ selectedStyle }) {
       setSelectedQuantity(null);
     }
   }, [selectedSku]);
+
+  useEffect(() => {
+    if (invalidSubmit) {
+      setSelectingSize(true);
+    }
+  }, [invalidSubmit]);
 
   const addToCart = () => {
     if (!selectedSku) {
@@ -133,6 +148,7 @@ function Checkout({ selectedStyle }) {
     setSelectingQuantity(false);
   };
 
+
   if (Object.keys(selectedStyle).length > 0
     && skusInStock.every((sku) => (Object.keys(selectedStyle.skus).indexOf(sku) !== -1))) {
     const quantityRange = [];
@@ -147,57 +163,33 @@ function Checkout({ selectedStyle }) {
         <TextWrapper style={{ visibility: invalidSubmit ? 'visible' : 'hidden' }}>
           <p>‼️ Please select size ‼️</p>
         </TextWrapper>
-        <SizeSelector>
+        <SizeSelector className="btn-header">
           {/* collapsed view */}
           {skusInStock.length > 0 && !selectedSku && !selectingSize && (
             <li>
-              <button type="button" onClick={expandSelectSize}>
+              <button className="btn-down focus" type="button" onClick={expandSelectSize}>
                 Select Size
-                &nbsp;
-                <RiArrowDownSFill
-                  style={{
-                    gridColumn: '5 / 6',
-                    alignSelf: 'center',
-                    // justifySelf: 'end',
-                  }}
-                />
               </button>
             </li>
           )}
           {skusInStock.length > 0 && selectedSku && !selectingSize && (
             <li>
-              <button type="button" onClick={expandSelectSize}>
+              <button type="button" className="btn-down focus" onClick={expandSelectSize}>
                 {selectedStyle.skus[selectedSku].size}
-                &nbsp;
-                <RiArrowDownSFill
-                  style={{
-                    gridColumn: '5 / 6',
-                    alignSelf: 'center',
-                    justifySelf: 'end',
-                  }}
-                />
               </button>
             </li>
           )}
           {skusInStock.length === 0 && (
             <li>
-              <button type="button">OUT OF STOCK</button>
+              <button type="button" className="inactive">OUT OF STOCK</button>
             </li>
           )}
 
           {/* expanded view */}
           {skusInStock.length > 0 && selectingSize && (
             <li>
-              <button type="button" onClick={resetSelectedSize}>
+              <button type="button" className="btn-up btn-header-expanded" onClick={resetSelectedSize}>
                 Select Size
-                &nbsp;
-                <RiArrowUpSFill
-                  style={{
-                    gridColumn: '5 / 6',
-                    alignSelf: 'center',
-                    justifySelf: 'end',
-                  }}
-                />
               </button>
             </li>
           )}
@@ -208,11 +200,11 @@ function Checkout({ selectedStyle }) {
           ))}
         </SizeSelector>
 
-        <QuantitySelector>
+        <QuantitySelector className="btn-header" style={{ visibility: skusInStock.length === 0 ? 'hidden' : 'visible' }}>
           {/* collapsed view */}
           {maxQuantity === 0 && (
             <li>
-              <button type="button">OUT OF STOCK</button>
+              <button type="button" className="inactive">OUT OF STOCK</button>
             </li>
           )}
           {!selectedSku && (
@@ -222,7 +214,9 @@ function Checkout({ selectedStyle }) {
           )}
           {selectedSku && maxQuantity > 0 && selectedQuantity && !selectingQuantity && (
             <li>
-              <button type="button" onClick={expandSelectQuantity}>{selectedQuantity}</button>
+              <button type="button" className="focus btn-down" onClick={expandSelectQuantity}>
+                {selectedQuantity}
+              </button>
             </li>
           )}
 
@@ -296,6 +290,41 @@ const Wrapper = styled.div`
   column-gap: 5px;
   position: relative;
   isolation: isolate;
+
+  & .btn-header {
+    border: 1px solid black;
+  }
+
+  & .btn-header-expanded {
+    border-bottom: 1px inset grey;
+  }
+
+  & .focus {
+    // transition: all .2s ease-in-out;
+    &:hover {
+      // transform: scale(1.1);
+      opacity: 0.7;
+    }
+  }
+
+  & .btn-down {
+    background: #D6CCC2 url('https://cdn-icons-png.flaticon.com/512/60/60995.png');
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
+    background-size: 10px 10px;
+  }
+
+  & .btn-up {
+    background: #D6CCC2 url('https://cdn-icons-png.flaticon.com/512/61/61148.png');
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
+    background-size: 10px 10px;
+  }
+
+  & .inactive {
+    color: #EDEDE9;
+    cursor: not-allowed;
+  }
 `;
 
 const TextWrapper = styled.div`
@@ -307,15 +336,14 @@ const TextWrapper = styled.div`
 const SizeSelector = styled.ul`
   list-style-type: none;
   position: absolute;
-  z-index: 100;
-  height: min-content;
+  z-index: 500;
+  height: max-content;
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   align-self: top;
   width: 100%;
   padding: 0;
   margin: 0;
-  // overflow-y: scroll;
   & li {
     height: 30px;
   }
@@ -324,47 +352,62 @@ const SizeSelector = styled.ul`
     left: 0;
     border: none;
     width: 100%;
-    height: 2rem;
+    height: 100%;
     cursor: pointer;
-    display: grid;
-    grid-template-rows: repeat(5, 1fr);
-    justify-content: center;
-    align-content: center;
-    align-items: center;
     background: #D6CCC2;
+    text-align: start;
   }
   & .options {
     &:hover {
       background: #D5BDAF;
     }
+  }
+
 `;
 
 const QuantitySelector = styled.ul`
   list-style-type: none;
   position: absolute;
   z-index: 100;
-  height: min-content;
+  height: max-content;
   grid-column: 2 / 3;
   grid-row: 2 / 3;
   align-self: top;
   width: 100%;
   padding: 0;
   margin: 0;
-  // overflow-y: scroll;
   & li {
     height: 30px;
   }
   & button {
     border: none;
     width: 100%;
-    height: 2rem;
+    height: 100%;
     cursor: pointer;
     background: #D6CCC2;
-    align-content: center;
-    align-items: center;
+    text-align: start;
+    // align-content: center;
+    // align-items: center;
   }
   & .options {
     &:hover {
       background: #D5BDAF;
     }
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+`;
+
+const UpArrow = styled.img`
+  right: 5%;
+  object-fit: contain;
+  width: 5px;
+  height: 5px;
+  position: absolute;
+  z-index: 100;
 `;

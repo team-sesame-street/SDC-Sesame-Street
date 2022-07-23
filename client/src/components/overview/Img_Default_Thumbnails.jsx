@@ -30,8 +30,22 @@ function ImageDefaultThumbnail({
         <ThumbnailsGrid>
           {images.map((image, index) => {
             if (index >= thumbnailIndexMin && index <= thumbnailIndexMax) {
+              // clean up inccorect url address format and check for null url
+              let url = image.thumbnail_url
+                ? image.thumbnail_url
+                : 'https://images.unsplash.com/photo-1594322436404-5a0526db4d13?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2329&q=80';
+              if (url.indexOf('http') !== 0) {
+                url = url.slice(url.indexOf('http'));
+              }
               return (
-                <ThumbnailImage style={{opacity: index === currImgIndex ? 1 : 0.4}} key={index} src={image.thumbnail_url} alt={`product representation #${index}`} onClick={() => { setCurrImgIndex(index); }} loading="lazy"/>
+                <ThumbnailImage
+                  style={{ opacity: index === currImgIndex ? 1 : 0.4 }}
+                  key={index}
+                  alt={`product representation #${index}`}
+                  onClick={() => { setCurrImgIndex(index); }}
+                  src={url}
+                  loading="lazy"
+                />
               );
             }
             return null;
@@ -55,8 +69,8 @@ function ImageDefaultThumbnail({
 
 ImageDefaultThumbnail.propTypes = {
   images: PropTypes.arrayOf(PropTypes.shape({
-    thumbnail_url: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
+    thumbnail_url: PropTypes.string,
+    url: PropTypes.string,
   })).isRequired,
   currImgIndex: PropTypes.number,
   setCurrImgIndex: PropTypes.func.isRequired,
@@ -115,8 +129,9 @@ const ThumbnailImage = styled.img`
   width: 4.5vw;
   object-fit: cover;
   cursor: pointer;
+  box-shadow: -5px 5px 5px #D6CCC2;
   &:hover {
-    border: 2px solid black;
+    transform: scale(1.1);
   }
   @media (min-width: 1500px) {
     height: 70px;
