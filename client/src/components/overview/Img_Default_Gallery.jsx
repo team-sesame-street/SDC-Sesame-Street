@@ -125,7 +125,7 @@ const SubWrapper = styled.div`
     width: 3vh;
     min-height: 20px;
     min-width: 20px;
-    grid-row: 5 / 6;
+    grid-row: 4 / 6;
     cursor: pointer;
   };
 `;
