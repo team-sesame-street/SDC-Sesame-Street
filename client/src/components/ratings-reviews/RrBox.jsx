@@ -15,6 +15,7 @@ const styles = {
     alignItems: 'stretch',
     backgroundColor: '#EDEDE9',
     padding: '20px',
+    flexWrap: 'wrap',
   },
 
   ratingsContainer: {
