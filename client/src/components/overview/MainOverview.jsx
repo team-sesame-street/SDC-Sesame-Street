@@ -59,6 +59,7 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
           if (stylesData.every((style) => !style['default?'])) {
             setSelectedStyle(stylesData[0]);
           }
+          setCurrImgIndex(0);
         })
         .catch(() => {
           alert('Unable to retrieve styles for this product');
@@ -100,6 +101,9 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
       }
     }
   }, [images]);
+
+
+  console.log(id, images, thumbnailIndexMin, thumbnailIndexMax, currImgIndex);
 
   return (
     <Wrapper>

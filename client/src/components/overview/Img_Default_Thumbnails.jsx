@@ -69,8 +69,8 @@ function ImageDefaultThumbnail({
 
 ImageDefaultThumbnail.propTypes = {
   images: PropTypes.arrayOf(PropTypes.shape({
-    thumbnail_url: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
+    thumbnail_url: PropTypes.string,
+    url: PropTypes.string,
   })).isRequired,
   currImgIndex: PropTypes.number,
   setCurrImgIndex: PropTypes.func.isRequired,
@@ -131,7 +131,6 @@ const ThumbnailImage = styled.img`
   cursor: pointer;
   box-shadow: 10px 5px 5px #D6CCC2;
   &:hover {
-    // border: 1px solid black;
     transform: scale(1.1);
   }
   @media (min-width: 1500px) {
