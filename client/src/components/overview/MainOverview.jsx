@@ -18,7 +18,6 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
   const [currImgIndex, setCurrImgIndex] = useState(null);
   const [expandedView, setExpandedView] = useState(false);
   const [styleChangeButSameProduct, setStyleChangeButSameProduct] = useState(false);
-  // NOTES: ID 40345 is the a product with no available sizes
 
   useEffect(() => {
     if (id) {

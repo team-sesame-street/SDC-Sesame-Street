@@ -356,6 +356,7 @@ const SizeSelector = styled.ul`
     cursor: pointer;
     background: #D6CCC2;
     text-align: start;
+    color: black;
   }
   & .options {
     &:hover {
@@ -386,28 +387,11 @@ const QuantitySelector = styled.ul`
     cursor: pointer;
     background: #D6CCC2;
     text-align: start;
-    // align-content: center;
-    // align-items: center;
+    color: black;button
   }
   & .options {
     &:hover {
       background: #D5BDAF;
     }
   }
-`;
-
-const ButtonWrapper = styled.div`
-  position: relative;
-  isolation: isolate;
-  width: 100%;
-  height: 100%;
-`;
-
-const UpArrow = styled.img`
-  right: 5%;
-  object-fit: contain;
-  width: 5px;
-  height: 5px;
-  position: absolute;
-  z-index: 100;
 `;
