@@ -134,7 +134,7 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
   const [modal, setModal] = useState(false);
   const [currOutfit, setCurrOutfit] = useState({});
   const [carouselPos, setCarouselPos] = useState(false);
-  const [leftSide, setLeftSide] = useState(1100);
+  const [leftSide, setLeftSide] = useState(900);
   const imageSlider = document.querySelector('#slider');
   const rightArrow = document.querySelector('#rightArrow');
   const leftArrow = document.querySelector('#leftArrow');
@@ -145,13 +145,13 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
   }
 
   const slideLeft = () => {
-    imageSlider.scrollLeft -= 370;
-    setLeftSide(leftSide - 370);
+    imageSlider.scrollLeft -= 400;
+    setLeftSide(leftSide - 400);
   };
 
   const slideRight = () => {
-    imageSlider.scrollLeft += 370;
-    setLeftSide(leftSide + 370);
+    imageSlider.scrollLeft += 400;
+    setLeftSide(leftSide + 400);
   };
 
   if (imageSlider && leftSide > imageSlider.scrollWidth - 15 && rightArrow) {
@@ -160,9 +160,9 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
     rightArrow.style.visibility = 'visible';
   }
 
-  if (leftArrow && leftSide <= 1100) {
+  if (leftArrow && leftSide <= 1000) {
     leftArrow.style.visibility = 'hidden';
-  } else if (leftSide > 1100 && leftArrow) {
+  } else if (leftSide > 1000 && leftArrow) {
     leftArrow.style.visibility = 'visible';
   }
 
