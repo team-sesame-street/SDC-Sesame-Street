@@ -58,7 +58,7 @@ function OutfitList({ slide, deleteOutfit, pageChange }) {
       <Button>
       <TiDeleteOutline size={25} onClick={deleteHandler} />
       </Button>
-      <Img src={slide.url} onClick={() => pageChange(slide.id)}/>
+      <Img src={slide.url} loading="lazy" onClick={() => pageChange(slide.id)}/>
       <Category>{slide.category}</Category>
       <Name onClick={() => pageChange(slide.id)}>{slide.name}</Name>
       <Price>
