@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { BsFillCheckCircleFill } from 'react-icons/bs';
 
-function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
+function StyleSelector({ styles, selectedStyle, setSelectedStyle, setStyleChangeButSameProduct }) {
   return (
     <div>
       <p>
@@ -15,9 +15,14 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
           <ThumbnailWrapper key={style.style_id}>
             <BsFillCheckCircleFill className="checkmark" style={{ visibility: style.style_id === selectedStyle.style_id ? 'visible' : 'hidden' }} />
             <Thumbnail
-              src={style.photos[0].thumbnail_url}
+              src={
+                style.photos[0].thumbnail_url
+                  ? style.photos[0].thumbnail_url
+                  : 'https://images.unsplash.com/photo-1594322436404-5a0526db4d13?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2329&q=80'
+              }
               onClick={() => {
                 setSelectedStyle(style);
+                setStyleChangeButSameProduct(true);
               }}
               alt={style.name}
             />
@@ -96,7 +101,7 @@ const ThumbnailWrapper = styled.div`
     color: black;
     border: white;
     position: absolute;
-    zIndex: 10;
+    z-index: 10;
     user-select: none;
     @media(min-width: 501px) and (max-width: 900px) {
       right: 25%;

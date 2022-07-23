@@ -94,30 +94,11 @@ const ChildrenWrapper = styled.div`
   }
 
   @media(min-width: 1200px) {
-    width: 50%;
-    height: max-content;
+    margin-top: 5vh;
+    width: 90vh;
+    height: 90vh;
   }
-
-  label {
-    display: inline-block;
-    width: 100%;
-    margin-top: 0.5rem;
-    & small {
-    font-style: italic;
-    }
+  @media(max-height: 900px) {
+    margin: auto;
   }
-
-  // .exit-icon {
-  //    position: absolute;
-  //    top:0;
-  //    right:0;
-  //    transform: scale(2);
-  //    z-index: 999;
-  //    margin: 40px;
-  //    cursor: pointer;
-
-  //    &:hover {
-  //     opacity: 0.65;
-  //    }
-  //  }
 `;

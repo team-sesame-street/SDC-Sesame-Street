@@ -98,6 +98,7 @@ const MobileNav = styled.div`
   margin: 2rem;
   font-size: 1.25rem;
   font-weight: 800;
+  font-family: 'Homemade Apple';
 
 
   & div#logo {

@@ -52,7 +52,11 @@ function MainImage(
                 )}
                 <Image
                   data-testid="main-image"
-                  src={images[currImgIndex].url}
+                  src={
+                    images[currImgIndex].url
+                      ? images[currImgIndex].url
+                      : 'https://images.unsplash.com/photo-1594322436404-5a0526db4d13?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2329&q=80'
+                    }
                   alt="A representation of this product"
                   onClick={() => { setExpandedView(true); }}
                   loading="lazy"
@@ -60,7 +64,7 @@ function MainImage(
                 {index < images.length - 1 && (
                   <FaArrowCircleRight
                     className="arrows-default"
-                    style={{  gridColumn: '13 / 15' }}
+                    style={{ gridColumn: '13 / 15' }}
                     data-testid="right-arrow"
                     onClick={navigateRight}
                   />
@@ -78,9 +82,9 @@ function MainImage(
 
 MainImage.propTypes = {
   images: PropTypes.arrayOf(PropTypes.shape({
-    thumbnail_url: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-  })).isRequired,
+    thumbnail_url: PropTypes.string,
+    url: PropTypes.string,
+  })),
   currImgIndex: PropTypes.number,
   setCurrImgIndex: PropTypes.func.isRequired,
   thumbnailIndexMin: PropTypes.number,
@@ -91,6 +95,10 @@ MainImage.propTypes = {
 };
 
 MainImage.defaultProps = {
+  images: PropTypes.arrayOf(PropTypes.shape({
+    thumbnail_url: null,
+    url: null,
+  })),
   currImgIndex: null,
   thumbnailIndexMax: null,
   thumbnailIndexMin: null,
@@ -121,7 +129,7 @@ const SubWrapper = styled.div`
     width: 3vh;
     min-height: 20px;
     min-width: 20px;
-    grid-row: 5 / 6;
+    grid-row: 4 / 6;
     cursor: pointer;
   };
 `;
