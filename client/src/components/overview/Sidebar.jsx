@@ -5,7 +5,7 @@ import Checkout from './Checkout.jsx';
 import StyleSelector from './StyleSelector.jsx';
 
 function Sidebar({
-  product, selectedStyle, styles, setSelectedStyle, avgRating, totalRatings, ratingsReviewsNode
+  product, selectedStyle, styles, setSelectedStyle, avgRating, totalRatings, ratingsReviewsNode, setStyleChangeButSameProduct
 }) {
   return (
     <Wrapper>
@@ -20,6 +20,7 @@ function Sidebar({
         styles={styles}
         selectedStyle={selectedStyle}
         setSelectedStyle={setSelectedStyle}
+        setStyleChangeButSameProduct={setStyleChangeButSameProduct}
       />
       <Checkout
         selectedStyle={selectedStyle}

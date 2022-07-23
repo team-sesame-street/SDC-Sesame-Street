@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { BsFillCheckCircleFill } from 'react-icons/bs';
 
-function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
+function StyleSelector({ styles, selectedStyle, setSelectedStyle, setStyleChangeButSameProduct }) {
   return (
     <div>
       <p>
@@ -22,6 +22,7 @@ function StyleSelector({ styles, selectedStyle, setSelectedStyle }) {
               }
               onClick={() => {
                 setSelectedStyle(style);
+                setStyleChangeButSameProduct(true);
               }}
               alt={style.name}
             />

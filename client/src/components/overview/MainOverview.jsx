@@ -17,6 +17,7 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
   const [thumbnailIndexMax, setThumbnailIndexMax] = useState(null);
   const [currImgIndex, setCurrImgIndex] = useState(null);
   const [expandedView, setExpandedView] = useState(false);
+  const [styleChangeButSameProduct, setStyleChangeButSameProduct] = useState(false);
   // NOTES: ID 40345 is the a product with no available sizes
 
   useEffect(() => {
@@ -40,7 +41,8 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
 
   useEffect(() => {
     if (id) {
-      console.log(0);
+      setStyleChangeButSameProduct(false);
+      setExpandedView(false);
       axios({
         url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/products/${id}/styles`,
         method: 'get',
@@ -50,24 +52,18 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
         responseType: 'json',
       })
         .then((response) => {
-          console.log(1);
           const stylesData = response.data.results;
           setStyles(stylesData);
+          let targetStyle;
           stylesData.forEach((style) => {
             if (style['default?']) {
-              setSelectedStyle(style);
+              targetStyle = style;
             }
           });
           if (stylesData.every((style) => !style['default?'])) {
-            setSelectedStyle(stylesData[0]);
+            targetStyle = stylesData[0];
           }
-          if (currImgIndex !== null && thumbnailIndexMin !== null && thumbnailIndexMax !== null) {
-            setCurrImgIndex(null);
-            setThumbnailIndexMin(null);
-            setThumbnailIndexMax(null);
-            setExpandedView(false);
-            console.log('1');
-          }
+          setSelectedStyle(targetStyle);
         })
         .catch(() => {
           alert('Unable to retrieve styles for this product');
@@ -77,16 +73,9 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
 
   useEffect(() => {
     if (Object.keys(selectedStyle).length > 0) {
-      console.log('2');
       // dummy images data is duplicate of the same photos set
       // setImages(selectedStyle.photos.concat(selectedStyle.photos));
       setImages(selectedStyle.photos);
-    }
-  }, [selectedStyle]);
-
-  useEffect(() => {
-    console.log('3');
-    if (images.length > 0) {
       if (currImgIndex === null) {
         setCurrImgIndex(0);
       }
@@ -94,13 +83,13 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
         setThumbnailIndexMin(0);
       }
       if (thumbnailIndexMax === null) {
-        if (images.length >= 7) {
+        if (selectedStyle.photos.length >= 7) {
           setThumbnailIndexMax(6);
         } else {
-          setThumbnailIndexMax(images.length - 1);
+          setThumbnailIndexMax(selectedStyle.photos.length - 1);
         }
       }
-      if (currImgIndex && !images[currImgIndex]) {
+      if (currImgIndex !== null && !images[currImgIndex]) {
         setCurrImgIndex(images.length - 1);
         setThumbnailIndexMax(images.length - 1);
         if (images.length >= 7) {
@@ -110,9 +99,34 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
         }
       }
     }
-  }, [currImgIndex, thumbnailIndexMin, thumbnailIndexMax, images]);
+  }, [selectedStyle]);
 
-  console.log(id, images, thumbnailIndexMin, thumbnailIndexMax, currImgIndex);
+  useEffect(() => {
+    if (images.length > 0) {
+      if (currImgIndex === null || !styleChangeButSameProduct) {
+        setCurrImgIndex(0);
+      }
+      if (thumbnailIndexMin === null || !styleChangeButSameProduct) {
+        setThumbnailIndexMin(0);
+      }
+      if (thumbnailIndexMax === null || !styleChangeButSameProduct) {
+        if (images.length >= 7) {
+          setThumbnailIndexMax(6);
+        } else {
+          setThumbnailIndexMax(images.length - 1);
+        }
+      }
+      if (currImgIndex !== null && !images[currImgIndex] && styleChangeButSameProduct) {
+        setCurrImgIndex(images.length - 1);
+        setThumbnailIndexMax(images.length - 1);
+        if (images.length >= 7) {
+          setThumbnailIndexMin(images.length - 7);
+        } else {
+          setThumbnailIndexMin(0);
+        }
+      }
+    }
+  }, [images]);
 
   return (
     <Wrapper>
@@ -145,6 +159,7 @@ function MainOverview({ id, avgRating, totalRatings, ratingsReviewsNode }) {
           avgRating={avgRating}
           totalRatings={totalRatings}
           ratingsReviewsNode={ratingsReviewsNode}
+          setStyleChangeButSameProduct={setStyleChangeButSameProduct}
         />
       </TopOverview>
       <BottomOverview className="bottom-overview overview-grid">
