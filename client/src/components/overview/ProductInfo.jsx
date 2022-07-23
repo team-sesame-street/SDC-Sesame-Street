@@ -23,7 +23,7 @@ function ProductInfo({ product, selectedStyle, avgRating, totalRatings, ratingsR
           </div>
         )}
         <h3 data-testid="category">{product.category.toUpperCase()}</h3>
-        <h1 data-testid="product-name" style={{ lineHeight: '130%' }}>{product.name}</h1>
+        <h1 data-testid="product-name" style={{ lineHeight: '10%' }}>{product.name}</h1>
         {selectedStyle.sale_price === null
           ? (<p data-testid="price">{formatPrice(selectedStyle.original_price)}</p>)
           : (

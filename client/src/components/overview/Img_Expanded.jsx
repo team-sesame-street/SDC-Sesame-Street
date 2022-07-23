@@ -74,7 +74,6 @@ function ExpandedImage({
                     alt="A representation of this product"
                     loading="lazy"
                     onClick={() => { setZoom(true); }}
-                    // style={{ cursor: 'crosshair' }}
                   />
                 )}
                 {!zoom && (
@@ -110,6 +109,18 @@ function ExpandedImage({
                   }
                 }}
               />
+              // <NavCircles
+              //   src="https://cdn-icons-png.flaticon.com/512/481/481078.png"
+              //   alt="circle"
+              //   data-testid="nav-symbols-circles"
+              //   key={index}
+              //   style={circleStyle}
+              //   onClick={() => {
+              //     if (index !== currImgIndex) {
+              //       setCurrImgIndex(index);
+              //     }
+              //   }}
+              // />
             );
           })}
         </NavSymbols>
@@ -146,10 +157,6 @@ const Wrapper = styled.div`
     color: black;
     width: 30px;
     height: 30px;
-    // max-width: 4vh;
-    // max-height: 4vh;
-    // min-width: 30px;
-    // min-height: 30px;
     cursor: pointer;
   };
   & .exit-icon {
@@ -171,10 +178,8 @@ const Wrapper = styled.div`
     width: 100%;
   }
   @media(min-width: 1200px) {
-    width: 40vw;
-    height: 40vw;
-    max-width: 600px;
-    max-height: 600px;
+    width: 90%;
+    height: 90%;
   }
 `;
 
@@ -193,10 +198,13 @@ const NavSymbols = styled.div`
   align-items: center;
   user-select: none;
   & .nav-symbols-circles {
-    color: grey;
+    fill: #D5BDAF;
     cursor: pointer;
   };
 `;
+
+// const NavCircles = styled.img`
+// `;
 
 const Image = styled.img`
   position: absolute;

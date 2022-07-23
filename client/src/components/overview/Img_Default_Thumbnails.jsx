@@ -129,8 +129,10 @@ const ThumbnailImage = styled.img`
   width: 4.5vw;
   object-fit: cover;
   cursor: pointer;
+  box-shadow: 10px 5px 5px #D6CCC2;
   &:hover {
-    border: 2px solid black;
+    // border: 1px solid black;
+    transform: scale(1.1);
   }
   @media (min-width: 1500px) {
     height: 70px;

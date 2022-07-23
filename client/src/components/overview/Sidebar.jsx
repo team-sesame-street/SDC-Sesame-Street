@@ -42,4 +42,8 @@ const Wrapper = styled.div`
   align-content: center;
   align-items: center;
   gap: 10px;
+  @media(max-width: 900px) {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
 `;
