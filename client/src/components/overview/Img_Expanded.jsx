@@ -181,9 +181,6 @@ const Wrapper = styled.div`
     width: 90%;
     height: 90%;
   }
-  @media(max-height: 600px) {
-
-  }
 `;
 
 const NavSymbols = styled.div`
