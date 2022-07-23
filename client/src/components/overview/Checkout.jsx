@@ -159,21 +159,21 @@ function Checkout({ selectedStyle }) {
           {/* collapsed view */}
           {skusInStock.length > 0 && !selectedSku && !selectingSize && (
             <li>
-              <button className="btn-down" type="button" onClick={expandSelectSize}>
+              <button className="btn-down focus" type="button" onClick={expandSelectSize}>
                 Select Size
               </button>
             </li>
           )}
           {skusInStock.length > 0 && selectedSku && !selectingSize && (
             <li>
-              <button type="button" className="btn-down" onClick={expandSelectSize}>
+              <button type="button" className="btn-down focus" onClick={expandSelectSize}>
                 {selectedStyle.skus[selectedSku].size}
               </button>
             </li>
           )}
           {skusInStock.length === 0 && (
             <li>
-              <button type="button">OUT OF STOCK</button>
+              <button type="button" className="inactive">OUT OF STOCK</button>
             </li>
           )}
 
@@ -194,10 +194,9 @@ function Checkout({ selectedStyle }) {
 
         <QuantitySelector className="btn-header" style={{ visibility: skusInStock.length === 0 ? 'hidden' : 'visible' }}>
           {/* collapsed view */}
-          {/* {console.log(selectedSku)} */}
           {maxQuantity === 0 && (
             <li>
-              <button type="button">OUT OF STOCK</button>
+              <button type="button" className="inactive">OUT OF STOCK</button>
             </li>
           )}
           {!selectedSku && (
@@ -207,7 +206,7 @@ function Checkout({ selectedStyle }) {
           )}
           {selectedSku && maxQuantity > 0 && selectedQuantity && !selectingQuantity && (
             <li>
-              <button type="button" onClick={expandSelectQuantity}>
+              <button type="button" className="focus btn-down" onClick={expandSelectQuantity}>
                 {selectedQuantity}
               </button>
             </li>
@@ -291,6 +290,33 @@ const Wrapper = styled.div`
   & .btn-header-expanded {
     border-bottom: 1px inset grey;
   }
+
+  & .focus {
+    // transition: all .2s ease-in-out;
+    &:hover {
+      // transform: scale(1.1);
+      opacity: 0.7;
+    }
+  }
+
+  & .btn-down {
+    background: #D6CCC2 url('https://cdn-icons-png.flaticon.com/512/60/60995.png');
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
+    background-size: 10px 10px;
+  }
+
+  & .btn-up {
+    background: #D6CCC2 url('https://cdn-icons-png.flaticon.com/512/61/61148.png');
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
+    background-size: 10px 10px;
+  }
+
+  & .inactive {
+    color: #EDEDE9;
+    cursor: not-allowed;
+  }
 `;
 
 const TextWrapper = styled.div`
@@ -329,19 +355,6 @@ const SizeSelector = styled.ul`
     }
   }
 
-  & .btn-up {
-    background: #D6CCC2 url('https://cdn-icons-png.flaticon.com/512/61/61148.png');
-    background-repeat: no-repeat;
-    background-position: 95% 50%;
-    background-size: 10px 10px;
-  }
-
-  & .btn-down {
-    background: #D6CCC2 url('https://cdn-icons-png.flaticon.com/512/60/60995.png');
-    background-repeat: no-repeat;
-    background-position: 95% 50%;
-    background-size: 10px 10px;
-  }
 `;
 
 const QuantitySelector = styled.ul`
