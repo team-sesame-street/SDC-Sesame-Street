@@ -35,7 +35,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: -10;
   & h2 {
     align-self: flex-start;
     margin-bottom: 20px;
@@ -135,7 +134,7 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
   const [modal, setModal] = useState(false);
   const [currOutfit, setCurrOutfit] = useState({});
   const [carouselPos, setCarouselPos] = useState(false);
-  const [leftSide, setLeftSide] = useState(900);
+  const [leftSide, setLeftSide] = useState(1100);
   const imageSlider = document.querySelector('#slider');
   const rightArrow = document.querySelector('#rightArrow');
   const leftArrow = document.querySelector('#leftArrow');
@@ -146,13 +145,13 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
   }
 
   const slideLeft = () => {
-    imageSlider.scrollLeft -= 350;
-    setLeftSide(leftSide - 350);
+    imageSlider.scrollLeft -= 370;
+    setLeftSide(leftSide - 370);
   };
 
   const slideRight = () => {
-    imageSlider.scrollLeft += 350;
-    setLeftSide(leftSide + 350);
+    imageSlider.scrollLeft += 370;
+    setLeftSide(leftSide + 370);
   };
 
   if (imageSlider && leftSide > imageSlider.scrollWidth - 15 && rightArrow) {
@@ -161,9 +160,9 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
     rightArrow.style.visibility = 'visible';
   }
 
-  if (leftArrow && leftSide <= 900) {
+  if (leftArrow && leftSide <= 1100) {
     leftArrow.style.visibility = 'hidden';
-  } else if (leftSide > 900 && leftArrow) {
+  } else if (leftSide > 1100 && leftArrow) {
     leftArrow.style.visibility = 'visible';
   }
 
@@ -185,7 +184,7 @@ function RelatedItems({ slides, id, pageChange, reviews }) {
                   setModal(true);
                 }}
               />
-              <Img src={slides.urls[index].url} onClick={() => {
+              <Img src={slides.urls[index].url} loading="lazy" onClick={() => {
                 setCarouselPos(true);
                 setLeftSide(900);
                 pageChange(slide.data.id);
