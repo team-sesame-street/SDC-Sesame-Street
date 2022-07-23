@@ -15,7 +15,6 @@ function ImageDefaultThumbnail({
 
     return (
       <Wrapper>
-        {console.log(images)}
         {images.length > 7 && (
           <RiArrowUpSFill
             className="arrows-thumbnail"
