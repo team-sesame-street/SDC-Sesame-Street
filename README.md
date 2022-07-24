@@ -20,9 +20,7 @@ All components in this repo have been written from scratch using React and Style
 - Responsive button on hover that leads the user to a products page
 
 ### Product Overview
-Gallery/Styles             |  Add to Cart
-:-------------------------:|:-------------------------:
-![Image Gallery and Product Information](https://imgur.com/a/kfCQgqT) 
+![Image Gallery and Product Information](https://imgur.com/a/kfCQgqT.gif)
 
 Built by <a href=https://github.com/kbinhnguyen>Binh Nguyen</a>
 
