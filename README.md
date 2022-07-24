@@ -22,16 +22,17 @@ All components in this repo have been written from scratch using React and Style
 ### Product Overview
 Gallery/Styles             |  Add to Cart
 :-------------------------:|:-------------------------:
-![gallery and styles](https://i.imgur.com/56JtGSx.gif)  |  ![add to cart](https://i.imgur.com/q4YhjjP.gif)
+![Image Gallery and Product Information](https://imgur.com/a/kfCQgqT) 
 
 Built by <a href=https://github.com/kbinhnguyen>Binh Nguyen</a>
 
 <b>Features</b>
 - Image gallery carousel with the ability to zoom and expand the photo
 - Styles Selector dynamically lists out styles based on the item
-- Size Selector dynamically fills out based on product
+- Size Selector dynamically fills out based on product's stock availability
 - Add to cart feature
 - Share to social media buttons
+- Read all reviews link that will scroll to the Ratings & Reviews section upon clicking
 
 ### Related Items & Your Outfit
 Product Carousel             |  Comparison Modal
