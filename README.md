@@ -46,16 +46,16 @@ Built by <a href=https://github.com/carsonliu1>Carson Liu</a>
 - A 'Your Outfit' section which allows you to save the currently viewed item into a list that persists while traversing the site
 
 ### Questions & Answers
-<img src="https://i.imgur.com/Oeg24x4.gif" />
+Add a Question Modal     |  Navigating the Q&A List
+:-------------------------:|:-------------------------:
+![Add a Question Modal](https://i.imgur.com/HDuJyeM.gif)  |  ![Navigating the Q&A List](https://i.imgur.com/jj7BpZ2.gif)
 
 Built by <a href=https://github.com/gianlazaro>Gian Lazaro</a>
 
 <b>Features</b>
-- Questions will load two at a time
-- Loads more answers to each question
-- The ability to search through all loaded questions
-- Adding a question
-- Adding an answer to an already existing question
+- The questions and answers load two at a time, every time the respective buttons are clicked on
+- Search functionality to look for a specific question
+- Add questions and answers through filling out a form in a custom modal
 
 ### Ratings & Reviews
 <img src="https://imgur.com/i0XpPIF.gif" />
@@ -95,7 +95,7 @@ This project follows the [Airbnb JavaScript Style Guide](https://github.com/airb
 **Gian Lazaro (Questions & Answers)**
 
 [![Linkedin: LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/caleb-kim0510/)](https://www.linkedin.com/in/gianlazaro/)
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/cariboukim)](https://github.com/gianlazaro) 
+[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/gianlazaro)](https://github.com/gianlazaro) 
 
 **Camden Smith (Ratings & Reviews)**
 
@@ -113,24 +113,11 @@ Generate your own github api key with these settings:
 - user:email  
 - user:follow  
 
-Create a .env file and add the following keys and values.
-  
-In order to get image upload functionality, please visit https://cloudinary.com/ and create a free account. 
-Copy the following into your .env file with these keys. 
-  
-CLOUD_NAME=  
-CLOUD_API_KEY=  
-CLOUD_API_SECRET=  
-  
-Your .env file should end up looking something like this:  
+Create a .env file and add the following keys and values. Your .env file should end up looking something like this:  
   
 PORT="3000"  
 GITKEY="GITHUB_API_KEY_HERE"  
-  
-CLOUD_NAME="CLOUD_NAME_HERE"  
-CLOUD_API_KEY="CLOUD_API_KEY_HERE"  
-CLOUD_API_SECRET="CLOUD_API_SECRET_HERE"  
-  
+
 After finishing your .env file and saving it, you can now ```npm install``` in the root directory.
 
 Once that finishes you can run ```npm run server-dev``` which should start up the server and also webpack.   
