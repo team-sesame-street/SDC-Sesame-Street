@@ -118,6 +118,8 @@ Create a .env file and add the following keys and values. Your .env file should 
 PORT="3000"  
 GITKEY="GITHUB_API_KEY_HERE"  
 
+-<b>NOTE don’t include the apostrophes<b/>
+
 After finishing your .env file and saving it, you can now ```npm install``` in the root directory.
 
 Once that finishes you can run ```npm run server-dev``` which should start up the server and also webpack.   
