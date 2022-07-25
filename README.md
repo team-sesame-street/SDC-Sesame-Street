@@ -101,6 +101,37 @@ This project follows the [Airbnb JavaScript Style Guide](https://github.com/airb
 
 ## Instructions for how to deploy the webpage:
 
-FILL_ME_IN
+Fork this repo into your local machine and do the following.
+  
+Generate your own github api key with these settings:  
+- read:org  
+- user  
+- read:user  
+- user:email  
+- user:follow  
+
+Create a .env file and add the following keys and values.
+  
+In order to get image upload functionality, please visit https://cloudinary.com/ and create a free account. 
+Copy the following into your .env file with these keys. 
+  
+CLOUD_NAME=  
+CLOUD_API_KEY=  
+CLOUD_API_SECRET=  
+  
+Your .env file should end up looking something like this:  
+  
+PORT="3000"  
+GITKEY="GITHUB_API_KEY_HERE"  
+  
+CLOUD_NAME="CLOUD_NAME_HERE"  
+CLOUD_API_KEY="CLOUD_API_KEY_HERE"  
+CLOUD_API_SECRET="CLOUD_API_SECRET_HERE"  
+  
+After finishing your .env file and saving it, you can now ```npm install``` in the root directory.
+
+Once that finishes you can run ```npm run server-dev``` which should start up the server and also webpack.   
+  
+Navigate in your browser to localhost:(PORT_THAT_YOU_CHOSE_HERE) and you should see the webpage! 
   
 © Soulful 2022  
