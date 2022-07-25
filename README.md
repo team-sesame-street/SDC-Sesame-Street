@@ -16,9 +16,6 @@ All components in this repo have been written from scratch using React and Style
 
 ## Features
 
-<b>Features</b>
-- Responsive button on hover that leads the user to a products page
-
 ### Product Overview
 ![Image Gallery and Product Information](https://imgur.com/hAEhnGn.gif)
 
