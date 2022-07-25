@@ -75,13 +75,22 @@ This project follows the [Airbnb JavaScript Style Guide](https://github.com/airb
 
 ## Tech Stack
 **Built with**
-- [React](https://reactjs.org/)
+- [ReactJS](https://reactjs.org/) (with hooks)
 - [Webpack](https://webpack.js.org/)
-- [Jest](https://jestjs.io/docs/getting-started)
-- [Node](https://nodejs.org/en/)
-- [Express](https://expressjs.com/)
-- [AWS](https://aws.amazon.com/)
+- [NodeJS](https://nodejs.org/en/)
+- [ExpressJS](https://expressjs.com/)
+- [Axios](https://axios-http.com/)
 
+**Styling**
+- [Styled Components](https://styled-components.com/)
+
+**Testing frameworks**
+- [Jest](https://jestjs.io/docs/getting-started)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [Jest DOM Testing Library](https://github.com/testing-library/jest-dom)
+
+**Deployment**
+- [AWS](https://aws.amazon.com/) (EC2 instance)
 ## Contributors
 **Binh Nguyen (Product Overview)**
 
@@ -118,7 +127,7 @@ Create a .env file and add the following keys and values. Your .env file should 
 PORT="3000"  
 GITKEY="GITHUB_API_KEY_HERE"  
 
--<b>NOTE don’t include the apostrophes<b/>
+-<b>NOTE don’t include the apostrophes</b>
 
 After finishing your .env file and saving it, you can now ```npm install``` in the root directory.
 
