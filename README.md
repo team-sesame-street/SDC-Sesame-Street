@@ -19,7 +19,7 @@ All components in this repo have been written from scratch using React and Style
 ### Product Overview
 Gallery/Styles             
 :-------------------------:
-<img src="https://i.imgur.com/hAEhnGn.gif" />
+![Gallery/Styles ](https://i.makeagif.com/media/7-25-2022/lCiaRb.gif)
 
 
 Built by <a href=https://github.com/kbinhnguyen>Binh Nguyen</a>
