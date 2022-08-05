@@ -37,7 +37,7 @@ function QaListItem({
   );
   function handleVoteQ() {
     axios
-      .put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${result.question_id}/helpful`, {}, {
+      .put(`http://3.101.135.1:3000/qa/questions/${result.question_id}/helpful`, {}, {
         headers: {
           Authorization: process.env.GITKEY,
         },
