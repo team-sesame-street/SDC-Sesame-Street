@@ -7,7 +7,7 @@ const getAll = async (req, res) => {
   const promises = [];
   for (let i = 1; i <= followingPage; i += 1) {
     promises.push(
-      await axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions', {
+      await axios.get('http://3.101.135.1:3000/qa/questions', {
         headers: {
           Authorization: process.env.GITKEY,
         },

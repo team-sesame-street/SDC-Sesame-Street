@@ -38,7 +38,7 @@ function QaBox({ currProduct }) {
   }, [currProduct]);
 
   useEffect(() => {
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions?product_id=${currProduct.id}`, {
+    axios.get(`http://3.101.135.1:3000/qa/questions?product_id=${currProduct.id}`, {
       headers: {
         Authorization: process.env.GITKEY,
       },
@@ -47,6 +47,7 @@ function QaBox({ currProduct }) {
       },
     })
       .then(({ data }) => {
+        console.log(data)
         // if the api pull is empty, start counting
         if (data.results.length === 0 && !isPageCallsDone) {
           setCount(count + 1);

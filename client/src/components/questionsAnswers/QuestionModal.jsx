@@ -15,7 +15,7 @@ function QuestionModal({
     const name = e.target.username.value;
     const email = e.target.email.value;
 
-    axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions', {
+    axios.post('http://3.101.135.1:3000/qa/questions', {
       body,
       name,
       email,

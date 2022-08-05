@@ -65,7 +65,7 @@ function AnswerModal({
           // Send the array of urls with the POST request to Hack Reactor
           Promise.all(cloudPromises)
             .then((photos) => axios
-              .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
+              .post(`http://3.101.135.1:3000/qa/questions/${question.question_id}/answers`, {
                 body,
                 name,
                 email,
@@ -76,7 +76,7 @@ function AnswerModal({
                 },
               })
               .then(() => axios
-                .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers?count=15`, {
+                .get(`http://3.101.135.1:3000/qa/questions/${question.question_id}/answers?count=15`, {
                   headers: {
                     Authorization: process.env.GITKEY,
                   },
@@ -94,7 +94,7 @@ function AnswerModal({
         .catch((err) => console.error(err));
     } else {
       return axios
-        .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers`, {
+        .post(`http://3.101.135.1:3000/qa/questions/${question.question_id}/answers`, {
           body,
           name,
           email,
@@ -107,7 +107,7 @@ function AnswerModal({
         .then(() => {
           setIsAnswerModalOpen(false);
           return axios
-            .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/qa/questions/${question.question_id}/answers?count=15`, {
+            .get(`http://3.101.135.1:3000/qa/questions/${question.question_id}/answers?count=15`, {
               headers: {
                 Authorization: process.env.GITKEY,
               },

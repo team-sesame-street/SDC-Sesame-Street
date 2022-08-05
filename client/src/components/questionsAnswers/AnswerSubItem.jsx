@@ -69,7 +69,7 @@ function AnswerSubItem({ answer }) {
         {body}
       </div>
       <ThumbnailWrapper>
-        {photos.map((photo) => <Thumbnail key={randomId()} src={photo} onClick={() => setIsImageEnlarged(!isImageEnlarged)} loading="lazy" />)}
+        {photos?.map((photo) => <Thumbnail key={randomId()} src={photo} onClick={() => setIsImageEnlarged(!isImageEnlarged)} loading="lazy" />)}
         {isImageEnlarged
         && <ImageViewer photos={photos} cb={() => setIsImageEnlarged(!isImageEnlarged)} />}
       </ThumbnailWrapper>
