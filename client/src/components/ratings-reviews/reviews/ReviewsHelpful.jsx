@@ -33,7 +33,7 @@ export default function ReviewsHelpful({ helpfulness, reviewId }) {
     const targetId = e.target.id;
 
     axios.put(
-      `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfp/reviews/${reviewId}/${targetId}`,
+      `http://3.101.14.95/reviews/${reviewId}/${targetId}`,
       {},
       {
         headers: {
